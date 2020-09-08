@@ -1,5 +1,5 @@
 # Student Academic Dashboard
-An all-in-one academics degree dashboard for CSULB students.
+An all-in-one degree dashboard for CSULB students to help plan out their degree
 
 # Contributors
 Ryan Stehle  
