@@ -1,4 +1,4 @@
-# student-academic-dashboard
+# Student Academic Dashboard
 An All-in-one academics degree dashboard for CSULB students.
 
 # Contributors
