@@ -4,8 +4,8 @@ class Login extends Component {
     constructor() {
         super()
         this.state = {
-            email = "",
-            password = "",
+            email: "",
+            password: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +24,9 @@ class Login extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-
+                    <label>
+                        
+                    </label>
                 </form>
             </div>
         )
