@@ -9,7 +9,7 @@ const GeRequirements = () => {
     <>
       <Card>
         <Card.Body>
-          <Card.Title>GE Requirements - 48-49 Units</Card.Title>
+          <Card.Title>GE Requirements</Card.Title>
         </Card.Body>
       </Card>
       <div className="table-wrapper">
