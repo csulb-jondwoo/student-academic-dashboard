@@ -5,19 +5,35 @@ import Col from 'react-bootstrap/Col';
 import StudentInfo from '../../components/StudentInfo/StudentInfo';
 import Progress from '../../components/Progress/Progress';
 import CurrentSchedule from '../../components/CurrentSchedule/CurrentSchedule';
-import RemainingCourses from '../../components/RemainingCourses/RemainingCourses';
+import MajorRemaining from '../../components/RemainingCourses/MajorRemaining/MajorRemaining';
+import MajorRequirements from '../../components/Requirements/MajorRequirements/MajorRequirements';
+import GeRemaining from '../../components/RemainingCourses/GeRemaining/GeRemaining';
+import GeRequirements from '../../components/Requirements/GeRequirements/GeRequirements';
 
 const Dashboard = () => {
   return (
     <>
       <StudentInfo />
       <Progress />
-      <Row className="mt-3">
-        <Col md={7}>
+      <Row className="mt-4">
+        <Col>
           <CurrentSchedule />
         </Col>
+      </Row>
+      <Row className="mt-4">
         <Col>
-          <RemainingCourses />
+          <MajorRemaining />
+        </Col>
+        <Col>
+          <MajorRequirements />
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col>
+          <GeRemaining />
+        </Col>
+        <Col>
+          <GeRequirements />
         </Col>
       </Row>
     </>
