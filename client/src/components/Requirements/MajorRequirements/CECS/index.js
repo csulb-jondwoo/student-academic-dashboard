@@ -54,7 +54,7 @@ export const lowerDiv = [
   },
 ];
 
-export const approvedSciences = [
+export const physicalSciences = [
   {
     course: 'PHYS 151 - Mechanics and Heat',
     units: 4,
@@ -63,6 +63,9 @@ export const approvedSciences = [
     course: 'CHEM 111A - General Chemistry',
     units: 5,
   },
+];
+
+export const lifeSciences = [
   {
     course: 'BIOL 153 - Introduction to Marine Biology',
     units: 3,

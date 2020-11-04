@@ -28,7 +28,7 @@ const Dashboard = () => {
           <MajorRequirements />
         </Col>
       </Row>
-      <Row className="mt-4">
+      <Row className="my-5">
         <Col>
           <GeRemaining />
         </Col>
