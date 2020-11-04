@@ -1,34 +1,37 @@
-import React, { Component } from "react"
+import React from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import "./Login.css";
 
-class Login extends Component {
-    constructor() {
-        super()
-        this.state = {
-            email: "",
-            password: "",
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+function Login() {
+    return (
+        <Form className="formStyle">
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Text className="text-muted">
+                    Please enter your CSULB email address.
+                </Form.Text>
+            </Form.Group>
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert("Form was submitted.");
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        
-                    </label>
-                </form>
-            </div>
-        )
-    }
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" />
+                <Form.Text className="text-muted">
+                    Password must be between 8-20 characters in length.
+                </Form.Text>
+            </Form.Group>
+            <Form.Check 
+                type="switch"
+                id="rememberMe"
+                label="Remember Me"
+            />
+            <br />
+            <Button variant="primary" type="submit">
+                Submit
+            </Button>
+        </Form>
+    )
 }
+
+export default Login

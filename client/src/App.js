@@ -9,6 +9,7 @@ import {
 
 import Navigation from './components/Navigation/Navigation';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Login from './components/Login/Login';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
         <Container>
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/login" exact component={Login} />
             {/* <Route path="/about" component={About} /> */}
             {/* if you want to pass props to route, render the component */}
             {/* <Route path="/new" render={() => <NewEntry />} /> */}
