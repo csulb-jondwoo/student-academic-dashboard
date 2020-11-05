@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./Login.css";
+import "./Register.css";
 
 function Login() {
     return (
@@ -21,6 +21,15 @@ function Login() {
                     Password must be between 8-20 characters in length.
                 </Form.Text>
             </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control type="confirmPassword" placeholder="Confirm Password" />
+                <Form.Text className="text-muted">
+                    Please confirm your password.
+                </Form.Text>
+            </Form.Group>
+
             <Form.Check 
                 type="switch"
                 id="rememberMe"
