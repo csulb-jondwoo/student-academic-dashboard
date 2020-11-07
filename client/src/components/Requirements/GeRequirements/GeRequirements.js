@@ -22,15 +22,15 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>A.1</td>
+              <td>A1 - Oral Communication</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>A.2</td>
+              <td>A2 - Written Communication</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>A.3</td>
+              <td>A3 - Critical Thinking</td>
               <td>3</td>
             </tr>
           </tbody>
@@ -42,19 +42,19 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>B.1</td>
+              <td>B1 - Physical Science</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>B.2</td>
+              <td>B2 - Life Science</td>
               <td>3-4</td>
             </tr>
             <tr>
-              <td>LAB</td>
+              <td>B3 - Laboratory Experience</td>
               <td>0</td>
             </tr>
             <tr>
-              <td>B.4</td>
+              <td>B4 - Mathematics/Quantitative Reasoning</td>
               <td>3</td>
             </tr>
           </tbody>
@@ -66,15 +66,15 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>C.1</td>
+              <td>C1 - Arts</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>C.2</td>
+              <td>C2 - Humanities</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>C.3</td>
+              <td>C3 - Arts / Humanities</td>
               <td>3</td>
             </tr>
           </tbody>
@@ -86,15 +86,15 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>D.1</td>
+              <td>D1 - US History</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>D.2</td>
+              <td>D2 - Constitution and American Ideals</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>D.3</td>
+              <td>D3 - Social Sciences and Citizenship</td>
               <td>3</td>
             </tr>
           </tbody>
@@ -106,16 +106,8 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>E</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>E</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>E</td>
-              <td>1</td>
+              <td>E x3</td>
+              <td>3</td>
             </tr>
           </tbody>
           <thead>
@@ -126,16 +118,8 @@ const GeRequirements = () => {
           </thead>
           <tbody>
             <tr>
-              <td>F</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>F</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>F</td>
-              <td>3</td>
+              <td>F x3</td>
+              <td>9</td>
             </tr>
           </tbody>
           <thead>

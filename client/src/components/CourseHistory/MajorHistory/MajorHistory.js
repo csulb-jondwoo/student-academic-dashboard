@@ -2,33 +2,40 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { majorReqData } from './CECS';
+import { majorHistoryData } from './MajorHistoryData/';
 
 import '../../../utility/css/table-fixed-height.css';
 
-const MajorRequirements = () => {
+const MajorHistory = () => {
   return (
     <>
-      <Card>
+      <Card className="mt-3">
         <Card.Body>
-          <Card.Title>CECS Requirements (2020-2021)</Card.Title>
+          <Card.Title>CECS History</Card.Title>
         </Card.Body>
       </Card>
+
       <div className="table-wrapper">
         <Table maxHeight="100px" striped hover bordered responsive="sm">
           <thead>
             <tr>
-              <th>Lower Division (Take all of the following)</th>
+              <th>Lower Division</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Lower Div') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -38,8 +45,11 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Approved Science (1 Physical, 1 Life; Min. 8 Units)</th>
+              <th>Approved Science</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -48,13 +58,19 @@ const MajorRequirements = () => {
                 <em>PHYSICAL SCIENCE</em>
               </td>
               <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Physical Science') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -66,13 +82,19 @@ const MajorRequirements = () => {
                 <em>LIFE SCIENCE</em>
               </td>
               <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Life Science') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -82,17 +104,23 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Upper Division (Take all of the following)</th>
+              <th>Upper Division</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Upper Div') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -102,17 +130,23 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Writing Intensive (Min. 3 Units)</th>
+              <th>Writing Intensive</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Writing Intensive') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -122,17 +156,23 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Core Elective (Min. 6 Units)</th>
+              <th>Core Elective</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Core Elective') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -142,17 +182,23 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Applied Elective (Min. 3 Units)</th>
+              <th>Applied Elective</th>
               <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorReqData.map((course, idx) => {
+            {majorHistoryData.map((course, idx) => {
               if (course.designation === 'Applied Elective') {
                 return (
                   <tr key={idx}>
                     <td>{course.course}</td>
                     <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.status}</td>
                   </tr>
                 );
               } else {
@@ -166,4 +212,4 @@ const MajorRequirements = () => {
   );
 };
 
-export default MajorRequirements;
+export default MajorHistory;

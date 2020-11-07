@@ -10,6 +10,7 @@ import {
 import Navigation from './components/Navigation/Navigation';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './components/Login/Login';
+import CourseHistory from './components/CourseHistory/CourseHistory';
 
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/login" exact component={Login} />
+            <Route path="/history" exact component={CourseHistory} />
             {/* <Route path="/about" component={About} /> */}
             {/* if you want to pass props to route, render the component */}
             {/* <Route path="/new" render={() => <NewEntry />} /> */}

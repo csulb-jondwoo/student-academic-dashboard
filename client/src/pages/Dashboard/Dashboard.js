@@ -13,29 +13,31 @@ import GeRequirements from '../../components/Requirements/GeRequirements/GeRequi
 const Dashboard = () => {
   return (
     <>
-      <StudentInfo />
-      <Progress />
-      <Row className="mt-4">
-        <Col>
-          <CurrentSchedule />
-        </Col>
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <MajorRemaining />
-        </Col>
-        <Col>
-          <MajorRequirements />
-        </Col>
-      </Row>
-      <Row className="my-5">
-        <Col>
-          <GeRemaining />
-        </Col>
-        <Col>
-          <GeRequirements />
-        </Col>
-      </Row>
+      <div style={{ height: '2000px' }}>
+        <StudentInfo />
+        <Progress />
+        <Row className="mt-4">
+          <Col>
+            <CurrentSchedule />
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col>
+            <MajorRemaining />
+          </Col>
+          <Col>
+            <MajorRequirements />
+          </Col>
+        </Row>
+        <Row className="my-5">
+          <Col>
+            <GeRemaining />
+          </Col>
+          <Col>
+            <GeRequirements />
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };
