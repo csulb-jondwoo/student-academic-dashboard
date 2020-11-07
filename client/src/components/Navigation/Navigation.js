@@ -20,9 +20,9 @@ const Navigation = () => {
           <Nav className="mr-auto">
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
-          <Nav>
+          {/* <Nav>
             <Nav.Link href="#logout">Logout</Nav.Link>
-          </Nav>
+          </Nav> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
