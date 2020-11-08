@@ -18,9 +18,9 @@ const CurrentSchedule = () => {
               <Card.Title>Current Schedule (Fall 2020) - 7 Units</Card.Title>
             </Card.Body>
           </Col>
-          <Col className="py-3 d-flex justify-content-end mr-3">
+          {/* <Col className="py-3 d-flex justify-content-end mr-3">
             <Button size="sm">Add Course</Button>
-          </Col>
+          </Col> */}
         </Row>
       </Card>
       <div className="table-wrapper">

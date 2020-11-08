@@ -15,6 +15,9 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
+            <Nav.Link href="/add-course">Add Course</Nav.Link>
+          </Nav>
+          <Nav>
             <Nav.Link href="/roadmap">Roadmap</Nav.Link>
           </Nav>
           <Nav className="mr-auto">
