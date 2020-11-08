@@ -1,6 +1,7 @@
 export const majorHistoryData = [
   {
-    course: 'CECS 100 - Critical Thinking in the Digital Information Age',
+    course: 'CECS 100',
+    title: 'Critical Thinking in the Digital Information Age',
     units: 3,
     designation: 'Lower Div',
     term: 'Spring 2016',
@@ -8,8 +9,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course:
-      'CECS 105 - Introduction to Computer Engineering and Computer Science',
+    course: 'CECS 105',
+    title: 'Introduction to Computer Engineering and Computer Science',
     units: 1,
     designation: 'Lower Div',
     term: 'Spring 2016',
@@ -17,7 +18,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 174 - Introduction to Programming and Problem Solving',
+    course: 'CECS 174',
+    title: 'Introduction to Programming and Problem Solving',
     units: 3,
     designation: 'Lower Div',
     term: 'Fall 2016',
@@ -25,7 +27,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 225 - Digital Logic and Assembly Programming',
+    course: 'CECS 225',
+    title: 'Digital Logic and Assembly Programming',
     units: 3,
     designation: 'Lower Div',
     term: 'Spring 2017',
@@ -33,7 +36,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 228 - Discrete Structures with Computing Applications',
+    course: 'CECS 228',
+    title: 'Discrete Structures with Computing Applications',
     units: 3,
     designation: 'Lower Div',
     term: 'Fall 2017',
@@ -41,7 +45,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 229 - Discrete Structures with Computing Applications II',
+    course: 'CECS 229',
+    title: 'Discrete Structures with Computing Applications II',
     units: 3,
     designation: 'Lower Div',
     term: 'Fall 2019',
@@ -49,7 +54,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 274 - Data Structures',
+    course: 'CECS 274',
+    title: 'Data Structures',
     units: 3,
     designation: 'Lower Div',
     term: 'Spring 2017',
@@ -57,7 +63,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 277 - Object Oriented Application Development',
+    course: 'CECS 277',
+    title: 'Object Oriented Application Development',
     units: 3,
     designation: 'Lower Div',
     term: 'Fall 2017',
@@ -65,7 +72,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 282 - Advanced C++',
+    course: 'CECS 282',
+    title: 'Advanced C++',
     units: 3,
     designation: 'Lower Div',
     term: 'Fall 2017',
@@ -73,7 +81,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'ENGR 101 - Introduction to the Engineering Profession',
+    course: 'ENGR 101',
+    title: 'Introduction to the Engineering Profession',
     units: 1,
     designation: 'Lower Div',
     term: 'Spring 2016',
@@ -81,7 +90,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'MATH 122 - Calculus I',
+    course: 'MATH 122',
+    title: 'Calculus I',
     units: 4,
     designation: 'Lower Div',
     term: 'Spring 2016',
@@ -89,7 +99,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'MATH 123 - Calculus II',
+    course: 'MATH 123',
+    title: 'Calculus II',
     units: 4,
     designation: 'Lower Div',
     term: 'Fall 2016',
@@ -97,7 +108,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'PHYS 151 - Mechanics and Heat',
+    course: 'PHYS 151',
+    title: 'Mechanics and Heat',
     units: 4,
     designation: 'Physical Science',
     term: 'Fall 2016',
@@ -105,7 +117,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'BIOL 200 - General Biology',
+    course: 'BIOL 200',
+    title: 'General Biology',
     units: 4,
     designation: 'Life Science',
     term: 'Fall 2020',
@@ -113,7 +126,8 @@ export const majorHistoryData = [
     status: 'In-Progress',
   },
   {
-    course: 'CECS 323 - Database Fundamentals',
+    course: 'CECS 323',
+    title: 'Database Fundamentals',
     units: 3,
     designation: 'Upper Div',
     term: 'Spring 2020',
@@ -121,7 +135,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 326 - Operating Systems',
+    course: 'CECS 326',
+    title: 'Operating Systems',
     units: 3,
     designation: 'Upper Div',
     term: 'Fall 2019',
@@ -129,7 +144,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 328 - Algorithms',
+    course: 'CECS 328',
+    title: 'Algorithms',
     units: 3,
     designation: 'Upper Div',
     term: 'Spring 2019',
@@ -137,7 +153,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 341 - Computer Architecture and Organization',
+    course: 'CECS 341',
+    title: 'Computer Architecture and Organization',
     units: 3,
     designation: 'Upper Div',
     term: 'Spring 2019',
@@ -145,7 +162,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 343 - Introduction to Software Engineering',
+    course: 'CECS 343',
+    title: 'Introduction to Software Engineering',
     units: 3,
     designation: 'Upper Div',
     term: 'Fall 2019',
@@ -153,7 +171,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'ENGR 350 - Computers, Ethics and Society',
+    course: 'ENGR 350',
+    title: 'Computers, Ethics and Society',
     units: 3,
     designation: 'Upper Div',
     term: 'Fall 2019',
@@ -161,7 +180,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 491A - Computer Science Senior Project I',
+    course: 'CECS 491A',
+    title: 'Computer Science Senior Project I',
     units: 3,
     designation: 'Upper Div',
     term: 'Fall 2020',
@@ -169,7 +189,8 @@ export const majorHistoryData = [
     status: 'In-Progress',
   },
   {
-    course: 'CECS 474 - Computer Network Interoperability',
+    course: 'CECS 474',
+    title: 'Computer Network Interoperability',
     units: 3,
     designation: 'Core Elective',
     term: 'Spring 2020',
@@ -177,7 +198,8 @@ export const majorHistoryData = [
     status: 'Complete',
   },
   {
-    course: 'CECS 476 - System and Network Administration',
+    course: 'CECS 476',
+    title: 'System and Network Administration',
     units: 3,
     designation: 'Applied Elective',
     term: 'Spring 2020',

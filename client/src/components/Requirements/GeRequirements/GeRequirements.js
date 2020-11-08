@@ -18,7 +18,7 @@ const GeRequirements = () => {
         <Table striped hover bordered responsive="sm">
           <thead>
             <tr>
-              <th>COMMUNICATION & CRITICAL THINKING - 9 Units</th>
+              <th>COMMUNICATION & CRITICAL THINKING (9 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -40,7 +40,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>SCIENCE & MATH - 9-10 Units</th>
+              <th>SCIENCE & MATH (11 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -62,7 +62,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>ARTS & HUMANITIES - 9 Units</th>
+              <th>ARTS & HUMANITIES (9 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -84,7 +84,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>SOCIAL SCIENCES & CITIZENSHIP - 9 Units</th>
+              <th>SOCIAL SCIENCES & CITIZENSHIP (9 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -106,7 +106,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>LIFELONG LEARNING & SELF DEVELOPMENT - 3 Units</th>
+              <th>LIFELONG LEARNING & SELF DEVELOPMENT (3 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -115,7 +115,7 @@ const GeRequirements = () => {
               if (course.designation.startsWith('E')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.designation} x3</td>
+                    <td>{course.designation}</td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -126,7 +126,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>CAPSTONE - 9 Units</th>
+              <th>CAPSTONE (9 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -135,7 +135,7 @@ const GeRequirements = () => {
               if (course.designation.startsWith('F')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.designation} x3</td>
+                    <td>{course.designation}</td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -146,7 +146,7 @@ const GeRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>ADDITIONAL REQUIREMENTS</th>
+              <th>ADDITIONAL REQUIREMENTS (6 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>

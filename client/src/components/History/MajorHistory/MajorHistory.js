@@ -31,7 +31,9 @@ const MajorHistory = () => {
               if (course.designation === 'Lower Div') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -66,7 +68,9 @@ const MajorHistory = () => {
               if (course.designation === 'Physical Science') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -90,7 +94,9 @@ const MajorHistory = () => {
               if (course.designation === 'Life Science') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -116,7 +122,9 @@ const MajorHistory = () => {
               if (course.designation === 'Upper Div') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -142,7 +150,9 @@ const MajorHistory = () => {
               if (course.designation === 'Writing Intensive') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -168,7 +178,9 @@ const MajorHistory = () => {
               if (course.designation === 'Core Elective') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -194,7 +206,9 @@ const MajorHistory = () => {
               if (course.designation === 'Applied Elective') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>

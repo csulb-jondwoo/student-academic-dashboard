@@ -27,7 +27,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Lower Div') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -38,7 +40,7 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Approved Science (1 Physical, 1 Life; Min. 8 Units)</th>
+              <th>Approved Science (1 Physical, 1 Life; 8 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -53,7 +55,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Physical Science') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -71,7 +75,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Life Science') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -91,7 +97,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Upper Div') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -102,7 +110,7 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Writing Intensive (Min. 3 Units)</th>
+              <th>Writing Intensive (3 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -111,7 +119,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Writing Intensive') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -122,7 +132,7 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Core Elective (Min. 6 Units)</th>
+              <th>Core Elective (6 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -131,7 +141,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Core Elective') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );
@@ -142,7 +154,7 @@ const MajorRequirements = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Applied Elective (Min. 3 Units)</th>
+              <th>Applied Elective (3 Units Req.)</th>
               <th>Units</th>
             </tr>
           </thead>
@@ -151,7 +163,9 @@ const MajorRequirements = () => {
               if (course.designation === 'Applied Elective') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                   </tr>
                 );

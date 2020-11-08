@@ -7,30 +7,25 @@ import getGeRemaining from './GeRemainingData/geRemainingData';
 import '../../../utility/css/table-fixed-height.css';
 
 const GeRemaining = () => {
-  const { geRemaining, geEUnitCount, geFUnitCount } = getGeRemaining();
-  let updatedRemaining = [];
+  const {
+    geAUnitCount,
+    geBUnitCount,
+    geCUnitCount,
+    geDUnitCount,
+    geEUnitCount,
+    geFUnitCount,
+    geAdditionalReqUnitCount,
+    geRemaining,
+    CAT_A,
+    CAT_B,
+    CAT_C,
+    CAT_D,
+    CAT_E,
+    CAT_F,
+    CAT_ADDITIONAL_REQ,
+  } = getGeRemaining();
 
-  // create new course object for E and F ge's with updated unit count
-  for (const course of geRemaining) {
-    if (course.designation === 'E') {
-      const courseObj = {
-        course: course.course,
-        designation: course.designation,
-        units: course.units - geEUnitCount,
-      };
-      updatedRemaining.push(courseObj);
-    } else if (course.designation === 'F') {
-      const courseObj = {
-        course: course.course,
-        designation: course.designation,
-        units: course.units - geFUnitCount,
-      };
-      updatedRemaining.push(courseObj);
-    } else {
-      updatedRemaining.push(course);
-    }
-  }
-
+  console.log(geBUnitCount);
   return (
     <>
       <Card>
@@ -42,12 +37,15 @@ const GeRemaining = () => {
         <Table striped hover bordered responsive="sm">
           <thead>
             <tr>
-              <th>COMMUNICATION & CRITICAL THINKING</th>
+              <th>
+                COMMUNICATION & CRITICAL THINKING ({CAT_A - geAUnitCount}{' '}
+                unit(s) remaining)
+              </th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('A')) {
                 return (
                   <tr key={idx}>
@@ -64,12 +62,12 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>SCIENCE & MATH - 9-10 Units</th>
+              <th>SCIENCE & MATH ({CAT_B - geBUnitCount} unit(s) remaining)</th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('B')) {
                 return (
                   <tr key={idx}>
@@ -86,12 +84,14 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>ARTS & HUMANITIES</th>
+              <th>
+                ARTS & HUMANITIES ({CAT_C - geCUnitCount} unit(s) remaining)
+              </th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('C')) {
                 return (
                   <tr key={idx}>
@@ -108,12 +108,15 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>SOCIAL SCIENCES & CITIZENSHIP</th>
+              <th>
+                SOCIAL SCIENCES & CITIZENSHIP ({CAT_D - geDUnitCount} unit(s)
+                remaining)
+              </th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('D')) {
                 return (
                   <tr key={idx}>
@@ -130,12 +133,15 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>LIFELONG LEARNING & SELF DEVELOPMENT</th>
+              <th>
+                LIFELONG LEARNING & SELF DEVELOPMENT ({CAT_E - geEUnitCount}{' '}
+                unit(s) remaining)
+              </th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('E')) {
                 return (
                   <tr key={idx}>
@@ -150,12 +156,12 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>CAPSTONE</th>
+              <th>CAPSTONE ({CAT_F - geFUnitCount} unit(s) remaining)</th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation.startsWith('F')) {
                 return (
                   <tr key={idx}>
@@ -170,12 +176,16 @@ const GeRemaining = () => {
           </tbody>
           <thead>
             <tr>
-              <th>ADDITIONAL REQUIREMENTS</th>
+              <th>
+                ADDITIONAL REQUIREMENTS (
+                {CAT_ADDITIONAL_REQ - geAdditionalReqUnitCount} unit(s)
+                remaining)
+              </th>
               <th>Units</th>
             </tr>
           </thead>
           <tbody>
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation === 'Global Issues') {
                 return (
                   <tr key={idx}>
@@ -187,7 +197,7 @@ const GeRemaining = () => {
                 return null;
               }
             })}
-            {updatedRemaining.map((course, idx) => {
+            {geRemaining.map((course, idx) => {
               if (course.designation === 'Human Diversity') {
                 return (
                   <tr key={idx}>
