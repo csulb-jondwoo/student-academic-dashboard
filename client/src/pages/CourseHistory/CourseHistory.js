@@ -3,8 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import MajorHistory from './MajorHistory/MajorHistory';
-import GeHistory from './GeHistory/GeHistory';
+import MajorHistory from '../../components/History/MajorHistory/MajorHistory';
+import GeHistory from '../../components/History/GeHistory/GeHistory';
 
 import '../../utility/css/table-fixed-height.css';
 

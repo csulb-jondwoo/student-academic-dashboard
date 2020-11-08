@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { geHistoryData } from './GeHistoryData/';
+import { geHistoryData } from './GeHistoryData';
 
 import '../../../utility/css/table-fixed-height.css';
 

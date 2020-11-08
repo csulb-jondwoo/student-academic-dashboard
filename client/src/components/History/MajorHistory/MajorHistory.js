@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { majorHistoryData } from './MajorHistoryData/';
+import { majorHistoryData } from './MajorHistoryData';
 
 import '../../../utility/css/table-fixed-height.css';
 

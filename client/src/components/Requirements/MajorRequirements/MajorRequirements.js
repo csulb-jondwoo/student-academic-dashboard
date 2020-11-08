@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { majorReqData } from './CECS';
+import { majorReqData } from './CecsReqData';
 
 import '../../../utility/css/table-fixed-height.css';
 

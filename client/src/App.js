@@ -10,7 +10,7 @@ import {
 import Navigation from './components/Navigation/Navigation';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Login/Login';
-import CourseHistory from './components/CourseHistory/CourseHistory';
+import CourseHistory from './pages/CourseHistory/CourseHistory';
 
 import './App.css';
 

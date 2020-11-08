@@ -2,6 +2,8 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
+import { geReqData } from './GeReqData';
+
 import '../../../utility/css/table-fixed-height.css';
 
 const GeRequirements = () => {
@@ -21,18 +23,20 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>A1 - Oral Communication</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>A2 - Written Communication</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>A3 - Critical Thinking</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('A')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.designation} - {course.course}
+                    </td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -41,22 +45,20 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>B1 - Physical Science</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>B2 - Life Science</td>
-              <td>3-4</td>
-            </tr>
-            <tr>
-              <td>B3 - Laboratory Experience</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>B4 - Mathematics/Quantitative Reasoning</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('B')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.designation} - {course.course}
+                    </td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -65,18 +67,20 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>C1 - Arts</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>C2 - Humanities</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>C3 - Arts / Humanities</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('C')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.designation} - {course.course}
+                    </td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -85,18 +89,20 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>D1 - US History</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>D2 - Constitution and American Ideals</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>D3 - Social Sciences and Citizenship</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('D')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.designation} - {course.course}
+                    </td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -105,10 +111,18 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>E x3</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('E')) {
+                return (
+                  <tr key={idx}>
+                    <td>{course.designation} x3</td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -117,10 +131,18 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>F x3</td>
-              <td>9</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation.startsWith('F')) {
+                return (
+                  <tr key={idx}>
+                    <td>{course.designation} x3</td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
           <thead>
             <tr>
@@ -129,14 +151,30 @@ const GeRequirements = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Global Issues</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>Human Diversity</td>
-              <td>3</td>
-            </tr>
+            {geReqData.map((course, idx) => {
+              if (course.designation === 'Global Issues') {
+                return (
+                  <tr key={idx}>
+                    <td>{course.course}</td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+            {geReqData.map((course, idx) => {
+              if (course.designation === 'Human Diversity') {
+                return (
+                  <tr key={idx}>
+                    <td>{course.course}</td>
+                    <td>{course.units}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
         </Table>
       </div>
