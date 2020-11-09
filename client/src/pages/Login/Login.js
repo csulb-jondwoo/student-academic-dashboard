@@ -1,37 +1,179 @@
-import React from "react";
+import React, {Component} from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import "./Login.css";
+import Button from "react-bootstrap/Button"
+import "./Login.css"
+import LoginValidator from "./LoginValidator"
+import { Link } from "react-router-dom"
 
-function Login() {
-    return (
-        <Form className="formStyle">
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                    Please enter your CSULB email address.
-                </Form.Text>
-            </Form.Group>
+class Login extends Component {
+    constructor() {
+        super()
+        this.state = {
+            email: '',
+            password: '',
+            rememberMe: false
+        }
+        this.LoginValidator = LoginValidator;
+        /**
+         * Reset the validators value to default
+         */
+        this.resetValidators();
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-                <Form.Text className="text-muted">
-                    Password must be between 8-20 characters in length.
-                </Form.Text>
-            </Form.Group>
-            <Form.Check 
-                type="switch"
-                id="rememberMe"
-                label="Remember Me"
-            />
-            <br />
-            <Button className="btn" variant="primary" type="submit">
-                Submit
-            </Button>
-        </Form>
-    )
+        /**
+         * Update state of forms
+         */
+        this.handleChange = this.handleChange.bind(this);
+
+        /**
+         * Check email entered is in the database when we submit it
+         * Check the password entered is correct for email entered
+         */
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        /**
+         * This function displays the validation errors for a given input field
+         */
+        this.displayValidationErrors = this.displayValidationErrors.bind(this);
+
+        /**
+         * Updates the state of the validators for specified validator
+         */
+        this.updateValidators = this.updateValidators.bind(this);
+
+        /**
+         * This function resets all validators for this form to the default state
+         */
+        this.resetValidators = this.resetValidators.bind(this);
+
+        /**
+         * This method checks to see if the validity of all validators are true
+         */
+        this.isFormValid = this.isFormValid.bind(this);
+    }
+
+    handleChange(event, inputPropName) {
+        const newState = Object.assign({}, this.state);
+        newState[inputPropName] = event.target.value;
+        this.setState(newState);
+        this.updateValidators(inputPropName, event.target.value);
+    }
+
+    isFormValid() {
+        let status = true;
+        Object.keys(this.LoginValidator).forEach((field) => {
+            if (!this.LoginValidator[field].valid) {
+                status = false;
+            }
+        });
+        return status;
+    }
+
+    displayValidationErrors(fieldName) {
+        const validator = this.LoginValidator[fieldName];
+        const result = '';
+        if (validator && !validator.valid)
+        {
+            const errors = validator.errors.map((info, index) =>
+            {
+                return <span className="error" key={index}>* {info}</span>;
+            });
+            return (
+                <div className="error">
+                    {errors}
+                </div>
+            );
+        }
+        return result;
+    }
+
+    resetValidators() {
+        Object.keys(this.LoginValidator).forEach((fieldName) => {
+            this.LoginValidator[fieldName].errors = [];
+            this.LoginValidator[fieldName].state = '';
+            this.LoginValidator[fieldName].valid = false;
+        });
+    }
+
+    updateValidators(fieldName, value)
+    {
+        this.LoginValidator[fieldName].errors = [];
+        this.LoginValidator[fieldName].state = value;
+        this.LoginValidator[fieldName].valid = true;
+        this.LoginValidator[fieldName].rules.forEach((rule) => {
+            if (rule.test instanceof RegExp) {
+                if (!rule.test.test(value)) {
+                    this.LoginValidator[fieldName].errors.push(rule.message);
+                    this.LoginValidator[fieldName].valid = false;
+                }
+            } else if (typeof rule.test === 'function') {
+                if (!rule.test(value)) {
+                    this.LoginValidator[fieldName].errors.push(rule.message);
+                    this.LoginValidator[fieldName].valid = false;
+                }
+            }
+        });
+    }
+
+    handleSubmit(event) {
+        console.log("Form Submitted")
+    }
+
+    render() {
+        return (
+            <Form className="formStyle" onSubmit={this.handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control 
+                        id="email"
+                        type="email" 
+                        placeholder="Enter email"
+                        value={this.state.email}
+                        onChange={event => this.handleChange(event, "email")}
+                        required
+                    /> {/* Might take this out.
+                    <Form.Text className="text-muted">
+                        Please enter your CSULB email address.
+                    </Form.Text>*/}
+                </Form.Group>
+                {this.displayValidationErrors('email')}
+    
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control 
+                        id="password"
+                        type="password" 
+                        placeholder="Password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={event => this.handleChange(event, "password")}
+                        required 
+                    /> {/* Might take this out.
+                    <Form.Text className="text-muted">
+                        Password must be between 8-20 characters in length.
+                    </Form.Text> */}
+                </Form.Group>
+                {this.displayValidationErrors('password')}
+                <Form.Check 
+                    type="switch"
+                    id="Remember Me"
+                    label="Remember Me"
+                />
+                <br />
+                <Button 
+                    variant="primary"
+                    disabled={!this.isFormValid()}
+                    type="submit"
+                >
+                    Sign In
+                </Button>
+                <br/>
+                <Link to={"/forgotPassword"}>Forgot Password?</Link>
+                <br/>
+                <Link to={"/register"}>Not yet registered? Sign up</Link>
+
+            </Form>  
+        )
+    }
 }
 
 export default Login
