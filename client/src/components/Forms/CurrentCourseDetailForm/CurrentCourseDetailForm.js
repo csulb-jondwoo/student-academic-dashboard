@@ -8,11 +8,16 @@ import TimePicker from 'react-bootstrap-time-picker';
 import Container from 'react-bootstrap/esm/Container';
 
 const CurrentCourseDetailForm = () => {
-  const [timeValue, setTimeValue] = useState({ time: 0 });
+  const [startTimeValue, setStartTimeValue] = useState({ time: 0 });
+  const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
   const [dayValue, setDayValue] = useState([]);
 
-  const handleTimeChange = (time) => {
-    setTimeValue(time);
+  const handleStartTimeChange = (time) => {
+    setStartTimeValue(time);
+  };
+
+  const handleEndTimeChange = (time) => {
+    setEndTimeValue(time);
   };
 
   const handleDayChange = (val) => {
@@ -25,10 +30,23 @@ const CurrentCourseDetailForm = () => {
         <Form.Label>Section</Form.Label>
         <Form.Control type="input" />
       </Form.Group>
-      <Form.Group controlId="time">
-        <Form.Label>Time</Form.Label>
+      <Form.Group controlId="startTime">
+        <Form.Label>Start Time</Form.Label>
 
-        <TimePicker onChange={handleTimeChange} value={timeValue} step={5} />
+        <TimePicker
+          onChange={handleStartTimeChange}
+          value={startTimeValue}
+          step={5}
+        />
+      </Form.Group>
+      <Form.Group controlId="endTime">
+        <Form.Label>End Time</Form.Label>
+
+        <TimePicker
+          onChange={handleEndTimeChange}
+          value={endTimeValue}
+          step={5}
+        />
       </Form.Group>
       <Form.Group controlId="day">
         <Row>
