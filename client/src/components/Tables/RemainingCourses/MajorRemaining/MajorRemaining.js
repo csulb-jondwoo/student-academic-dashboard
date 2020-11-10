@@ -23,7 +23,7 @@ const RemainingCourses = () => {
   } = getMajorRemaining();
   return (
     <>
-      <div className="shadow">
+      <div className="shadow-sm">
         <Card>
           <Card.Body>
             <Card.Title>Remaining CECS Courses</Card.Title>

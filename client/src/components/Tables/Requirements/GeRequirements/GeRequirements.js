@@ -9,7 +9,7 @@ import '../../../../utility/css/table-fixed-height.css';
 const GeRequirements = () => {
   return (
     <>
-      <div className="shadow">
+      <div className="shadow-sm">
         <Card>
           <Card.Body>
             <Card.Title>GE Requirements</Card.Title>

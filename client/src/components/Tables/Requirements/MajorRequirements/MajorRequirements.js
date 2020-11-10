@@ -9,7 +9,7 @@ import '../../../../utility/css/table-fixed-height.css';
 const MajorRequirements = () => {
   return (
     <>
-      <div className="shadow">
+      <div className="shadow-sm">
         <Card>
           <Card.Body>
             <Card.Title>CECS Requirements (2020-2021)</Card.Title>

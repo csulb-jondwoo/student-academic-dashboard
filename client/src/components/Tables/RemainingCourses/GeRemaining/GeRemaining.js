@@ -28,7 +28,7 @@ const GeRemaining = () => {
   console.log(geBUnitCount);
   return (
     <>
-      <div className="shadow">
+      <div className="shadow-sm">
         <Card>
           <Card.Body>
             <Card.Title>Remaining GE Courses</Card.Title>
