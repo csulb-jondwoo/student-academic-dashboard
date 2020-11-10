@@ -127,7 +127,7 @@ class Register extends Component {
       <Container>
         <Row className="d-flex mt-5 justify-content-center">
           <Col md={9}>
-            <Card className="text-center">
+            <Card className="text-center shadow">
               <Card.Body>
                 <Form onSubmit={this.handleSubmit} className="formStyle">
                   <Form.Group controlId="formBasicEmail">

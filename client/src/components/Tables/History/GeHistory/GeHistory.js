@@ -2,33 +2,33 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { majorHistoryData } from './MajorHistoryData';
+import { geHistoryData } from './GeHistoryData';
 
-import '../../../utility/css/table-fixed-height.css';
+import '../../../../utility/css/table-fixed-height.css';
 
-const MajorHistory = () => {
+const GeHistory = () => {
   return (
     <>
       <Card className="mt-3">
         <Card.Body>
-          <Card.Title>CECS History</Card.Title>
+          <Card.Title>GE History</Card.Title>
         </Card.Body>
       </Card>
-
       <div className="table-wrapper">
-        <Table maxHeight="100px" striped hover bordered responsive="sm">
+        <Table className="mb-3" striped hover bordered responsive="sm">
           <thead>
             <tr>
-              <th>Lower Division</th>
+              <th>COMMUNICATION & CRITICAL THINKING</th>
               <th>Units</th>
               <th>Term</th>
               <th>Grade</th>
+              <th>Requirement Designation</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Lower Div') {
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('A')) {
                 return (
                   <tr key={idx}>
                     <td>
@@ -37,6 +37,7 @@ const MajorHistory = () => {
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
+                    <td>{course.designation}</td>
                     <td>{course.status}</td>
                   </tr>
                 );
@@ -47,25 +48,177 @@ const MajorHistory = () => {
           </tbody>
           <thead>
             <tr>
-              <th>Approved Science</th>
+              <th>SCIENCE & MATH</th>
               <th>Units</th>
               <th>Term</th>
               <th>Grade</th>
+              <th>Requirement Designation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('B')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </tbody>
+          <thead>
+            <tr>
+              <th>ARTS & HUMANITIES</th>
+              <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Requirement Designation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('C')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </tbody>
+          <thead>
+            <tr>
+              <th>SOCIAL SCIENCES & CITIZENSHIP</th>
+              <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Requirement Designation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('D')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </tbody>
+          <thead>
+            <tr>
+              <th>LIFELONG LEARNING & SELF DEVELOPMENT</th>
+              <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Requirement Designation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('E')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </tbody>
+          <thead>
+            <tr>
+              <th>CAPSTONE</th>
+              <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Requirement Designation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {geHistoryData.map((course, idx) => {
+              if (course.designation.startsWith('F')) {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </tbody>
+          <thead>
+            <tr>
+              <th>ADDITIONAL REQUIREMENTS</th>
+              <th>Units</th>
+              <th>Term</th>
+              <th>Grade</th>
+              <th>Requirement Designation</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <em>PHYSICAL SCIENCE</em>
+                <em>GLOBAL ISSUES</em>
               </td>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Physical Science') {
+            {geHistoryData.map((course, idx) => {
+              if (course.additionalReq === 'Global Issues') {
                 return (
                   <tr key={idx}>
                     <td>
@@ -74,6 +227,7 @@ const MajorHistory = () => {
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
+                    <td>{course.designation}</td>
                     <td>{course.status}</td>
                   </tr>
                 );
@@ -83,15 +237,16 @@ const MajorHistory = () => {
             })}
             <tr>
               <td>
-                <em>LIFE SCIENCE</em>
+                <em>HUMAN DIVERSITY</em>
               </td>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Life Science') {
+            {geHistoryData.map((course, idx) => {
+              if (course.additionalReq === 'Human Diversity') {
                 return (
                   <tr key={idx}>
                     <td>
@@ -100,118 +255,7 @@ const MajorHistory = () => {
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
-                    <td>{course.status}</td>
-                  </tr>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </tbody>
-          <thead>
-            <tr>
-              <th>Upper Division</th>
-              <th>Units</th>
-              <th>Term</th>
-              <th>Grade</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Upper Div') {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      {course.course} - {course.title}
-                    </td>
-                    <td>{course.units}</td>
-                    <td>{course.term}</td>
-                    <td>{course.grade}</td>
-                    <td>{course.status}</td>
-                  </tr>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </tbody>
-          <thead>
-            <tr>
-              <th>Writing Intensive</th>
-              <th>Units</th>
-              <th>Term</th>
-              <th>Grade</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Writing Intensive') {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      {course.course} - {course.title}
-                    </td>
-                    <td>{course.units}</td>
-                    <td>{course.term}</td>
-                    <td>{course.grade}</td>
-                    <td>{course.status}</td>
-                  </tr>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </tbody>
-          <thead>
-            <tr>
-              <th>Core Elective</th>
-              <th>Units</th>
-              <th>Term</th>
-              <th>Grade</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Core Elective') {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      {course.course} - {course.title}
-                    </td>
-                    <td>{course.units}</td>
-                    <td>{course.term}</td>
-                    <td>{course.grade}</td>
-                    <td>{course.status}</td>
-                  </tr>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </tbody>
-          <thead>
-            <tr>
-              <th>Applied Elective</th>
-              <th>Units</th>
-              <th>Term</th>
-              <th>Grade</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {majorHistoryData.map((course, idx) => {
-              if (course.designation === 'Applied Elective') {
-                return (
-                  <tr key={idx}>
-                    <td>
-                      {course.course} - {course.title}
-                    </td>
-                    <td>{course.units}</td>
-                    <td>{course.term}</td>
-                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
                     <td>{course.status}</td>
                   </tr>
                 );
@@ -226,4 +270,4 @@ const MajorHistory = () => {
   );
 };
 
-export default MajorHistory;
+export default GeHistory;

@@ -7,8 +7,8 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 import CurrentCourseDetailForm from '../CurrentCourseDetailForm/CurrentCourseDetailForm';
-import { geReqData } from '../../Requirements/GeRequirements/GeReqData';
-import { majorReqCategory } from '../../Requirements/MajorRequirements/CecsReqData';
+import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
+import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
 
 // MAKE FIELDS REQUIRED
 export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {

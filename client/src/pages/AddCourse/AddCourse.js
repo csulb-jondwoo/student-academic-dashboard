@@ -26,7 +26,7 @@ const AddCourse = () => {
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
         <Col md={9}>
-          <Card className="text-center">
+          <Card className="text-center shadow">
             <Card.Body>
               <Row className="my-2">
                 <Col className="d-flex justify-content-center">

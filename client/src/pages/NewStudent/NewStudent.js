@@ -22,7 +22,7 @@ class NewStudent extends Component {
     return (
       <Row className="d-flex mt-5 justify-content-center">
         <Col>
-          <Card className="text-center">
+          <Card className="text-center shadow">
             <Card.Body>
               <h1>Welcome to the Student Academic Dashboard</h1>
               <p>

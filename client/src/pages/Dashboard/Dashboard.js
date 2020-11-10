@@ -1,14 +1,14 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 import StudentInfo from '../../components/StudentInfo/StudentInfo';
-import Progress from '../../components/Progress/Progress';
-import CurrentSchedule from '../../components/CurrentSchedule/CurrentSchedule';
-import MajorRemaining from '../../components/RemainingCourses/MajorRemaining/MajorRemaining';
-import MajorRequirements from '../../components/Requirements/MajorRequirements/MajorRequirements';
-import GeRemaining from '../../components/RemainingCourses/GeRemaining/GeRemaining';
-import GeRequirements from '../../components/Requirements/GeRequirements/GeRequirements';
+import CurrentSchedule from '../../components/Tables/CurrentSchedule/CurrentSchedule';
+import MajorRemaining from '../../components/Tables/RemainingCourses/MajorRemaining/MajorRemaining';
+import MajorRequirements from '../../components/Tables/Requirements/MajorRequirements/MajorRequirements';
+import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/GeRemaining';
+import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements';
 
 const Dashboard = () => {
   return (
@@ -19,8 +19,6 @@ const Dashboard = () => {
             <StudentInfo />
           </Col>
         </Row>
-
-        <Progress />
 
         <Row className="mt-4">
           <Col>
