@@ -28,15 +28,14 @@ function App() {
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
-            <Route path="/forgotpassword" exact component={ForgotPassword} />
+            <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/history" exact component={CourseHistory} />
             <Route path="/add-course" exact component={AddCourse} />
-            <Route path="/newstudent" exact component={NewStudent} />
-            {/* <Route path="/about" component={About} /> */}
+            <Route path="/new-student" exact component={NewStudent} />
             {/* if you want to pass props to route, render the component */}
             {/* <Route path="/new" render={() => <NewEntry />} /> */}
             {/* <Route path="/new" component={NewEntry} /> */}
-            <Redirect to="/dashboard" />
+            <Redirect to="/login" />
           </Switch>
         </Container>
       </Router>

@@ -336,3 +336,13 @@ export const majorReqData = [
     designation: 'Applied Elective',
   },
 ];
+
+export const majorReqCategory = [
+  'Lower Div',
+  'Upper Div',
+  'Physical Science',
+  'Life Science',
+  'Writing Intensive',
+  'Core Elective',
+  'Applied Elective',
+];
