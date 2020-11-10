@@ -23,7 +23,7 @@ const StudentInfo = () => {
       {/* student info */}
       <Row>
         <Col>
-          <Card className="mt-3 d-flex flex-row">
+          <Card className="d-flex flex-row">
             <Col>
               <Card.Body>
                 <Card.Title>014628839</Card.Title>

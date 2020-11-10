@@ -11,7 +11,7 @@ import '../../utility/css/table-fixed-height.css';
 const CourseHistory = () => {
   return (
     <>
-      <Card className="mt-3 text-center">
+      <Card className="mt-5 text-center">
         <Row>
           <Col>
             <Card.Body>

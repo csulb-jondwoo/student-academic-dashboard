@@ -132,7 +132,7 @@ class Login extends Component {
                     <Form.Control
                       id="email"
                       type="email"
-                      placeholder="Email"
+                      placeholder="Enter email"
                       value={this.state.email}
                       onChange={(event) => this.handleChange(event, 'email')}
                       required
@@ -149,7 +149,7 @@ class Login extends Component {
                     <Form.Control
                       id="password"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Enter password"
                       name="password"
                       value={this.state.password}
                       onChange={(event) => this.handleChange(event, 'password')}

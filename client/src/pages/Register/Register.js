@@ -153,7 +153,7 @@ class Register extends Component {
                       name="password"
                       value={this.state.password}
                       type="password"
-                      placeholder="Password"
+                      placeholder="Enter password"
                       onChange={(event) => this.handleChange(event, 'password')}
                       required
                     />{' '}

@@ -14,8 +14,14 @@ const Dashboard = () => {
   return (
     <>
       <div style={{ height: '2000px' }}>
-        <StudentInfo />
+        <Row className="mt-5">
+          <Col>
+            <StudentInfo />
+          </Col>
+        </Row>
+
         <Progress />
+
         <Row className="mt-4">
           <Col>
             <CurrentSchedule />
