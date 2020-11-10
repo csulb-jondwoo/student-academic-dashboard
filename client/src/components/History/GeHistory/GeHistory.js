@@ -31,7 +31,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('A')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -59,7 +61,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('B')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -87,7 +91,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('C')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -115,7 +121,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('D')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -143,7 +151,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('E')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -171,7 +181,9 @@ const GeHistory = () => {
               if (course.designation.startsWith('F')) {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -209,7 +221,9 @@ const GeHistory = () => {
               if (course.additionalReq === 'Global Issues') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>
@@ -235,7 +249,9 @@ const GeHistory = () => {
               if (course.additionalReq === 'Human Diversity') {
                 return (
                   <tr key={idx}>
-                    <td>{course.course}</td>
+                    <td>
+                      {course.course} - {course.title}
+                    </td>
                     <td>{course.units}</td>
                     <td>{course.term}</td>
                     <td>{course.grade}</td>

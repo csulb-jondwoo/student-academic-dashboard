@@ -1,6 +1,7 @@
 export const geHistoryData = [
   {
-    course: 'COMM 110 - Interpersonal Communication',
+    course: 'COMM 110',
+    title: 'Interpersonal Communication',
     units: 3,
     term: 'Spring 2016',
     grade: 'B',
@@ -10,7 +11,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'ENGL 100 - Composition II',
+    course: 'ENGL 100',
+    title: 'Composition II',
     units: 3,
     term: 'Fall 2015',
     grade: 'A',
@@ -21,6 +23,7 @@ export const geHistoryData = [
   },
   {
     course: 'waived',
+    title: 'waived',
     units: 3,
     term: 'waived',
     grade: 'waived',
@@ -30,7 +33,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'PHYS 151 - Mechanics and Heat',
+    course: 'PHYS 151',
+    title: 'Mechanics and Heat',
     units: 4,
     term: 'Fall 2016',
     grade: 'C',
@@ -40,7 +44,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'BIOL 200 - General Biology',
+    course: 'BIOL 200',
+    title: 'General Biology',
     units: 4,
     term: 'Fall 2020',
     grade: null,
@@ -50,7 +55,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'BIOL 200 - General Biology Lab',
+    course: 'BIOL 200',
+    title: 'General Biology Lab',
     units: 0,
     term: 'Fall 2020',
     grade: null,
@@ -60,7 +66,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'MATH 119A - Survey of Calculus I',
+    course: 'MATH 119A',
+    title: 'Survey of Calculus I',
     units: 3,
     term: 'Fall 2015',
     grade: 'A',
@@ -70,7 +77,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'LING 151 - Fundamentals of Amer Sign Lang',
+    course: 'LING 151',
+    title: 'Fundamentals of Amer Sign Lang',
     units: 3,
     term: 'Fall 2015',
     grade: 'A',
@@ -80,7 +88,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'ENGL 100 - Composition II',
+    course: 'ENGL 100',
+    title: 'Composition II',
     units: 3,
     term: 'Fall 2015',
     grade: 'A',
@@ -90,7 +99,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'POSC 100 - Intro American Government',
+    course: 'POSC 100',
+    title: 'Intro American Government',
     units: 3,
     term: 'Fall 2016',
     grade: 'B',
@@ -100,7 +110,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'ANTH 120 - Intro to Cultural Anthropology',
+    course: 'ANTH 120',
+    title: 'Intro to Cultural Anthropology',
     units: 3,
     term: 'Fall 2017',
     grade: 'C',
@@ -110,7 +121,8 @@ export const geHistoryData = [
     additionalReq: 'Global Issues',
   },
   {
-    course: 'CECS 105 - Introduction to CECS',
+    course: 'CECS 105',
+    title: 'Introduction to CECS',
     units: 1,
     term: 'Spring 2016',
     grade: 'B',
@@ -120,7 +132,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'ENGR  101 - Intro to Engineering Profession',
+    course: 'ENGR  101',
+    title: 'Intro to Engineering Profession',
     units: 1,
     term: 'Spring 2016',
     grade: 'B',
@@ -130,7 +143,8 @@ export const geHistoryData = [
     additionalReq: null,
   },
   {
-    course: 'CECS  491A - Computer Science Senior Project I',
+    course: 'CECS  491A',
+    title: 'Computer Science Senior Project I',
     units: 3,
     term: 'Fall 2020',
     grade: null,
