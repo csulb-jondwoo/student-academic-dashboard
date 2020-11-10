@@ -14,6 +14,7 @@ import CourseHistory from './pages/CourseHistory/CourseHistory';
 import Register from './pages/Register/Register';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import AddCourse from './pages/AddCourse/AddCourse';
+import NewStudent from './pages/NewStudent/NewStudent';
 
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/forgotpassword" exact component={ForgotPassword} />
             <Route path="/history" exact component={CourseHistory} />
             <Route path="/add-course" exact component={AddCourse} />
+            <Route path="/newstudent" exact component={NewStudent} />
             {/* <Route path="/about" component={About} /> */}
             {/* if you want to pass props to route, render the component */}
             {/* <Route path="/new" render={() => <NewEntry />} /> */}

@@ -23,7 +23,7 @@ export default function Accept(props) {
       <div {...getRootProps({className: `dropzone ${dragStatus}`})}>
         <input {...getInputProps()} />
         <span>{isDragActive ? "📂" : "📁"}</span>
-        <p className="dragText">Drag and drop an image file here, or click to select files.</p>
+        <p className="dragText">Drag and drop a PDF file here, or click to select files.</p>
       </div>
       <aside>
         <h4>Accepted files</h4>
