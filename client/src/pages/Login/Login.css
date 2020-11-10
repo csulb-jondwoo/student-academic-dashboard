@@ -1,7 +1,7 @@
 .formStyle {
-    width: 50%;
+  width: 100% !important;
 }
 .btn {
-    background-color: #2a9d8f !important;
-    border: none;
-  }
+  background-color: #2a9d8f !important;
+  border: none;
+}
