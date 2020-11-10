@@ -26,19 +26,21 @@ const SchoolYear = () => {
             </thead>
             <tbody>
               <tr>
-                <td>CECS 326 - OS</td>
+                <td>CECS 326 - Operating Systems</td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>CECS 343 - SWE</td>
+                <td>CECS 343 - Introduction to Software Engineering</td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>CECS 229 - Discrete Math</td>
+                <td>
+                  CECS 229 - Discrete Structures with Computing Applications II
+                </td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>ENGR 350 - Discrete Math</td>
+                <td>ENGR 350 - Computers, Ethics and Society</td>
                 <td>3</td>
               </tr>
             </tbody>
@@ -53,15 +55,15 @@ const SchoolYear = () => {
             </thead>
             <tbody>
               <tr>
-                <td>CECS 323 - Database</td>
+                <td>CECS 323 - Database Fundamentals</td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>CECS 474 - Network Interop</td>
+                <td>CECS 474 - Computer Network Interoperability</td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>CECS 476 - network/sys admin</td>
+                <td>CECS 476 - System and Network Administration</td>
                 <td>3</td>
               </tr>
             </tbody>
@@ -89,7 +91,7 @@ const SchoolYear = () => {
             </thead>
             <tbody>
               <tr>
-                <td>CECS 491A - Senior Project</td>
+                <td>CECS 491A - Computer Science Senior Project I</td>
                 <td>3</td>
               </tr>
               <tr>
