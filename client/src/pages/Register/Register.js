@@ -5,9 +5,11 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import './Register.css';
-import RegisterValidator from './RegisterValidator';
 import { Link } from 'react-router-dom';
+
+import RegisterValidator from './RegisterValidator';
+
+import './Register.css';
 
 class Register extends Component {
   constructor() {

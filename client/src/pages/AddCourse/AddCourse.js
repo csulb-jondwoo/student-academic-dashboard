@@ -6,14 +6,20 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import GeForm from '../../components/Forms/GeForm/GeForm';
-import MajorForm from '../../components/Forms/MajorForm/MajorForm';
+
+import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
 
 const AddCourse = () => {
   const [radioValue, setRadioValue] = useState('ge');
+  const [isComplete, setIsComplete] = useState(true);
 
-  const handleChange = (value) => {
+  const handleCourseChange = (value) => {
     setRadioValue(value);
+  };
+
+  const handleProgressChange = (value) => {
+    console.log(value);
+    setIsComplete(value);
   };
 
   return (
@@ -29,7 +35,7 @@ const AddCourse = () => {
                     type="radio"
                     name="options"
                     defaultValue="ge"
-                    onChange={handleChange}
+                    onChange={handleCourseChange}
                   >
                     <ToggleButton value="ge">GE Course</ToggleButton>
                     <ToggleButton value="major">Major Course</ToggleButton>
@@ -38,7 +44,13 @@ const AddCourse = () => {
               </Row>
               <Card.Title>Add {radioValue.toUpperCase()} Course</Card.Title>
 
-              <Form>{radioValue === 'ge' ? <GeForm /> : <MajorForm />}</Form>
+              <Form>
+                <CourseDetailForm
+                  isComplete={isComplete}
+                  handleChange={handleProgressChange}
+                  courseType={radioValue}
+                />
+              </Form>
             </Card.Body>
           </Card>
         </Col>

@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
-import './CurrentSchedule.css';
 import '../../utility/css/table-fixed-height.css';
 
 const CurrentSchedule = () => {

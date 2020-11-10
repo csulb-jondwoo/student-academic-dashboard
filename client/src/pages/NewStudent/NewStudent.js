@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -14,6 +14,11 @@ class NewStudent extends Component {
   }
 
   render() {
+    const handleClick = (e) => {
+      //redirect to dash
+      console.log(e.target);
+    };
+
     return (
       <Row className="d-flex mt-5 justify-content-center">
         <Col>
@@ -31,7 +36,6 @@ class NewStudent extends Component {
                 major from the dropdown menu below.
               </p>
               <DragAndDrop />
-
               <Form>
                 <Form.Group controlId="exampleForm.majorSelect">
                   <Form.Label>Select a Major</Form.Label>
@@ -45,6 +49,17 @@ class NewStudent extends Component {
                     <option>Biology</option>
                   </Form.Control>
                 </Form.Group>
+
+                <Button className="mt-3 mr-2" variant="primary" type="submit">
+                  Submit
+                </Button>
+                <Button
+                  onClick={handleClick}
+                  className="mt-3"
+                  as="input"
+                  type="button"
+                  value="I don't have a transcript"
+                />
               </Form>
             </Card.Body>
           </Card>
