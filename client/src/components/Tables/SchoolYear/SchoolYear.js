@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
 
 const SchoolYear = () => {
   return (
@@ -10,7 +9,6 @@ const SchoolYear = () => {
         <Card className="text-center">
           <Card.Body>
             <Card.Title>2019-2020</Card.Title>
-            <Button size="sm">Add Term</Button>
           </Card.Body>
         </Card>
         <div className="table-wrapper mb-5">
@@ -75,7 +73,6 @@ const SchoolYear = () => {
         <Card className="text-center">
           <Card.Body>
             <Card.Title>2020-2021</Card.Title>
-            <Button size="sm">Add Term</Button>
           </Card.Body>
         </Card>
         <div className="table-wrapper">

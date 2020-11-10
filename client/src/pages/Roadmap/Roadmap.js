@@ -25,8 +25,11 @@ const Roadmap = () => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex justify-content-center">
+        <Col className="d-flex justify-content-end">
           <Button className="mb-4">Downlad PDF</Button>
+        </Col>
+        <Col>
+          <Button>Add Term</Button>
         </Col>
       </Row>
     </Container>
