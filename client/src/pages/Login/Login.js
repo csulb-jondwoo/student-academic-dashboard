@@ -163,6 +163,7 @@ class Login extends Component {
                     </Form.Text> */}
                   </Form.Group>
                   {this.displayValidationErrors('password')}
+                  <br />
                   <Form.Check
                     type="switch"
                     id="Remember Me"
