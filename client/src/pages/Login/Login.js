@@ -85,7 +85,7 @@ class Login extends Component {
           </span>
         );
       });
-      return <div className="error">{errors}</div>;
+      return <div className="error text-danger">{errors}</div>;
     }
     return result;
   }

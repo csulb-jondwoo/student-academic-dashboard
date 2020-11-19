@@ -14,7 +14,7 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav>
+          {/* <Nav>
             <Nav.Link href="/add-course">Add Course</Nav.Link>
           </Nav>
           <Nav>
@@ -25,7 +25,7 @@ const Navigation = () => {
           </Nav>
           <Nav>
             <Nav.Link href="#logout">Logout</Nav.Link>
-          </Nav>
+          </Nav> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
