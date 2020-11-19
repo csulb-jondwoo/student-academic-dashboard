@@ -18,17 +18,19 @@ const SchoolYear = () => {
           <Table className="mb-3" striped hover bordered responsive="sm">
             <thead>
               <tr>
-                <th colSpan="2">
+                <th colSpan="2">FALL 2019</th>
+              </tr>
+              <tr>
+                <th>
                   <Row>
-                    <Col>FALL 2019</Col>
-                    <Col className="d-flex justify-content-end">
-                      <Button size="sm">Add Course</Button>
+                    <Col>
+                      Course{' '}
+                      <Button className="ml-1" size="sm">
+                        +
+                      </Button>
                     </Col>
                   </Row>
                 </th>
-              </tr>
-              <tr>
-                <th>Course</th>
                 <th>Units</th>
               </tr>
             </thead>
@@ -54,17 +56,19 @@ const SchoolYear = () => {
             </tbody>
             <thead>
               <tr>
-                <th colSpan="2">
+                <th colSpan="2">SPRING 2020</th>
+              </tr>
+              <tr>
+                <th>
                   <Row>
-                    <Col>SPRING 2020</Col>
-                    <Col className="d-flex justify-content-end">
-                      <Button size="sm">Add Course</Button>
+                    <Col>
+                      Course{' '}
+                      <Button className="ml-1" size="sm">
+                        +
+                      </Button>
                     </Col>
                   </Row>
                 </th>
-              </tr>
-              <tr>
-                <th>Course</th>
                 <th>Units</th>
               </tr>
             </thead>
@@ -96,17 +100,19 @@ const SchoolYear = () => {
           <Table maxHeight="100px" striped hover bordered responsive="sm">
             <thead>
               <tr>
-                <th colSpan="2">
+                <th colSpan="2">FALL 2020</th>
+              </tr>
+              <tr>
+                <th>
                   <Row>
-                    <Col>FALL 2020</Col>
-                    <Col className="d-flex justify-content-end">
-                      <Button size="sm">Add Course</Button>
+                    <Col>
+                      Course{' '}
+                      <Button className="ml-1" size="sm">
+                        +
+                      </Button>
                     </Col>
                   </Row>
                 </th>
-              </tr>
-              <tr>
-                <th>Course</th>
                 <th>Units</th>
               </tr>
             </thead>
