@@ -24,7 +24,7 @@ const CourseHistory = () => {
       <div className="shadow-sm mb-5">
         <MajorHistory />
       </div>
-      <div className="shadow-sm" style={{ height: '900px' }}>
+      <div className="shadow-sm mb-5">
         <GeHistory />
       </div>
     </>
