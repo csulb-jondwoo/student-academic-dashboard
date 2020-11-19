@@ -1,6 +1,9 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const SchoolYear = () => {
   return (
@@ -15,7 +18,14 @@ const SchoolYear = () => {
           <Table className="mb-3" striped hover bordered responsive="sm">
             <thead>
               <tr>
-                <th colSpan="2">FALL 2019</th>
+                <th colSpan="2">
+                  <Row>
+                    <Col>FALL 2019</Col>
+                    <Col className="d-flex justify-content-end">
+                      <Button size="sm">Add Course</Button>
+                    </Col>
+                  </Row>
+                </th>
               </tr>
               <tr>
                 <th>Course</th>
@@ -44,7 +54,14 @@ const SchoolYear = () => {
             </tbody>
             <thead>
               <tr>
-                <th colSpan="2">SPRING 2020</th>
+                <th colSpan="2">
+                  <Row>
+                    <Col>SPRING 2020</Col>
+                    <Col className="d-flex justify-content-end">
+                      <Button size="sm">Add Course</Button>
+                    </Col>
+                  </Row>
+                </th>
               </tr>
               <tr>
                 <th>Course</th>
@@ -79,7 +96,14 @@ const SchoolYear = () => {
           <Table maxHeight="100px" striped hover bordered responsive="sm">
             <thead>
               <tr>
-                <th colSpan="2">FALL 2020</th>
+                <th colSpan="2">
+                  <Row>
+                    <Col>FALL 2020</Col>
+                    <Col className="d-flex justify-content-end">
+                      <Button size="sm">Add Course</Button>
+                    </Col>
+                  </Row>
+                </th>
               </tr>
               <tr>
                 <th>Course</th>
