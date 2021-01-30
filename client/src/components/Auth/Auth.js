@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,36 +13,44 @@ import { useDispatch } from 'react-redux';
 import './Auth.css';
 
 import Validator from './Validator';
+import { signin, signup } from '../../actions/auth';
 
 const initialValues = {
   email: '',
   password: '',
   confirmPassword: '',
-  rememberMe: false,
 };
 
 const Auth = () => {
-  const [state, setState] = useState(initialValues);
+  const [formData, setFormData] = useState(initialValues);
+  const [rememberMe, setRememberMe] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleChange = (e, inputPropName) => {
     const { name, value } = e.target;
-    setState({
-      ...state,
+    setFormData({
+      ...formData,
       [name]: value,
     });
     updateValidators(inputPropName, e.target.value);
   };
 
-  const isFormValid = () => {
-    let status = true;
-    Object.keys(Validator).forEach((field) => {
-      if (!Validator[field].valid) {
-        status = false;
-      }
-    });
-    return status;
-  };
+  // const isFormValid = () => {
+  //   let status = true;
+  //   Object.keys(Validator).forEach((field) => {
+  //     console.log(Validator[field].valid);
+  //   });
+  //   Object.keys(Validator).forEach((field) => {
+  //     if (!Validator[field].valid) {
+  //       status = false;
+  //     }
+  //   });
+
+  //   return status;
+  // };
 
   const displayValidationErrors = (fieldName) => {
     const validator = Validator[fieldName];
@@ -89,14 +98,27 @@ const Auth = () => {
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
   };
-  const handleSubmit = (event) => {
-    console.log('Form Submitted');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (isSignUp) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   };
 
   const googleSuccess = async (res) => {
-    console.log(res);
     const result = res?.profileObj;
     const token = res?.tokenId;
+
+    try {
+      dispatch({ type: 'AUTH', data: { result, token } });
+      history.push('/dashboard');
+    } catch (error) {
+      console.log(error);
+    }
 
     try {
     } catch (error) {
@@ -122,7 +144,7 @@ const Auth = () => {
                     type="email"
                     placeholder="Enter email"
                     name="email"
-                    value={state.email}
+                    value={formData.email}
                     onChange={(event) => handleChange(event, 'email')}
                     required
                   />
@@ -136,7 +158,7 @@ const Auth = () => {
                     type="password"
                     placeholder="Enter password"
                     name="password"
-                    value={state.password}
+                    value={formData.password}
                     onChange={(event) => handleChange(event, 'password')}
                     required
                   />
@@ -150,7 +172,7 @@ const Auth = () => {
                       type="password"
                       id="confirmPassword"
                       name="confirmPassword"
-                      value={state.confirmPassword}
+                      value={formData.confirmPassword}
                       onChange={(event) =>
                         handleChange(event, 'confirmPassword')
                       }
@@ -169,30 +191,45 @@ const Auth = () => {
                 />
                 <br />
 
-                <Button
-                  className="mb-3"
-                  variant="primary"
-                  disabled={!isFormValid()}
-                  type="submit"
-                >
-                  Sign In
-                </Button>
+                {isSignUp ? (
+                  <Button
+                    variant="primary"
+                    // disabled={!isFormValid()}
+                    type="submit"
+                  >
+                    Sign Up
+                  </Button>
+                ) : (
+                  <Button
+                    className="mb-3"
+                    variant="primary"
+                    // disabled={!isFormValid()}
+                    type="submit"
+                  >
+                    Sign In
+                  </Button>
+                )}
                 <br />
-                <GoogleLogin
-                  clientId="86113368677-0bun4qab0haalfob041h38kruulbmvj4.apps.googleusercontent.com"
-                  onSuccess={googleSuccess}
-                  onFailure={googleFailure}
-                  cookiePolicy="single_host_origin"
-                  render={(renderProps) => (
-                    <Button
-                      variant="primary"
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                    >
-                      Google Sign In
-                    </Button>
-                  )}
-                />
+
+                {isSignUp ? null : (
+                  <GoogleLogin
+                    clientId="86113368677-0bun4qab0haalfob041h38kruulbmvj4.apps.googleusercontent.com"
+                    onSuccess={googleSuccess}
+                    onFailure={googleFailure}
+                    cookiePolicy="single_host_origin"
+                    render={(renderProps) => (
+                      <Button
+                        className="mb-3"
+                        variant="primary"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        Google Sign In
+                      </Button>
+                    )}
+                  />
+                )}
+
                 <br />
                 <Link to={'/forgotPassword'}>Forgot Password?</Link>
                 <br />

@@ -25,7 +25,6 @@ const GeRemaining = () => {
     CAT_ADDITIONAL_REQ,
   } = getGeRemaining();
 
-  console.log(geBUnitCount);
   return (
     <>
       <div className="shadow-sm">
