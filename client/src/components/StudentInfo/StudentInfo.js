@@ -8,17 +8,19 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Progress from '../../components/Progress/Progress';
 
 const StudentInfo = () => {
-  const renderOverallGpaTooltip = (props) => (
+  const renderTotalGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Overall GPA
+      Total GPA
     </Tooltip>
   );
 
-  const renderMajorGpaTooltip = (props) => (
+  const renderCurrentGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Major GPA
+      Current GPA
     </Tooltip>
   );
+
+  const user = null;
 
   return (
     <>
@@ -29,9 +31,9 @@ const StudentInfo = () => {
             <Card className="d-flex flex-row">
               <Col>
                 <Card.Body>
-                  <Card.Title>014628839</Card.Title>
+                  <Card.Title>{user ? user.studentID : 123456789}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    john.smith@student.csulb.edu
+                    {user ? user.email : 'john.smith@student.csulb.edu'}
                   </Card.Subtitle>
                 </Card.Body>
               </Col>
@@ -47,17 +49,17 @@ const StudentInfo = () => {
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={renderMajorGpaTooltip}
+                      overlay={renderCurrentGpaTooltip}
                     >
-                      <span>3.1</span>
+                      <span>{user ? user.gpa : 3.1}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={renderOverallGpaTooltip}
+                      overlay={renderTotalGpaTooltip}
                     >
-                      <span>3.3</span>
+                      <span>4.0</span>
                     </OverlayTrigger>
                   </Card.Subtitle>
                 </Card.Body>

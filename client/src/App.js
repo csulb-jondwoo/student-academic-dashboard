@@ -7,11 +7,12 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import Auth from './components/Auth/Auth';
 import Navigation from './components/Navigation/Navigation';
 import Dashboard from './pages/Dashboard/Dashboard';
-import Login from './pages/Login/Login';
+// import Login from './pages/Login/Login';
 import CourseHistory from './pages/CourseHistory/CourseHistory';
-import Register from './pages/Register/Register';
+// import Register from './pages/Register/Register';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import AddCourse from './pages/AddCourse/AddCourse';
 import NewStudent from './pages/NewStudent/NewStudent';
@@ -27,8 +28,9 @@ function App() {
         <Container>
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/register" exact component={Register} />
+            <Route path="/auth" exact component={Auth} />
+            {/* <Route path="/login" exact component={Login} />
+            <Route path="/register" exact component={Register} /> */}
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/history" exact component={CourseHistory} />
             <Route path="/add-course" exact component={AddCourse} />
@@ -37,7 +39,7 @@ function App() {
             {/* if you want to pass props to route, render the component */}
             {/* <Route path="/new" render={() => <NewEntry />} /> */}
             {/* <Route path="/new" component={NewEntry} /> */}
-            <Redirect to="/login" />
+            <Redirect to="/auth" />
           </Switch>
         </Container>
       </Router>

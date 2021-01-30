@@ -6,6 +6,8 @@ import Container from 'react-bootstrap/Container';
 import './Navigation.css';
 
 const Navigation = () => {
+  const user = null;
+
   return (
     <Navbar className="nav-color" collapseOnSelect expand="lg" variant="light">
       <Container>
@@ -24,7 +26,11 @@ const Navigation = () => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#logout">Logout</Nav.Link>
+            {user ? (
+              <Nav.Link href="#logout">Logout</Nav.Link>
+            ) : (
+              <Nav.Link href="/auth">Login</Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
