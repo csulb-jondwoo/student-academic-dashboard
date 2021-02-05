@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -7,17 +7,8 @@ import Form from 'react-bootstrap/Form';
 
 import DragAndDrop from '../../utility/components/DragAndDrop';
 
-class NewStudent extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
 
-  render() {
-    const handleClick = (e) => {
-      //redirect to dash
-      console.log(e.target);
-    };
+function NewStudent() {
 
     return (
       <Row className="d-flex mt-5 justify-content-center">
@@ -40,7 +31,7 @@ class NewStudent extends Component {
                 <Form.Group controlId="exampleForm.majorSelect">
                   <Form.Label>Select a Major</Form.Label>
                   <Form.Control as="select" custom>
-                    <option>Biology</option>
+                    <option value="biology">Biology</option>
                     <option>Computer Science</option>
                     <option>Computer Engineering</option>
                     <option>Mathematics</option>
@@ -66,7 +57,6 @@ class NewStudent extends Component {
         </Col>
       </Row>
     );
-  }
 }
 
 export default NewStudent;
