@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -6,8 +6,11 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import Progress from '../../components/Progress/Progress';
+import { myContext } from '../../context/Context';
 
 const StudentInfo = () => {
+  const userObj = useContext(myContext);
+
   const renderTotalGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Total GPA
@@ -20,8 +23,6 @@ const StudentInfo = () => {
     </Tooltip>
   );
 
-  const user = null;
-
   return (
     <>
       {/* student info */}
@@ -31,9 +32,11 @@ const StudentInfo = () => {
             <Card className="d-flex flex-row">
               <Col>
                 <Card.Body>
-                  <Card.Title>{user ? user.studentID : 123456789}</Card.Title>
+                  <Card.Title>
+                    {userObj ? userObj.studentID : 123456789}
+                  </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    {user ? user.email : 'john.smith@student.csulb.edu'}
+                    {userObj ? userObj.email : 'john.smith@student.csulb.edu'}
                   </Card.Subtitle>
                 </Card.Body>
               </Col>
@@ -51,7 +54,7 @@ const StudentInfo = () => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderCurrentGpaTooltip}
                     >
-                      <span>{user ? user.gpa : 3.1}</span>
+                      <span>{userObj ? userObj.gpa : 3.1}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger

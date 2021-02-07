@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,14 +7,14 @@ import Col from 'react-bootstrap/Col';
 // import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // import { Link } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
-import { useDispatch } from 'react-redux';
+// import { GoogleLogin } from 'react-google-login';
+// import { useDispatch } from 'react-redux';
 import { FaGoogle } from 'react-icons/fa';
 
-import './Auth.css';
+import './Login.css';
 
 // import Validator from './Validator';
-// import { signin, signup } from '../../actions/auth';
+// import { googleLogin } from '../../actions/auth';
 
 // const initialValues = {
 //   email: '',
@@ -22,14 +22,16 @@ import './Auth.css';
 //   confirmPassword: '',
 // };
 
-const Auth = () => {
+const Login = () => {
   // const [formData, setFormData] = useState(initialValues);
   // const [rememberMe, setRememberMe] = useState(false);
   // const [isSignUp, setIsSignUp] = useState(false);
-  const history = useHistory();
+  // const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
+  const googleLogin = () => {
+    // dispatch(googleLogin());
+    window.open('http://localhost:5000/auth/google', '_self');
+  };
   // const handleChange = (e, inputPropName) => {
   //   const { name, value } = e.target;
   //   setFormData({
@@ -110,26 +112,26 @@ const Auth = () => {
   //   }
   // };
 
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+  // const googleSuccess = async (res) => {
+  //   const result = res?.profileObj;
+  //   const token = res?.tokenId;
 
-    try {
-      dispatch({ type: 'AUTH', data: { result, token } });
-      history.push('/dashboard');
-    } catch (error) {
-      console.log(error);
-    }
+  //   try {
+  //     dispatch({ type: 'AUTH', data: { result, token } });
+  //     history.push('/dashboard');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const googleFailure = (error) => {
-    console.log(error);
-  };
+  // const googleFailure = (error) => {
+  //   console.log(error);
+  // };
 
   return (
     <Container>
@@ -138,7 +140,14 @@ const Auth = () => {
           <Card className="text-center shadow">
             <Card.Body>
               <Card.Title>Login to Student Academic Dashboard</Card.Title>
-              <GoogleLogin
+              <Button
+                className="mb-3 mt-3"
+                variant="primary"
+                onClick={googleLogin}
+              >
+                <FaGoogle className="mb-1" /> Sign in with Google
+              </Button>
+              {/* <GoogleLogin
                 clientId="274923431758-p0ojivpf6if4q9uvoi7ohqguevopkrus.apps.googleusercontent.com"
                 onSuccess={googleSuccess}
                 onFailure={googleFailure}
@@ -153,7 +162,7 @@ const Auth = () => {
                     <FaGoogle className="mb-1" /> Sign in with Google
                   </Button>
                 )}
-              />
+              /> */}
 
               {/* <Form className="formStyle" onSubmit={handleSubmit}>
                 <Form.Group>
@@ -247,4 +256,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Login;

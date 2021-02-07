@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+import * as api from '../../api';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
 import './Navigation.css';
+import { myContext } from '../../context/Context';
 
 const Navigation = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const userObj = useContext(myContext);
 
   const logout = () => {
-    dispatch({ type: 'LOGOUT' });
-    history.push('/login');
-    setUser(null);
+    api.googleLogout().then((res) => {
+      if (res.data === 'done') {
+        window.location.href = '/login';
+      }
+    });
   };
-
-  useEffect(() => {
-    const token = user?.token;
-
-    //JWT...
-
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [user?.token, location]);
 
   return (
     <Navbar className="nav-color" collapseOnSelect expand="lg" variant="light">
@@ -45,12 +36,10 @@ const Navigation = () => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            {user ? (
-              <Nav.Link onClick={logout} href="#logout">
-                Logout
-              </Nav.Link>
+            {userObj ? (
+              <Nav.Link onClick={logout}>Logout</Nav.Link>
             ) : (
-              <Nav.Link href="/auth">Login</Nav.Link>
+              <Nav.Link href="/login">Login</Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

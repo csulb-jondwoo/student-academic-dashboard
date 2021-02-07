@@ -1,10 +1,10 @@
-import express from 'express';
-
-import { signin, signup } from '../controllers/user.js';
-
+const express = require('express');
 const router = express.Router();
 
-router.post('/signin', signin);
-router.post('/signup', signup);
+const { fetchUser } = require('../controllers/user.js');
 
-export default router;
+// @desc retrieve current user
+// @route GET /user/
+router.get('/', fetchUser);
+
+module.exports = router;
