@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import * as api from '../../api';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
-import './Navigation.css';
+import * as api from '../../api';
 import { myContext } from '../../context/Context';
+
+import './Navigation.css';
 
 const Navigation = () => {
   const userObj = useContext(myContext);
