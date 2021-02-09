@@ -11,6 +11,8 @@ import Button from 'react-bootstrap/Button';
 // import { useDispatch } from 'react-redux';
 import { FaGoogle } from 'react-icons/fa';
 
+import * as api from '../../api';
+
 import './Login.css';
 
 // import Validator from './Validator';
@@ -30,6 +32,7 @@ const Login = () => {
 
   const googleLogin = () => {
     // dispatch(googleLogin());
+    // api.googleLogin(); -- idk why this gets CORS error
     window.open('http://localhost:5000/auth/google', '_self');
   };
   // const handleChange = (e, inputPropName) => {
