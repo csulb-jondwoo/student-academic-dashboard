@@ -56,19 +56,6 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
         </Col>
       </Row>
 
-      <Form.Group controlId="grade">
-        <Form.Label>Grade</Form.Label>
-        <Form.Control as="select">
-          <option>A</option>
-          <option>B</option>
-          <option>C</option>
-          <option>D</option>
-          <option>F</option>
-          <option>CR</option>
-          <option>NC</option>
-        </Form.Control>
-      </Form.Group>
-
       {courseType === 'ge' ? (
         // ge designation
         <Form.Group controlId="designation">
@@ -124,7 +111,19 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
         </Row>
       </Form.Group>
 
-      {isComplete ? null : <CurrentCourseDetailForm />}
+      {isComplete ? 
+      <Form.Group controlId="grade">
+        <Form.Label>Grade</Form.Label>
+        <Form.Control as="select">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+          <option>D</option>
+          <option>F</option>
+          <option>CR</option>
+          <option>NC</option>
+        </Form.Control>
+      </Form.Group> : <CurrentCourseDetailForm />}
 
       <Button className="mt-3" variant="primary" type="submit">
         Submit
