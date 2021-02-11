@@ -13,11 +13,11 @@ import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/Ce
 // MAKE FIELDS REQUIRED
 export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
   const [courseData, setCourseData] = useState({
-    courseNo: null, 
+    courseNo: "", 
     courseTitle: "", 
-    courseUnits: null, 
+    courseUnits: "", 
     courseTerm: "", 
-    courseYear: null, 
+    courseYear: "", 
     designation: "", 
     reqs: "", 
     courseGrade: ""
@@ -44,7 +44,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
   return (
     <>
       <Form>
-        <Form.Group controlId="course">
+        <Form.Group controlId="courseNo">
           <Form.Label>Course Number</Form.Label>
           <Form.Control 
             type="input"
@@ -64,34 +64,46 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="units">
+        <Form.Group controlId="courseUnits">
           <Form.Label>Units</Form.Label>
-          <Form.Control as="select">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <Form.Control 
+            as="select"
+            name="courseUnits"
+            value={courseData.courseUnits}
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </Form.Control>
         </Form.Group>
 
         <Row>
           <Col>
-            <Form.Group controlId="term">
+            <Form.Group controlId="courseTerm">
               <Form.Label>Term</Form.Label>
-              <Form.Control as="select">
-                <option>Fall</option>
-                <option>Spring</option>
-                <option>Summer</option>
-                <option>Winter</option>
+              <Form.Control 
+                as="select"
+                name=""courseTerm
+                value={courseData.courseTerm}
+              >
+                <option value="Fall">Fall</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Winter">Winter</option>
               </Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="term">
+            <Form.Group controlId="courseYear">
               <Form.Label>Year</Form.Label>
-              <Form.Control type="input" />
+              <Form.Control 
+                type="input"
+                name="courseYear"
+                value={courseData.courseYear}
+              />
             </Form.Group>
           </Col>
         </Row>
@@ -133,14 +145,14 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
           </Form.Group>
         ) : null}
 
-        <Form.Group controlId="status">
+        <Form.Group controlId="courseStatus">
           <Form.Label>Status</Form.Label>
           <Row className="">
             <Col className="d-flex justify-content-center">
               <ToggleButtonGroup
                 className="mb-3"
                 type="radio"
-                name="options"
+                name="courseStatus"
                 defaultValue="ge"
                 onChange={handleChange}
               >
