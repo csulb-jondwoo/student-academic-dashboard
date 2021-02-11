@@ -103,6 +103,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
                 type="input"
                 name="courseYear"
                 value={courseData.courseYear}
+                onChange={handleChange}
               />
             </Form.Group>
           </Col>
@@ -137,7 +138,9 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
         {courseType === 'ge' ? (
           <Form.Group controlId="additionalReq">
             <Form.Label>Additional Requirement</Form.Label>
-            <Form.Control as="select">
+            <Form.Control 
+              as="select"
+            >
               <option>N/A</option>
               <option>Global Issues</option>
               <option>Human Diversity</option>
