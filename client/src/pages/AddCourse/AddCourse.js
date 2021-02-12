@@ -47,7 +47,7 @@ const AddCourse = () => {
               <Form>
                 <CourseDetailForm
                   isComplete={isComplete}
-                  handleChange={handleProgressChange}
+                  handleChangeProgress={handleProgressChange}
                   courseType={radioValue}
                 />
               </Form>
