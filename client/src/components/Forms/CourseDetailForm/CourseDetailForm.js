@@ -19,7 +19,8 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
     courseTerm: "", 
     courseYear: "", 
     designation: "", 
-    reqs: "", 
+    additionalReq: "",
+    courseStatus: false,
     courseGrade: ""
   })
 
@@ -86,7 +87,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
               <Form.Label>Term</Form.Label>
               <Form.Control 
                 as="select"
-                name=""courseTerm
+                name="courseTerm"
                 value={courseData.courseTerm}
               >
                 <option value="Fall">Fall</option>
@@ -112,10 +113,14 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
           // ge designation
           <Form.Group controlId="designation">
             <Form.Label>Designation</Form.Label>
-            <Form.Control as="select">
+            <Form.Control 
+              as="select"
+              name="designation"
+              value={courseData.designation}
+            >
               {geReqData.slice(0, 13).map((ge, idx) => {
                 return (
-                  <option key={idx}>
+                  <option value={`${ge.designation} - ${ge.course}`}key={idx}>
                     {ge.designation} - {ge.course}
                   </option>
                 );
@@ -126,9 +131,13 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
           // major category
           <Form.Group controlId="designation">
             <Form.Label>Designation</Form.Label>
-            <Form.Control as="select">
+            <Form.Control 
+              as="select"
+              name="designation"
+              value={courseData.designation}
+            >
               {majorReqCategory.map((category, idx) => {
-                return <option key={idx}>{category}</option>;
+                return <option value={category} key={idx}>{category}</option>;
               })}
             </Form.Control>
           </Form.Group>
@@ -137,10 +146,14 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
         {courseType === 'ge' ? (
           <Form.Group controlId="additionalReq">
             <Form.Label>Additional Requirement</Form.Label>
-            <Form.Control as="select">
-              <option>N/A</option>
-              <option>Global Issues</option>
-              <option>Human Diversity</option>
+            <Form.Control 
+              as="select"
+              name="additionalReq"
+              value={courseData.additionalReq}
+            >
+              <option value="N/A">N/A</option>
+              <option value="Global Issues">Global Issues</option>
+              <option value="Human Diversity">Human Diversity</option>
             </Form.Control>
           </Form.Group>
         ) : null}
@@ -153,7 +166,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
                 className="mb-3"
                 type="radio"
                 name="courseStatus"
-                defaultValue="ge"
+                
                 onChange={handleChange}
               >
                 <ToggleButton value={true}>Complete</ToggleButton>
@@ -164,16 +177,20 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
         </Form.Group>
 
         {isComplete ? 
-        <Form.Group controlId="grade">
+        <Form.Group controlId="courseGrade">
           <Form.Label>Grade</Form.Label>
-          <Form.Control as="select">
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-            <option>D</option>
-            <option>F</option>
-            <option>CR</option>
-            <option>NC</option>
+          <Form.Control 
+            as="select"
+            name="courseGrade"
+            value={courseData.courseGrade}
+          >
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+            <option value="CR">CR</option>
+            <option value="NC">NC</option>
           </Form.Control>
         </Form.Group> : <CurrentCourseDetailForm />}
 
