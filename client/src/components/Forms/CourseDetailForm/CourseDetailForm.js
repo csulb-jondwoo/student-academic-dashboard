@@ -11,7 +11,7 @@ import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
 
 // MAKE FIELDS REQUIRED
-export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
+export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType }) => {
   const [courseData, setCourseData] = useState({
     courseNo: "", 
     courseTitle: "", 
@@ -25,14 +25,14 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
   })
 
   /*
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setCourseData(prevData => )
   }
   */
   
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const {name, value} = event.target
     setCourseData(prevData => {
       return {
@@ -71,6 +71,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
             as="select"
             name="courseUnits"
             value={courseData.courseUnits}
+            onChange={handleChange}
           >
             <option value="0">0</option>
             <option value="1">1</option>
@@ -89,6 +90,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
                 as="select"
                 name="courseTerm"
                 value={courseData.courseTerm}
+                onChange={handleChange}
               >
                 <option value="Fall">Fall</option>
                 <option value="Spring">Spring</option>
@@ -104,6 +106,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
                 type="input"
                 name="courseYear"
                 value={courseData.courseYear}
+                onChange={handleChange}
               />
             </Form.Group>
           </Col>
@@ -117,6 +120,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
               as="select"
               name="designation"
               value={courseData.designation}
+              onChange={handleChange}
             >
               {geReqData.slice(0, 13).map((ge, idx) => {
                 return (
@@ -135,6 +139,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
               as="select"
               name="designation"
               value={courseData.designation}
+              onChange={handleChange}
             >
               {majorReqCategory.map((category, idx) => {
                 return <option value={category} key={idx}>{category}</option>;
@@ -150,6 +155,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
               as="select"
               name="additionalReq"
               value={courseData.additionalReq}
+              onChange={handleChange}
             >
               <option value="N/A">N/A</option>
               <option value="Global Issues">Global Issues</option>
@@ -158,16 +164,15 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
           </Form.Group>
         ) : null}
 
-        <Form.Group controlId="courseStatus">
+        <Form.Group controlId="courseProgress">
           <Form.Label>Status</Form.Label>
           <Row className="">
             <Col className="d-flex justify-content-center">
               <ToggleButtonGroup
                 className="mb-3"
                 type="radio"
-                name="courseStatus"
-                
-                onChange={handleChange}
+                name="courseProgress"
+                onChange={handleProgressChange}
               >
                 <ToggleButton value={true}>Complete</ToggleButton>
                 <ToggleButton value={false}>In-Progress</ToggleButton>
@@ -183,6 +188,7 @@ export const CourseDetailForm = ({ isComplete, handleChange, courseType }) => {
             as="select"
             name="courseGrade"
             value={courseData.courseGrade}
+            onChange={handleChange}
           >
             <option value="A">A</option>
             <option value="B">B</option>
