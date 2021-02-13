@@ -1,3 +1,5 @@
+/*global process*/
+
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const User = require('../models/user');
@@ -34,8 +36,8 @@ module.exports = (passport) => {
         });
 
         console.log(profile);
-      },
-    ),
+      }
+    )
   );
 
   passport.serializeUser((user, done) => {

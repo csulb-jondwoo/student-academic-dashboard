@@ -1,3 +1,5 @@
+/*global __dirname, process*/
+
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
