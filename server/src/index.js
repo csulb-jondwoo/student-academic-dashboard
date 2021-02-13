@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -8,7 +9,7 @@ const passport = require('passport');
 const authRoutes = require('../routes/auth.js');
 const userRoutes = require('../routes/user.js');
 
-dotenv.config({ path: './config/.env' });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 require('../config/passport')(passport);
 
 const app = express();
@@ -22,7 +23,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() =>
-    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)),
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
   .catch((error) => console.log(error.message));
 
@@ -34,7 +35,7 @@ app.use(
     secret: 'secretcode',
     resave: true,
     saveUninitialized: true,
-  }),
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
