@@ -1,5 +1,5 @@
 import { AUTH } from '../utility/components/constants/actionTypes';
-import * as api from '../api/index.js';
+import * as api from '../api';
 
 // ACTION CREATORS
 // -- async action creators must use thunk
@@ -30,5 +30,7 @@ export const login = () => async (dispatch) => {
     const { data } = await api.googleLogin();
     console.log(data);
     // dispatch({ type: AUTH, data });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
