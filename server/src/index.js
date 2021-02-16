@@ -11,6 +11,9 @@ const passport = require('passport');
 const authRoutes = require('../routes/auth.js');
 const userRoutes = require('../routes/user.js');
 
+// Ryan
+// const addRoutes = require("../routes/courses.js");
+
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 require('../config/passport')(passport);
 
@@ -44,3 +47,5 @@ app.use(passport.session());
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+// Ryan
+// app.use('/add', addRoutes)
