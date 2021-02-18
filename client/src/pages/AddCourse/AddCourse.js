@@ -12,15 +12,48 @@ import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDeta
 const AddCourse = () => {
   const [radioValue, setRadioValue] = useState('ge');
   const [isComplete, setIsComplete] = useState(true);
-
+  const [courseData, setCourseData] = useState({
+    courseType: radioValue,
+    courseNo: "", 
+    courseTitle: "", 
+    courseUnits: "", 
+    courseTerm: "", 
+    courseYear: "", 
+    designation: "", 
+    additionalReq: "",
+    courseStatus: isComplete,
+    courseGrade: ""
+  })
+  
   const handleCourseChange = (value) => {
     setRadioValue(value);
+    setCourseData(prevData => {
+      return {
+        ...prevData,
+        courseType: radioValue
+      }
+    })
   };
 
   const handleProgressChange = (value) => {
-    console.log(value);
     setIsComplete(value);
+    setCourseData(prevData => {
+      return {
+        ...prevData,
+        courseStatus: isComplete
+      }
+    })
   };
+
+  const handleChange = (event) => {
+    const {name, value} = event.target
+    setCourseData(prevData => {
+      return {
+        ...prevData,
+        [name]: value
+      }
+    })
+  }
 
   return (
     <Container>
@@ -47,8 +80,10 @@ const AddCourse = () => {
               <Form>
                 <CourseDetailForm
                   isComplete={isComplete}
-                  handleChangeProgress={handleProgressChange}
-                  courseType={radioValue}
+                  radioValue={radioValue}
+                  handleProgressChange={handleProgressChange}
+                  handleChange={handleChange}
+                  courseData={courseData}
                 />
               </Form>
             </Card.Body>
