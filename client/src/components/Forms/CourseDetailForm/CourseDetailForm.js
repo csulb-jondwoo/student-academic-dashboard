@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ToggleButton from 'react-bootstrap/ToggleButton';
@@ -15,12 +14,10 @@ export const CourseDetailForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(props.courseData)
   }
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="courseNo">
           <Form.Label>Course Number</Form.Label>
           <Form.Control 
@@ -174,12 +171,18 @@ export const CourseDetailForm = (props) => {
             <option value="CR">CR</option>
             <option value="NC">NC</option>
           </Form.Control>
-        </Form.Group> : <CurrentCourseDetailForm />}
-
-        <Button className="mt-3" variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+        </Form.Group> : 
+        <CurrentCourseDetailForm 
+          handleChange={props.handleChange}
+          handleStartTimeChange={props.handleStartTimeChange}
+          handleEndTimeChange={props.handleEndTimeChange}
+          handleDayChange={props.handleDayChange}
+          courseSection={props.courseData.courseSection}
+          courseStartTime={props.courseData.courseStartTime}
+          courseEndTime={props.courseData.courseEndTime}
+          courseDays={props.courseData.courseDays}
+          courseLocation={props.courseData.courseLocation}
+        />}
     </>
   );
 };

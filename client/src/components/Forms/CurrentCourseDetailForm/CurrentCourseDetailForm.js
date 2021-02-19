@@ -7,47 +7,40 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import TimePicker from 'react-bootstrap-time-picker';
 import Container from 'react-bootstrap/esm/Container';
 
-const CurrentCourseDetailForm = () => {
-  const [startTimeValue, setStartTimeValue] = useState({ time: 0 });
-  const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
-  const [dayValue, setDayValue] = useState([]);
-
-  const handleStartTimeChange = (time) => {
-    setStartTimeValue(time);
-  };
-
-  const handleEndTimeChange = (time) => {
-    setEndTimeValue(time);
-  };
-
-  const handleDayChange = (val) => {
-    setDayValue(val);
-  };
+const CurrentCourseDetailForm = (props) => {
 
   return (
     <>
       <Form.Group controlId="section">
         <Form.Label>Section</Form.Label>
-        <Form.Control type="input" />
+        <Form.Control 
+          type="input"
+          name="courseSection"
+          value={props.courseSection}
+          onChange={props.handleChange}
+        />
       </Form.Group>
+      
       <Form.Group controlId="startTime">
         <Form.Label>Start Time</Form.Label>
-
         <TimePicker
-          onChange={handleStartTimeChange}
-          value={startTimeValue}
+          onChange={props.handleStartTimeChange}
+          name="courseStartTime"
+          value={props.courseStartTime}
           step={5}
         />
       </Form.Group>
+
       <Form.Group controlId="endTime">
         <Form.Label>End Time</Form.Label>
-
         <TimePicker
-          onChange={handleEndTimeChange}
-          value={endTimeValue}
+          onChange={props.handleEndTimeChange}
+          name="courseEndTime"
+          value={props.courseEndTime}
           step={5}
         />
       </Form.Group>
+
       <Form.Group controlId="day">
         <Row>
           <Col className="d-flex flex-column">
@@ -55,8 +48,9 @@ const CurrentCourseDetailForm = () => {
             <Container>
               <ToggleButtonGroup
                 type="checkbox"
-                value={dayValue}
-                onChange={handleDayChange}
+                name="courseDays"
+                value={props.courseDays}
+                onChange={props.handleDayChange}
               >
                 <ToggleButton value={1}>M</ToggleButton>
                 <ToggleButton value={2}>T</ToggleButton>
@@ -69,9 +63,15 @@ const CurrentCourseDetailForm = () => {
           </Col>
         </Row>
       </Form.Group>
+
       <Form.Group controlId="location">
         <Form.Label>Location</Form.Label>
-        <Form.Control type="input" />
+        <Form.Control 
+          type="input"
+          name="courseLocation"
+          value={props.courseLocation}
+          onChange={props.handleChange}
+        />
       </Form.Group>
     </>
   );
