@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ToggleButton from 'react-bootstrap/ToggleButton';
@@ -11,47 +10,21 @@ import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
 
 // MAKE FIELDS REQUIRED
-export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType }) => {
-  const [courseData, setCourseData] = useState({
-    courseNo: "", 
-    courseTitle: "", 
-    courseUnits: "", 
-    courseTerm: "", 
-    courseYear: "", 
-    designation: "", 
-    additionalReq: "",
-    courseStatus: false,
-    courseGrade: ""
-  })
+export const CourseDetailForm = (props) => {
 
-  /*
   const handleSubmit = (e) => {
     e.preventDefault()
-    setCourseData(prevData => )
   }
-  */
-  
 
-  const handleChange = (event) => {
-    const {name, value} = event.target
-    setCourseData(prevData => {
-      return {
-        ...prevData,
-        [name]: value
-      }
-    })
-  }
-  
   return (
     <>
-      <Form>
         <Form.Group controlId="courseNo">
           <Form.Label>Course Number</Form.Label>
           <Form.Control 
             type="input"
             name="courseNo"
-            value={courseData.courseNo}
-            onChange={handleChange}
+            value={props.courseData.courseNo}
+            onChange={props.handleChange}
           />
         </Form.Group>
 
@@ -60,8 +33,8 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
           <Form.Control 
             type="input"
             name="courseTitle"
-            value={courseData.courseTitle}
-            onChange={handleChange}
+            value={props.courseData.courseTitle}
+            onChange={props.handleChange}
           />
         </Form.Group>
 
@@ -70,8 +43,8 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
           <Form.Control 
             as="select"
             name="courseUnits"
-            value={courseData.courseUnits}
-            onChange={handleChange}
+            value={props.courseData.courseUnits}
+            onChange={props.handleChange}
           >
             <option value="0">0</option>
             <option value="1">1</option>
@@ -89,8 +62,8 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
               <Form.Control 
                 as="select"
                 name="courseTerm"
-                value={courseData.courseTerm}
-                onChange={handleChange}
+                value={props.courseData.courseTerm}
+                onChange={props.handleChange}
               >
                 <option value="Fall">Fall</option>
                 <option value="Spring">Spring</option>
@@ -105,22 +78,22 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
               <Form.Control 
                 type="input"
                 name="courseYear"
-                value={courseData.courseYear}
-                onChange={handleChange}
+                value={props.courseData.courseYear}
+                onChange={props.handleChange}
               />
             </Form.Group>
           </Col>
         </Row>
 
-        {courseType === 'ge' ? (
+        {props.radioValue === 'ge' ? (
           // ge designation
           <Form.Group controlId="designation">
             <Form.Label>Designation</Form.Label>
             <Form.Control 
               as="select"
               name="designation"
-              value={courseData.designation}
-              onChange={handleChange}
+              value={props.courseData.designation}
+              onChange={props.handleChange}
             >
               {geReqData.slice(0, 13).map((ge, idx) => {
                 return (
@@ -132,14 +105,14 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
             </Form.Control>
           </Form.Group>
         ) : (
-          // major category
+          // major designation
           <Form.Group controlId="designation">
             <Form.Label>Designation</Form.Label>
             <Form.Control 
               as="select"
               name="designation"
-              value={courseData.designation}
-              onChange={handleChange}
+              value={props.courseData.designation}
+              onChange={props.handleChange}
             >
               {majorReqCategory.map((category, idx) => {
                 return <option value={category} key={idx}>{category}</option>;
@@ -148,14 +121,14 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
           </Form.Group>
         )}
 
-        {courseType === 'ge' ? (
+        {props.radioValue === 'ge' ? (
           <Form.Group controlId="additionalReq">
             <Form.Label>Additional Requirement</Form.Label>
             <Form.Control 
               as="select"
               name="additionalReq"
-              value={courseData.additionalReq}
-              onChange={handleChange}
+              value={props.courseData.additionalReq}
+              onChange={props.handleChange}
             >
               <option value="N/A">N/A</option>
               <option value="Global Issues">Global Issues</option>
@@ -164,15 +137,15 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
           </Form.Group>
         ) : null}
 
-        <Form.Group controlId="courseProgress">
+        <Form.Group controlId="courseStatus">
           <Form.Label>Status</Form.Label>
           <Row className="">
             <Col className="d-flex justify-content-center">
               <ToggleButtonGroup
                 className="mb-3"
                 type="radio"
-                name="courseProgress"
-                onChange={handleProgressChange}
+                name="courseStatus"
+                onChange={props.handleProgressChange}
               >
                 <ToggleButton value={true}>Complete</ToggleButton>
                 <ToggleButton value={false}>In-Progress</ToggleButton>
@@ -181,14 +154,14 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
           </Row>
         </Form.Group>
 
-        {isComplete ? 
+        {props.isComplete ? 
         <Form.Group controlId="courseGrade">
           <Form.Label>Grade</Form.Label>
           <Form.Control 
             as="select"
             name="courseGrade"
-            value={courseData.courseGrade}
-            onChange={handleChange}
+            value={props.courseData.courseGrade}
+            onChange={props.handleChange}
           >
             <option value="A">A</option>
             <option value="B">B</option>
@@ -198,12 +171,18 @@ export const CourseDetailForm = ({ isComplete, handleProgressChange, courseType 
             <option value="CR">CR</option>
             <option value="NC">NC</option>
           </Form.Control>
-        </Form.Group> : <CurrentCourseDetailForm />}
-
-        <Button className="mt-3" variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+        </Form.Group> : 
+        <CurrentCourseDetailForm 
+          handleChange={props.handleChange}
+          handleStartTimeChange={props.handleStartTimeChange}
+          handleEndTimeChange={props.handleEndTimeChange}
+          handleDayChange={props.handleDayChange}
+          courseSection={props.courseData.courseSection}
+          courseStartTime={props.courseData.courseStartTime}
+          courseEndTime={props.courseData.courseEndTime}
+          courseDays={props.courseData.courseDays}
+          courseLocation={props.courseData.courseLocation}
+        />}
     </>
   );
 };
