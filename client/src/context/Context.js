@@ -8,7 +8,7 @@ export default function Context(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/user/', { withCredentials: true })
+      .get('http://localhost:5000/user', { withCredentials: true })
       .then((res) => {
         if (res.data) {
           setUserObj(res.data);

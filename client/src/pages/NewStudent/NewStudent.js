@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
-import DragAndDrop from '../../utility/components/DragAndDrop';
+import DragAndDrop from '../../utility/DragAndDrop';
 
 function NewStudent() {
   return (

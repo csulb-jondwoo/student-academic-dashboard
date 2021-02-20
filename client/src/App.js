@@ -14,12 +14,14 @@ import CourseHistory from './pages/CourseHistory/CourseHistory';
 import AddCourse from './pages/AddCourse/AddCourse';
 import NewStudent from './pages/NewStudent/NewStudent';
 import Roadmap from './pages/Roadmap/Roadmap';
+import PrivateRoute from './utility/components/PrivateRoute';
 import { myContext } from './context/Context';
 
 import './App.css';
 
-function App() {
+const App = () => {
   const userObj = useContext(myContext);
+  console.log(userObj);
 
   return (
     <>
@@ -27,22 +29,24 @@ function App() {
         <Navigation />
         <Container>
           <Switch>
-            <Route path="/dashboard" exact component={Dashboard} />
-            {userObj ? (
-              <Redirect to="/dashboard" />
-            ) : (
-              <Route path="/login" component={Login} />
-            )}
-            <Route path="/history" exact component={CourseHistory} />
-            <Route path="/add-course" exact component={AddCourse} />
-            <Route path="/new-student" exact component={NewStudent} />
-            <Route path="/roadmap" exact component={Roadmap} />
-            {userObj ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+            <Route path="/login" component={Login} />
+            <Route path="/new-student" component={NewStudent} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/roadmap" component={Roadmap} />
+            <Route path="/add-course" component={AddCourse} />
+            <Route path="/history" component={CourseHistory} />
+            <Route path="/new-student" component={NewStudent} />
+            <Redirect to="/login" />
+
+            {/* <PrivateRoute path="/dashboard" component={Dashboard} /> */}
+            {/* <PrivateRoute path="/roadmap" component={Roadmap} /> */}
+            {/* <PrivateRoute path="/add-course" component={AddCourse} /> */}
+            {/* <PrivateRoute path="/course-history" component={Dashboard} /> */}
           </Switch>
         </Container>
       </Router>
     </>
   );
-}
+};
 
 export default App;

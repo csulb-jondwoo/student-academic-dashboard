@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+import { useHistory } from 'react-router-dom';
 
 import * as api from '../../api';
 import { myContext } from '../../context/Context';
@@ -10,11 +11,12 @@ import './Navigation.css';
 
 const Navigation = () => {
   const userObj = useContext(myContext);
+  const history = useHistory();
 
-  const logout = () => {
-    api.googleLogout().then((res) => {
+  const handleLogout = async () => {
+    await api.googleLogout().then((res) => {
       if (res.data === 'done') {
-        window.location.href = '/login';
+        history.push('/login');
       }
     });
   };
@@ -38,7 +40,7 @@ const Navigation = () => {
           </Nav>
           <Nav>
             {userObj ? (
-              <Nav.Link onClick={logout}>Logout</Nav.Link>
+              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login">Login</Nav.Link>
             )}
