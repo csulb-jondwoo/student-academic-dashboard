@@ -11,12 +11,12 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/auth',
+    failureRedirect: 'http://localhost:3000/login',
   }),
   (req, res) => {
-    // Successful authentication, redirect home.
+    // Successful authentication
     res.redirect('http://localhost:3000/dashboard');
-  },
+  }
 );
 
 // @desc log current user out

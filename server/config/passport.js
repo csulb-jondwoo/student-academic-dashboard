@@ -1,7 +1,6 @@
 /*global process*/
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
 const User = require('../models/user');
 
 module.exports = (passport) => {
@@ -12,30 +11,29 @@ module.exports = (passport) => {
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL,
       },
-      (accessToken, refreshToken, profile, cb) => {
+      (accessToken, refreshToken, profile, done) => {
         // Successful authentication
 
         // check if user exists
         User.findOne({ googleId: profile.id }, async (err, doc) => {
           if (err) {
-            return cb(err, null);
+            return done(err, null);
           }
 
           if (!doc) {
-            // if none, create one
+            // if no user, create one
             const newUser = new User({
               googleId: profile.id,
               name: profile.name.givenName,
             });
-
             // Insert into database
             await newUser.save();
-            cb(null, newUser);
+            done(null, newUser);
           }
-          cb(null, doc);
-        });
 
-        console.log(profile);
+          // user already exists in db
+          done(null, doc);
+        });
       }
     )
   );
@@ -45,7 +43,7 @@ module.exports = (passport) => {
   });
 
   passport.deserializeUser((id, done) => {
-    User.findById(id, (err, doc) => {
+    User.findById(id, async (err, doc) => {
       // Whatever we return goes to the client
       return done(null, doc);
     });
