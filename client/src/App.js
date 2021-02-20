@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import {
   BrowserRouter as Router,
@@ -21,7 +21,14 @@ import './App.css';
 
 const App = () => {
   const userObj = useContext(myContext);
+  const [isAuth, setIsAuth] = useState(false);
   console.log(userObj);
+
+  useEffect(() => {
+    if (userObj) {
+      setIsAuth(true);
+    }
+  }, [userObj]);
 
   return (
     <>
@@ -30,18 +37,25 @@ const App = () => {
         <Container>
           <Switch>
             <Route path="/login" component={Login} />
-            <Route path="/new-student" component={NewStudent} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/roadmap" component={Roadmap} />
-            <Route path="/add-course" component={AddCourse} />
-            <Route path="/history" component={CourseHistory} />
-            <Route path="/new-student" component={NewStudent} />
-            <Redirect to="/login" />
 
-            {/* <PrivateRoute path="/dashboard" component={Dashboard} /> */}
-            {/* <PrivateRoute path="/roadmap" component={Roadmap} /> */}
-            {/* <PrivateRoute path="/add-course" component={AddCourse} /> */}
-            {/* <PrivateRoute path="/course-history" component={Dashboard} /> */}
+            <PrivateRoute
+              path="/dashboard"
+              component={Dashboard}
+              isAuth={isAuth}
+            />
+            <PrivateRoute path="/roadmap" component={Roadmap} isAuth={isAuth} />
+            <PrivateRoute
+              path="/add-course"
+              component={AddCourse}
+              isAuth={isAuth}
+            />
+            <PrivateRoute
+              path="/history"
+              component={CourseHistory}
+              isAuth={isAuth}
+            />
+            {/* <Route path="/new-student" component={NewStudent} /> */}
+            <Redirect to="/login" />
           </Switch>
         </Container>
       </Router>
