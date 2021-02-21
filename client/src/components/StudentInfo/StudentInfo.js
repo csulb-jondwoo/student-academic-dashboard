@@ -33,10 +33,12 @@ const StudentInfo = () => {
               <Col>
                 <Card.Body>
                   <Card.Title>
-                    {isAuth ? isAuth.studentID : 123456789}
+                    {isAuth ? 'authenticated id' : 123456789}
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    {isAuth ? isAuth.email : 'john.smith@student.csulb.edu'}
+                    {isAuth
+                      ? 'authenticated email'
+                      : 'john.smith@student.csulb.edu'}
                   </Card.Subtitle>
                 </Card.Body>
               </Col>
@@ -54,7 +56,7 @@ const StudentInfo = () => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderCurrentGpaTooltip}
                     >
-                      <span>{isAuth ? isAuth.gpa : 3.1}</span>
+                      <span>{isAuth ? 'authenticated gpa' : 3.1}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger

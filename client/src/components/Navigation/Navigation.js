@@ -5,18 +5,17 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 
 import * as api from '../../api';
-import { myContext } from '../../context/Context';
+// import { myContext } from '../../context/Context';
 
 import './Navigation.css';
 
-const Navigation = () => {
-  const { isAuth, setIsAuth } = useContext(myContext);
+const Navigation = ({ user, clearUser }) => {
   const history = useHistory();
 
   const handleLogout = async () => {
     await api.googleLogout().then((res) => {
       if (res.data === 'done') {
-        setIsAuth(false);
+        clearUser();
         history.push('/login');
       }
     });
@@ -40,7 +39,7 @@ const Navigation = () => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            {isAuth ? (
+            {user ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login">Login</Nav.Link>

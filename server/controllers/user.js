@@ -1,4 +1,4 @@
-async function fetchUser(req, res) {
+function fetchUser(req, res) {
   res.send(req.user);
 }
 

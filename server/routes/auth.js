@@ -22,10 +22,8 @@ router.get(
 // @desc log current user out
 // @route GET /auth/logout
 router.get('/logout', (req, res) => {
-  if (req.user) {
-    req.logout();
-    res.send('done');
-  }
+  req.logout();
+  res.send('done');
 });
 
 module.exports = router;

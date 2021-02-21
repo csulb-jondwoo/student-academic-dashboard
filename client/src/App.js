@@ -1,54 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import Login from './pages/Login/Login';
 import Navigation from './components/Navigation/Navigation';
-import Dashboard from './pages/Dashboard/Dashboard';
-import CourseHistory from './pages/CourseHistory/CourseHistory';
-import AddCourse from './pages/AddCourse/AddCourse';
-import NewStudent from './pages/NewStudent/NewStudent';
-import Roadmap from './pages/Roadmap/Roadmap';
-import PrivateRoute from './utility/components/PrivateRoute';
 import { myContext } from './context/Context';
+import AppRoutes from './components/AppRoutes/AppRoutes';
 
 import './App.css';
 
 const App = () => {
-  const { isAuth } = useContext(myContext);
-  console.log(isAuth);
-
+  const { auth, clearAuth } = useContext(myContext);
   return (
     <>
       <Router>
-        <Navigation />
+        <Navigation isLoggedIn={auth.isLoggedIn} clearAuth={clearAuth} />
         <Container>
           <Switch>
-            <Route path="/login" component={Login} />
-
-            <PrivateRoute
-              path="/dashboard"
-              component={Dashboard}
-              isAuth={isAuth}
-            />
-            <PrivateRoute path="/roadmap" component={Roadmap} isAuth={isAuth} />
-            <PrivateRoute
-              path="/add-course"
-              component={AddCourse}
-              isAuth={isAuth}
-            />
-            <PrivateRoute
-              path="/history"
-              component={CourseHistory}
-              isAuth={isAuth}
-            />
-            {/* <Route path="/new-student" component={NewStudent} /> */}
-            <Redirect to="/login" />
+            <AppRoutes />
           </Switch>
         </Container>
       </Router>
