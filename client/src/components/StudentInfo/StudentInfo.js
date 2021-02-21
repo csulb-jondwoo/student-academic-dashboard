@@ -9,7 +9,7 @@ import Progress from '../../components/Progress/Progress';
 import { myContext } from '../../context/Context';
 
 const StudentInfo = () => {
-  const userObj = useContext(myContext);
+  const isAuth = useContext(myContext);
 
   const renderTotalGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -33,10 +33,10 @@ const StudentInfo = () => {
               <Col>
                 <Card.Body>
                   <Card.Title>
-                    {userObj ? userObj.studentID : 123456789}
+                    {isAuth ? isAuth.studentID : 123456789}
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    {userObj ? userObj.email : 'john.smith@student.csulb.edu'}
+                    {isAuth ? isAuth.email : 'john.smith@student.csulb.edu'}
                   </Card.Subtitle>
                 </Card.Body>
               </Col>
@@ -54,7 +54,7 @@ const StudentInfo = () => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderCurrentGpaTooltip}
                     >
-                      <span>{userObj ? userObj.gpa : 3.1}</span>
+                      <span>{isAuth ? isAuth.gpa : 3.1}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger

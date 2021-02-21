@@ -5,6 +5,7 @@ export const myContext = createContext({});
 
 export default function Context(props) {
   const [userObj, setUserObj] = useState();
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     axios
@@ -16,7 +17,17 @@ export default function Context(props) {
       });
   }, []);
 
+  useEffect(() => {
+    if (userObj) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, [userObj]);
+
   return (
-    <myContext.Provider value={userObj}>{props.children}</myContext.Provider>
+    <myContext.Provider value={{ isAuth, setIsAuth }}>
+      {props.children}
+    </myContext.Provider>
   );
 }

@@ -20,15 +20,8 @@ import { myContext } from './context/Context';
 import './App.css';
 
 const App = () => {
-  const userObj = useContext(myContext);
-  const [isAuth, setIsAuth] = useState(false);
-  console.log(userObj);
-
-  useEffect(() => {
-    if (userObj) {
-      setIsAuth(true);
-    }
-  }, [userObj]);
+  const { isAuth } = useContext(myContext);
+  console.log(isAuth);
 
   return (
     <>

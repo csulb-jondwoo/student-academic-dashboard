@@ -10,12 +10,13 @@ import { myContext } from '../../context/Context';
 import './Navigation.css';
 
 const Navigation = () => {
-  const userObj = useContext(myContext);
+  const { isAuth, setIsAuth } = useContext(myContext);
   const history = useHistory();
 
   const handleLogout = async () => {
     await api.googleLogout().then((res) => {
       if (res.data === 'done') {
+        setIsAuth(false);
         history.push('/login');
       }
     });
@@ -39,7 +40,7 @@ const Navigation = () => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            {userObj ? (
+            {isAuth ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login">Login</Nav.Link>
