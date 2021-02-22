@@ -28,6 +28,7 @@ const AppRoutes = () => {
         user={user}
         component={AddCourse}
       />
+
       {user ? (
         <Redirect from="/login" to="/dashboard" />
       ) : (

@@ -16,7 +16,7 @@ router.get(
   (req, res) => {
     // Successful authentication
 
-    res.redirect('http://localhost:3000/');
+    res.redirect('http://localhost:3000/dashboard');
   }
 );
 
