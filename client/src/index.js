@@ -9,9 +9,9 @@ import Context from './context/Context';
 
 ReactDOM.render(
   <>
-    {/* <Context> */}
-    <App />
-    {/* </Context> */}
+    <Context>
+      <App />
+    </Context>
   </>,
   document.getElementById('root')
 );

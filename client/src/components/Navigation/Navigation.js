@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
 import './Navigation.css';
+import { myContext } from '../../context/Context';
 
-const Navigation = ({ user, handleLogout }) => {
+const Navigation = () => {
+  const { user, handleLogout } = useContext(myContext);
+
   return (
     <Navbar className="nav-color" collapseOnSelect expand="lg" variant="light">
       <Container>

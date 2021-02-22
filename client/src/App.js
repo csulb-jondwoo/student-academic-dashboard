@@ -1,37 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Navigation from './components/Navigation/Navigation';
 import AppRoutes from './components/AppRoutes/AppRoutes';
 import * as api from './api';
-
-import './App.css';
 import { myContext } from './context/Context';
 
+import './App.css';
+
 const App = () => {
-  const user = localStorage.getItem('user');
+  // const user = useContext(myContext);
 
-  const handleLogout = async () => {
-    await api.googleLogout().then((res) => {
-      if (res.data === 'done') {
-        localStorage.clear();
-        window.location.href = 'http://localhost:3000/login';
-      }
-    });
-  };
+  // const handleLogout = () => {
+  //   api.googleLogout().then((res) => {
+  //     if (res.data === 'done') {
+  //       localStorage.clear();
+  //       window.location.href = 'http://localhost:3000/login';
+  //     }
+  //   });
+  // };
 
-  const handleLogin = async () => {
-    window.location.href = 'http://localhost:5000/auth/google';
-    // window.open('http://localhost:5000/auth/google', '_self');
-  };
+  // const handleLogin = () => {
+  //   window.location.href = 'http://localhost:5000/auth/google';
+  // };
 
   return (
     <>
       <Router>
-        <Navigation user={user} handleLogout={handleLogout} />
+        <Navigation />
         <Container>
-          <AppRoutes user={user} handleLogin={handleLogin} />
+          <AppRoutes />
         </Container>
       </Router>
     </>

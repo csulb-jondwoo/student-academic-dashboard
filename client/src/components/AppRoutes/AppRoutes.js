@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Login from '../../pages/Login/Login';
@@ -7,8 +7,11 @@ import CourseHistory from '../../pages/CourseHistory/CourseHistory';
 import AddCourse from '../../pages/AddCourse/AddCourse';
 import Roadmap from '../../pages/Roadmap/Roadmap';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import { myContext } from '../../context/Context';
 
-const AppRoutes = ({ user, handleLogin }) => {
+const AppRoutes = () => {
+  const { user, handleLogin } = useContext(myContext);
+
   return (
     <Switch>
       <PrivateRoute exact path="/dashboard" user={user} component={Dashboard} />
