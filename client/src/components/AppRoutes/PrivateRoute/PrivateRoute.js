@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
+  console.log(isLoggedIn);
+
   return (
     <Route
       {...rest}
@@ -10,7 +12,8 @@ const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
           <Component {...props} />
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
+            // to={{ pathname: '/login', state: { from: props.location } }}
+            to="/login"
           />
         )
       }
@@ -20,4 +23,4 @@ const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
 
 export default PrivateRoute;
 
-// TODO: fix redirect when unauth users access auth routes
+// TODO: components not rendering

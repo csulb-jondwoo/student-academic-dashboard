@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Navigation from './components/Navigation/Navigation';
 import { myContext } from './context/Context';
@@ -15,9 +15,7 @@ const App = () => {
       <Router>
         <Navigation isLoggedIn={auth.isLoggedIn} clearAuth={clearAuth} />
         <Container>
-          <Switch>
-            <AppRoutes />
-          </Switch>
+          <AppRoutes />
         </Container>
       </Router>
     </>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Login from '../../pages/Login/Login';
 import Dashboard from '../../pages/Dashboard/Dashboard';
@@ -13,8 +13,8 @@ const AppRoutes = () => {
   const { auth } = useContext(myContext);
 
   return (
-    <>
-      <Route exact path="/login" comp={Login} />
+    <Switch>
+      <Route exact path="/login" component={Login} />
 
       <PrivateRoute
         exact
@@ -40,7 +40,7 @@ const AppRoutes = () => {
         isLoggedIn={auth.isLoggedIn}
         component={AddCourse}
       />
-    </>
+    </Switch>
   );
 };
 
