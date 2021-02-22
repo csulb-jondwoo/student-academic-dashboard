@@ -28,20 +28,12 @@ const AppRoutes = () => {
         user={user}
         component={AddCourse}
       />
-      <Route exact path="/login">
-        <Login handleLogin={handleLogin} />
-      </Route>
-
-      {user ? (
-        <Redirect from="/" to="/dashboard" />
-      ) : (
-        <Redirect from="/" to="/login" />
-      )}
-
       {user ? (
         <Redirect from="/login" to="/dashboard" />
       ) : (
-        <Redirect to="/login" />
+        <Route exact path="/login">
+          <Login handleLogin={handleLogin} />
+        </Route>
       )}
     </Switch>
   );
