@@ -1,21 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 
 import * as api from '../../api';
-// import { myContext } from '../../context/Context';
 
 import './Navigation.css';
 
-const Navigation = ({ user, clearUser }) => {
+const Navigation = ({ isLoggedIn, clearAuth }) => {
   const history = useHistory();
 
   const handleLogout = async () => {
     await api.googleLogout().then((res) => {
       if (res.data === 'done') {
-        clearUser();
+        clearAuth();
         history.push('/login');
       }
     });
@@ -39,7 +38,7 @@ const Navigation = ({ user, clearUser }) => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            {user ? (
+            {isLoggedIn ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login">Login</Nav.Link>

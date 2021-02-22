@@ -10,16 +10,36 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 import { myContext } from '../../context/Context';
 
 const AppRoutes = () => {
-  const { isAuth } = useContext(myContext);
+  const { auth } = useContext(myContext);
 
   return (
     <>
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/login" comp={Login} />
 
-      <PrivateRoute exact path="/dashboard" component={Dashboard} />
-      <PrivateRoute exact path="/roadmap" component={Roadmap} />
-      <PrivateRoute exact path="/history" component={CourseHistory} />
-      <PrivateRoute exact path="/add-course" component={AddCourse} />
+      <PrivateRoute
+        exact
+        path="/dashboard"
+        isLoggedIn={auth.isLoggedIn}
+        component={Dashboard}
+      />
+      <PrivateRoute
+        exact
+        path="/roadmap"
+        isLoggedIn={auth.isLoggedIn}
+        component={Roadmap}
+      />
+      <PrivateRoute
+        exact
+        path="/history"
+        isLoggedIn={auth.isLoggedIn}
+        component={CourseHistory}
+      />
+      <PrivateRoute
+        exact
+        path="/add-course"
+        isLoggedIn={auth.isLoggedIn}
+        component={AddCourse}
+      />
     </>
   );
 };
