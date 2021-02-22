@@ -15,6 +15,9 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
           />
         )
       }
+      // render={(props) =>
+      //   !isLoggedIn && isLoading ? <p>loading...</p> : <Component {...props} />
+      // }
     />
   );
 };

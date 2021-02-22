@@ -8,10 +8,9 @@ import AddCourse from '../../pages/AddCourse/AddCourse';
 import Roadmap from '../../pages/Roadmap/Roadmap';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 
-const AppRoutes = ({ user }) => {
+const AppRoutes = ({ user, handleLogin }) => {
   return (
     <Switch>
-      <Route exact path="/login" component={Login} />
       <PrivateRoute exact path="/dashboard" user={user} component={Dashboard} />
       <PrivateRoute exact path="/roadmap" user={user} component={Roadmap} />
       <PrivateRoute
@@ -26,6 +25,9 @@ const AppRoutes = ({ user }) => {
         user={user}
         component={AddCourse}
       />
+      <Route exact path="/login">
+        <Login handleLogin={handleLogin} />
+      </Route>
     </Switch>
   );
 };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,11 +9,7 @@ import { FaGoogle } from 'react-icons/fa';
 
 import './Login.css';
 
-const Login = () => {
-  const googleLogin = () => {
-    window.open('http://localhost:5000/auth/google', '_self');
-  };
-
+const Login = ({ handleLogin }) => {
   return (
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
@@ -23,7 +20,7 @@ const Login = () => {
               <Button
                 className="mb-3 mt-3"
                 variant="primary"
-                onClick={googleLogin}
+                onClick={handleLogin}
               >
                 <FaGoogle className="mb-1" /> Sign in with Google
               </Button>
