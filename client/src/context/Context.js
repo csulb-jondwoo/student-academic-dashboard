@@ -4,35 +4,28 @@ import axios from 'axios';
 export const myContext = createContext({});
 
 export default function Context(props) {
-  const [auth, setAuth] = useState({
-    user: null,
-    isLoggedIn: false,
-  });
-  console.log(auth);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     axios
       .get('http://localhost:5000/user', { withCredentials: true })
       .then((res) => {
         if (res.data) {
-          setAuth({
-            user: res.data,
-            isLoggedIn: true,
-          });
+          // setUser(res.data);
+          localStorage.setItem('user', res.data);
         }
       });
   }, []);
 
-  const clearAuth = () => {
-    setAuth({
-      user: null,
-      isLoggedIn: false,
-    });
+  const clearUser = () => {
+    setUser(null);
   };
 
   return (
-    <myContext.Provider value={{ auth, clearAuth }}>
+    <myContext.Provider value={{ user, clearUser }}>
       {props.children}
     </myContext.Provider>
   );
 }
+
+// use isLoggedIn from context

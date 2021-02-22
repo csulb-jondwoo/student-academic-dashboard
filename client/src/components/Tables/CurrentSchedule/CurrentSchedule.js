@@ -3,14 +3,13 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import '../../../utility/css/table-fixed-height.css';
-import { BiEdit } from "react-icons/bi";
-import { BiPlusCircle } from "react-icons/bi";
+import { BiEdit } from 'react-icons/bi';
+import { BiPlusCircle } from 'react-icons/bi';
 
 const CurrentSchedule = () => {
-
   return (
     <>
       <div className="shadow-sm">
@@ -18,7 +17,14 @@ const CurrentSchedule = () => {
           <Row>
             <Col>
               <Card.Body>
-                <Card.Title>Current Schedule (Fall 2020) - 7 Units - <button><Link to="/add-course"><BiEdit/></Link></button></Card.Title>
+                <Card.Title>
+                  Current Schedule (Fall 2020) - 7 Units -{' '}
+                  <button>
+                    <Link to="/add-course">
+                      <BiEdit />
+                    </Link>
+                  </button>
+                </Card.Title>
               </Card.Body>
             </Col>
             {/* <Col className="py-3 d-flex justify-content-end mr-3">

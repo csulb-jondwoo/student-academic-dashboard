@@ -2,24 +2,10 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
-import { useHistory } from 'react-router-dom';
-
-import * as api from '../../api';
 
 import './Navigation.css';
 
-const Navigation = ({ isLoggedIn, clearAuth }) => {
-  const history = useHistory();
-
-  const handleLogout = async () => {
-    await api.googleLogout().then((res) => {
-      if (res.data === 'done') {
-        clearAuth();
-        history.push('/login');
-      }
-    });
-  };
-
+const Navigation = ({ user, handleLogout }) => {
   return (
     <Navbar className="nav-color" collapseOnSelect expand="lg" variant="light">
       <Container>
@@ -38,7 +24,7 @@ const Navigation = ({ isLoggedIn, clearAuth }) => {
             <Nav.Link href="/history">History</Nav.Link>
           </Nav>
           <Nav>
-            {isLoggedIn ? (
+            {user ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login">Login</Nav.Link>
