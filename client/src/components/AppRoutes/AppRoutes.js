@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Login from '../../pages/Login/Login';
 import Dashboard from '../../pages/Dashboard/Dashboard';
@@ -31,6 +31,18 @@ const AppRoutes = () => {
       <Route exact path="/login">
         <Login handleLogin={handleLogin} />
       </Route>
+
+      {user ? (
+        <Redirect from="/" to="/dashboard" />
+      ) : (
+        <Redirect from="/" to="/login" />
+      )}
+
+      {user ? (
+        <Redirect from="/login" to="/dashboard" />
+      ) : (
+        <Redirect to="/login" />
+      )}
     </Switch>
   );
 };
