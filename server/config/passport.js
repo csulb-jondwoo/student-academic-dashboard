@@ -21,6 +21,7 @@ module.exports = (passport) => {
           }
 
           if (!doc) {
+            console.log('no doc');
             // if no user, create one
             const newUser = new User({
               googleId: profile.id,
@@ -29,10 +30,10 @@ module.exports = (passport) => {
             // Insert into database
             await newUser.save();
             done(null, newUser);
+          } else {
+            // user already exists in db
+            done(null, doc);
           }
-
-          // user already exists in db
-          done(null, doc);
         });
       }
     )
