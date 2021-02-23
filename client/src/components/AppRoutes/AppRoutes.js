@@ -12,10 +12,6 @@ import { myContext } from '../../context/Context';
 const AppRoutes = () => {
   const { user, handleLogin } = useContext(myContext);
 
-  useEffect(() => {
-    console.log(localStorage.getItem('user'));
-  }, []);
-
   return (
     <Switch>
       <PrivateRoute exact path="/dashboard" user={user} component={Dashboard} />
