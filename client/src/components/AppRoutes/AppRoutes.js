@@ -14,20 +14,10 @@ const AppRoutes = () => {
 
   return (
     <Switch>
-      <PrivateRoute exact path="/dashboard" user={user} component={Dashboard} />
-      <PrivateRoute exact path="/roadmap" user={user} component={Roadmap} />
-      <PrivateRoute
-        exact
-        path="/history"
-        user={user}
-        component={CourseHistory}
-      />
-      <PrivateRoute
-        exact
-        path="/add-course"
-        user={user}
-        component={AddCourse}
-      />
+      <PrivateRoute path="/dashboard" user={user} component={Dashboard} />
+      <PrivateRoute path="/roadmap" user={user} component={Roadmap} />
+      <PrivateRoute path="/history" user={user} component={CourseHistory} />
+      <PrivateRoute path="/add-course" user={user} component={AddCourse} />
 
       {user ? (
         <Redirect from="/login" to="/dashboard" />
