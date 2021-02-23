@@ -17,13 +17,13 @@ export default function Context(props) {
 
   const handleLogin = () => {
     window.location.href = 'http://localhost:5000/auth/google';
-    //ISSUE: page renders after login but before localstorage is set so user gets redirected to login after login
   };
 
   useEffect(() => {
     api.fetchUser().then((res) => {
       if (res.data) {
         localStorage.setItem('user', res.data);
+        setUser(localStorage.getItem('user'));
       }
     });
   }, []);

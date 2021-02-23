@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Login from '../../pages/Login/Login';
@@ -11,6 +11,10 @@ import { myContext } from '../../context/Context';
 
 const AppRoutes = () => {
   const { user, handleLogin } = useContext(myContext);
+
+  useEffect(() => {
+    console.log(localStorage.getItem('user'));
+  }, []);
 
   return (
     <Switch>
