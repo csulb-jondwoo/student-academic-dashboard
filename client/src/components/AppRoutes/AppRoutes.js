@@ -26,6 +26,8 @@ const AppRoutes = () => {
           <Login handleLogin={handleLogin} />
         </Route>
       )}
+
+      <Redirect from="/" to="/login" />
     </Switch>
   );
 };
