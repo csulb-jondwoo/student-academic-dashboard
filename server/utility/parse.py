@@ -7,12 +7,6 @@ from pathlib import Path
 from pdfreader import SimplePDFViewer
 
 
-"""
-3. parse for terms for those years
-4. parse for courses for those terms
-"""
-
-
 def initViewer():
     # get absolute path of transcript to open
     script_location = Path(__file__).absolute().parent
@@ -31,21 +25,10 @@ def pairwise(iterable):
     return zip(a, b)
 
 
-def joinList(myList):
-    myJoinedList = []
-
-    # rejoin previously split term year list
-    separator = " "
-    for item in myList:
-        myJoinedList.append(separator.join(item))
-
-    return myJoinedList
-
-
 # get list of terms for all years enrolled (i.e Fall 2015)
-def getTermsWithYear(viewer):
+def getTermsByYear(viewer):
     viewer.navigate(1)
-    termsWithYear = []
+    termsByYear = []
 
     # loop through each page
     for canvas in viewer:
@@ -53,45 +36,57 @@ def getTermsWithYear(viewer):
         for term in canvas.strings:
             # append to term list if word matches
             if re.search(r"Fall \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Spring \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Summer \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Winter \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
 
-    return termsWithYear
+    return termsByYear
 
 
-def getCourses(viewer, termsWithYear):
+# parse and return list of courses for each term
+# takes in a pair of terms because regex is searching for content between the two terms
+def getCoursesByTerm(viewer, pair):
     viewer.navigate(1)
-    termsWithYear = joinList(termsWithYear)
+    combinedString = ""
+    coursesByTerm = []
 
-    for pair in list(pairwise(termsWithYear)):
-        print(f"show data between {pair[0]} and {pair[1]}")
+    # convert pdf text into a single string
+    for canvas in viewer:
+        separator = " "
+        combinedString = combinedString + separator.join(canvas.strings)
+
+    # search for text in between pair (i.e Fall 2015 .... Spring 2016)
+    for matchedText in re.findall(fr"(?<={pair[0]}).*?(?={pair[1]})", combinedString):
+        coursesByTerm.append(matchedText)
+
+    return coursesByTerm
 
 
 def getParsedData(viewer):
     data = []
+    body = {}
     years = []
     terms = []
-    body = {}
 
-    termsWithYear = getTermsWithYear(viewer)
-    getCourses(viewer, termsWithYear)
+    termsByYear = getTermsByYear(viewer)
+    pairedList = list(pairwise(termsByYear))
+    pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
 
-    for term in termsWithYear:
-        # split the years
-        years.append(term[1])
-        # split the terms
-        terms.append(term[0])
+    # lay out yearly data
+    for idx, term in enumerate(termsByYear):
+        currentTerm = pairedList[idx]
 
         # hashmap
-        key = term[1]  # make the current year in loop the key for map
-        body.setdefault(key, [])
-        body[key].append(  # append the term to the corresponding year
-            {term[0]: ["data"]}
+        termName = term.split(" ")[0]
+        termYear = term.split(" ")[1]  # make the current year in loop the key for map
+        body.setdefault(termYear, [])
+
+        body[termYear].append(  # append the term to the corresponding year
+            {termName: getCoursesByTerm(viewer, currentTerm)}
         )
 
     data.append(body)
@@ -101,7 +96,7 @@ def getParsedData(viewer):
 
 if __name__ == "__main__":
     contents = getParsedData(initViewer())
-    # print(json.dumps(contents, indent=1))
+    print(json.dumps(contents, indent=1))
 
 
 """
@@ -109,39 +104,36 @@ current state:
 [
     {
         '2015': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
     {
         '2016': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
     {
         '2017': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
-    {
-        '2018': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
-    }
 ]
 """
