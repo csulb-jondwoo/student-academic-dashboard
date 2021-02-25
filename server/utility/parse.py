@@ -24,7 +24,25 @@ def initViewer():
     return viewer
 
 
-# get terms for all years enrolled (i.e Fall 2015)
+def pairwise(iterable):
+    # s -> (s0,s1), (s1,s2), (s2, s3), ...
+    a, b = itertools.tee(iterable)
+    next(b, None)
+    return zip(a, b)
+
+
+def joinList(myList):
+    myJoinedList = []
+
+    # rejoin previously split term year list
+    separator = " "
+    for item in myList:
+        myJoinedList.append(separator.join(item))
+
+    return myJoinedList
+
+
+# get list of terms for all years enrolled (i.e Fall 2015)
 def getTermsWithYear(viewer):
     viewer.navigate(1)
     termsWithYear = []
@@ -46,18 +64,22 @@ def getTermsWithYear(viewer):
     return termsWithYear
 
 
-# return pdf contents
+def getCourses(viewer, termsWithYear):
+    viewer.navigate(1)
+    termsWithYear = joinList(termsWithYear)
+
+    for pair in list(pairwise(termsWithYear)):
+        print(f"show data between {pair[0]} and {pair[1]}")
+
+
 def getParsedData(viewer):
     data = []
     years = []
     terms = []
     body = {}
 
-    # key = "somekey"
-    # a.setdefault(key, [])
-    # a[key].append(2)
-
     termsWithYear = getTermsWithYear(viewer)
+    getCourses(viewer, termsWithYear)
 
     for term in termsWithYear:
         # split the years
@@ -79,7 +101,7 @@ def getParsedData(viewer):
 
 if __name__ == "__main__":
     contents = getParsedData(initViewer())
-    print(json.dumps(contents, indent=1))
+    # print(json.dumps(contents, indent=1))
 
 
 """
