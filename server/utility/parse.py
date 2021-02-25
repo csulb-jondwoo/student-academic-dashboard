@@ -24,7 +24,7 @@ def initViewer():
     return viewer
 
 
-# get terms for all years enrolled
+# get terms for all years enrolled (i.e Fall 2015)
 def getTermsWithYear(viewer):
     viewer.navigate(1)
     termsWithYear = []
@@ -46,8 +46,8 @@ def getTermsWithYear(viewer):
     return termsWithYear
 
 
-# return courses for each term for each year
-def getContents(viewer):
+# return pdf contents
+def getParsedData(viewer):
     data = []
     years = []
     terms = []
@@ -68,24 +68,18 @@ def getContents(viewer):
         # hashmap
         key = term[1]  # make the current year in loop the key for map
         body.setdefault(key, [])
-        body[key].append(
+        body[key].append(  # append the term to the corresponding year
             {term[0]: ["data"]}
-        )  # append the term to the corresponding year
+        )
 
-    print(json.dumps(body, indent=1))
-    sortedUniqueYears = sorted(set(years))
-    uniqueTerms = set(terms)
-
-    # create response data
-    for year in sortedUniqueYears:
-        data.append({year: []})
+    data.append(body)
 
     return data
 
 
 if __name__ == "__main__":
-    contents = getContents(initViewer())
-    # print(json.dumps(contents, indent=1))
+    contents = getParsedData(initViewer())
+    print(json.dumps(contents, indent=1))
 
 
 """
@@ -104,31 +98,13 @@ current state:
         '2016': 
             {
                 FALL: [data],
-                SPRING: [data],
             },
+            {
+                SPRING: [data],
+            }
     },
     {
         '2017': 
-            {
-                FALL: [data],
-                SPRING: [data],
-            },
-    },
-    {
-        '2018': 
-            {
-                FALL: [data],
-                SPRING: [data],
-            },
-    }
-]
-
-
-
-goal:
-[
-    {
-        '2015': 
             {
                 FALL: [data],
             },
@@ -137,25 +113,13 @@ goal:
             }
     },
     {
-        '2016': 
-            {
-                FALL: [data],
-                SPRING: [data],
-            },
-    },
-    {
-        '2017': 
-            {
-                FALL: [data],
-                SPRING: [data],
-            },
-    },
-    {
         '2018': 
             {
                 FALL: [data],
-                SPRING: [data],
             },
+            {
+                SPRING: [data],
+            }
     }
 ]
 """
