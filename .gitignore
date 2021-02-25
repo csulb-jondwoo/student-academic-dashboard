@@ -5,3 +5,4 @@ server/.env
 client/.eslintrc.json
 server/.eslintrc.json
 client/.vscode
+.vscode/

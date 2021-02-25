@@ -7,7 +7,13 @@ from pathlib import Path
 from pdfreader import SimplePDFViewer
 
 
-def initializeViewer():
+"""
+3. parse for terms for those years
+4. parse for courses for those terms
+"""
+
+
+def initViewer():
     # get abs path of transcript to open
     script_location = Path(__file__).absolute().parent
     file = script_location / "transcript.pdf"
@@ -18,16 +24,31 @@ def initializeViewer():
     return viewer
 
 
+# retreive all school years from transcript
+def getYears(viewer):
+    years = []
+
+    for canvas in viewer:
+        for string in canvas.strings:
+            for year in string.split(" "):
+                if re.search(r"^\d{4}$", year):
+                    years.append(year)
+
+    sortedYears = sorted(set(years))
+
+    return sortedYears
+
+
 # get contents from each page
 def getContents(viewer):
     data = []
 
-    for idx, canvas in enumerate(viewer):
-        # page_text = canvas.text_content
-        page_strings = canvas.strings
-        data.append({f"page {idx+1}": page_strings})
+    years = getYears(viewer)
 
-    print(json.dumps(data, indent=1))
+    for year in years:
+        data.append({year: {}})
+
+    return data
 
 
 def pairwise(iterable):
@@ -38,24 +59,24 @@ def pairwise(iterable):
 
 
 if __name__ == "__main__":
-    contents = getContents(initializeViewer())
-    # print(json.dumps(contents, indent=1))
+    contents = getContents(initViewer())
+    print(json.dumps(contents, indent=1))
 
 
 """
 current state:
 [
     {
-        'page 1':
-            [
-                data...
-            ]
+        '2015': { },
     },
     {
-        'page 2': [data...]
+        '2016': { },
     },
     {
-        'page 3': [data...]
+        '2017': { },
+    },
+    {
+        '2018': { },
     }
 ]
 
@@ -64,26 +85,32 @@ current state:
 goal:
 [
     {
-        'page 1':
-            [
-                {
-                    'Fall 2015': [contents...]
-                },
-                {
-                    'Spring 2016': [contents...]
-                },
-                {
-                    'Fall 2016': [contents...]
-                },
-                ...
-            ]
+        '2015': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     },
     {
-        'page 2': [contents...]
+        '2016': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     },
     {
-        'page 3': [contents...]
+        '2017': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
+    },
+    {
+        '2018': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     }
 ]
-
 """
