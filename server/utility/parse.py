@@ -14,7 +14,7 @@ from pdfreader import SimplePDFViewer
 
 
 def initViewer():
-    # get abs path of transcript to open
+    # get absolute path of transcript to open
     script_location = Path(__file__).absolute().parent
     file = script_location / "transcript.pdf"
     fd = open(file, "rb")
@@ -24,59 +24,102 @@ def initViewer():
     return viewer
 
 
-# retreive all school years from transcript
-def getYears(viewer):
-    years = []
+# get terms for all years enrolled
+def getTermsWithYear(viewer):
+    viewer.navigate(1)
+    termsWithYear = []
 
+    # loop through each page
     for canvas in viewer:
-        for string in canvas.strings:
-            for year in string.split(" "):
-                if re.search(r"^\d{4}$", year):
-                    years.append(year)
+        # loop through each word of the page
+        for term in canvas.strings:
+            # append to term list if word matches
+            if re.search(r"Fall \d{4}", term):
+                termsWithYear.append(term.split(" "))
+            elif re.search(r"Spring \d{4}", term):
+                termsWithYear.append(term.split(" "))
+            elif re.search(r"Summer \d{4}", term):
+                termsWithYear.append(term.split(" "))
+            elif re.search(r"Winter \d{4}", term):
+                termsWithYear.append(term.split(" "))
 
-    sortedYears = sorted(set(years))
-
-    return sortedYears
+    return termsWithYear
 
 
-# get contents from each page
+# return courses for each term for each year
 def getContents(viewer):
     data = []
+    years = []
+    terms = []
+    body = {}
 
-    years = getYears(viewer)
+    # key = "somekey"
+    # a.setdefault(key, [])
+    # a[key].append(2)
 
-    for year in years:
-        data.append({year: {}})
+    termsWithYear = getTermsWithYear(viewer)
+
+    for term in termsWithYear:
+        # split the years
+        years.append(term[1])
+        # split the terms
+        terms.append(term[0])
+
+        # hashmap
+        key = term[1]  # make the current year in loop the key for map
+        body.setdefault(key, [])
+        body[key].append(
+            {term[0]: ["data"]}
+        )  # append the term to the corresponding year
+
+    print(json.dumps(body, indent=1))
+    sortedUniqueYears = sorted(set(years))
+    uniqueTerms = set(terms)
+
+    # create response data
+    for year in sortedUniqueYears:
+        data.append({year: []})
 
     return data
 
 
-def pairwise(iterable):
-    # s -> (s0,s1), (s1,s2), (s2, s3), ...
-    a, b = itertools.tee(iterable)
-    next(b, None)
-    return zip(a, b)
-
-
 if __name__ == "__main__":
     contents = getContents(initViewer())
-    print(json.dumps(contents, indent=1))
+    # print(json.dumps(contents, indent=1))
 
 
 """
 current state:
 [
     {
-        '2015': { },
+        '2015': 
+            {
+                FALL: [data],
+            },
+            {
+                SPRING: [data],
+            }
     },
     {
-        '2016': { },
+        '2016': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     },
     {
-        '2017': { },
+        '2017': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     },
     {
-        '2018': { },
+        '2018': 
+            {
+                FALL: [data],
+                SPRING: [data],
+            },
     }
 ]
 
@@ -88,8 +131,10 @@ goal:
         '2015': 
             {
                 FALL: [data],
-                SPRING: [data],
             },
+            {
+                SPRING: [data],
+            }
     },
     {
         '2016': 
