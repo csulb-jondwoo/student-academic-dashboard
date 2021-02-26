@@ -27,15 +27,12 @@ def pairwise(iterable):
 
 # Function to convert
 def listToString(s):
-
     # initialize an empty string
     str1 = ""
 
-    # traverse in the string
-    for ele in s:
-        str1 += ele
+    for elem in s:
+        str1 += elem
 
-    # return string
     return str1
 
 
@@ -65,10 +62,13 @@ def getCourseInfo(termInfo):
     courses = []
     string = listToString(termInfo).strip()
 
-    # TODO: find regex pattern to filter out individual courses
-
+    # filter out before and after course info
     for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", string):
-        print(courseInfo)
+        # parse out individual course info
+        for match in re.finditer(
+            r"((?!GPA)[A-Z]{3,4}).*?(\b(?![I])[A-Z]\b)", courseInfo.strip()
+        ):
+            print(match.group())
         break
 
     # return courseInfo
@@ -123,7 +123,6 @@ def getParsedData(viewer):
         # print(currentTerm)
         currentTermInfo = getTermInfo(viewer, currentTerm)
         getCourseInfo(currentTermInfo)
-        break
         # print("-----------------------------------------------------------")
 
     data.append(body)
