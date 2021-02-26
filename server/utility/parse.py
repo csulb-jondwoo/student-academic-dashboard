@@ -66,7 +66,8 @@ def getCourseInfo(termInfo):
     for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", string):
         # parse out individual course info
         for match in re.finditer(
-            r"((?!GPA)[A-Z]{3,4}).*?(\b(?![I])[A-Z]\b)", courseInfo.strip()
+            r"((?!GPA)[A-Z]{3,4}).*?(\b(?![I])(?!C\+\+)[A-Z]{1,2}\b)",
+            courseInfo.strip(),
         ):
             print(match.group())
         break
