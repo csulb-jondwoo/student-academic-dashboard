@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import MajorHistory from '../../components/Tables/History/MajorHistory/MajorHistory';
 import GeHistory from '../../components/Tables/History/GeHistory/GeHistory';
@@ -16,6 +17,7 @@ const CourseHistory = () => {
           <Col>
             <Card.Body>
               <Card.Title>Course History</Card.Title>
+              <Button>Add Completed Course</Button>
             </Card.Body>
           </Col>
         </Row>
