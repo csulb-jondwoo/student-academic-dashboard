@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const addCourseSchema = mongoose.Schema({
+// currentCourseSchema, completedCourseSchema
+const courseSchema = mongoose.Schema({
     courseNo: String, 
     courseTitle: String, 
     courseUnits: String, 
@@ -12,6 +13,5 @@ const addCourseSchema = mongoose.Schema({
     courseGrade: String
 });
 
-const addCourse = mongoose.model('addCourse', addCourseSchema);
+module.exports = mongoose.model('Course', courseSchema);
 
-export default addCourse;
