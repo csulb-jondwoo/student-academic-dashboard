@@ -7,12 +7,6 @@ from pathlib import Path
 from pdfreader import SimplePDFViewer
 
 
-"""
-3. parse for terms for those years
-4. parse for courses for those terms
-"""
-
-
 def initViewer():
     # get absolute path of transcript to open
     script_location = Path(__file__).absolute().parent
@@ -24,10 +18,31 @@ def initViewer():
     return viewer
 
 
-# get terms for all years enrolled (i.e Fall 2015)
-def getTermsWithYear(viewer):
+def pairwise(iterable):
+    # s -> (s0,s1), (s1,s2), (s2, s3), ...
+    a, b = itertools.tee(iterable)
+    next(b, None)
+    return zip(a, b)
+
+
+# Function to convert
+def listToString(s):
+
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+    # return string
+    return str1
+
+
+# get list of terms for all years enrolled (i.e Fall 2015)
+def getTermsByYear(viewer):
     viewer.navigate(1)
-    termsWithYear = []
+    termsByYear = []
 
     # loop through each page
     for canvas in viewer:
@@ -35,42 +50,81 @@ def getTermsWithYear(viewer):
         for term in canvas.strings:
             # append to term list if word matches
             if re.search(r"Fall \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Spring \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Summer \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
             elif re.search(r"Winter \d{4}", term):
-                termsWithYear.append(term.split(" "))
+                termsByYear.append(term)
 
-    return termsWithYear
+    return termsByYear
 
 
-# return pdf contents
+def getCourseInfo(termInfo):
+    courses = []
+    string = listToString(termInfo).strip()
+
+    # TODO: find regex pattern to filter out individual courses
+
+    for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", string):
+        print(courseInfo)
+        break
+
+    # return courseInfo
+
+
+# parse and return list of courses for each term
+# takes in a pair of terms because regex is searching for content between the two terms
+def getTermInfo(viewer, pair):
+    viewer.navigate(1)
+    combinedString = ""
+    termInfo = []
+
+    # convert pdf text into a single string
+    for canvas in viewer:
+        separator = " "
+        combinedString = combinedString + separator.join(canvas.strings)
+
+    # search for text in between pair (i.e Fall 2015 .... Spring 2016)
+    for matchedText in re.findall(fr"(?<={pair[0]}).*?(?={pair[1]})", combinedString):
+        termInfo.append(matchedText)
+
+    return termInfo
+
+
 def getParsedData(viewer):
     data = []
+    body = {}
     years = []
     terms = []
-    body = {}
 
-    # key = "somekey"
-    # a.setdefault(key, [])
-    # a[key].append(2)
+    termsByYear = getTermsByYear(viewer)
+    pairedList = list(pairwise(termsByYear))
+    pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
 
-    termsWithYear = getTermsWithYear(viewer)
-
-    for term in termsWithYear:
-        # split the years
-        years.append(term[1])
-        # split the terms
-        terms.append(term[0])
+    # format data
+    for idx, term in enumerate(termsByYear):
+        currentTerm = pairedList[idx]
 
         # hashmap
-        key = term[1]  # make the current year in loop the key for map
-        body.setdefault(key, [])
-        body[key].append(  # append the term to the corresponding year
-            {term[0]: ["data"]}
+        termName = term.split(" ")[0]
+        termYear = term.split(" ")[1]  # make the current year in loop the key for map
+        body.setdefault(termYear, [])
+
+        body[termYear].append(  # map term to the corresponding year
+            {termName: getTermInfo(viewer, currentTerm)}  # map term info to term
         )
+
+    """
+    get course info by term
+    """
+    for currentTerm in pairedList:
+        # print(currentTerm)
+        currentTermInfo = getTermInfo(viewer, currentTerm)
+        getCourseInfo(currentTermInfo)
+        break
+        # print("-----------------------------------------------------------")
 
     data.append(body)
 
@@ -79,7 +133,7 @@ def getParsedData(viewer):
 
 if __name__ == "__main__":
     contents = getParsedData(initViewer())
-    print(json.dumps(contents, indent=1))
+    # print(json.dumps(contents, indent=1))
 
 
 """
@@ -87,39 +141,36 @@ current state:
 [
     {
         '2015': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
     {
         '2016': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
     {
         '2017': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
+            [
+                {
+                    FALL: [data],
+                },
+                {
+                    SPRING: [data],
+                }
+            ]
     },
-    {
-        '2018': 
-            {
-                FALL: [data],
-            },
-            {
-                SPRING: [data],
-            }
-    }
 ]
 """
