@@ -25,6 +25,20 @@ def pairwise(iterable):
     return zip(a, b)
 
 
+# Function to convert
+def listToString(s):
+
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+    # return string
+    return str1
+
+
 # get list of terms for all years enrolled (i.e Fall 2015)
 def getTermsByYear(viewer):
     viewer.navigate(1)
@@ -47,12 +61,25 @@ def getTermsByYear(viewer):
     return termsByYear
 
 
+def getCourseInfo(termInfo):
+    courses = []
+    string = listToString(termInfo).strip()
+
+    # TODO: find regex pattern to filter out individual courses
+
+    for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", string):
+        print(courseInfo)
+        break
+
+    # return courseInfo
+
+
 # parse and return list of courses for each term
 # takes in a pair of terms because regex is searching for content between the two terms
-def getCoursesByTerm(viewer, pair):
+def getTermInfo(viewer, pair):
     viewer.navigate(1)
     combinedString = ""
-    coursesByTerm = []
+    termInfo = []
 
     # convert pdf text into a single string
     for canvas in viewer:
@@ -61,9 +88,9 @@ def getCoursesByTerm(viewer, pair):
 
     # search for text in between pair (i.e Fall 2015 .... Spring 2016)
     for matchedText in re.findall(fr"(?<={pair[0]}).*?(?={pair[1]})", combinedString):
-        coursesByTerm.append(matchedText)
+        termInfo.append(matchedText)
 
-    return coursesByTerm
+    return termInfo
 
 
 def getParsedData(viewer):
@@ -76,7 +103,7 @@ def getParsedData(viewer):
     pairedList = list(pairwise(termsByYear))
     pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
 
-    # lay out yearly data
+    # format data
     for idx, term in enumerate(termsByYear):
         currentTerm = pairedList[idx]
 
@@ -85,9 +112,19 @@ def getParsedData(viewer):
         termYear = term.split(" ")[1]  # make the current year in loop the key for map
         body.setdefault(termYear, [])
 
-        body[termYear].append(  # append the term to the corresponding year
-            {termName: getCoursesByTerm(viewer, currentTerm)}
+        body[termYear].append(  # map term to the corresponding year
+            {termName: getTermInfo(viewer, currentTerm)}  # map term info to term
         )
+
+    """
+    get course info by term
+    """
+    for currentTerm in pairedList:
+        # print(currentTerm)
+        currentTermInfo = getTermInfo(viewer, currentTerm)
+        getCourseInfo(currentTermInfo)
+        break
+        # print("-----------------------------------------------------------")
 
     data.append(body)
 
@@ -96,7 +133,7 @@ def getParsedData(viewer):
 
 if __name__ == "__main__":
     contents = getParsedData(initViewer())
-    print(json.dumps(contents, indent=1))
+    # print(json.dumps(contents, indent=1))
 
 
 """
