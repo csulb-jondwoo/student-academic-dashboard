@@ -113,7 +113,7 @@ def getCourseInfo(termInfo, isTransferData=False):
                 # first half of regex is saying ignore GPA and UNOFFICIAL, only match an uppercase word of length 3-4
                 # second half is saying ignore any letter from [IEST], C++, GE, and LD, only match literally 325 or uppercase word of length 1-2
                 # the 325 is hardcoded bc ryans crazy transcript. i have no idea how to filter out a numerical grade dynamically
-                r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
+                r"((?!GPA|UNOFFICIAL)\b[A-Z]{1,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
                 courseInfo,
             ):
                 # parse out details
@@ -128,7 +128,7 @@ def getCourseInfo(termInfo, isTransferData=False):
                 # first half of regex is saying ignore GPA and UNOFFICIAL, only match an uppercase word of length 3-4
                 # second half is saying ignore any letter from [IEST], C++, GE, and LD, only match literally 325 or uppercase word of length 1-2
                 # the 325 is hardcoded bc ryans crazy transcript. i have no idea how to filter out a numerical grade dynamically
-                r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
+                r"((?!GPA|UNOFFICIAL)\b[A-Z]{1,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
                 courseInfo,
             ):
                 courses.append(formatCourseData(match.group()))

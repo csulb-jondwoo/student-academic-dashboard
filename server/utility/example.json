@@ -227,7 +227,10 @@
       ],
       "2019": [
         {
-          "Spring": [["ENGL 317", "Technical Communication", "B"]]
+          "Spring": [
+            ["E E", "380 Prblity, Stats, & Stoch Modlng", "B"],
+            ["ENGL 317", "Technical Communication", "B"]
+          ]
         },
         {
           "Fall": [
