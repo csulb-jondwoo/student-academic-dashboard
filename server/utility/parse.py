@@ -51,24 +51,27 @@ def convertPDFtoString(viewer):
 
 
 ### BUSINESS LOGIC FUNCTIONS
-def getTermPairs(termsByYear, isTransferDataSection=False):
+def getTermPairs(termsByYear, isTransferData=False):
     pairedList = list(pairwise(termsByYear))
-    if isTransferDataSection:
-        # i.e [(Fall 2009, Spring 2017), (Spring 2017, Beginning)]
-        # gotta set the final pair with "beginning" because thats when the transfer portion ends
-        pairedList.append([termsByYear[len(termsByYear) - 1], "Beginning"])
+    if termsByYear:
+        if isTransferData:
+            # i.e [(Fall 2009, Spring 2017), (Spring 2017, Beginning)]
+            # gotta set the final pair with "beginning" because thats when the transfer portion ends
+            pairedList.append([termsByYear[len(termsByYear) - 1], "Beginning"])
+        else:
+            # gotta set the final pair with "End" because thats when the transfer portion ends
+            pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
     else:
-        # gotta set the final pair with "End" because thats when the transfer portion ends
-        pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
+        return []
 
     return pairedList
 
 
-def getTermsByYear(string):
+def getTermsByYear(dataSectionText):
     termsByYear = []
 
     # append to term list if word matches
-    for text in string:
+    for text in dataSectionText:
         matchedText = re.finditer(
             r"Fall \d{4}|Spring \d{4}|Summer \d{4}|Winter \d{4}", text
         )
@@ -78,201 +81,202 @@ def getTermsByYear(string):
     return termsByYear
 
 
-# def getCourseInfo(termInfo):
-#     courses = []
-#     string = listToString(termInfo).strip()
+def getCourseInfo(termInfo, isTransferData=False):
+    courses = []
+    # filter out before and after course info
+    if isTransferData:
+        termInfo = listToString(termInfo)
 
-#     filter out before and after course info
-#     for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", string):
-#         # parse out individual course info
-#         for match in re.finditer(
-#             r"((?!GPA)[A-Z]{3,4}).*?(\b(?![IEST])(?!C\+\+)(?!GE)(?!LD)[A-Z]{1,2}\b)",
-#             courseInfo.strip(),
-#         ):
-#             print(match.group())
-#         break
+        for courseInfo in re.findall(r"(?<=Points).*?(?=Totals)", termInfo):
+            # parse out individual course info
+            for match in re.finditer(
+                # first half of regex is saying ignore GPA and UNOFFICIAL, only match an uppercase word of length 3-4
+                # second half is saying ignore any letter from [IEST], C++, GE, and LD, only match literally 325 or uppercase word of length 1-2
+                # the 325 is hardcoded bc ryans crazy transcript. i have no idea how to filter out a numerical grade dynamically
+                r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
+                courseInfo,
+            ):
+                courses.append(match.group())
+            break
+    else:
+        termInfo = listToString(termInfo)
 
-#     return courseInfo
+        for courseInfo in re.findall(r"(?<=Points).*?(?=Attempted)", termInfo):
+            # parse out individual course info
+            for match in re.finditer(
+                # first half of regex is saying ignore GPA and UNOFFICIAL, only match an uppercase word of length 3-4
+                # second half is saying ignore any letter from [IEST], C++, GE, and LD, only match literally 325 or uppercase word of length 1-2
+                # the 325 is hardcoded bc ryans crazy transcript. i have no idea how to filter out a numerical grade dynamically
+                r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
+                courseInfo,
+            ):
+                courses.append(match.group())
+            break
+
+    return courses
 
 
-# parse and return list of courses for each term
-# takes in a pair of terms because regex is searching for content between the two terms
-def getTermInfo(dataSection, termPair):
-    string = dataSection[0]
-    termInfo = []
+def getTermInfo(dataSection, currentTerm):
 
-    # search for text in between pair (i.e Fall 2015 .... Spring 2016)
-    for matchedText in re.findall(fr"(?<={termPair[0]}).*?(?={termPair[1]})", string):
-        termInfo.append(matchedText)
+    if dataSection:
+        dataString = dataSection[0]
+        termInfo = []
 
-    return termInfo
+        # search for text in between pair (i.e Fall 2015 .... Spring 2016)
+        for matchedText in re.findall(
+            fr"(?<={currentTerm[0]}).*?(?={currentTerm[1]})", dataString
+        ):
+            termInfo.append(matchedText)
+        return termInfo
+    else:
+        return []
 
 
-def getTransferData(pdfString):
-    transferDataSection = []
+def formatData(
+    transferText,
+    transferTermsByYear,
+    transferTermPair,
+    csulbText,
+    csulbTermsByYear,
+    csulbTermPair,
+):
+    data = []
+    body = {"transfer": {}, "csulb": {}}
+
+    for idx, term in enumerate(transferTermPair):
+        currentTermInfo = getTermInfo(transferText, term)
+        # get courses for current term
+        courses = getCourseInfo(currentTermInfo, isTransferData=True)
+        currentTermPair = transferTermPair[idx]
+
+        # hashmap
+        termName = term[0].split(" ")[0]
+        # make the current year in loop the key for map
+        termYear = term[0].split(" ")[1]
+        body["transfer"][termYear] = {termName: courses}
+
+    for idx, term in enumerate(csulbTermPair):
+        currentTermInfo = getTermInfo(csulbText, term)
+        # get courses for current term
+        courses = getCourseInfo(currentTermInfo)
+        currentTermPair = csulbTermsByYear[idx]
+
+        # hashmap
+        termName = term[0].split(" ")[0]
+        # make the current year in loop the key for map
+        termYear = term[0].split(" ")[1]
+        body["csulb"][termYear] = {termName: courses}
+
+    return body
+
+
+def getTransferPdfText(pdfString):
+    transferText = []
 
     # get all data between "Transfer Credits" and "Record" of transcript
     for matchedText in re.findall(fr"(?<=Transfer Credits).*?(?=Record)", pdfString):
-        transferDataSection.append(matchedText)
+        transferText.append(matchedText)
 
-    termsByYear = getTermsByYear(transferDataSection)
-    # edit the pairs to include most recent term
-    pairedTermList = getTermPairs(termsByYear, isTransferDataSection=True)
-    formattedData = formatData(termsByYear, pairedTermList, transferDataSection)
-
-    return formattedData
+    return transferText
 
 
-def getCsulbData(pdfString):
-    csulbDataSection = []
+def getCsulbPdfText(pdfString):
+    csulbText = []
 
     # get all data between "Beginning" and "End" of transcript
     for matchedText in re.findall(fr"(?<=Beginning).*?(?=End)", pdfString):
-        csulbDataSection.append(matchedText)
+        csulbText.append(matchedText)
 
-    termsByYear = getTermsByYear(csulbDataSection)
-    # edit the pairs to include most recent term
-    pairedTermList = getTermPairs(termsByYear)
-    formattedData = formatData(termsByYear, pairedTermList, csulbDataSection)
-
-    return formattedData
-
-
-def formatData(termsByYear, pairedTermList, dataSection):
-    data = []
-    body = {}
-    years = []
-    terms = []
-
-    # for each term, get term info
-    for idx, term in enumerate(termsByYear):
-        currentTermPair = pairedTermList[idx]
-        termInfo = getTermInfo(dataSection, currentTermPair)
-
-        # hashmap
-        termName = term.split(" ")[0]
-        termYear = term.split(" ")[1]  # make the current year in loop the key for map
-
-        body.setdefault(termYear, [])
-
-        body[termYear].append(  # map term to the corresponding year
-            {termName: termInfo}  # map term info to term
-        )
-
-    # """
-    # get course info by term
-    # """
-    # for currentTerm in pairedList:
-    #     # print(currentTerm)
-    #     currentTermInfo = getTermInfo(viewer, currentTerm)
-    #     getCourseInfo(currentTermInfo)
-    #     # print("-----------------------------------------------------------")
-
-    data.append(body)
-
-    return data
+    return csulbText
 
 
 def getParsedData(viewer):
-    data = []
-
     pdfString = convertPDFtoString(viewer)
 
+    transferText = getTransferPdfText(pdfString)
+    csulbText = getCsulbPdfText(pdfString)
+
     # current term will be empty because no grade yet
-    transferData = getTransferData(pdfString)
-    csulbData = getCsulbData(pdfString)
+    transferTermsByYear = getTermsByYear(transferText)
+    csulbTermsByYear = getTermsByYear(csulbText)
+
+    transferTermPair = getTermPairs(transferTermsByYear, isTransferData=True)
+    csulbTermPair = getTermPairs(csulbTermsByYear)
+
+    data = formatData(
+        transferText,
+        transferTermsByYear,
+        transferTermPair,
+        csulbText,
+        csulbTermsByYear,
+        csulbTermPair,
+    )
 
     return data
 
 
 if __name__ == "__main__":
     contents = getParsedData(initViewer())
-    # print(json.dumps(contents, indent=1))
+    print(json.dumps(contents, indent=1))
 
 
 """
 goal state:
+
 [
     {
-        '2015': 
+        transfer: 
             [
                 {
-                    transfer:
+                    2015: 
                         [
                             {
-                                FALL: [data]
+                                Fall: [data]
                             },
                             {
-                                SPRING: [data]
+                                Spring: [data]
                             }
                         ]
                 },
                 {
-                    csulb:
+                    2016: 
                         [
                             {
-                                FALL: [data]
+                                Fall: [data]
                             },
                             {
-                                SPRING: [data]
+                                Spring: [data]
                             }
                         ]
                 }
-            ]
+            ],
     },
     {
-        '2016': 
+        csulb: 
             [
                 {
-                    transfer:
+                    2015: 
                         [
                             {
-                                FALL: [data]
+                                Fall: [data]
                             },
                             {
-                                SPRING: [data]
+                                Spring: [data]
                             }
                         ]
                 },
                 {
-                    csulb:
+                    2016: 
                         [
                             {
-                                FALL: [data]
+                                Fall: [data]
                             },
                             {
-                                SPRING: [data]
+                                Spring: [data]
                             }
                         ]
                 }
-            ]
-    },
-    {
-        '2017': 
-            [
-                {
-                    transfer:
-                        [
-                            {
-                                FALL: [data]
-                            },
-                            {
-                                SPRING: [data]
-                            }
-                        ]
-                },
-                {
-                    csulb:
-                        [
-                            {
-                                FALL: [data]
-                            },
-                            {
-                                SPRING: [data]
-                            }
-                        ]
-                }
-            ]
-    },
+            ],
+    }
 ]
 """
