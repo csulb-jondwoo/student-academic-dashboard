@@ -1,0 +1,95 @@
+{
+  "transfer": {},
+  "csulb": {
+    "2015": [
+      {
+        "Fall": [
+          "CLSC  101 Greek Mythology 3.000 3.000 B",
+          "ENGL  100 Composition II 3.000 3.000 A",
+          "LING  151 Fundamentals of  Amer Sign Lang 3.000 3.000 A",
+          "MATH  119A Survey of Calculus I 3.000 3.000 A",
+          "PSY  130 Critical Thinking 3.000 3.000 A"
+        ]
+      }
+    ],
+    "2016": [
+      {
+        "Spring": [
+          "CECS  100 Crit Think in Digital  Info Age 3.000 3.000 A",
+          "CECS  105 Introduction to CECS 1.000 1.000 B",
+          "CECS  201 Computer Logic  Design I 3.000 3.000 A",
+          "COMM  110 Interpersonal  Communication 3.000 3.000 B",
+          "ENGR  101 Intro Engineering  Profession 1.000 1.000 B",
+          "MATH  122 Calculus I 4.000 4.000 A"
+        ]
+      },
+      {
+        "Fall": [
+          "CECS  174 Intro Prog & Problem Solving 3.000 3.000 A",
+          "MATH  123 Calculus II 4.000 4.000 B",
+          "PHYS  151 Mechanics and Heat 4.000 4.000 C",
+          "POSC  100 Intro American  Government 3.000 3.000 B"
+        ]
+      }
+    ],
+    "2017": [
+      {
+        "Spring": [
+          "CECS  225 Digital Logic and  Assembly Pro 3.000 3.000 B",
+          "CECS  228 Discrete Struc- Computing Appl 3.000 0.000 D",
+          "CECS  274 Obj Oriented Prog &  Data Struc 3.000 3.000 C",
+          "PHYS  152 Electricity and  Magnetism 4.000 4.000 C"
+        ]
+      },
+      {
+        "Fall": [
+          "ANTH  120 Intro to Cultural  Anthropology 3.000 3.000 C",
+          "CECS  228 Discrete Struc- Computing Appl 3.000 3.000 B",
+          "CECS  277 Obj Oriented Appl  Development 3.000 3.000 B",
+          "CECS  282 C++ for Java  Programmers 3.000 3.000 B"
+        ]
+      }
+    ],
+    "2018": [
+      {
+        "Spring": [
+          "ART  101 Artists in Their Own  Words 1.000 0.000 W",
+          "DANC  101 Introduction to  Modern Dance 3.000 0.000 W",
+          "MUS  141A Musicianship I 2.000 0.000 W",
+          "MUS  142A Harmony I 3.000 0.000 W",
+          "THEA  113 Intro to Acting 3.000 0.000 W"
+        ]
+      }
+    ],
+    "2019": [
+      {
+        "Spring": [
+          "CECS  229 Discrete Struct Comp Applic II 3.000 0.000 D",
+          "CECS  323 Database  Fundamentals 3.000 0.000 D",
+          "CECS  328 Data Structures and  Algorithms 3.000 3.000 B",
+          "CECS  341 Computer Architect  Organizatin 3.000 3.000 B"
+        ]
+      },
+      {
+        "Fall": [
+          "CECS  229 Discrete Struct Comp Applic II 3.000 3.000 B",
+          "CECS  326 Operating Systems 3.000 3.000 A",
+          "CECS  343 Intro to Software  Engineering 3.000 3.000 A",
+          "ENGR  350 Computers- Ethics &  Society 3.000 3.000 A"
+        ]
+      }
+    ],
+    "2020": [
+      {
+        "Spring": [
+          "CECS  323 Database  Fundamentals 3.000 3.000 A",
+          "CECS  474 Computer Net  Interoperability 3.000 3.000 A",
+          "CECS  476 System & Network  Admin 3.000 3.000 A"
+        ]
+      },
+      {
+        "Fall": []
+      }
+    ]
+  }
+}

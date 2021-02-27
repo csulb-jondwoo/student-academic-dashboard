@@ -84,6 +84,7 @@ def getTermsByYear(dataSectionText):
 def getCourseInfo(termInfo, isTransferData=False):
     courses = []
     # filter out before and after course info
+    # TODO: fix zacks 3 spring term courses (it is parsing out but only the first one three times)
     if isTransferData:
         termInfo = listToString(termInfo)
 
@@ -117,7 +118,6 @@ def getCourseInfo(termInfo, isTransferData=False):
 
 
 def getTermInfo(dataSection, currentTerm):
-
     if dataSection:
         dataString = dataSection[0]
         termInfo = []
@@ -127,6 +127,7 @@ def getTermInfo(dataSection, currentTerm):
             fr"(?<={currentTerm[0]}).*?(?={currentTerm[1]})", dataString
         ):
             termInfo.append(matchedText)
+
         return termInfo
     else:
         return []
@@ -143,29 +144,37 @@ def formatData(
     data = []
     body = {"transfer": {}, "csulb": {}}
 
+    # populate transfer terms
     for idx, term in enumerate(transferTermPair):
         currentTermInfo = getTermInfo(transferText, term)
         # get courses for current term
         courses = getCourseInfo(currentTermInfo, isTransferData=True)
         currentTermPair = transferTermPair[idx]
 
-        # hashmap
+        ## hashmap
         termName = term[0].split(" ")[0]
         # make the current year in loop the key for map
         termYear = term[0].split(" ")[1]
-        body["transfer"][termYear] = {termName: courses}
 
+        body["transfer"].setdefault(termYear, [])
+        # append the term to the corresponding year
+        body["transfer"][termYear].append({termName: courses})
+
+    # populate csulb terms
     for idx, term in enumerate(csulbTermPair):
         currentTermInfo = getTermInfo(csulbText, term)
         # get courses for current term
         courses = getCourseInfo(currentTermInfo)
         currentTermPair = csulbTermsByYear[idx]
 
-        # hashmap
+        ## hashmap
         termName = term[0].split(" ")[0]
         # make the current year in loop the key for map
         termYear = term[0].split(" ")[1]
-        body["csulb"][termYear] = {termName: courses}
+
+        body["csulb"].setdefault(termYear, [])
+        # append the term to the corresponding year
+        body["csulb"][termYear].append({termName: courses})
 
     return body
 
@@ -216,8 +225,8 @@ def getParsedData(viewer):
 
 
 if __name__ == "__main__":
-    contents = getParsedData(initViewer())
-    print(json.dumps(contents, indent=1))
+    transcriptData = getParsedData(initViewer())
+    print(json.dumps(transcriptData, indent=1))
 
 
 """
