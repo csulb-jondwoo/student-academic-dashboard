@@ -105,6 +105,7 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
   }
 
   return (
