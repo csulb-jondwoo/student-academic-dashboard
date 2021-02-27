@@ -81,9 +81,28 @@ def getTermsByYear(dataSectionText):
     return termsByYear
 
 
+def formatCourseData(string):
+    courseDetails = string.split(" ")
+    while "" in courseDetails:
+        courseDetails.remove("")
+
+    # remove any point values
+    courseDetails.pop(len(courseDetails) - 2)
+    courseDetails.pop(len(courseDetails) - 2)
+
+    # separate out course department and number, description, and grade
+    courseDetails[0:2] = [" ".join(courseDetails[0:2])]
+    courseDetails[1 : len(courseDetails) - 1] = [
+        " ".join(courseDetails[1 : len(courseDetails) - 1])
+    ]
+
+    return courseDetails
+
+
 def getCourseInfo(termInfo, isTransferData=False):
     courses = []
-    # filter out before and after course info
+
+    # filter out irrelevant data
     # TODO: fix zacks 3 spring term courses (it is parsing out but only the first one three times)
     if isTransferData:
         termInfo = listToString(termInfo)
@@ -97,7 +116,8 @@ def getCourseInfo(termInfo, isTransferData=False):
                 r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
                 courseInfo,
             ):
-                courses.append(match.group())
+                # parse out details
+                courses.append(formatCourseData(match.group()))
             break
     else:
         termInfo = listToString(termInfo)
@@ -111,7 +131,7 @@ def getCourseInfo(termInfo, isTransferData=False):
                 r"((?!GPA|UNOFFICIAL)\b[A-Z]{3,4}\b).*?((?![IEST]|C\+\+|GE|LD)((\b325\b)|(\b[A-Z]{1,2}\b)))",
                 courseInfo,
             ):
-                courses.append(match.group())
+                courses.append(formatCourseData(match.group()))
             break
 
     return courses
@@ -133,7 +153,7 @@ def getTermInfo(dataSection, currentTerm):
         return []
 
 
-def formatData(
+def formatTranscriptData(
     transferText,
     transferTermsByYear,
     transferTermPair,
@@ -212,7 +232,7 @@ def getParsedData(viewer):
     transferTermPair = getTermPairs(transferTermsByYear, isTransferData=True)
     csulbTermPair = getTermPairs(csulbTermsByYear)
 
-    data = formatData(
+    data = formatTranscriptData(
         transferText,
         transferTermsByYear,
         transferTermPair,
