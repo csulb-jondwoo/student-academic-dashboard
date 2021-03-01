@@ -7,9 +7,21 @@ import { Link } from 'react-router-dom';
 
 import '../../../utility/css/table-fixed-height.css';
 import { BiEdit } from 'react-icons/bi';
-import { BiPlusCircle } from 'react-icons/bi';
+//import { BiPlusCircle } from 'react-icons/bi';
+
+import { Context } from "../../../context/Context"
 
 const CurrentSchedule = () => {
+
+  /*
+  // grab the users courses from context
+  const { userCourses } = useContext(Context);
+  // get a list of courses by checking which are current
+  const currentCourses = userCourses.filter(course => course.isCurrent)
+  // create a new currentCourse component for Dashboard to replace hardcoded data.
+  const currentCourseList = currentCourses.map(course => (<currentCourse id={course.id} course={course} />))
+  */
+
   return (
     <>
       <div className="shadow-sm">
