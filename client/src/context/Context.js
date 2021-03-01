@@ -54,10 +54,10 @@ export default function Context(props) {
     })
   }
 
-  function updateCourse(courseID) {
+  function updateCourse(course) {
     dispatch({
       type: 'UPDATE_COURSE',
-      payload: courseID
+      payload: course
     })
   }
   */

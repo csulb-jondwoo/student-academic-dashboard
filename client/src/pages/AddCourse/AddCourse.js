@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
+import { myContext } from "../../context/Context";
+
 import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
 
 const AddCourse = () => {
@@ -16,6 +18,8 @@ const AddCourse = () => {
   const [startTimeValue, setStartTimeValue] = useState({ time: 0 });
   const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
   const [dayValue, setDayValue] = useState([]);
+
+  const { addCourse } = useContext(myContext);
 
   const [courseData, setCourseData] = useState({
     courseType: radioValue,
@@ -105,7 +109,26 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+    /*
+    const newCourse = {
+      courseType: radioValue,
+      courseNo: courseData.courseNo, 
+      courseTitle: courseData.courseTitle, 
+      courseUnits: courseData.courseUnits, 
+      courseTerm: courseData.courseTerm, 
+      courseYear: courseData.courseYear, 
+      designation: courseData.designation, 
+      additionalReq: courseData.additionalReq,
+      courseStatus: courseData.courseStatus,
+      courseGrade: courseData.courseGrade,
+      courseSection: courseData.courseSection,
+      courseStartTime: courseData.courseStartTime, 
+      courseEndTime: courseData.courseEndTime,
+      courseDays: courseData.courseDays,
+      courseLocation: courseData.courseLocation
+    } 
+    addCourse(newCourse);
+    */
   }
 
   return (
