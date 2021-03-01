@@ -31,7 +31,7 @@ export default function Accept(props) {
         <input {...getInputProps()} />
         <span>{isDragActive ? '📂' : '📁'}</span>
         <p className="dragText">
-          Drag and drop a PDF file here, or click to select files.
+          Drag and drop your transcipt here, or click to select files.
         </p>
       </div>
       <aside>

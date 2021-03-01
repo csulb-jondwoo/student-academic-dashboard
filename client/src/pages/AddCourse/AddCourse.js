@@ -10,6 +10,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import { myContext } from '../../context/Context';
 
+import DragAndDrop from '../../utility/DragAndDrop';
 import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
 
 const AddCourse = () => {
@@ -182,6 +183,7 @@ const AddCourse = () => {
         <Col md={9}>
           <Card className="text-center shadow-sm mb-5">
             <Card.Body>
+              <DragAndDrop />
               <Button className variant="primary" type="submit">
                 Add via transcript
               </Button>
