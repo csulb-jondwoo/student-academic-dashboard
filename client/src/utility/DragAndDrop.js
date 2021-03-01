@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 
+import './DragAndDrop.css';
 /**
  * Drag and drop a file
  * @author Ryan Stehle
@@ -27,7 +28,10 @@ export default function Accept(props) {
 
   return (
     <section className="container">
-      <div {...getRootProps({ className: `dropzone ${dragStatus}` })}>
+      <div
+        className="dropzone"
+        {...getRootProps({ className: `dropzone ${dragStatus}` })}
+      >
         <input {...getInputProps()} />
         <span>{isDragActive ? '📂' : '📁'}</span>
         <p className="dragText">
