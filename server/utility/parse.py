@@ -86,14 +86,13 @@ def formatCourseData(string):
     while "" in courseDetails:
         courseDetails.remove("")
 
-    # remove any point values
-    courseDetails.pop(len(courseDetails) - 2)
+    # remove earned point values
     courseDetails.pop(len(courseDetails) - 2)
 
     # separate out course department and number, description, and grade
     courseDetails[0:2] = [" ".join(courseDetails[0:2])]
-    courseDetails[1 : len(courseDetails) - 1] = [
-        " ".join(courseDetails[1 : len(courseDetails) - 1])
+    courseDetails[1 : len(courseDetails) - 2] = [
+        " ".join(courseDetails[1 : len(courseDetails) - 2])
     ]
 
     return courseDetails
