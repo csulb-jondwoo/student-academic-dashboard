@@ -19,7 +19,7 @@ const CurrentSchedule = () => {
   // get a list of courses by checking which are current
   const currentCourses = userCourses.filter(course => course.isCurrent)
   // create a new currentCourse component for Dashboard to replace hardcoded data.
-  const currentCourseList = currentCourses.map(course => (<currentCourse id={course.id} course={course} />))
+  const currentCourseList = currentCourses.map(course => (<currentCourse key={course.id} course={course} />))
   */
 
   return (
