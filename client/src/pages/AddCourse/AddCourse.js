@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
-import { myContext } from "../../context/Context";
+import { myContext } from '../../context/Context';
 
 import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
 
@@ -23,92 +23,93 @@ const AddCourse = () => {
 
   const [courseData, setCourseData] = useState({
     courseType: radioValue,
-    courseNo: "", 
-    courseTitle: "", 
-    courseUnits: "", 
-    courseTerm: "", 
-    courseYear: "", 
-    designation: "", 
-    additionalReq: "",
+    courseNo: '',
+    courseTitle: '',
+    courseUnits: '',
+    courseTerm: '',
+    courseYear: '',
+    designation: '',
+    additionalReq: '',
     courseStatus: isComplete,
-    courseGrade: "",
-    courseSection: "",
-    courseStartTime: startTimeValue, 
+    courseGrade: '',
+    courseSection: '',
+    courseStartTime: startTimeValue,
     courseEndTime: endTimeValue,
     courseDays: [],
-    courseLocation: ""
-  })
-  
+    courseLocation: '',
+  });
+
   const handleCourseChange = (value) => {
     setRadioValue(value);
-    setCourseData(prevData => {
+    setCourseData((prevData) => {
       return {
         ...prevData,
-        courseType: radioValue
-      }
-    })
+        courseType: radioValue,
+      };
+    });
   };
 
   const handleProgressChange = (value) => {
     setIsComplete(value);
-    setCourseData(prevData => {
+    setCourseData((prevData) => {
       return {
         ...prevData,
-        courseStatus: isComplete
-      }
-    })
+        courseStatus: isComplete,
+      };
+    });
   };
 
   const handleStartTimeChange = (time) => {
     setStartTimeValue(time);
-    setCourseData(prevData => {
+    setCourseData((prevData) => {
       return {
         ...prevData,
-        courseStartTime: time
-      }
-    })
-    alert(courseData.courseStartTime)
+        courseStartTime: time,
+      };
+    });
+    alert(courseData.courseStartTime);
   };
 
   const handleEndTimeChange = (time) => {
     setEndTimeValue(time);
-    setCourseData(prevData => {
+    setCourseData((prevData) => {
       return {
         ...prevData,
-        courseEndTime: time
-      }
-    })
+        courseEndTime: time,
+      };
+    });
   };
 
   const handleDayChange = (val) => {
-    setDayValue(prevDays => [...prevDays, val]);
-    setCourseData(prevData => {
+    setDayValue((prevDays) => [...prevDays, val]);
+    setCourseData((prevData) => {
       return {
         ...prevData,
-        courseDays: dayValue
-      }
-    })
-    alert(courseData.courseDays[4])
+        courseDays: dayValue,
+      };
+    });
+    alert(courseData.courseDays[4]);
   };
 
   const handleChange = (event) => {
-    const {name, value, type, checked} = event.target
-    type === "checked" ? setCourseData(prevData => {
-      return {
-        ...prevData,
-        [name]: checked
-      }
-    }) :
-    setCourseData(prevData => {
-      return {
-        ...prevData,
-        [name]: value
-      }
-    })
-  }
+    const { name, value, type, checked } = event.target;
+    type === 'checked'
+      ? setCourseData((prevData) => {
+          return {
+            ...prevData,
+            [name]: checked,
+          };
+        })
+      : setCourseData((prevData) => {
+          return {
+            ...prevData,
+            [name]: value,
+          };
+        });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     /*
     const newCourse = {
       courseType: radioValue,
@@ -129,13 +130,13 @@ const AddCourse = () => {
     } 
     addCourse(newCourse);
     */
-  }
+  };
 
   return (
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
         <Col md={9}>
-          <Card className="text-center shadow mb-5">
+          <Card className="text-center shadow-sm mb-3">
             <Card.Body>
               <Row className="my-2">
                 <Col className="d-flex justify-content-center">
@@ -168,6 +169,22 @@ const AddCourse = () => {
                   Submit
                 </Button>
               </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row className="d-flex justify-content-center">
+        <Col md={9} className="d-flex justify-content-center">
+          <p> - or - </p>
+        </Col>
+      </Row>
+      <Row className="d-flex justify-content-center">
+        <Col md={9}>
+          <Card className="text-center shadow-sm mb-5">
+            <Card.Body>
+              <Button className variant="primary" type="submit">
+                Add via transcript
+              </Button>
             </Card.Body>
           </Card>
         </Col>
