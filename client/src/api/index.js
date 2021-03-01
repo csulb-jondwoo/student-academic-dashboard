@@ -6,4 +6,4 @@ export const googleLogout = () =>
   API.get('/auth/logout', { withCredentials: true });
 export const fetchUser = () => API.get('/user', { withCredentials: true });
 export const getCourses = () => API.get('/course');
-export const addCourse = (newCourse) => axios.post(baseURL, newCourse)
+export const addCourse = (newCourse) => API.post('/course', newCourse)
