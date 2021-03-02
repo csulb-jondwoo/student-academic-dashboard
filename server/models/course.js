@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 // currentCourseSchema, completedCourseSchema
+/* 
+courseNo: {
+    type: String,
+    required: [true, 'Please enter a course number.']
+}
+*/
 const courseSchema = mongoose.Schema({
     courseNo: String, 
     courseTitle: String, 

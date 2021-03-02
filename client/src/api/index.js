@@ -6,4 +6,5 @@ export const googleLogout = () =>
   API.get('/auth/logout', { withCredentials: true });
 export const fetchUser = () => API.get('/user', { withCredentials: true });
 export const getCourses = () => API.get('/course');
-export const addCourse = (newCourse) => API.post('/course', newCourse)
+export const addNewCourse = (course, config) => API.post('/course', course, config)
+export const deleteCourse = (id) => API.delete(`/course/${id}`)

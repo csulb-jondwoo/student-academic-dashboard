@@ -20,7 +20,7 @@ const AddCourse = () => {
   const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
   const [dayValue, setDayValue] = useState([]);
 
-  const { addCourse } = useContext(myContext);
+  const { addNewCourse } = useContext(myContext);
 
   const [courseData, setCourseData] = useState({
     courseType: radioValue,
@@ -68,6 +68,7 @@ const AddCourse = () => {
         courseStartTime: time,
       };
     });
+    //testing purposes
     alert(courseData.courseStartTime);
   };
 
@@ -89,6 +90,7 @@ const AddCourse = () => {
         courseDays: dayValue,
       };
     });
+    //testing purposes
     alert(courseData.courseDays[4]);
   };
 
@@ -111,7 +113,7 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    /*
+    
     const newCourse = {
       courseType: radioValue,
       courseNo: courseData.courseNo, 
@@ -129,8 +131,7 @@ const AddCourse = () => {
       courseDays: courseData.courseDays,
       courseLocation: courseData.courseLocation
     } 
-    addCourse(newCourse);
-    */
+    addNewCourse(newCourse)  
   };
 
   return (

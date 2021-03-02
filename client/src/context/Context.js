@@ -1,20 +1,22 @@
-import React, { createContext, useEffect, useState } from 'react';
-//import AppReducer from "./AppReducer";
+import React, { createContext, useEffect, useState, useReducer } from 'react';
+import AppReducer from "./AppReducer";
 import * as api from '../api';
 
-/*
+
 const initialState = {
-  userCourses: []
+  courses: [],
+  error: null,
+  loading: true
   //needs user name?
 }
-*/
 
-// export const myContext = createContext({initialState});
-export const myContext = createContext({});
+
+export const myContext = createContext({initialState});
+//export const myContext = createContext({});
 
 export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'));
-  // const [state, dispatch] = useReducer(AppReducer, initialState);
+  const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // actions
   const handleLogout = () => {
@@ -39,28 +41,61 @@ export default function Context(props) {
     });
   }, []);
 
-  /*
-  function addCourse(course) {
-    dispatch({
-      type: 'ADD_COURSE',
-      payload: course
-    })
+  
+  async function getCourses() {
+    try {
+      const res = await api.getCourses();
+
+      dispatch({
+        type: 'GET_COURSES',
+        payload: res.data.data
+      });
+    } catch (err) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: err.response.data.error
+      });
+    }
   }
 
-  function deleteCourse(courseID) {
-    dispatch({
-      type: 'DELETE_COURSE',
-      payload: courseID
-    })
+  async function deleteCourse(id) {
+    try {
+      await api.deleteCourse();
+
+      dispatch({
+        type: 'DELETE_COURSE',
+        payload: id
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error
+      });
+    }
   }
 
-  function updateCourse(course) {
-    dispatch({
-      type: 'UPDATE_COURSE',
-      payload: course
-    })
+  async function addNewCourse(course) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    try {
+      const res = await api.addNewCourse(course, config);
+
+      dispatch({
+        type: 'ADD_COURSE',
+        payload: res.data.data
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error
+      });
+    }
   }
-  */
+   
 
   return (
     <myContext.Provider
@@ -68,9 +103,10 @@ export default function Context(props) {
         user, 
         handleLogin, 
         handleLogout,
-        //userCourses: state.userCourses,
-        //addCourse,
-        //deleteCourse,
+        courses: state.courses,
+        getCourses,
+        addNewCourse,
+        deleteCourse,
         //updateCourse
       }}>
       {props.children}

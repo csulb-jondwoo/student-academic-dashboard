@@ -9,14 +9,13 @@ const passport = require('passport');
 
 const authRoutes = require('../routes/auth.js');
 const userRoutes = require('../routes/user.js');
-
-// Ryan
 const courseRoutes = require("../routes/course.js");
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 require('../config/passport')(passport);
 
 const app = express();
+app.use(express.json());
 
 const CONNECTION_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bcfji.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;
@@ -46,5 +45,4 @@ app.use(passport.session());
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-// Ryan
 app.use('/course', courseRoutes)
