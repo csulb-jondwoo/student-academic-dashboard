@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,10 +11,6 @@ import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/Ce
 
 // MAKE FIELDS REQUIRED
 export const CourseDetailForm = (props) => {
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  }
 
   return (
     <>

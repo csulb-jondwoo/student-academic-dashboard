@@ -9,7 +9,7 @@ import '../../../utility/css/table-fixed-height.css';
 import { BiEdit } from 'react-icons/bi';
 //import { BiPlusCircle } from 'react-icons/bi';
 
-import { Context } from "../../../context/Context"
+//import { Context } from "../../../context/Context"
 
 const CurrentSchedule = () => {
 
