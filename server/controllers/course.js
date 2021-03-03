@@ -8,7 +8,6 @@ const getAddedCourses = async (req, res) => {
         const addedCourses = await Course.find();
         
         return res.status(200).json(addedCourses)
-        // return res.status(200).json({success: true, count: addeCourses.length, data: addedCourses})
     } catch (error) {
         return res.status(404).json({message: error.message});
     }

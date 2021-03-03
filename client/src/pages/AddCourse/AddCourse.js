@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
-import { myContext } from '../../context/Context';
+import {myContext} from '../../context/Context';
 
 import DragAndDrop from '../../utility/DragAndDrop';
 import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
@@ -20,9 +20,11 @@ const AddCourse = () => {
   const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
   const [dayValue, setDayValue] = useState([]);
 
-  const { addNewCourse } = useContext(myContext);
+  const { addNewCourse, user } = useContext(myContext);
+  console.log(user.googleId)
 
   const [courseData, setCourseData] = useState({
+    userID: user.googleId,
     courseType: radioValue,
     courseNo: '',
     courseTitle: '',

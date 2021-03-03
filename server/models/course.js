@@ -8,6 +8,7 @@ courseNo: {
 }
 */
 const courseSchema = mongoose.Schema({
+    userID: String,
     courseNo: String, 
     courseTitle: String, 
     courseUnits: String, 

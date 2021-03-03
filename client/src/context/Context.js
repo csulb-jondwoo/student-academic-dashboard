@@ -9,8 +9,8 @@ const initialState = {
   //needs user name?
 };
 
-export const myContext = createContext({ initialState });
-//export const myContext = createContext({});
+//export const myContext = createContext({ initialState });
+export const myContext = createContext({});
 
 export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'));
