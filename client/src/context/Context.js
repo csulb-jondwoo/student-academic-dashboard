@@ -1,17 +1,15 @@
 import React, { createContext, useEffect, useState, useReducer } from 'react';
-import AppReducer from "./AppReducer";
+import AppReducer from './AppReducer';
 import * as api from '../api';
-
 
 const initialState = {
   courses: [],
   error: null,
-  loading: true
+  loading: true,
   //needs user name?
-}
+};
 
-
-export const myContext = createContext({initialState});
+export const myContext = createContext({ initialState });
 //export const myContext = createContext({});
 
 export default function Context(props) {
@@ -35,25 +33,24 @@ export default function Context(props) {
   useEffect(() => {
     api.fetchUser().then((res) => {
       if (res.data) {
-        localStorage.setItem('user', res.data);
+        localStorage.setItem('user', JSON.stringify(res.data));
         setUser(localStorage.getItem('user'));
       }
     });
   }, []);
 
-  
   async function getCourses() {
     try {
       const res = await api.getCourses();
 
       dispatch({
         type: 'GET_COURSES',
-        payload: res.data.data
+        payload: res.data.data,
       });
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: err.response.data.error
+        payload: err.response.data.error,
       });
     }
   }
@@ -64,12 +61,12 @@ export default function Context(props) {
 
       dispatch({
         type: 'DELETE_COURSE',
-        payload: id
+        payload: id,
       });
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: error.response.data.error
+        payload: error.response.data.error,
       });
     }
   }
@@ -77,38 +74,38 @@ export default function Context(props) {
   async function addNewCourse(course) {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+        'Content-Type': 'application/json',
+      },
+    };
 
     try {
       const res = await api.addNewCourse(course, config);
 
       dispatch({
         type: 'ADD_COURSE',
-        payload: res.data.data
+        payload: res.data.data,
       });
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: error.response.data.error
+        payload: error.response.data.error,
       });
     }
   }
-   
 
   return (
     <myContext.Provider
-      value={{ 
-        user, 
-        handleLogin, 
+      value={{
+        user,
+        handleLogin,
         handleLogout,
         courses: state.courses,
         getCourses,
         addNewCourse,
         deleteCourse,
         //updateCourse
-      }}>
+      }}
+    >
       {props.children}
     </myContext.Provider>
   );
