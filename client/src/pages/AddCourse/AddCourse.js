@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
-import {myContext} from '../../context/Context';
+import { myContext } from '../../context/Context';
 
 import DragAndDrop from '../../utility/DragAndDrop';
 import CourseDetailForm from '../../components/Forms/CourseDetailForm/CourseDetailForm';
@@ -21,7 +21,7 @@ const AddCourse = () => {
   const [dayValue, setDayValue] = useState([]);
 
   const { addNewCourse, user } = useContext(myContext);
-  console.log(user.googleId)
+  console.log(JSON.parse(user).googleId);
 
   const [courseData, setCourseData] = useState({
     userID: user.googleId,
@@ -115,25 +115,25 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const newCourse = {
       courseType: radioValue,
-      courseNo: courseData.courseNo, 
-      courseTitle: courseData.courseTitle, 
-      courseUnits: courseData.courseUnits, 
-      courseTerm: courseData.courseTerm, 
-      courseYear: courseData.courseYear, 
-      designation: courseData.designation, 
+      courseNo: courseData.courseNo,
+      courseTitle: courseData.courseTitle,
+      courseUnits: courseData.courseUnits,
+      courseTerm: courseData.courseTerm,
+      courseYear: courseData.courseYear,
+      designation: courseData.designation,
       additionalReq: courseData.additionalReq,
       courseStatus: courseData.courseStatus,
       courseGrade: courseData.courseGrade,
       courseSection: courseData.courseSection,
-      courseStartTime: courseData.courseStartTime, 
+      courseStartTime: courseData.courseStartTime,
       courseEndTime: courseData.courseEndTime,
       courseDays: courseData.courseDays,
-      courseLocation: courseData.courseLocation
-    } 
-    addNewCourse(newCourse)  
+      courseLocation: courseData.courseLocation,
+    };
+    addNewCourse(newCourse);
   };
 
   return (
