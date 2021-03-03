@@ -21,7 +21,7 @@ const AddCourse = () => {
   const [dayValue, setDayValue] = useState([]);
 
   const { addNewCourse, user } = useContext(myContext);
-  console.log(user.googleId)
+  console.log(JSON.parse(user).googleId);
 
   const [courseData, setCourseData] = useState({
     userID: user.googleId,
