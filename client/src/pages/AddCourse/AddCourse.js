@@ -21,10 +21,10 @@ const AddCourse = () => {
   const [dayValue, setDayValue] = useState([]);
 
   const { addNewCourse, user } = useContext(myContext);
-  console.log(JSON.parse(user).googleId);
+  const googleID = JSON.parse(user).googleId;
 
   const [courseData, setCourseData] = useState({
-    userID: user.googleId,
+    userID: googleID,
     courseType: radioValue,
     courseNo: '',
     courseTitle: '',
@@ -70,8 +70,6 @@ const AddCourse = () => {
         courseStartTime: time,
       };
     });
-    //testing purposes
-    alert(courseData.courseStartTime);
   };
 
   const handleEndTimeChange = (time) => {
@@ -92,8 +90,6 @@ const AddCourse = () => {
         courseDays: dayValue,
       };
     });
-    //testing purposes
-    alert(courseData.courseDays[4]);
   };
 
   const handleChange = (event) => {
@@ -117,7 +113,8 @@ const AddCourse = () => {
     e.preventDefault();
 
     const newCourse = {
-      courseType: radioValue,
+      userID: courseData.userID,
+      courseType: courseData.courseType,
       courseNo: courseData.courseNo,
       courseTitle: courseData.courseTitle,
       courseUnits: courseData.courseUnits,
