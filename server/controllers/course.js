@@ -1,13 +1,16 @@
 const currentCourse = require('../models/currentCourse.js');
 const completedCourse = require('../models/completedCourse.js');
-// may need to just bring in the new user model and change functions appropriately. Example: (User.currentCourse.find)
+const fetchUser = require('./user.js')
 
 const addCompletedCourse = async (req, res) => {
     try {
         const completed = req.body;
         //const newCompletedCourse = await completedCourse.create(completed);
+        const currentUser = await fetchUser();
+        console.log(currentUser);
+        const { _id } = currentUser
         await completedCourse.findOneAndUpdate({
-            googleId: ""
+            _id: ""
         },
         {
             $addToSet: {
@@ -24,7 +27,15 @@ const addCompletedCourse = async (req, res) => {
 const addCurrentCourse = async (req, res) => {
     try {
         const current = req.body;
-        const newCurrentCourse = await currentCourse.create(current);
+        //const newCompletedCourse = await completedCourse.create(completed);
+        await currentCourse.findOneAndUpdate({
+            _id: ""
+        },
+        {
+            $addToSet: {
+                currentCourses: current
+            }
+        })
 
         return res.status(201).json(newCurrentCourse)
     } catch (error) {
