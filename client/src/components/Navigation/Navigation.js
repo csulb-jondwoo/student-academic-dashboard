@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import './Navigation.css';
 import { myContext } from '../../context/Context';
@@ -18,7 +20,10 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
-            <Nav.Link href="/add-course">Add Course</Nav.Link>
+            <DropdownButton id="add_course" title="add_course">
+              <Dropdown.Item href="/add-current-course">Current Course</Dropdown.Item>
+              <Dropdown.Item href="/add-completed-course">Completed Course</Dropdown.Item>
+            </DropdownButton>
           </Nav>
           <Nav>
             <Nav.Link href="/roadmap">Roadmap</Nav.Link>

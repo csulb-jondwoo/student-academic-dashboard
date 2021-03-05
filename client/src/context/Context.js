@@ -39,12 +39,28 @@ export default function Context(props) {
     });
   }, []);
 
-  async function getCourses() {
+  async function getCurrentCourses() {
     try {
-      const res = await api.getCourses();
+      const res = await api.getCurrentCourses();
 
       dispatch({
-        type: 'GET_COURSES',
+        type: 'GET_CURRENT_COURSES',
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  async function getCompletedCourses() {
+    try {
+      const res = await api.getCompletedCourses();
+
+      dispatch({
+        type: 'GET_COMPLETED_COURSES',
         payload: res.data.data,
       });
     } catch (err) {
@@ -71,7 +87,7 @@ export default function Context(props) {
     }
   }
 
-  async function addNewCourse(course) {
+  async function addCurrentCourse(course) {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -79,10 +95,32 @@ export default function Context(props) {
     };
 
     try {
-      const res = await api.addNewCourse(course, config);
+      const res = await api.addCurrentCourse(course, config);
 
       dispatch({
-        type: 'ADD_COURSE',
+        type: 'ADD_CURRENT_COURSE',
+        payload: res.data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error,
+      });
+    }
+  }
+
+  async function addCompletedCourse(course) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await api.addCompletedCourse(course, config);
+
+      dispatch({
+        type: 'ADD_COMPLETED_COURSE',
         payload: res.data.data,
       });
     } catch (error) {
@@ -100,8 +138,10 @@ export default function Context(props) {
         handleLogin,
         handleLogout,
         courses: state.courses,
-        getCourses,
-        addNewCourse,
+        getCompletedCourses,
+        getCurrentCourses,
+        addCurrentCourse,
+        addCompletedCourse,
         deleteCourse,
         //updateCourse
       }}

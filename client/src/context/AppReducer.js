@@ -5,7 +5,12 @@ export default (state, action) => {
           ...state,
           userCourses: state.userCourses.filter(course => course._id !== action.payload)
         }
-      case 'ADD_COURSE':
+      case 'ADD_CURRENT_COURSE':
+        return {
+          ...state,
+          courses: [...state.courses, action.payload]
+        }
+      case 'ADD_COMPLETED_COURSE':
         return {
           ...state,
           courses: [...state.courses, action.payload]
@@ -15,7 +20,13 @@ export default (state, action) => {
           ...state,
           
         }
-      case 'GET_COURSES':
+      case 'GET_CURRENT_COURSES':
+        return {
+          ...state,
+          loading: false,
+          courses: action.payload
+        }
+      case 'GET_COMPLETED_COURSES':
         return {
           ...state,
           loading: false,

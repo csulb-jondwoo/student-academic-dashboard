@@ -1,24 +1,32 @@
-const Course = require("../models/course.js")
+const currentCourse = require('../models/currentCourse.js');
+const completedCourse = require('../models/completedCourse.js');
+// may need to just bring in the new user model and change functions appropriately. Example: (User.currentCourse.find)
 
-// getCurrentCourses, getCompletedCourses)
-// addCurrentCourse, addCompletedCourse
-// req, res, next?
-const getAddedCourses = async (req, res) => {
+const addCompletedCourse = async (req, res) => {
     try {
-        const addedCourses = await Course.find();
-        
-        return res.status(200).json(addedCourses)
+        const completed = req.body;
+        //const newCompletedCourse = await completedCourse.create(completed);
+        await completedCourse.findOneAndUpdate({
+            googleId: ""
+        },
+        {
+            $addToSet: {
+                completedCourses: completed
+            }
+        })
+
+        return res.status(201).json(newCompletedCourse)
     } catch (error) {
-        return res.status(404).json({message: error.message});
+        return res.status(409).json({message: error.message});
     }
 }
 
-const addCourse = async (req, res) => {
-    const course = req.body;
-    const newCourse = new Course(course)
+const addCurrentCourse = async (req, res) => {
     try {
-        await newCourse.save()
-        return res.status(201).json(newCourse)
+        const current = req.body;
+        const newCurrentCourse = await currentCourse.create(current);
+
+        return res.status(201).json(newCurrentCourse)
     } catch (error) {
         return res.status(409).json({message: error.message});
     }
@@ -43,8 +51,30 @@ const deleteCourse = async (req, res) => {
     }
 }
 
+const getCurrentCourses = async (req, res) => {
+    try {
+        const currentCourses = await currentCourse.find();
+        
+        return res.status(200).json(currentCourses)
+    } catch (error) {
+        return res.status(404).json({message: error.message});
+    }
+}
+
+const getCompletedCourses = async (req, res) => {
+    try {
+        const completedCourses = await completedCourse.find();
+        
+        return res.status(200).json(completedCourses)
+    } catch (error) {
+        return res.status(404).json({message: error.message});
+    }
+}
+
 module.exports = {
-    getAddedCourses,
-    addCourse,
+    getCurrentCourses,
+    getCompletedCourses,
+    addCurrentCourse,
+    addCompletedCourse,
     deleteCourse
 }
