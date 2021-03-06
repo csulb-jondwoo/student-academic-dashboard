@@ -56,6 +56,7 @@ export const CompletedCourseForm = (props) => {
     e.preventDefault();
 
     const newCompletedCourse = {
+      userID: courseData.userID,
       courseType: courseData.courseType,
       courseNo: courseData.courseNo,
       courseTitle: courseData.courseTitle,
