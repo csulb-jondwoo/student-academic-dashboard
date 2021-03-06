@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 //const currentCourse = require('./currentCourse.js');
 //const completedCourse = require('./completedCourse.js')
 
-const completedCourse = {
+const completedCourseSchema = mongoose.Schema({
+  userID: String,
   courseNo: String, 
   courseTitle: String, 
   courseUnits: String, 
@@ -10,9 +11,10 @@ const completedCourse = {
   courseYear: String, 
   designation: String, // unnecessary? nice for display, don't really need to save it.
   courseGrade: String
-};
+})
 
-const currentCourse = {
+const currentCourseSchema = mongoose.Schema({
+  userID: String,
   courseNo: String, 
   courseTitle: String, 
   courseUnits: String, 
@@ -23,7 +25,7 @@ const currentCourse = {
   // start, end time (how to save? toString()?)
   // days of week [String]
   // location String
-};
+})
 
 const userSchema = mongoose.Schema({
   googleId: {
@@ -38,14 +40,10 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  currentCourses: {
-    type: [currentCourse],
-    required: false
-  },
-  completedCourses: {
-    type: [completedCourse],
-    required: false
-  },
+  currentCourses: [currentCourseSchema],
+  completedCourses: [completedCourseSchema]
 });
 
 module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('CurrentCourse', currentCourseSchema);
+module.exports = mongoose.model('CompletedCourse', completedCourseSchema);

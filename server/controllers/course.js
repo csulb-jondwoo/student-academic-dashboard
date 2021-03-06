@@ -1,24 +1,27 @@
-const currentCourse = require('../models/currentCourse.js');
-const completedCourse = require('../models/completedCourse.js');
+const currentCourse = require('../models/user.js');
+const completedCourse = require('../models/user.js');
+const userSchema = require('../models/user.js')
 const fetchUser = require('./user.js')
 
 const addCompletedCourse = async (req, res) => {
     try {
+        const { userID } = req.body; // userID = googleId passed from completed course form
         const completed = req.body;
-        //const newCompletedCourse = await completedCourse.create(completed);
-        const currentUser = await fetchUser();
-        console.log(currentUser);
-        const { _id } = currentUser
-        await completedCourse.findOneAndUpdate({
-            _id: ""
-        },
-        {
+        await new completedCourse(completed).save()
+
+
+        await userSchema.findOneAndUpdate({
+            googleId: userID,
+        }, {
             $addToSet: {
                 completedCourses: completed
             }
         })
 
-        return res.status(201).json(newCompletedCourse)
+        return res.status(201).json({
+            success: true,
+            data: completed
+        });
     } catch (error) {
         return res.status(409).json({message: error.message});
     }
@@ -26,10 +29,12 @@ const addCompletedCourse = async (req, res) => {
 
 const addCurrentCourse = async (req, res) => {
     try {
+        const { userID } = req.body;
         const current = req.body;
-        //const newCompletedCourse = await completedCourse.create(completed);
-        await currentCourse.findOneAndUpdate({
-            _id: ""
+        await new currentCourse(current).save()
+        
+        await userSchema.findOneAndUpdate({
+            googleId: userID
         },
         {
             $addToSet: {

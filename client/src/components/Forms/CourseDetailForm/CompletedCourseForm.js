@@ -20,6 +20,7 @@ export const CompletedCourseForm = (props) => {
   const { addCompletedCourse, user } = useContext(myContext);
 
   const [courseData, setCourseData] = useState({
+    userID: JSON.parse(user).googleId,
     courseType: radioValue,
     courseNo: '',
     courseTitle: '',
