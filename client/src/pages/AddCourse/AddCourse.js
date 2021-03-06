@@ -7,10 +7,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 import { myContext } from '../../context/Context';
-
 import DragAndDrop from '../../utility/DragAndDrop';
 import { CompletedCourseForm } from '../../components/Forms/CourseDetailForm/CompletedCourseForm';
 import { CurrentCourseForm } from '../../components/Forms/CurrentCourseDetailForm/CurrentCourseForm';
+import * as API from '../../api';
 
 const AddCourse = () => {
   const [radioValue, setRadioValue] = useState('ge');
@@ -125,6 +125,8 @@ const AddCourse = () => {
     addCourse(newCourse);
   };
 
+  const handleSubmitTranscript = () => {};
+
   return (
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
@@ -132,8 +134,7 @@ const AddCourse = () => {
           <Card className="text-center shadow-sm mb-3">
             <Card.Body>
               <Row className="my-2">
-                <Col className="d-flex justify-content-center">
-                </Col>
+                <Col className="d-flex justify-content-center"></Col>
               </Row>
             </Card.Body>
           </Card>
@@ -145,12 +146,18 @@ const AddCourse = () => {
           <p> - or - </p>
         </Col>
       </Row>
+
       <Row className="d-flex justify-content-center">
         <Col md={9}>
           <Card className="text-center shadow-sm mb-5">
             <Card.Body>
               <DragAndDrop />
-              <Button className variant="primary" type="submit">
+              <Button
+                className
+                onClick={handleSubmitTranscript}
+                variant="primary"
+                type="submit"
+              >
                 Add via transcript
               </Button>
             </Card.Body>

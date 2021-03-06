@@ -1,5 +1,4 @@
 /*global __dirname, process*/
-
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +8,7 @@ const passport = require('passport');
 
 const authRoutes = require('../routes/auth.js');
 const userRoutes = require('../routes/user.js');
-const courseRoutes = require("../routes/course.js");
+const courseRoutes = require('../routes/course.js');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 require('../config/passport')(passport);
@@ -45,4 +44,4 @@ app.use(passport.session());
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/course', courseRoutes)
+app.use('/course', courseRoutes);
