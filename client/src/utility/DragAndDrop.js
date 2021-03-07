@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import './DragAndDrop.css';
@@ -6,7 +6,14 @@ import './DragAndDrop.css';
  * Drag and drop a file
  * @author Ryan Stehle
  */
-export default function Accept(props) {
+export default function Accept({ handleFileChange }) {
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      handleFileChange(acceptedFiles);
+    },
+    [handleFileChange]
+  );
+
   const {
     acceptedFiles,
     getRootProps,
@@ -16,6 +23,7 @@ export default function Accept(props) {
     isDragReject,
   } = useDropzone({
     accept: '',
+    onDrop,
   });
 
   const acceptedFilesItems = acceptedFiles.map((file) => (

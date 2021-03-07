@@ -1,7 +1,7 @@
-//const currentCourseSchema = require('../models/user.js');
-//const completedCourseSchema = require('../models/user.js');
-const userSchema = require('../models/user.js')
-const fetchUser = require('./user.js')
+const multer = require('multer');
+const { PythonShell } = require('python-shell');
+const userSchema = require('../models/user.js');
+const { upload } = require('../utility/multer.js');
 
 const addCompletedCourse = async (req, res) => {
     try {
@@ -91,10 +91,42 @@ const getCompletedCourses = async (req, res) => {
     }
 }
 
+
+const uploadTranscript = (req, res) => {
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).send(req.file);
+  });
+
+  let options = {
+    mode: 'text',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: './transcripts', //If you are having python_test.py script in same folder, then it's optional.
+    args: [''], //An argument which can be accessed in the script using sys.argv[1]
+  };
+
+  PythonShell.run('parse.py', options, function (err, result) {
+    if (err) throw err;
+    // result is an array consisting of messages collected
+    //during execution of script.
+    const data = result;
+    const jsonData = JSON.parse(data);
+    console.log(jsonData);
+    // console.log(json['csulb']['2020'][1]);
+
+    // res.send(result.toString());
+  });
+};
+
 module.exports = {
-    getCurrentCourses,
-    getCompletedCourses,
-    addCurrentCourse,
-    addCompletedCourse,
-    deleteCourse
-}
+  getCurrentCourses,
+  getCompletedCourses,
+  addCurrentCourse,
+  addCompletedCourse,
+  deleteCourse,
+  uploadTranscript,
+};
