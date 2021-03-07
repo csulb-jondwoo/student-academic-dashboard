@@ -8,12 +8,14 @@ const addCompletedCourse = async (req, res) => {
         const { userID } = req.body; // userID = googleId passed from completed course form
         const completed = req.body;
 
+        console.log(completed)
+
         await userSchema.findOneAndUpdate(
             {
                 googleId: userID,
             }, 
             {
-                $addToSet: 
+                $push: 
                 {
                     completedCourses: completed
                 }
