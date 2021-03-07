@@ -15,7 +15,7 @@ const addCompletedCourse = async (req, res) => {
                 googleId: userID,
             }, 
             {
-                $push: 
+                $addToSet: 
                 {
                     completedCourses: completed
                 }
@@ -75,7 +75,7 @@ const deleteCourse = async (req, res) => {
 
 const getCurrentCourses = async (req, res) => {
     try {
-        const currentCourses = await currentCourse.find();
+        const currentCourses = await userSchema.find();
         
         return res.status(200).json(currentCourses)
     } catch (error) {
@@ -85,7 +85,7 @@ const getCurrentCourses = async (req, res) => {
 
 const getCompletedCourses = async (req, res) => {
     try {
-        const completedCourses = await completedCourse.find();
+        const completedCourses = await userSchema.find();
         
         return res.status(200).json(completedCourses)
     } catch (error) {
