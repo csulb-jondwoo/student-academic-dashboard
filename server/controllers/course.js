@@ -4,74 +4,73 @@ const userSchema = require('../models/user.js');
 const { upload } = require('../utility/multer.js');
 
 const addCompletedCourse = async (req, res) => {
-    try {
-        const { userID } = req.body; // userID = googleId passed from completed course form
-        const completed = req.body;
+  try {
+    const { userID } = req.body; // userID = googleId passed from completed course form
+    const completed = req.body;
 
-        console.log(completed)
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $addToSet: {
+          completedCourses: completed,
+        },
+      }
+    );
 
-        await userSchema.findOneAndUpdate(
-            {
-                googleId: userID,
-            }, 
-            {
-                $addToSet: 
-                {
-                    completedCourses: completed
-                }
-            }
-        )
-
-        return res.status(201).json({
-            success: true,
-            data: completed
-        });
-    } catch (error) {
-        return res.status(409).json({message: error.message});
-    }
-}
+    return res.status(201).json({
+      success: true,
+      data: completed,
+    });
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
 
 const addCurrentCourse = async (req, res) => {
-    try {
-        const { userID } = req.body;
-        const current = req.body;
-        
-        await userSchema.findOneAndUpdate({
-            googleId: userID
-        },
-        {
-            $addToSet: {
-                currentCourses: current
-            }
-        })
+  try {
+    const { userID } = req.body;
+    const current = req.body;
 
-        return res.status(201).json({
-            success: true,
-            data: current
-        });
-    } catch (error) {
-        return res.status(409).json({message: error.message});
-    }
-}
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $addToSet: {
+          currentCourses: current,
+        },
+      }
+    );
+
+    return res.status(201).json({
+      success: true,
+      data: current,
+    });
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
 
 const deleteCourse = async (req, res) => {
-    try {
-        const course = await Course.findById(req.params.id);
-        if (!course) {
-            return res.status(404).json({
-                success: false,
-                error: 'Course not found.'
-            })
-        }
-        await course.remove();
-        return res.status(200).json({
-            success: true,
-            data: {}
-        });
-    } catch (error) {
-        return res.status(409).json({message: error.message});
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found.',
+      });
     }
-}
+    await course.remove();
+    return res.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
 
 const getCurrentCourses = async (req, res) => {
     try {
@@ -93,7 +92,6 @@ const getCompletedCourses = async (req, res) => {
     }
 }
 
-
 const uploadTranscript = (req, res) => {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -107,7 +105,7 @@ const uploadTranscript = (req, res) => {
   let options = {
     mode: 'text',
     pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: './transcripts', //If you are having python_test.py script in same folder, then it's optional.
+    scriptPath: './transcripts',
     args: [''], //An argument which can be accessed in the script using sys.argv[1]
   };
 
@@ -118,7 +116,8 @@ const uploadTranscript = (req, res) => {
     const data = result;
     const jsonData = JSON.parse(data);
     console.log(jsonData);
-    // console.log(json['csulb']['2020'][1]);
+    console.log(jsonData['csulb']['2020']);
+    console.log(jsonData['csulb']['2020'][0]);
 
     // res.send(result.toString());
   });

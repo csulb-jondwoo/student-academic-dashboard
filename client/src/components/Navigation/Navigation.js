@@ -20,9 +20,13 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
-            <DropdownButton id="add_course" title="add_course">
-              <Dropdown.Item href="/add-current-course">Current Course</Dropdown.Item>
-              <Dropdown.Item href="/add-completed-course">Completed Course</Dropdown.Item>
+            <DropdownButton id="add_course" title="Add Course">
+              <Dropdown.Item href="/add-current-course">
+                Current Course
+              </Dropdown.Item>
+              <Dropdown.Item href="/add-completed-course">
+                Completed Course
+              </Dropdown.Item>
             </DropdownButton>
           </Nav>
           <Nav>

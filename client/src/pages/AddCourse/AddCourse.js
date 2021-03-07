@@ -51,6 +51,11 @@ const AddCourse = () => {
     });
   };
 
+    const test = () => {
+
+        const test = 'a'
+    }
+
   const handleProgressChange = (value) => {
     setIsComplete(value);
     setCourseData((prevData) => {

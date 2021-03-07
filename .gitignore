@@ -1,8 +1,6 @@
-client/node_modules/
-server/node_modules/
-server/nodemon.json
-server/.env
-client/.eslintrc.json
-server/.eslintrc.json
-client/.vscode
+**/node_modules/
+**/nodemon.json
+**/.env
+**/.vscode
 .vscode/
+**/.prettierrc.json
