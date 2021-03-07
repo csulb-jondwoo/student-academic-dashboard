@@ -17,7 +17,7 @@ const CourseHistory = () => {
           <Col>
             <Card.Body>
               <Card.Title>Course History</Card.Title>
-              <Button>Add Completed Course</Button>
+              <Button size="sm">Add Completed Course</Button>
             </Card.Body>
           </Col>
         </Row>
