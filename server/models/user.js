@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const completedCourseSchema = mongoose.Schema({
   userID: String,
+  courseType: String,
   courseNo: String, 
   courseTitle: String, 
   courseUnits: String, 
@@ -45,5 +46,5 @@ const userSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('User', userSchema);
-module.exports = mongoose.model('CurrentCourse', currentCourseSchema);
-module.exports = mongoose.model('CompletedCourse', completedCourseSchema);
+//module.exports = mongoose.model('CurrentCourse', currentCourseSchema);
+//module.exports = mongoose.model('CompletedCourse', completedCourseSchema);
