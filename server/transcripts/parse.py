@@ -1,13 +1,11 @@
 import json
 import re
 import itertools
-import pprint
-import json
 from pathlib import Path
 from pdfreader import SimplePDFViewer
 
 
-### HELPER FUNCTIONS
+# HELPER FUNCTIONS
 def initViewer():
     # get absolute path of transcript to open
     script_location = Path(__file__).absolute().parent
@@ -50,16 +48,19 @@ def convertPDFtoString(viewer):
     return string
 
 
-### BUSINESS LOGIC FUNCTIONS
+
+# BUSINESS LOGIC FUNCTIONS
 def getTermPairs(termsByYear, isTransferData=False):
     pairedList = list(pairwise(termsByYear))
     if termsByYear:
         if isTransferData:
             # i.e [(Fall 2009, Spring 2017), (Spring 2017, Beginning)]
-            # gotta set the final pair with "beginning" because thats when the transfer portion ends
+            # gotta set the final pair with "beginning" because thats when the
+            # transfer portion ends
             pairedList.append([termsByYear[len(termsByYear) - 1], "Beginning"])
         else:
-            # gotta set the final pair with "End" because thats when the transfer portion ends
+            # gotta set the final pair with "End" because thats when the
+            # transfer portion ends
             pairedList.append([termsByYear[len(termsByYear) - 1], "End"])
     else:
         return []
@@ -91,8 +92,8 @@ def formatCourseData(string):
 
     # separate out course department and number, description, and grade
     courseDetails[0:2] = [" ".join(courseDetails[0:2])]
-    courseDetails[1 : len(courseDetails) - 2] = [
-        " ".join(courseDetails[1 : len(courseDetails) - 2])
+    courseDetails[1:len(courseDetails) - 2] = [
+        " ".join(courseDetails[1:len(courseDetails) - 2])
     ]
 
     return courseDetails
