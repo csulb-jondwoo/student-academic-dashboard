@@ -11,5 +11,6 @@ export const addCurrentCourse = (course, config) =>
   API.post('/course/current', course, config);
 export const addCompletedCourse = (course, config) =>
   API.post('/course/completed', course, config);
-export const deleteCourse = (id) => API.delete(`/course/${id}`);
+export const deleteCurrentCourse = (id) => API.delete(`/course/${id}`);
+export const deleteCompletedCourse = (id) => API.delete(`/course/${id}`);
 export const uploadCourse = (data) => API.post('/course/upload', data);

@@ -53,20 +53,35 @@ const addCurrentCourse = async (req, res) => {
   }
 };
 
-const deleteCourse = async (req, res) => {
+const deleteCurrentCourse = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).json({
-        success: false,
-        error: "Course not found.",
-      });
-    }
-    await course.remove();
-    return res.status(200).json({
-      success: true,
-      data: {},
-    });
+    const { userID } = req.body;
+    const current = req.body;
+
+    await userSchema.findOneAndUpdate({
+      googleId: userID
+    }, {
+      $pull: {
+        currentCourses: current
+      }
+    })
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
+
+const deleteCompletedCourse = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const completed = req.body;
+
+    await userSchema.findOneAndUpdate({
+      googleId: userID
+    }, {
+      $pull: {
+        completedCourses: completed
+      }
+    })
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -128,6 +143,7 @@ module.exports = {
   getCompletedCourses,
   addCurrentCourse,
   addCompletedCourse,
-  deleteCourse,
+  deleteCurrentCourse,
+  deleteCompletedCourse,
   uploadTranscript,
 };

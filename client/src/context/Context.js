@@ -71,9 +71,25 @@ export default function Context(props) {
     }
   }
 
-  async function deleteCourse(id) {
+  async function deleteCurrentCourse(id) {
     try {
-      await api.deleteCourse();
+      await api.deleteCurrentCourse();
+
+      dispatch({
+        type: 'DELETE_COURSE',
+        payload: id,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error,
+      });
+    }
+  }
+
+  async function deleteCompletedCourse(id) {
+    try {
+      await api.deleteCompletedCourse();
 
       dispatch({
         type: 'DELETE_COURSE',
@@ -142,7 +158,8 @@ export default function Context(props) {
         getCurrentCourses,
         addCurrentCourse,
         addCompletedCourse,
-        deleteCourse,
+        deleteCurrentCourse,
+        deleteCompletedCourse,
         //updateCourse
       }}
     >

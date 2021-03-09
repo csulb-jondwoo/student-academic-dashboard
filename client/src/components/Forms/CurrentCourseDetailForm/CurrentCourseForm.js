@@ -22,6 +22,7 @@ export const CurrentCourseForm = (props) => {
   const [dayValue, setDayValue] = useState([]);
 
   const [courseData, setCourseData] = useState({
+    userID: JSON.parse(user).googleId,
     courseType: radioValue,
     courseNo: '',
     courseTitle: '',
@@ -91,6 +92,7 @@ export const CurrentCourseForm = (props) => {
     e.preventDefault();
 
     const newCurrentCourse = {
+      userID: courseData.userID,
       courseType: courseData.courseType,
       courseNo: courseData.courseNo,
       courseTitle: courseData.courseTitle,

@@ -29,12 +29,7 @@ const CurrentSchedule = () => {
             <Col>
               <Card.Body>
                 <Card.Title>
-                  Current Schedule (Fall 2020) - 7 Units -{' '}
-                  <button>
-                    <Link to="/add-course">
-                      <BiEdit />
-                    </Link>
-                  </button>
+                  Current Schedule (Fall 2020) - 7 Units
                 </Card.Title>
               </Card.Body>
             </Col>

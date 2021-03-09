@@ -12,7 +12,7 @@ const completedCourseSchema = mongoose.Schema({
   courseYear: String, 
   designation: String, // unnecessary? nice for display, don't really need to save it.
   courseGrade: String
-})
+}, { _id : false });
 
 const currentCourseSchema = mongoose.Schema({
   userID: String,
@@ -26,7 +26,7 @@ const currentCourseSchema = mongoose.Schema({
   // start, end time (how to save? toString()?)
   // days of week [String]
   // location String
-})
+}, { _id : false });
 
 const userSchema = mongoose.Schema({
   googleId: {
