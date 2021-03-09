@@ -22,9 +22,9 @@ const CurrentSchedule = () => {
   const currentCourseList = currentCourses.map(course => (<currentCourse key={course.id} course={course} />))
   */
 
-  useEffect(() => {
-    getCurrentCourses(userID);
-  }, []);
+  // useEffect(() => {
+  //   getCurrentCourses(userID);
+  // }, []);
 
   /* const displayedCourses = currentCourses.map(course => {
     <tr>

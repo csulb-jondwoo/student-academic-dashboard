@@ -91,9 +91,15 @@ const getCurrentCourses = async (req, res) => {
     try {
         const currentCourses = await userSchema.find();
         
-        return res.status(200).json(currentCourses)
-    } catch (error) {
-        return res.status(404).json({message: error.message});
+        return res.status(200).json({
+          success: true,
+          data: currentCourses
+        });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
     }
 }
 
@@ -101,9 +107,15 @@ const getCompletedCourses = async (req, res) => {
     try {
         const completedCourses = await userSchema.find();
         
-        return res.status(200).json(completedCourses)
-    } catch (error) {
-        return res.status(404).json({message: error.message});
+        return res.status(200).json({
+          success: true,
+          data: completedCourses
+        });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
     }
 }
 
