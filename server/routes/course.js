@@ -9,13 +9,11 @@ const {
   uploadTranscript,
 } = require('../controllers/course.js');
 
-//router.get('/', getAddedCourses);
-// router.get('/current', getCurrentCourses);
-// router.get('/completed', getCompletedCourses);
-//router.post('/', addCourse);
-// router.post('/current', addCurrentCourse);
-// router.post('/completed', addCompletedCourse);
-// router.delete('/:id', deleteCourse)
+router.get('/current', getCurrentCourses);
+router.get('/completed', getCompletedCourses);
+router.post('/current', addCurrentCourse);
+router.post('/completed', addCompletedCourse);
+router.delete('/:id', deleteCourse)
 router.post('/upload', uploadTranscript);
 
 module.exports = router;
