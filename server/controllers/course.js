@@ -73,24 +73,24 @@ const deleteCourse = async (req, res) => {
 };
 
 const getCurrentCourses = async (req, res) => {
-    try {
-        const currentCourses = await userSchema.find();
-        
-        return res.status(200).json(currentCourses)
-    } catch (error) {
-        return res.status(404).json({message: error.message});
-    }
-}
+  try {
+    const currentCourses = await userSchema.find();
+
+    return res.status(200).json(currentCourses);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
 
 const getCompletedCourses = async (req, res) => {
-    try {
-        const completedCourses = await userSchema.find();
-        
-        return res.status(200).json(completedCourses)
-    } catch (error) {
-        return res.status(404).json({message: error.message});
-    }
-}
+  try {
+    const completedCourses = await userSchema.find();
+
+    return res.status(200).json(completedCourses);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
 
 const uploadTranscript = (req, res) => {
   upload(req, res, function (err) {
