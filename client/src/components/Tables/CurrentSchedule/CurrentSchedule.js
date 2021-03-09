@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,12 +6,13 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 import '../../../utility/css/table-fixed-height.css';
-import { BiEdit } from 'react-icons/bi';
-//import { BiPlusCircle } from 'react-icons/bi';
 
-//import { Context } from "../../../context/Context"
+import { myContext } from "../../../context/Context"
 
 const CurrentSchedule = () => {
+  const { getCurrentCourses, user } = useContext(myContext);
+  const userID = JSON.parse(user).googleId
+  
   /*
   // grab the users courses from context
   const { userCourses } = useContext(Context);
@@ -20,6 +21,19 @@ const CurrentSchedule = () => {
   // create a new currentCourse component for Dashboard to replace hardcoded data.
   const currentCourseList = currentCourses.map(course => (<currentCourse key={course.id} course={course} />))
   */
+
+  useEffect(() => {
+    getCurrentCourses(userID);
+  }, []);
+
+  /* const displayedCourses = currentCourses.map(course => {
+    <tr>
+      <td>course.</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  }) */
 
   return (
     <>
@@ -33,9 +47,6 @@ const CurrentSchedule = () => {
                 </Card.Title>
               </Card.Body>
             </Col>
-            {/* <Col className="py-3 d-flex justify-content-end mr-3">
-            <Button size="sm">Add Course</Button>
-          </Col> */}
           </Row>
         </Card>
         <div className="table-wrapper">

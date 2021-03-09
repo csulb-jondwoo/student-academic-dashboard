@@ -3,14 +3,15 @@ import AppReducer from './AppReducer';
 import * as api from '../api';
 
 const initialState = {
-  courses: [],
+  completedCourses: [],
+  currentCourses: [],
   error: null,
   loading: true,
   //needs user name?
 };
 
-//export const myContext = createContext({ initialState });
-export const myContext = createContext({});
+export const myContext = createContext({ initialState });
+//export const myContext = createContext({});
 
 export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'));
@@ -39,9 +40,9 @@ export default function Context(props) {
     });
   }, []);
 
-  async function getCurrentCourses() {
+  async function getCurrentCourses(userID) {
     try {
-      const res = await api.getCurrentCourses();
+      const res = await api.getCurrentCourses(userID);
 
       dispatch({
         type: 'GET_CURRENT_COURSES',
@@ -55,9 +56,9 @@ export default function Context(props) {
     }
   }
 
-  async function getCompletedCourses() {
+  async function getCompletedCourses(userID) {
     try {
-      const res = await api.getCompletedCourses();
+      const res = await api.getCompletedCourses(userID);
 
       dispatch({
         type: 'GET_COMPLETED_COURSES',
