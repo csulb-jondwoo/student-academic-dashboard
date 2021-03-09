@@ -13,6 +13,10 @@ import { myContext } from '../../context/Context';
 
 const AppRoutes = () => {
   const { user, handleLogin } = useContext(myContext);
+  /*
+  May need to add the userID as a parameter appended to all routes.
+  const userID = JSON.parse(user).googleId
+  */
 
   return (
     <Switch>

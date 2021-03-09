@@ -40,25 +40,25 @@ export default function Context(props) {
     });
   }, []);
 
-  // async function getCurrentCourses(userID) {
-  //   try {
-  //     const res = await api.getCurrentCourses(userID);
-
-  //     dispatch({
-  //       type: 'GET_CURRENT_COURSES',
-  //       payload: res.data.data,
-  //     });
-  //   } catch (err) {
-  //     dispatch({
-  //       type: 'COURSE_ERROR',
-  //       payload: err.response.data.error,
-  //     });
-  //   }
-  // }
-
-  async function getCompletedCourses(userID) {
+  async function getCurrentCourses() {
     try {
-      const res = await api.getCompletedCourses(userID);
+      const res = await api.getCurrentCourses();
+
+      dispatch({
+        type: 'GET_CURRENT_COURSES',
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  async function getCompletedCourses() {
+    try {
+      const res = await api.getCompletedCourses();
 
       dispatch({
         type: 'GET_COMPLETED_COURSES',
@@ -156,7 +156,7 @@ export default function Context(props) {
         handleLogout,
         courses: state.courses,
         getCompletedCourses,
-        //getCurrentCourses,
+        getCurrentCourses,
         addCurrentCourse,
         addCompletedCourse,
         deleteCurrentCourse,
