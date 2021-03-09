@@ -1,7 +1,7 @@
-const multer = require("multer");
-const { PythonShell } = require("python-shell");
-const userSchema = require("../models/user.js");
-const { upload } = require("../utility/multer.js");
+const multer = require('multer');
+const { PythonShell } = require('python-shell');
+const userSchema = require('../models/user.js');
+const { upload } = require('../utility/multer.js');
 
 const addCompletedCourse = async (req, res) => {
   try {
@@ -53,20 +53,41 @@ const addCurrentCourse = async (req, res) => {
   }
 };
 
-const deleteCourse = async (req, res) => {
+const deleteCurrentCourse = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).json({
-        success: false,
-        error: "Course not found.",
-      });
-    }
-    await course.remove();
-    return res.status(200).json({
-      success: true,
-      data: {},
-    });
+    const { userID } = req.body;
+    const current = req.body;
+
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $pull: {
+          currentCourses: current,
+        },
+      }
+    );
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
+
+const deleteCompletedCourse = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const completed = req.body;
+
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $pull: {
+          completedCourses: completed,
+        },
+      }
+    );
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -76,9 +97,15 @@ const getCurrentCourses = async (req, res) => {
   try {
     const currentCourses = await userSchema.find();
 
-    return res.status(200).json(currentCourses);
-  } catch (error) {
-    return res.status(404).json({ message: error.message });
+    return res.status(200).json({
+      success: true,
+      data: currentCourses,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
   }
 };
 
@@ -86,9 +113,15 @@ const getCompletedCourses = async (req, res) => {
   try {
     const completedCourses = await userSchema.find();
 
-    return res.status(200).json(completedCourses);
-  } catch (error) {
-    return res.status(404).json({ message: error.message });
+    return res.status(200).json({
+      success: true,
+      data: completedCourses,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
   }
 };
 
@@ -103,21 +136,21 @@ const uploadTranscript = (req, res) => {
   });
 
   let options = {
-    mode: "text",
-    pythonOptions: ["-u"], // get print results in real-time
-    scriptPath: "./transcripts",
-    args: [""], //An argument which can be accessed in the script using sys.argv[1]
+    mode: 'text',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: './transcripts',
+    args: [''], //An argument which can be accessed in the script using sys.argv[1]
   };
 
-  PythonShell.run("parse.py", options, function (err, result) {
+  PythonShell.run('parse.py', options, function (err, result) {
     if (err) throw err;
     // result is an array consisting of messages collected
     //during execution of script.
     const data = result;
     const jsonData = JSON.parse(data);
     console.log(jsonData);
-    console.log(jsonData["csulb"]["2020"]);
-    console.log(jsonData["csulb"]["2020"][0]);
+    console.log(jsonData['csulb']['2020']);
+    console.log(jsonData['csulb']['2020'][0]);
 
     // res.send(result.toString());
   });
@@ -128,6 +161,7 @@ module.exports = {
   getCompletedCourses,
   addCurrentCourse,
   addCompletedCourse,
-  deleteCourse,
+  deleteCurrentCourse,
+  deleteCompletedCourse,
   uploadTranscript,
 };

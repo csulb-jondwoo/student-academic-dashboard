@@ -10,12 +10,12 @@ export default (state, action) => {
     case 'ADD_CURRENT_COURSE':
       return {
         ...state,
-        courses: [...state.courses, action.payload],
+        courses: [...state.currentCourses, action.payload],
       };
     case 'ADD_COMPLETED_COURSE':
       return {
         ...state,
-        courses: [...state.courses, action.payload],
+        courses: [...state.completedCourses, action.payload],
       };
     case 'UPDATE_COURSE':
       return {
@@ -25,13 +25,13 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
-        courses: action.payload,
+        currentCourses: action.payload,
       };
     case 'GET_COMPLETED_COURSES':
       return {
         ...state,
         loading: false,
-        courses: action.payload,
+        completedCourses: action.payload,
       };
     case 'COURSE_ERROR':
       return {
