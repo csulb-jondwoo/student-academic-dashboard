@@ -51,10 +51,9 @@ const AddCourse = () => {
     });
   };
 
-    const test = () => {
-
-        const test = 'a'
-    }
+  const test = () => {
+    const test = 'a';
+  };
 
   const handleProgressChange = (value) => {
     setIsComplete(value);

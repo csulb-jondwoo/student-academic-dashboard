@@ -1,7 +1,7 @@
-const multer = require('multer');
-const { PythonShell } = require('python-shell');
-const userSchema = require('../models/user.js');
-const { upload } = require('../utility/multer.js');
+const multer = require("multer");
+const { PythonShell } = require("python-shell");
+const userSchema = require("../models/user.js");
+const { upload } = require("../utility/multer.js");
 
 const addCompletedCourse = async (req, res) => {
   try {
@@ -59,7 +59,7 @@ const deleteCourse = async (req, res) => {
     if (!course) {
       return res.status(404).json({
         success: false,
-        error: 'Course not found.',
+        error: "Course not found.",
       });
     }
     await course.remove();
@@ -103,21 +103,21 @@ const uploadTranscript = (req, res) => {
   });
 
   let options = {
-    mode: 'text',
-    pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: './transcripts',
-    args: [''], //An argument which can be accessed in the script using sys.argv[1]
+    mode: "text",
+    pythonOptions: ["-u"], // get print results in real-time
+    scriptPath: "./transcripts",
+    args: [""], //An argument which can be accessed in the script using sys.argv[1]
   };
 
-  PythonShell.run('parse.py', options, function (err, result) {
+  PythonShell.run("parse.py", options, function (err, result) {
     if (err) throw err;
     // result is an array consisting of messages collected
     //during execution of script.
     const data = result;
     const jsonData = JSON.parse(data);
     console.log(jsonData);
-    console.log(jsonData['csulb']['2020']);
-    console.log(jsonData['csulb']['2020'][0]);
+    console.log(jsonData["csulb"]["2020"]);
+    console.log(jsonData["csulb"]["2020"][0]);
 
     // res.send(result.toString());
   });

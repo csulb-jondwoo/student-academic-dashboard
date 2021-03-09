@@ -5,8 +5,8 @@ import Login from '../../pages/Login/Login';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import CourseHistory from '../../pages/CourseHistory/CourseHistory';
 //import AddCourse from '../../pages/AddCourse/AddCourse';
-import CompletedCourseForm from '../Forms/CourseDetailForm/CompletedCourseForm'
-import CurrentCourseForm from '../Forms/CurrentCourseDetailForm/CurrentCourseForm'
+import CompletedCourseForm from '../Forms/CourseDetailForm/CompletedCourseForm';
+import CurrentCourseForm from '../Forms/CurrentCourseDetailForm/CurrentCourseForm';
 import Roadmap from '../../pages/Roadmap/Roadmap';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import { myContext } from '../../context/Context';
@@ -19,8 +19,16 @@ const AppRoutes = () => {
       <PrivateRoute path="/dashboard" user={user} component={Dashboard} />
       <PrivateRoute path="/roadmap" user={user} component={Roadmap} />
       <PrivateRoute path="/history" user={user} component={CourseHistory} />
-      <PrivateRoute path="/add-completed-course" user={user} component={CompletedCourseForm} />
-      <PrivateRoute path="/add-current-course" user={user} component={CurrentCourseForm} />
+      <PrivateRoute
+        path="/add-completed-course"
+        user={user}
+        component={CompletedCourseForm}
+      />
+      <PrivateRoute
+        path="/add-current-course"
+        user={user}
+        component={CurrentCourseForm}
+      />
 
       {user ? (
         <Redirect from="/login" to="/dashboard" />

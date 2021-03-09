@@ -1,6 +1,6 @@
+import itertools
 import json
 import re
-import itertools
 from pathlib import Path
 from pdfreader import SimplePDFViewer
 
@@ -48,7 +48,6 @@ def convertPDFtoString(viewer):
     return string
 
 
-
 # BUSINESS LOGIC FUNCTIONS
 def getTermPairs(termsByYear, isTransferData=False):
     pairedList = list(pairwise(termsByYear))
@@ -92,8 +91,8 @@ def formatCourseData(string):
 
     # separate out course department and number, description, and grade
     courseDetails[0:2] = [" ".join(courseDetails[0:2])]
-    courseDetails[1:len(courseDetails) - 2] = [
-        " ".join(courseDetails[1:len(courseDetails) - 2])
+    courseDetails[1 : len(courseDetails) - 2] = [
+        " ".join(courseDetails[1 : len(courseDetails) - 2])
     ]
 
     return courseDetails
@@ -253,10 +252,10 @@ goal state:
 
 [
     {
-        transfer: 
+        transfer:
             [
                 {
-                    2015: 
+                    2015:
                         [
                             {
                                 Fall: [data]
@@ -267,7 +266,7 @@ goal state:
                         ]
                 },
                 {
-                    2016: 
+                    2016:
                         [
                             {
                                 Fall: [data]
@@ -280,10 +279,10 @@ goal state:
             ],
     },
     {
-        csulb: 
+        csulb:
             [
                 {
-                    2015: 
+                    2015:
                         [
                             {
                                 Fall: [data]
@@ -294,7 +293,7 @@ goal state:
                         ]
                 },
                 {
-                    2016: 
+                    2016:
                         [
                             {
                                 Fall: [data]

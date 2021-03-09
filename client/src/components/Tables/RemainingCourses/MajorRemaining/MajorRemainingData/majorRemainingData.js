@@ -114,12 +114,12 @@ const getMajorRemaining = () => {
 
   const addToRemaining = (reqCourse) => {
     return !majorHistoryData.some((completedCourse) =>
-      compareUnitCount(reqCourse, completedCourse),
+      compareUnitCount(reqCourse, completedCourse)
     );
   };
 
   const majorRemaining = majorReqData.filter((reqCourse) =>
-    addToRemaining(reqCourse),
+    addToRemaining(reqCourse)
   );
 
   return {

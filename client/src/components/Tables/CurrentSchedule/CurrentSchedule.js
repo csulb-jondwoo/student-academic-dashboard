@@ -12,7 +12,6 @@ import { BiEdit } from 'react-icons/bi';
 //import { Context } from "../../../context/Context"
 
 const CurrentSchedule = () => {
-
   /*
   // grab the users courses from context
   const { userCourses } = useContext(Context);

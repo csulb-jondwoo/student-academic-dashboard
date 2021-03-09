@@ -110,12 +110,12 @@ const getGeRemaining = () => {
 
   const addToRemaining = (reqCourse) => {
     return !geHistoryData.some((completedCourse) =>
-      compareEandFcategories(reqCourse, completedCourse),
+      compareEandFcategories(reqCourse, completedCourse)
     );
   };
 
   const geRemaining = geReqData.filter((reqCourse) =>
-    addToRemaining(reqCourse),
+    addToRemaining(reqCourse)
   );
 
   return {
