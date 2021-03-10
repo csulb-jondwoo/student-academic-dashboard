@@ -17,6 +17,9 @@ const CurrentSchedule = () => {
     getCurrentCourses(userID);
     getCompletedCourses(userID);
   }, []);
+
+  console.log(currentCourses)
+  console.log(completedCourses)
   
   return (
     <>
