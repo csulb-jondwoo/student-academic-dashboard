@@ -40,9 +40,9 @@ export default function Context(props) {
     });
   }, []);
 
-  async function getCurrentCourses() {
+  async function getCurrentCourses(userID) {
     try {
-      const res = await api.getCurrentCourses();
+      const res = await api.getCurrentCourses(userID);
 
       dispatch({
         type: 'GET_CURRENT_COURSES',
@@ -56,9 +56,9 @@ export default function Context(props) {
     }
   }
 
-  async function getCompletedCourses() {
+  async function getCompletedCourses(userID) {
     try {
-      const res = await api.getCompletedCourses();
+      const res = await api.getCompletedCourses(userID);
 
       dispatch({
         type: 'GET_COMPLETED_COURSES',

@@ -10,12 +10,12 @@ export default (state, action) => {
     case 'ADD_CURRENT_COURSE':
       return {
         ...state,
-        courses: [...state.currentCourses, action.payload],
+        currentCourses: [...state.currentCourses, action.payload],
       };
     case 'ADD_COMPLETED_COURSE':
       return {
         ...state,
-        courses: [...state.completedCourses, action.payload],
+        completedCourses: [...state.completedCourses, action.payload],
       };
     case 'UPDATE_COURSE':
       return {

@@ -89,11 +89,14 @@ const deleteCompletedCourse = async (req, res) => {
 
 const getCurrentCourses = async (req, res) => {
     try {
-        const currentCourses = await userSchema.find();
+        const param = req.query.ID;
+        const currentCourses = await userSchema.findOne({
+          googleId: param
+        });
         
         return res.status(200).json({
           success: true,
-          data: currentCourses
+          data: currentCourses.currentCourses
         });
     } catch (err) {
       return res.status(500).json({
@@ -105,11 +108,14 @@ const getCurrentCourses = async (req, res) => {
 
 const getCompletedCourses = async (req, res) => {
     try {
-        const completedCourses = await userSchema.find();
+        const param = req.query.ID;
+        const completedCourses = await userSchema.findOne({
+          googleId: param
+        });
         
         return res.status(200).json({
           success: true,
-          data: completedCourses
+          data: completedCourses.completedCourses
         });
     } catch (err) {
       return res.status(500).json({
