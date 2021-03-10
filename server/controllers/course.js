@@ -1,7 +1,7 @@
-const multer = require("multer");
-const { PythonShell } = require("python-shell");
-const userSchema = require("../models/user.js");
-const { upload } = require("../utility/multer.js");
+const multer = require('multer');
+const { PythonShell } = require('python-shell');
+const userSchema = require('../models/user.js');
+const { upload } = require('../utility/multer.js');
 
 const addCompletedCourse = async (req, res) => {
   try {
@@ -58,13 +58,16 @@ const deleteCurrentCourse = async (req, res) => {
     const { userID } = req.body;
     const current = req.body;
 
-    await userSchema.findOneAndUpdate({
-      googleId: userID
-    }, {
-      $pull: {
-        currentCourses: current
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $pull: {
+          currentCourses: current,
+        },
       }
-    })
+    );
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -75,13 +78,16 @@ const deleteCompletedCourse = async (req, res) => {
     const { userID } = req.body;
     const completed = req.body;
 
-    await userSchema.findOneAndUpdate({
-      googleId: userID
-    }, {
-      $pull: {
-        completedCourses: completed
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $pull: {
+          completedCourses: completed,
+        },
       }
-    })
+    );
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -136,21 +142,21 @@ const uploadTranscript = (req, res) => {
   });
 
   let options = {
-    mode: "text",
-    pythonOptions: ["-u"], // get print results in real-time
-    scriptPath: "./transcripts",
-    args: [""], //An argument which can be accessed in the script using sys.argv[1]
+    mode: 'text',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: './transcripts',
+    args: [''], //An argument which can be accessed in the script using sys.argv[1]
   };
 
-  PythonShell.run("parse.py", options, function (err, result) {
+  PythonShell.run('parse.py', options, function (err, result) {
     if (err) throw err;
     // result is an array consisting of messages collected
     //during execution of script.
     const data = result;
     const jsonData = JSON.parse(data);
     console.log(jsonData);
-    console.log(jsonData["csulb"]["2020"]);
-    console.log(jsonData["csulb"]["2020"][0]);
+    console.log(jsonData['csulb']['2020']);
+    console.log(jsonData['csulb']['2020'][0]);
 
     // res.send(result.toString());
   });

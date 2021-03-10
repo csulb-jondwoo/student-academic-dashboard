@@ -247,6 +247,7 @@ if __name__ == "__main__":
     transcriptData = getParsedData(initViewer())
     print(json.dumps(transcriptData))
 
+
 """
 goal state:
 
