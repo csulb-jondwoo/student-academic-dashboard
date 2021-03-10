@@ -6,35 +6,21 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 import '../../../utility/css/table-fixed-height.css';
-
+import CurrentCourse from './CurrentCourse'
 import { myContext } from "../../../context/Context"
 
 const CurrentSchedule = () => {
-  const { getCurrentCourses, user } = useContext(myContext);
+  const { getCurrentCourses, getCompletedCourses, currentCourses, completedCourses, user } = useContext(myContext);
   const userID = JSON.parse(user).googleId
+
+  useEffect(() => {
+    getCurrentCourses(userID);
+    getCompletedCourses(userID);
+  }, []);
+
+  console.log(currentCourses)
+  console.log(completedCourses)
   
-  /*
-  // grab the users courses from context
-  const { userCourses } = useContext(Context);
-  // get a list of courses by checking which are current
-  const currentCourses = userCourses.filter(course => course.isCurrent)
-  // create a new currentCourse component for Dashboard to replace hardcoded data.
-  const currentCourseList = currentCourses.map(course => (<currentCourse key={course.id} course={course} />))
-  */
-
-  // useEffect(() => {
-  //   getCurrentCourses(userID);
-  // }, []);
-
-  /* const displayedCourses = currentCourses.map(course => {
-    <tr>
-      <td>course.</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  }) */
-
   return (
     <>
       <div className="shadow-sm">
@@ -89,6 +75,7 @@ const CurrentSchedule = () => {
                 <td>12:00pm-1:15pm (Tues/Thurs)</td>
                 <td>online</td>
               </tr>
+              {/* {currentCourses.map(course => (<CurrentCourse key={course.courseNo} courseData={course} />))} */}
             </tbody>
           </Table>
         </div>

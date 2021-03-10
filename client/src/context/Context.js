@@ -10,9 +10,10 @@ const initialState = {
   //needs user name?
 };
 
-export const myContext = createContext({ initialState });
-//export const myContext = createContext({});
+// Create Context
+export const myContext = createContext(initialState);
 
+// Provider Component
 export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'));
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -40,21 +41,21 @@ export default function Context(props) {
     });
   }, []);
 
-  // async function getCurrentCourses(userID) {
-  //   try {
-  //     const res = await api.getCurrentCourses(userID);
+  async function getCurrentCourses(userID) {
+    try {
+      const res = await api.getCurrentCourses(userID);
 
-  //     dispatch({
-  //       type: 'GET_CURRENT_COURSES',
-  //       payload: res.data.data,
-  //     });
-  //   } catch (err) {
-  //     dispatch({
-  //       type: 'COURSE_ERROR',
-  //       payload: err.response.data.error,
-  //     });
-  //   }
-  // }
+      dispatch({
+        type: 'GET_CURRENT_COURSES',
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
 
   async function getCompletedCourses(userID) {
     try {
@@ -62,12 +63,12 @@ export default function Context(props) {
 
       dispatch({
         type: 'GET_COMPLETED_COURSES',
-        payload: res.data.data,
+        payload: res.data.data
       });
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: err.response.data.error,
+        payload: err.response.data.error
       });
     }
   }
@@ -152,11 +153,13 @@ export default function Context(props) {
     <myContext.Provider
       value={{
         user,
+        currentCourses: state.currentCourses,
+        completedCourses: state.completedCourses,
+        loading: state.loading,
         handleLogin,
         handleLogout,
-        courses: state.courses,
         getCompletedCourses,
-        //getCurrentCourses,
+        getCurrentCourses,
         addCurrentCourse,
         addCompletedCourse,
         deleteCurrentCourse,

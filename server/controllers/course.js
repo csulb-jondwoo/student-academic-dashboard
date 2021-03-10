@@ -94,36 +94,42 @@ const deleteCompletedCourse = async (req, res) => {
 };
 
 const getCurrentCourses = async (req, res) => {
-  try {
-    const currentCourses = await userSchema.find();
-
-    return res.status(200).json({
-      success: true,
-      data: currentCourses,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error',
-    });
-  }
-};
+    try {
+        const param = req.query.ID;
+        const currentCourses = await userSchema.findOne({
+          googleId: param
+        });
+        
+        return res.status(200).json({
+          success: true,
+          data: currentCourses.currentCourses
+        });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
+    }
+}
 
 const getCompletedCourses = async (req, res) => {
-  try {
-    const completedCourses = await userSchema.find();
-
-    return res.status(200).json({
-      success: true,
-      data: completedCourses,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error',
-    });
-  }
-};
+    try {
+        const param = req.query.ID;
+        const completedCourses = await userSchema.findOne({
+          googleId: param
+        });
+        
+        return res.status(200).json({
+          success: true,
+          data: completedCourses.completedCourses
+        });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
+    }
+}
 
 const uploadTranscript = (req, res) => {
   upload(req, res, function (err) {

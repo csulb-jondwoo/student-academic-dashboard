@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-//const currentCourse = require('./currentCourse.js');
-//const completedCourse = require('./completedCourse.js')
 
 const completedCourseSchema = mongoose.Schema({
   userID: String,
