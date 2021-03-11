@@ -17,27 +17,23 @@ import useTrait from '../../../hooks/useTrait';
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
 
-  const courseTypeTrait = useTrait('ge');
-  const [courseType, setCourseType] = useState('ge');
+  const courseType = useTrait('ge');
   const courseNumber = useTrait(null);
   const courseTitle = useTrait(null);
   const courseUnits = useTrait(null);
   const courseTerm = useTrait('Fall');
   const courseYear = useTrait(null);
-  const courseDesignation = useTrait(
-    courseType === 'ge' ? 'A1 - Oral Communication' : 'Lower Div'
-  );
+  const courseDesignation = useTrait('A1 - Oral Communications');
   const courseAdditionalReq = useTrait('Human Diversity');
   const courseSection = useTrait(null);
   const courseStartTime = useTrait('00:00');
   const courseEndTime = useTrait('00:00');
-  const courseDaysTrait = useTrait([]);
+  const courseDays = useTrait([]);
   const courseLocation = useTrait(null);
   const [timePickerStartTime, setTimePickerStartTime] = useState(0);
   const [timePickerEndTime, setTimePickerEndTime] = useState(0);
-  const [courseDays, setCourseDays] = useState([]);
 
-  const [courseData, setCourseData] = useState({
+  const courseData = useTrait({
     userID: JSON.parse(user).googleId,
     type: 'ge',
     number: null,
@@ -45,7 +41,7 @@ export const CurrentCourseForm = (props) => {
     units: null,
     term: 'Fall',
     year: null,
-    designation: courseType === 'ge' ? 'A1 - Oral Communication' : 'Lower Div',
+    designation: 'A1 - Oral Communication',
     additionalReq: 'Human Diversity',
     section: null,
     startTime: '00:00',
@@ -72,52 +68,66 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleCourseTypeChange = (val) => {
-    const newCourseType = courseTypeTrait.set(val);
-    setCourseType(val);
-    setCourseData({ ...courseData, type: newCourseType });
+    const newCourseType = courseType.set(val);
+    if (val === 'ge') {
+      courseData.set({
+        ...courseData.get(),
+        type: newCourseType,
+        designation: 'A1 - Oral Communication',
+        additionalReq: 'Human Diversity',
+      });
+    } else {
+      courseData.set({
+        ...courseData.get(),
+        type: newCourseType,
+        designation: 'Lower div',
+        additionalReq: null,
+      });
+    }
+    console.log(courseData.get());
   };
 
   const handleCourseNumberChange = (e) => {
     const newCourseNumber = courseNumber.set(e.target.value);
-    setCourseData({ ...courseData, number: newCourseNumber });
+    courseData.set({ ...courseData.get(), number: newCourseNumber });
   };
 
   const handleCourseTitleChange = (e) => {
     const newCourseTitle = courseTitle.set(e.target.value);
-    setCourseData({ ...courseData, title: newCourseTitle });
+    courseData.set({ ...courseData.get(), title: newCourseTitle });
   };
 
   const handleCourseUnitChange = (e) => {
     const newCourseUnits = courseUnits.set(e.target.value);
-    setCourseData({ ...courseData, units: newCourseUnits });
+    courseData.set({ ...courseData.get(), units: newCourseUnits });
   };
 
   const handleCourseTermChange = (e) => {
     const newCourseTerm = courseTerm.set(e.target.value);
-    setCourseData({ ...courseData, term: newCourseTerm });
+    courseData.set({ ...courseData.get(), term: newCourseTerm });
   };
 
   const handleCourseYearChange = (e) => {
     const newCourseYear = courseYear.set(e.target.value);
-    setCourseData({ ...courseData, year: newCourseYear });
+    courseData.set({ ...courseData.get(), year: newCourseYear });
   };
 
   const handleCourseDesignationChange = (e) => {
     const newCourseDesignation = courseDesignation.set(e.target.value);
-    setCourseData({ ...courseData, designation: newCourseDesignation });
+    courseData.set({ ...courseData.get(), designation: newCourseDesignation });
   };
 
   const handleCourseAdditionalReqChange = (e) => {
     const newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
-    setCourseData({
-      ...courseData,
+    courseData.set({
+      ...courseData.get(),
       additionalReq: newCourseAdditionalReq,
     });
   };
 
   const handleCourseSectionChange = (e) => {
     const newCourseSection = courseSection.set(e.target.value);
-    setCourseData({ ...courseData, section: newCourseSection });
+    courseData.set({ ...courseData.get(), section: newCourseSection });
   };
 
   const handleTimeStartChange = (seconds) => {
@@ -127,7 +137,7 @@ export const CurrentCourseForm = (props) => {
     const time = getTime(dateTime, seconds);
     setTimePickerStartTime(seconds);
     const newCourseStartTime = courseStartTime.set(time);
-    setCourseData({ ...courseData, startTime: newCourseStartTime });
+    courseData.set({ ...courseData.get(), startTime: newCourseStartTime });
   };
 
   const handleTimeEndChange = (seconds) => {
@@ -137,24 +147,24 @@ export const CurrentCourseForm = (props) => {
     const time = getTime(dateTime, seconds);
     setTimePickerEndTime(seconds);
     const newCourseEndTime = courseEndTime.set(time);
-    setCourseData({ ...courseData, endTime: newCourseEndTime });
+    courseData.set({ ...courseData.get(), endTime: newCourseEndTime });
   };
 
   const handleCourseDayChange = (days) => {
-    const newCourseDays = courseDaysTrait.set(days);
-    setCourseDays(days);
-    setCourseData({ ...courseData, days: newCourseDays });
+    const newCourseDays = courseDays.set(days);
+    // setCourseDays(days);
+    courseData.set({ ...courseData.get(), days: newCourseDays });
   };
 
   const handleCourseLocationChange = (e) => {
     const newCourseLocation = courseLocation.set(e.target.value);
-    setCourseData({ ...courseData, location: newCourseLocation });
+    courseData.set({ ...courseData.get(), location: newCourseLocation });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(courseData);
-    addCurrentCourse(courseData);
+    console.log(courseData.get());
+    addCurrentCourse(courseData.get());
   };
 
   return (
@@ -247,7 +257,7 @@ export const CurrentCourseForm = (props) => {
                       </Row>
 
                       {/* COURSE DESIGNATION */}
-                      {courseType === 'ge' ? (
+                      {courseType.get() === 'ge' ? (
                         // ge designation
                         <>
                           <Form.Group controlId="designation">
@@ -348,7 +358,7 @@ export const CurrentCourseForm = (props) => {
                               <ToggleButtonGroup
                                 type="checkbox"
                                 name="courseDays"
-                                value={courseDays}
+                                value={courseDays.get()}
                                 onChange={handleCourseDayChange}
                               >
                                 <ToggleButton value="Mon">M</ToggleButton>
