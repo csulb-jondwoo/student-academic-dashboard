@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const currentCourseSchema = mongoose.Schema({
   type: String,
   number: Number,
+  name: String,
   title: String,
   units: Number,
   term: String,

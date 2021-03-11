@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -19,6 +19,7 @@ export const CurrentCourseForm = (props) => {
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(null);
+  const courseName = useTrait(null);
   const courseTitle = useTrait(null);
   const courseUnits = useTrait(null);
   const courseTerm = useTrait('Fall');
@@ -90,6 +91,11 @@ export const CurrentCourseForm = (props) => {
   const handleCourseNumberChange = (e) => {
     const newCourseNumber = courseNumber.set(e.target.value);
     courseData.set({ ...courseData.get(), number: newCourseNumber });
+  };
+
+  const handleCourseNameChange = (e) => {
+    const newCourseName = courseName.set(e.target.value);
+    courseData.set({ ...courseData.get(), name: newCourseName });
   };
 
   const handleCourseTitleChange = (e) => {
@@ -196,6 +202,16 @@ export const CurrentCourseForm = (props) => {
                           type="input"
                           name="courseNo"
                           onChange={handleCourseNumberChange}
+                        />
+                      </Form.Group>
+
+                      {/* COURSE NAME */}
+                      <Form.Group controlId="courseName">
+                        <Form.Label>Course Name</Form.Label>
+                        <Form.Control
+                          type="input"
+                          name="courseName"
+                          onChange={handleCourseNameChange}
                         />
                       </Form.Group>
 
