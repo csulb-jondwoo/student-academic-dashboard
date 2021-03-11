@@ -114,7 +114,6 @@ export default function Context(props) {
 
     try {
       const res = await api.addCurrentCourse(course, config);
-      console.log(res);
 
       dispatch({
         type: 'ADD_CURRENT_COURSE',

@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 
 const currentCourseSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-  courseType: String,
-  courseNo: Number,
-  courseTitle: String,
-  courseUnits: Number,
-  courseTerm: String,
-  courseYear: Number,
+  type: String,
+  number: Number,
+  title: String,
+  units: Number,
+  term: String,
+  year: Number,
   designation: String, // unnecessary? nice for display, don't really need to save it.
   additionalReq: String, // unnecessary???
-  courseSection: Number,
-  courseStartTime: String,
-  courseEndTime: String,
-  courseDays: [String],
-  courseLocation: String,
+  section: Number,
+  startTime: String,
+  endTime: String,
+  days: Array,
+  location: String,
 });
 
 // const completedCourseSchema = mongoose.Schema({
