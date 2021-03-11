@@ -38,25 +38,19 @@ export const CurrentCourseForm = (props) => {
   const [courseUnits, setCourseUnits] = useState(0);
   const [courseTerm, setCourseTerm] = useState('Fall');
   const [courseYear, setCourseYear] = useState(null);
-  const [courseDesignation, setCourseDesignation] = useState(null);
-  const [courseAdditionalReq, setCourseAdditionalReq] = useState(null);
+  const [courseDesignation, setCourseDesignation] = useState(
+    courseType === 'ge' ? 'A1 - Oral Communication' : 'Lower Div'
+  );
+  const [courseAdditionalReq, setCourseAdditionalReq] = useState(
+    'Human Diversity'
+  );
   const [courseSection, setCourseSection] = useState(null);
   const [timePickerStartTime, setTimePickerStartTime] = useState(0);
-  const [courseStartTime, setCourseStartTime] = useState(null);
+  const [courseStartTime, setCourseStartTime] = useState('00:00');
   const [timePickerEndTime, setTimePickerEndTime] = useState(0);
-  const [courseEndTime, setCourseEndTime] = useState(null);
+  const [courseEndTime, setCourseEndTime] = useState('00:00');
   const [courseDays, setCourseDays] = useState([]);
   const [courseLocation, setCourseLocation] = useState(null);
-
-  useEffect(() => {
-    if (courseType === 'ge') {
-      setCourseDesignation('A1 - Oral Communication');
-      setCourseAdditionalReq('Human Diversity');
-    } else {
-      setCourseDesignation('Lower Div');
-      setCourseAdditionalReq(null);
-    }
-  }, [courseType]);
 
   const getTime = (dateTime, seconds) => {
     const date = new Date(dateTime.getTime() + (seconds / 60) * 60000);
@@ -151,7 +145,7 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     const newCurrentCourse = {
       userID: courseData.userID,
@@ -170,7 +164,24 @@ export const CurrentCourseForm = (props) => {
       courseLocation: courseData.courseLocation,
     };
 
-    console.log(newCurrentCourse);
+    setCourseType('ge');
+    setCourseNumber(null);
+    setCourseTitle(null);
+    setCourseUnits(null);
+    setCourseTerm('Fall');
+    setCourseYear(null);
+    setCourseDesignation(
+      courseType === 'ge' ? 'A1 - Oral Communication' : 'Lower Div'
+    );
+    setCourseAdditionalReq('Human Diversity');
+    setCourseSection(null);
+    setTimePickerStartTime(null);
+    setCourseStartTime('00:00');
+    setTimePickerEndTime(null);
+    setCourseEndTime('00:00');
+    setCourseDays(null);
+    setCourseLocation(null);
+
     addCurrentCourse(newCurrentCourse);
   };
 

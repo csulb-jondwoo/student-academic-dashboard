@@ -1,30 +1,31 @@
 const mongoose = require('mongoose');
 
-const completedCourseSchema = mongoose.Schema({
-  userID: String,
-  courseType: String,
-  courseNo: String, 
-  courseTitle: String, 
-  courseUnits: String, 
-  courseTerm: String,
-  courseYear: String, 
-  designation: String, // unnecessary? nice for display, don't really need to save it.
-  courseGrade: String
-}, { _id : false });
-
 const currentCourseSchema = mongoose.Schema({
-  userID: String,
-  courseNo: String, 
-  courseTitle: String, 
-  courseUnits: String, 
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  courseType: String,
+  courseNo: Number,
+  courseTitle: String,
+  courseUnits: Number,
+  courseTerm: String,
+  courseYear: Number,
   designation: String, // unnecessary? nice for display, don't really need to save it.
   additionalReq: String, // unnecessary???
-  courseStatus: Boolean, // unnecessary???
+  courseSection: Number,
+  courseStartTime: String,
+  courseEndTime: String,
+  courseDays: [String],
+  courseLocation: String,
+});
 
-  // start, end time (how to save? toString()?)
-  // days of week [String]
-  // location String
-}, { _id : false });
+// const completedCourseSchema = mongoose.Schema({
+//   courseNo: String,
+//   courseTitle: String,
+//   courseUnits: String,
+//   courseTerm: String,
+//   courseYear: String,
+//   designation: String, // unnecessary? nice for display, don't really need to save it.
+//   courseGrade: String,
+// });
 
 const userSchema = mongoose.Schema({
   googleId: {
@@ -40,9 +41,6 @@ const userSchema = mongoose.Schema({
     default: Date.now,
   },
   currentCourses: [currentCourseSchema],
-  completedCourses: [completedCourseSchema]
 });
 
-module.exports = mongoose.model('User', userSchema);
-//module.exports = mongoose.model('CurrentCourse', currentCourseSchema);
-//module.exports = mongoose.model('CompletedCourse', completedCourseSchema);
+module.exports = mongoose.model('user', userSchema);

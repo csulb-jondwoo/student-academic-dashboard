@@ -52,7 +52,7 @@ export default function Context(props) {
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: err.response.data.error
+        payload: err.response.data.error,
       });
     }
   }
@@ -63,12 +63,12 @@ export default function Context(props) {
 
       dispatch({
         type: 'GET_COMPLETED_COURSES',
-        payload: res.data.data
+        payload: res.data.data,
       });
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
-        payload: err.response.data.error
+        payload: err.response.data.error,
       });
     }
   }
@@ -114,6 +114,7 @@ export default function Context(props) {
 
     try {
       const res = await api.addCurrentCourse(course, config);
+      console.log(res);
 
       dispatch({
         type: 'ADD_CURRENT_COURSE',

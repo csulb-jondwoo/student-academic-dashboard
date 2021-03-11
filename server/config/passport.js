@@ -1,5 +1,6 @@
 /*global process*/
 
+const mongoose = require('mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/user');
 
@@ -24,6 +25,7 @@ module.exports = (passport) => {
             console.log('no doc');
             // if no user, create one
             const newUser = new User({
+              _id: new mongoose.Types.ObjectId(),
               googleId: profile.id,
               name: profile.name.givenName,
             });
