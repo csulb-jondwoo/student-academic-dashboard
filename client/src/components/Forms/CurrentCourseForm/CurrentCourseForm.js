@@ -85,7 +85,6 @@ export const CurrentCourseForm = (props) => {
         additionalReq: null,
       });
     }
-    console.log(courseData.get());
   };
 
   const handleCourseNumberChange = (e) => {
