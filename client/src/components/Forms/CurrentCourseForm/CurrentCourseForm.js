@@ -73,6 +73,7 @@ export const CurrentCourseForm = (props) => {
 
   const handleCourseTypeChange = (val) => {
     const newCourseType = courseTypeTrait.set(val);
+    setCourseType(val);
     setCourseData({ ...courseData, type: newCourseType });
   };
 
