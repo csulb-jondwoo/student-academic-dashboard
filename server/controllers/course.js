@@ -32,7 +32,6 @@ const addCurrentCourse = async (req, res) => {
   try {
     const { userID } = req.body;
     const current = req.body;
-    console.log(req.body);
 
     await userSchema.findOneAndUpdate(
       {
