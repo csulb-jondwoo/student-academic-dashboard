@@ -32,6 +32,7 @@ const addCurrentCourse = async (req, res) => {
   try {
     const { userID } = req.body;
     const current = req.body;
+    console.log(req.body);
 
     await userSchema.findOneAndUpdate(
       {
@@ -94,42 +95,42 @@ const deleteCompletedCourse = async (req, res) => {
 };
 
 const getCurrentCourses = async (req, res) => {
-    try {
-        const param = req.query.ID;
-        const currentCourses = await userSchema.findOne({
-          googleId: param
-        });
-        
-        return res.status(200).json({
-          success: true,
-          data: currentCourses.currentCourses
-        });
-    } catch (err) {
-      return res.status(500).json({
-        success: false,
-        error: 'Server Error'
-      });
-    }
-}
+  try {
+    const param = req.query.ID;
+    const currentCourses = await userSchema.findOne({
+      googleId: param,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: currentCourses.currentCourses,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
+};
 
 const getCompletedCourses = async (req, res) => {
-    try {
-        const param = req.query.ID;
-        const completedCourses = await userSchema.findOne({
-          googleId: param
-        });
-        
-        return res.status(200).json({
-          success: true,
-          data: completedCourses.completedCourses
-        });
-    } catch (err) {
-      return res.status(500).json({
-        success: false,
-        error: 'Server Error'
-      });
-    }
-}
+  try {
+    const param = req.query.ID;
+    const completedCourses = await userSchema.findOne({
+      googleId: param,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: completedCourses.completedCourses,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
+};
 
 const uploadTranscript = (req, res) => {
   upload(req, res, function (err) {

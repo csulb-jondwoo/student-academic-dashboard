@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -15,81 +15,143 @@ import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/Ce
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
-
-  const [radioValue, setRadioValue] = useState('ge');
-  const [startTimeValue, setStartTimeValue] = useState({ time: 0 });
-  const [endTimeValue, setEndTimeValue] = useState({ time: 0 });
-  const [dayValue, setDayValue] = useState([]);
-
   const [courseData, setCourseData] = useState({
     userID: JSON.parse(user).googleId,
-    courseType: radioValue,
-    courseNo: '',
-    courseTitle: '',
-    courseUnits: '',
-    courseTerm: '',
-    courseYear: '',
-    designation: '',
-    additionalReq: '',
-    courseSection: '',
-    courseStartTime: startTimeValue,
-    courseEndTime: endTimeValue,
+    courseType: null,
+    courseNo: null,
+    courseTitle: null,
+    courseUnits: null,
+    courseTerm: null,
+    courseYear: null,
+    designation: null,
+    additionalReq: null,
+    courseSection: null,
+    courseStartTime: null,
+    courseEndTime: null,
     courseDays: [],
-    courseLocation: '',
+    courseLocation: null,
   });
 
-  const handleCourseChange = (value) => {
-    setRadioValue(value);
-    setCourseData((prevData) => {
-      return {
-        ...prevData,
-        courseType: radioValue,
-      };
-    });
+  const [courseType, setCourseType] = useState('ge');
+  const [courseNumber, setCourseNumber] = useState(null);
+  const [courseTitle, setCourseTitle] = useState(null);
+  const [courseUnits, setCourseUnits] = useState(0);
+  const [courseTerm, setCourseTerm] = useState('Fall');
+  const [courseYear, setCourseYear] = useState(null);
+  const [courseDesignation, setCourseDesignation] = useState(null);
+  const [courseAdditionalReq, setCourseAdditionalReq] = useState(null);
+  const [courseSection, setCourseSection] = useState(null);
+  const [timePickerStartTime, setTimePickerStartTime] = useState(0);
+  const [courseStartTime, setCourseStartTime] = useState(null);
+  const [timePickerEndTime, setTimePickerEndTime] = useState(0);
+  const [courseEndTime, setCourseEndTime] = useState(null);
+  const [courseDays, setCourseDays] = useState([]);
+  const [courseLocation, setCourseLocation] = useState(null);
+
+  useEffect(() => {
+    if (courseType === 'ge') {
+      setCourseDesignation('A1 - Oral Communication');
+      setCourseAdditionalReq('Human Diversity');
+    } else {
+      setCourseDesignation('Lower Div');
+      setCourseAdditionalReq(null);
+    }
+  }, [courseType]);
+
+  const getTime = (dateTime, seconds) => {
+    const date = new Date(dateTime.getTime() + (seconds / 60) * 60000);
+    let hour = date.getHours().toString();
+    let minutes = date.getMinutes().toString();
+
+    if (hour.length === 1) {
+      hour = '0' + hour;
+    }
+
+    if (minutes.length === 1) {
+      minutes = '0' + minutes;
+    }
+
+    const time = hour + ':' + minutes;
+    return time;
   };
 
-  const handleStartTimeChange = (time) => {
-    setStartTimeValue(time);
-    setCourseData((prevData) => {
-      return {
-        ...prevData,
-        courseStartTime: time,
-      };
-    });
+  const handleCourseTypeChange = (val) => {
+    setCourseType(val);
+    setCourseData({ ...courseData, courseType });
   };
 
-  const handleEndTimeChange = (time) => {
-    setEndTimeValue(time);
-    setCourseData((prevData) => {
-      return {
-        ...prevData,
-        courseEndTime: time,
-      };
-    });
+  const handleCourseNumberChange = (e) => {
+    setCourseNumber(e.target.value);
+    setCourseData({ ...courseData, courseNumber });
   };
 
-  const handleDayChange = (val) => {
-    setDayValue((prevDays) => [...prevDays, val]);
-    setCourseData((prevData) => {
-      return {
-        ...prevData,
-        courseDays: dayValue,
-      };
-    });
+  const handleCourseTitleChange = (e) => {
+    setCourseTitle(e.target.value);
+    setCourseData({ ...courseData, courseTitle });
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setCourseData((prevData) => {
-      return {
-        ...prevData,
-        [name]: value,
-      };
-    });
+  const handleCourseUnitChange = (e) => {
+    setCourseUnits(e.target.value);
+    setCourseData({ ...courseData, courseUnits });
+  };
+
+  const handleCourseTermChange = (e) => {
+    setCourseTerm(e.target.value);
+    setCourseData({ ...courseData, courseTerm });
+  };
+
+  const handleCourseYearChange = (e) => {
+    setCourseYear(e.target.value);
+    setCourseData({ ...courseData, courseYear });
+  };
+
+  const handleCourseDesignationChange = (e) => {
+    setCourseDesignation(e.target.value);
+    setCourseData({ ...courseData, courseDesignation });
+  };
+
+  const handleCourseAdditionalReqChange = (e) => {
+    setCourseAdditionalReq(e.target.value);
+    setCourseData({ ...courseData, courseAdditionalReq });
+  };
+
+  const handleCourseSectionChange = (e) => {
+    setCourseSection(e.target.value);
+    setCourseData({ ...courseData, courseSection });
+  };
+
+  const handleTimeStartChange = (seconds) => {
+    const dateTime = new Date('July 1, 1999');
+
+    // time in 24h string format
+    const time = getTime(dateTime, seconds);
+    setTimePickerStartTime(seconds);
+    setCourseStartTime(time);
+    setCourseData({ ...courseData, courseStartTime });
+  };
+
+  const handleTimeEndChange = (seconds) => {
+    const dateTime = new Date('July 1, 1999');
+
+    // time in 24h string format
+    const time = getTime(dateTime, seconds);
+    setTimePickerEndTime(seconds);
+    setCourseEndTime(time);
+    setCourseData({ ...courseData, courseEndTime });
+  };
+
+  const handleCourseDayChange = (days) => {
+    setCourseDays(days);
+    setCourseData({ ...courseData, courseDays });
+  };
+
+  const handleCourseLocationChange = (e) => {
+    setCourseLocation(e.target.value);
+    setCourseData({ ...courseData, courseLocation });
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const newCurrentCourse = {
       userID: courseData.userID,
@@ -107,6 +169,8 @@ export const CurrentCourseForm = (props) => {
       courseDays: courseData.courseDays,
       courseLocation: courseData.courseLocation,
     };
+
+    console.log(newCurrentCourse);
     addCurrentCourse(newCurrentCourse);
   };
 
@@ -120,43 +184,45 @@ export const CurrentCourseForm = (props) => {
                 <Row className="my-2">
                   <Col className="d-flex justify-content-center">
                     <Form onSubmit={handleSubmit}>
+                      {/* COURSE TYPE */}
                       <ToggleButtonGroup
                         className="mb-3"
                         type="radio"
                         name="options"
                         defaultValue="ge"
-                        onChange={handleCourseChange}
+                        onChange={handleCourseTypeChange}
                       >
                         <ToggleButton value="ge">GE Course</ToggleButton>
                         <ToggleButton value="major">Major Course</ToggleButton>
                       </ToggleButtonGroup>
+
+                      {/* COURSE NUMBER */}
                       <Form.Group controlId="courseNo">
                         <Form.Label>Course Number</Form.Label>
                         <Form.Control
                           type="input"
                           name="courseNo"
-                          value={courseData.courseNo}
-                          onChange={handleChange}
+                          onChange={handleCourseNumberChange}
                         />
                       </Form.Group>
 
+                      {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
                         <Form.Label>Course Title</Form.Label>
                         <Form.Control
                           type="input"
                           name="courseTitle"
-                          value={courseData.courseTitle}
-                          onChange={handleChange}
+                          onChange={handleCourseTitleChange}
                         />
                       </Form.Group>
 
+                      {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
                         <Form.Label>Units</Form.Label>
                         <Form.Control
                           as="select"
                           name="courseUnits"
-                          value={courseData.courseUnits}
-                          onChange={handleChange}
+                          onChange={handleCourseUnitChange}
                         >
                           <option value="0">0</option>
                           <option value="1">1</option>
@@ -169,13 +235,13 @@ export const CurrentCourseForm = (props) => {
 
                       <Row>
                         <Col>
+                          {/* COURSE TERM */}
                           <Form.Group controlId="courseTerm">
                             <Form.Label>Term</Form.Label>
                             <Form.Control
                               as="select"
                               name="courseTerm"
-                              value={courseData.courseTerm}
-                              onChange={handleChange}
+                              onChange={handleCourseTermChange}
                             >
                               <option value="Fall">Fall</option>
                               <option value="Spring">Spring</option>
@@ -185,40 +251,59 @@ export const CurrentCourseForm = (props) => {
                           </Form.Group>
                         </Col>
                         <Col>
+                          {/* COURSE YEAR */}
                           <Form.Group controlId="courseYear">
                             <Form.Label>Year</Form.Label>
                             <Form.Control
                               type="input"
                               name="courseYear"
-                              value={courseData.courseYear}
-                              onChange={handleChange}
+                              onChange={handleCourseYearChange}
                             />
                           </Form.Group>
                         </Col>
                       </Row>
 
-                      {props.radioValue === 'ge' ? (
+                      {/* COURSE DESIGNATION */}
+                      {courseType === 'ge' ? (
                         // ge designation
-                        <Form.Group controlId="designation">
-                          <Form.Label>Designation</Form.Label>
-                          <Form.Control
-                            as="select"
-                            name="designation"
-                            value={courseData.designation}
-                            onChange={handleChange}
-                          >
-                            {geReqData.slice(0, 13).map((ge, idx) => {
-                              return (
-                                <option
-                                  value={`${ge.designation} - ${ge.course}`}
-                                  key={idx}
-                                >
-                                  {ge.designation} - {ge.course}
-                                </option>
-                              );
-                            })}
-                          </Form.Control>
-                        </Form.Group>
+                        <>
+                          <Form.Group controlId="designation">
+                            <Form.Label>Designation</Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="designation"
+                              onChange={handleCourseDesignationChange}
+                            >
+                              {geReqData.slice(0, 13).map((ge, idx) => {
+                                return (
+                                  <option
+                                    value={`${ge.designation} - ${ge.course}`}
+                                    key={idx}
+                                  >
+                                    {ge.designation} - {ge.course}
+                                  </option>
+                                );
+                              })}
+                            </Form.Control>
+                          </Form.Group>
+
+                          {/* Additional Req */}
+                          <Form.Group controlId="additinalReq">
+                            <Form.Label>Additional Requirements</Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="additionalReq"
+                              onChange={handleCourseAdditionalReqChange}
+                            >
+                              <option value="Human Diversity" key={1}>
+                                Human Diversity
+                              </option>
+                              <option value="Global Issues" key={2}>
+                                Global Issues
+                              </option>
+                            </Form.Control>
+                          </Form.Group>
+                        </>
                       ) : (
                         // major designation
                         <Form.Group controlId="designation">
@@ -226,8 +311,7 @@ export const CurrentCourseForm = (props) => {
                           <Form.Control
                             as="select"
                             name="designation"
-                            value={courseData.designation}
-                            onChange={handleChange}
+                            onChange={handleCourseDesignationChange}
                           >
                             {majorReqCategory.map((category, idx) => {
                               return (
@@ -239,36 +323,40 @@ export const CurrentCourseForm = (props) => {
                           </Form.Control>
                         </Form.Group>
                       )}
+
+                      {/* COURSE SECTION */}
                       <Form.Group controlId="section">
                         <Form.Label>Section</Form.Label>
                         <Form.Control
                           type="input"
                           name="courseSection"
-                          value={courseData.courseSection}
-                          onChange={handleChange}
+                          onChange={handleCourseSectionChange}
                         />
                       </Form.Group>
 
+                      {/* COURSE START TIME */}
                       <Form.Group controlId="startTime">
                         <Form.Label>Start Time</Form.Label>
                         <TimePicker
-                          onChange={handleStartTimeChange}
+                          onChange={handleTimeStartChange}
                           name="courseStartTime"
-                          value={courseData.courseStartTime}
+                          value={timePickerStartTime}
                           step={5}
                         />
                       </Form.Group>
 
+                      {/* COURSE END TIME */}
                       <Form.Group controlId="endTime">
                         <Form.Label>End Time</Form.Label>
                         <TimePicker
-                          onChange={handleEndTimeChange}
-                          name="courseEndTime"
-                          value={courseData.courseEndTime}
+                          onChange={handleTimeEndChange}
+                          name="courseStartTime"
+                          value={timePickerEndTime}
                           step={5}
                         />
                       </Form.Group>
 
+                      {/* COURSE DAYS */}
                       <Form.Group controlId="day">
                         <Row>
                           <Col className="d-flex flex-column">
@@ -277,30 +365,31 @@ export const CurrentCourseForm = (props) => {
                               <ToggleButtonGroup
                                 type="checkbox"
                                 name="courseDays"
-                                value={courseData.courseDays}
-                                onChange={handleDayChange}
+                                value={courseDays}
+                                onChange={handleCourseDayChange}
                               >
-                                <ToggleButton value={1}>M</ToggleButton>
-                                <ToggleButton value={2}>T</ToggleButton>
-                                <ToggleButton value={3}>W</ToggleButton>
-                                <ToggleButton value={4}>Th</ToggleButton>
-                                <ToggleButton value={5}>F</ToggleButton>
-                                <ToggleButton value={6}>S</ToggleButton>
+                                <ToggleButton value="Mon">M</ToggleButton>
+                                <ToggleButton value="Tues">T</ToggleButton>
+                                <ToggleButton value="Wed">W</ToggleButton>
+                                <ToggleButton value="Thurs">Th</ToggleButton>
+                                <ToggleButton value="Fri">F</ToggleButton>
+                                <ToggleButton value="Sat">S</ToggleButton>
                               </ToggleButtonGroup>
                             </Container>
                           </Col>
                         </Row>
                       </Form.Group>
 
+                      {/* COURSE LOCATION */}
                       <Form.Group controlId="location">
                         <Form.Label>Location</Form.Label>
                         <Form.Control
                           type="input"
                           name="courseLocation"
-                          value={courseData.courseLocation}
-                          onChange={handleChange}
+                          onChange={handleCourseLocationChange}
                         />
                       </Form.Group>
+
                       <Button className variant="primary" type="submit">
                         Submit
                       </Button>
