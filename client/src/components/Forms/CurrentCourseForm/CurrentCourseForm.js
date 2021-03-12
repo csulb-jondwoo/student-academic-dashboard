@@ -9,10 +9,10 @@ import TimePicker from 'react-bootstrap-time-picker';
 import Container from 'react-bootstrap/esm/Container';
 import Card from 'react-bootstrap/Card';
 
+import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
-import useTrait from '../../../hooks/useTrait';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
