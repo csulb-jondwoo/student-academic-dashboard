@@ -8,6 +8,7 @@ const addCompletedCourse = async (req, res) => {
   try {
     const { userID } = req.body; // userID = googleId passed from completed course form
     const completed = req.body;
+    console.log(completed);
 
     await userSchema.findOneAndUpdate(
       {
@@ -135,6 +136,19 @@ const getCompletedCourses = async (req, res) => {
 };
 
 const uploadTranscript = (req, res) => {
+  let courseData = {
+    type: 'major',
+    number: null,
+    dept: null,
+    title: null,
+    units: 0,
+    term: null,
+    year: null,
+    grade: null,
+    designation: null,
+    additionalReq: null,
+  };
+
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);
@@ -156,22 +170,35 @@ const uploadTranscript = (req, res) => {
       throw err;
     }
 
-    const data = JSON.parse(result);
-
-    const years = [];
+    data = JSON.parse(result);
 
     // get all years for csulb courses
     for (year in data['csulb']) {
-      years.push(year);
+      for (termIdx in data['csulb'][year]) {
+        for (term in data['csulb'][year][termIdx]) {
+          for (courseIdx in data['csulb'][year][termIdx][term]) {
+            course = data['csulb'][year][termIdx][term][courseIdx];
+            const dept = course[0].split(' ')[0];
+            const number = course[0].split(' ')[1];
+            const title = course[1];
+            const units = course[2];
+            const grade = course[3];
+
+            courseData = {
+              ...courseData,
+              year,
+              term,
+              number,
+              dept,
+              title,
+              units,
+              grade,
+            };
+            console.log(courseData);
+          }
+        }
+      }
     }
-
-    console.log(years);
-
-    // console.log(jsonData['csulb']['2020']);
-    // console.log(jsonData['csulb']['2020'][0]);
-
-    // res.send(result.toString());
-    // return result;
   });
 };
 
