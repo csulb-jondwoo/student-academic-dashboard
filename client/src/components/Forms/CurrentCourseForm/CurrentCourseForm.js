@@ -40,7 +40,7 @@ export const CurrentCourseForm = (props) => {
     number: null,
     dept: null,
     title: null,
-    units: null,
+    units: 0,
     term: 'Fall',
     year: null,
     designation: 'A1 - Oral Communication',

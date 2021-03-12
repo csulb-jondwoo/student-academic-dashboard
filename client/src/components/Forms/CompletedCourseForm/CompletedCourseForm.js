@@ -37,7 +37,7 @@ export const CompletedCourseForm = (props) => {
     number: null,
     dept: null,
     title: null,
-    units: null,
+    units: 0,
     term: 'Fall',
     year: null,
     grade: 'A',
