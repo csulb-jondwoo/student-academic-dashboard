@@ -38,6 +38,7 @@ export const CurrentCourseForm = (props) => {
     userID: JSON.parse(user).googleId,
     type: 'ge',
     number: null,
+    name: null,
     title: null,
     units: null,
     term: 'Fall',
