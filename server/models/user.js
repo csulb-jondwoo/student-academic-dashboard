@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const currentCourseSchema = mongoose.Schema({
   type: String,
-  number: Number,
+  number: String, // sometimes includes letters (i.e 491B)
   dept: String,
   title: String,
   units: Number,
@@ -19,7 +19,7 @@ const currentCourseSchema = mongoose.Schema({
 
 const completedCourseSchema = mongoose.Schema({
   type: String,
-  number: Number,
+  number: String, // sometimes includes letters (i.e 491B)
   dept: String,
   title: String,
   units: Number,

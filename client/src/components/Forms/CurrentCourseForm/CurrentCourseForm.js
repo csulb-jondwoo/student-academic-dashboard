@@ -31,8 +31,8 @@ export const CurrentCourseForm = (props) => {
   const courseEndTime = useTrait('00:00');
   const courseDays = useTrait([]);
   const courseLocation = useTrait(null);
-  const [timePickerStartTime, setTimePickerStartTime] = useState(0);
-  const [timePickerEndTime, setTimePickerEndTime] = useState(0);
+  const [timePickerStartTime, setTimePickerStartTime] = useState(21600); // start at 6am
+  const [timePickerEndTime, setTimePickerEndTime] = useState(82800); // end at 11pm
 
   const courseData = useTrait({
     userID: JSON.parse(user).googleId,
@@ -44,7 +44,7 @@ export const CurrentCourseForm = (props) => {
     term: 'Fall',
     year: null,
     designation: 'A1 - Oral Communication',
-    additionalReq: 'Human Diversity',
+    additionalReq: null,
     section: null,
     startTime: '00:00',
     endTime: '00:00',
@@ -76,7 +76,7 @@ export const CurrentCourseForm = (props) => {
         ...courseData.get(),
         type: newCourseType,
         designation: 'A1 - Oral Communication',
-        additionalReq: 'Human Diversity',
+        additionalReq: null,
       });
     } else {
       courseData.set({
@@ -124,7 +124,13 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleCourseAdditionalReqChange = (e) => {
-    const newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
+    let newCourseAdditionalReq;
+
+    if (e.target.value === '-') {
+      newCourseAdditionalReq = courseAdditionalReq.set(null);
+    } else {
+      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
+    }
     courseData.set({
       ...courseData.get(),
       additionalReq: newCourseAdditionalReq,
@@ -137,6 +143,7 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleTimeStartChange = (seconds) => {
+    console.log(seconds);
     const dateTime = new Date('July 1, 1999');
 
     // time in 24h string format
@@ -158,7 +165,6 @@ export const CurrentCourseForm = (props) => {
 
   const handleCourseDayChange = (days) => {
     const newCourseDays = courseDays.set(days);
-    // setCourseDays(days);
     courseData.set({ ...courseData.get(), days: newCourseDays });
   };
 
@@ -168,7 +174,9 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
+    // TODO: alert user
     console.log(courseData.get());
     addCurrentCourse(courseData.get());
   };
@@ -304,10 +312,13 @@ export const CurrentCourseForm = (props) => {
                               name="additionalReq"
                               onChange={handleCourseAdditionalReqChange}
                             >
-                              <option value="Human Diversity" key={1}>
+                              <option value="-" key={1}>
+                                -
+                              </option>
+                              <option value="Human Diversity" key={2}>
                                 Human Diversity
                               </option>
-                              <option value="Global Issues" key={2}>
+                              <option value="Global Issues" key={3}>
                                 Global Issues
                               </option>
                             </Form.Control>
@@ -348,6 +359,7 @@ export const CurrentCourseForm = (props) => {
                         <Form.Label>Start Time</Form.Label>
                         <TimePicker
                           onChange={handleTimeStartChange}
+                          start="06:00"
                           name="courseStartTime"
                           value={timePickerStartTime}
                           step={5}
@@ -359,6 +371,7 @@ export const CurrentCourseForm = (props) => {
                         <Form.Label>End Time</Form.Label>
                         <TimePicker
                           onChange={handleTimeEndChange}
+                          end="23:00"
                           name="courseStartTime"
                           value={timePickerEndTime}
                           step={5}

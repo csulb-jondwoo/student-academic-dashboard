@@ -42,7 +42,7 @@ export const CompletedCourseForm = (props) => {
     year: null,
     grade: 'A',
     designation: 'A1 - Oral Communication',
-    additionalReq: 'Human Diversity',
+    additionalReq: null,
   });
 
   const handleCourseTypeChange = (val) => {
@@ -52,7 +52,7 @@ export const CompletedCourseForm = (props) => {
         ...courseData.get(),
         type: newCourseType,
         designation: 'A1 - Oral Communication',
-        additionalReq: 'Human Diversity',
+        additionalReq: null,
       });
     } else {
       courseData.set({
@@ -105,7 +105,13 @@ export const CompletedCourseForm = (props) => {
   };
 
   const handleCourseAdditionalReqChange = (e) => {
-    const newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
+    let newCourseAdditionalReq;
+
+    if (e.target.value === '-') {
+      newCourseAdditionalReq = courseAdditionalReq.set(null);
+    } else {
+      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
+    }
     courseData.set({
       ...courseData.get(),
       additionalReq: newCourseAdditionalReq,
@@ -113,7 +119,9 @@ export const CompletedCourseForm = (props) => {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
+    // TODO: alert user
     console.log(courseData.get());
     addCompletedCourse(courseData.get());
   };
@@ -260,6 +268,9 @@ export const CompletedCourseForm = (props) => {
                               name="additionalReq"
                               onChange={handleCourseAdditionalReqChange}
                             >
+                              <option value="-" key={1}>
+                                -
+                              </option>
                               <option value="Human Diversity" key={1}>
                                 Human Diversity
                               </option>
