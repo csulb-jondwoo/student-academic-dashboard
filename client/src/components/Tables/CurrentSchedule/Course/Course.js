@@ -20,7 +20,7 @@ const CurrentCourse = ({
       <td>{section}</td>
       <td>{units}</td>
       <td>
-        {startTime} - {endTime} ({days})
+        {startTime} - {endTime} ({days.join('/')})
       </td>
       <td>{location}</td>
     </tr>
