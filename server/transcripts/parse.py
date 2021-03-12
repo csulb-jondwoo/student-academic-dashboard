@@ -160,15 +160,13 @@ def formatTranscriptData(
     csulbTermsByYear,
     csulbTermPair,
 ):
-    data = []
     body = {"transfer": {}, "csulb": {}}
 
     # populate transfer terms
-    for idx, term in enumerate(transferTermPair):
+    for term in transferTermPair:
         currentTermInfo = getTermInfo(transferText, term)
         # get courses for current term
         courses = getCourseInfo(currentTermInfo, isTransferData=True)
-        currentTermPair = transferTermPair[idx]
 
         ## hashmap
         termName = term[0].split(" ")[0]
@@ -180,11 +178,10 @@ def formatTranscriptData(
         body["transfer"][termYear].append({termName: courses})
 
     # populate csulb terms
-    for idx, term in enumerate(csulbTermPair):
+    for term in csulbTermPair:
         currentTermInfo = getTermInfo(csulbText, term)
         # get courses for current term
         courses = getCourseInfo(currentTermInfo)
-        currentTermPair = csulbTermsByYear[idx]
 
         ## hashmap
         termName = term[0].split(" ")[0]
