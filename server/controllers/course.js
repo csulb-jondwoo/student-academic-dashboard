@@ -136,6 +136,7 @@ const getCompletedCourses = async (req, res) => {
 };
 
 const uploadTranscript = (req, res) => {
+  const userID = req.body.userID;
   let courseData = {
     type: 'major',
     number: null,
@@ -165,18 +166,19 @@ const uploadTranscript = (req, res) => {
     args: [''], //An argument which can be accessed in the script using sys.argv[1]
   };
 
-  PythonShell.run('parse.py', options, (err, result) => {
+  PythonShell.run('parse.py', options, async (err, result) => {
     if (err) {
       throw err;
     }
 
     data = JSON.parse(result);
 
-    // get all years for csulb courses
+    // get individual courses
     for (year in data['csulb']) {
       for (termIdx in data['csulb'][year]) {
         for (term in data['csulb'][year][termIdx]) {
           for (courseIdx in data['csulb'][year][termIdx][term]) {
+            // create courseData obj
             course = data['csulb'][year][termIdx][term][courseIdx];
             const dept = course[0].split(' ')[0];
             const number = course[0].split(' ')[1];
@@ -193,8 +195,22 @@ const uploadTranscript = (req, res) => {
               title,
               units,
               grade,
+              //designation
+              //additionalReq
             };
+
             console.log(courseData);
+            // add to completed courses
+            await userSchema.findOneAndUpdate(
+              {
+                googleId: userID,
+              },
+              {
+                $addToSet: {
+                  completedCourses: courseData,
+                },
+              }
+            );
           }
         }
       }
