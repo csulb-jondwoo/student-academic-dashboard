@@ -20,7 +20,7 @@ const currentCourseSchema = mongoose.Schema(
     term: reqString,
     year: reqNumber,
     designation: reqString,
-    additionalReq: reqString,
+    additionalReq: String, // not always required
     section: reqNumber,
     startTime: reqString,
     endTime: reqString,
@@ -44,7 +44,7 @@ const completedCourseSchema = mongoose.Schema(
     year: reqNumber,
     grade: reqString,
     designation: reqString,
-    additionalReq: reqString,
+    additionalReq: String, // not always required
   },
   { _id: false }
 );
