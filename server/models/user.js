@@ -2,46 +2,52 @@ const mongoose = require('mongoose');
 
 const reqString = {
   type: String,
-  required: true
-}
+  required: true,
+};
 
 const reqNumber = {
   type: Number,
-  required: true
-}
+  required: true,
+};
 
-const currentCourseSchema = mongoose.Schema({
-  type: reqString,
-  number: reqString, // sometimes includes letters (i.e 491B)
-  dept: reqString,
-  title: reqString,
-  units: reqNumber,
-  term: reqString,
-  year: reqNumber,
-  designation: reqString,
-  additionalReq: reqString,
-  section: reqNumber,
-  startTime: reqString,
-  endTime: reqString,
-  days: {
-    type: Array,
-    required: true
+const currentCourseSchema = mongoose.Schema(
+  {
+    type: reqString,
+    number: reqString, // sometimes includes letters (i.e 491B)
+    dept: reqString,
+    title: reqString,
+    units: reqNumber,
+    term: reqString,
+    year: reqNumber,
+    designation: reqString,
+    additionalReq: reqString,
+    section: reqNumber,
+    startTime: reqString,
+    endTime: reqString,
+    days: {
+      type: Array,
+      required: true,
+    },
+    location: reqString,
   },
-  location: reqString,
-});
+  { _id: false }
+);
 
-const completedCourseSchema = mongoose.Schema({
-  type: reqString,
-  number: reqString, // sometimes includes letters (i.e 491B)
-  dept: reqString,
-  title: reqString,
-  units: reqNumber,
-  term: reqString,
-  year: reqNumber,
-  grade: reqString,
-  designation: reqString,
-  additionalReq: reqString,
-});
+const completedCourseSchema = mongoose.Schema(
+  {
+    type: reqString,
+    number: reqString, // sometimes includes letters (i.e 491B)
+    dept: reqString,
+    title: reqString,
+    units: reqNumber,
+    term: reqString,
+    year: reqNumber,
+    grade: reqString,
+    designation: reqString,
+    additionalReq: reqString,
+  },
+  { _id: false }
+);
 
 const userSchema = mongoose.Schema({
   googleId: reqString,
