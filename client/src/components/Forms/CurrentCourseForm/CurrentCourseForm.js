@@ -143,7 +143,6 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleTimeStartChange = (seconds) => {
-    console.log(seconds);
     const dateTime = new Date('July 1, 1999');
 
     // time in 24h string format
