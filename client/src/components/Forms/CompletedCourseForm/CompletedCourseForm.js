@@ -271,10 +271,10 @@ export const CompletedCourseForm = (props) => {
                               <option value="-" key={1}>
                                 -
                               </option>
-                              <option value="Human Diversity" key={1}>
+                              <option value="Human Diversity" key={2}>
                                 Human Diversity
                               </option>
-                              <option value="Global Issues" key={2}>
+                              <option value="Global Issues" key={3}>
                                 Global Issues
                               </option>
                             </Form.Control>
