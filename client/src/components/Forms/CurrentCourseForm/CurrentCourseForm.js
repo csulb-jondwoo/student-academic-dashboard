@@ -109,16 +109,6 @@ export const CurrentCourseForm = (props) => {
     courseData.set({ ...courseData.get(), units: newCourseUnits });
   };
 
-  const handleCourseTermChange = (e) => {
-    const newCourseTerm = courseTerm.set(e.target.value);
-    courseData.set({ ...courseData.get(), term: newCourseTerm });
-  };
-
-  const handleCourseYearChange = (e) => {
-    const newCourseYear = courseYear.set(e.target.value);
-    courseData.set({ ...courseData.get(), year: newCourseYear });
-  };
-
   const handleCourseDesignationChange = (e) => {
     const newCourseDesignation = courseDesignation.set(e.target.value);
     courseData.set({ ...courseData.get(), designation: newCourseDesignation });
@@ -249,36 +239,6 @@ export const CurrentCourseForm = (props) => {
                           <option value="5">5</option>
                         </Form.Control>
                       </Form.Group>
-
-                      {/* <Row>
-                        <Col>
-                          COURSE TERM
-                          <Form.Group controlId="courseTerm">
-                            <Form.Label>Term</Form.Label>
-                            <Form.Control
-                              as="select"
-                              name="courseTerm"
-                              onChange={handleCourseTermChange}
-                            >
-                              <option value="Fall">Fall</option>
-                              <option value="Spring">Spring</option>
-                              <option value="Summer">Summer</option>
-                              <option value="Winter">Winter</option>
-                            </Form.Control>
-                          </Form.Group>
-                        </Col>
-                        <Col>
-                          COURSE YEAR
-                          <Form.Group controlId="courseYear">
-                            <Form.Label>Year</Form.Label>
-                            <Form.Control
-                              type="input"
-                              name="courseYear"
-                              onChange={handleCourseYearChange}
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row> */}
 
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
