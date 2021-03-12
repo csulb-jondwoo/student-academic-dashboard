@@ -35,7 +35,6 @@ export default function Accept({ handleFileChange }) {
   const dragStatus = isDragAccept ? 'accept' : isDragReject ? 'reject' : '';
 
   return (
-
     <section className="container">
       <div
         className="dropzone"

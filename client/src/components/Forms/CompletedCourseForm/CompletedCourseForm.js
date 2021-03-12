@@ -9,7 +9,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Button from 'react-bootstrap/Button';
 
 import useTrait from '../../../hooks/useTrait';
-import DragAndDrop from '../../../utility/DragAndDrop';
+import DragAndDrop from '../../../utility/DrapAndDrop/DragAndDrop';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
 import { myContext } from '../../../context/Context';

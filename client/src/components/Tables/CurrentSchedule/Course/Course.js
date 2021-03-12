@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { myContext } from '../../../../context/Context';
+import React from 'react';
+import formatTime from '../../../../utility/formatTime/formatTime';
 
 const CurrentCourse = ({
   number,
@@ -20,7 +20,7 @@ const CurrentCourse = ({
       <td>{section}</td>
       <td>{units}</td>
       <td>
-        {startTime} - {endTime} ({days.join('/')})
+        {formatTime(startTime)} - {formatTime(endTime)} ({days.join('/')})
       </td>
       <td>{location}</td>
     </tr>
