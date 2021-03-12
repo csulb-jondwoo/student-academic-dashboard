@@ -22,7 +22,7 @@ export const CompletedCourseForm = (props) => {
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(null);
-  const courseName = useTrait(null);
+  const courseDept = useTrait(null);
   const courseTitle = useTrait(null);
   const courseUnits = useTrait(null);
   const courseTerm = useTrait('Fall');
@@ -35,7 +35,7 @@ export const CompletedCourseForm = (props) => {
     userID: JSON.parse(user).googleId,
     type: 'ge',
     number: null,
-    name: null,
+    dept: null,
     title: null,
     units: null,
     term: 'Fall',
@@ -69,9 +69,9 @@ export const CompletedCourseForm = (props) => {
     courseData.set({ ...courseData.get(), number: newCourseNumber });
   };
 
-  const handleCourseNameChange = (e) => {
-    const newCourseName = courseName.set(e.target.value);
-    courseData.set({ ...courseData.get(), name: newCourseName });
+  const handleCourseDeptChange = (e) => {
+    const newCourseDept = courseDept.set(e.target.value);
+    courseData.set({ ...courseData.get(), name: newCourseDept });
   };
 
   const handleCourseTitleChange = (e) => {
@@ -115,7 +115,7 @@ export const CompletedCourseForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(courseData.get());
-    // addCompletedCourse(courseData.get());
+    addCompletedCourse(courseData.get());
   };
 
   const handleFileChange = (file) => {
@@ -161,13 +161,13 @@ export const CompletedCourseForm = (props) => {
                         />
                       </Form.Group>
 
-                      {/* COURSE NAME */}
-                      <Form.Group controlId="courseName">
-                        <Form.Label>Course Name</Form.Label>
+                      {/* COURSE DEPT */}
+                      <Form.Group controlId="courseDept">
+                        <Form.Label>Course Department</Form.Label>
                         <Form.Control
                           type="input"
-                          name="courseName"
-                          onChange={handleCourseNameChange}
+                          name="courseDept"
+                          onChange={handleCourseDeptChange}
                         />
                       </Form.Group>
 

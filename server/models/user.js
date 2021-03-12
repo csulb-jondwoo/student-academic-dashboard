@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const currentCourseSchema = mongoose.Schema({
   type: String,
   number: Number,
-  name: String,
+  dept: String,
   title: String,
   units: Number,
   term: String,
   year: Number,
-  designation: String, // unnecessary? nice for display, don't really need to save it.
-  additionalReq: String, // unnecessary???
+  designation: String,
+  additionalReq: String,
   section: Number,
   startTime: String,
   endTime: String,
@@ -17,15 +17,18 @@ const currentCourseSchema = mongoose.Schema({
   location: String,
 });
 
-// const completedCourseSchema = mongoose.Schema({
-//   courseNo: String,
-//   courseTitle: String,
-//   courseUnits: String,
-//   courseTerm: String,
-//   courseYear: String,
-//   designation: String, // unnecessary? nice for display, don't really need to save it.
-//   courseGrade: String,
-// });
+const completedCourseSchema = mongoose.Schema({
+  type: String,
+  number: Number,
+  dept: String,
+  title: String,
+  units: Number,
+  term: String,
+  year: Number,
+  grade: String,
+  designation: String,
+  additionalReq: String,
+});
 
 const userSchema = mongoose.Schema({
   googleId: {
@@ -41,6 +44,7 @@ const userSchema = mongoose.Schema({
     default: Date.now,
   },
   currentCourses: [currentCourseSchema],
+  completedCourses: [completedCourseSchema],
 });
 
 module.exports = mongoose.model('user', userSchema);
