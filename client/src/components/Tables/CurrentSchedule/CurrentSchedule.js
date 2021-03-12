@@ -24,11 +24,10 @@ const CurrentSchedule = () => {
     // getCompletedCourses(userID);
   }, [getCurrentCourses, userID]);
 
-  // const getUnits = (currentCourses) => {
-  //   console.log(currentCourses);
-  // };
-
-  // getUnits(currentCourses);
+  // accumulate total number of units
+  const totalUnits = currentCourses.reduce((sum, obj) => {
+    return sum + obj.units;
+  }, 0);
 
   return (
     <>
@@ -37,7 +36,9 @@ const CurrentSchedule = () => {
           <Row>
             <Col>
               <Card.Body>
-                <Card.Title>Current Schedule (Fall 2020) - 7 Units</Card.Title>
+                <Card.Title>
+                  Current Schedule (Fall 2020) - {totalUnits} Units
+                </Card.Title>
               </Card.Body>
             </Col>
           </Row>
