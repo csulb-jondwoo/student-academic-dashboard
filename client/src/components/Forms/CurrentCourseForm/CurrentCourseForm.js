@@ -41,8 +41,9 @@ export const CurrentCourseForm = (props) => {
     dept: null,
     title: null,
     units: 0,
-    term: 'Fall',
-    year: null,
+    // hardcoded term and year
+    term: 'Spring',
+    year: 2021,
     designation: 'A1 - Oral Communication',
     additionalReq: null,
     section: null,
