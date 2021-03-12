@@ -44,7 +44,7 @@ const CurrentSchedule = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              {/* <tr>
                 <td>BIOL 200</td>
                 <td>2</td>
                 <td>4</td>
@@ -71,8 +71,18 @@ const CurrentSchedule = () => {
                 <td>0</td>
                 <td>12:00pm-1:15pm (Tues/Thurs)</td>
                 <td>online</td>
-              </tr>
-              {/* {currentCourses.map(course => (<CurrentCourse key={course.courseNo} courseData={course} />))} */}
+              </tr> */}
+              {currentCourses.map(course => (<CurrentCourse
+                key={course.number} 
+                courseName={course.title}
+                section={course.section}
+                units={course.units}
+                startTime={course.startTime}
+                endTime={course.endTime}
+                days={course.days}
+                location={course.location}
+                />))
+              }
             </tbody>
           </Table>
         </div>
