@@ -1,44 +1,51 @@
 const mongoose = require('mongoose');
 
-const currentCourseSchema = mongoose.Schema({
+const reqString = {
   type: String,
-  number: String, // sometimes includes letters (i.e 491B)
-  dept: String,
-  title: String,
-  units: Number,
-  term: String,
-  year: Number,
-  designation: String,
-  additionalReq: String,
-  section: Number,
-  startTime: String,
-  endTime: String,
-  days: Array,
-  location: String,
+  required: true
+}
+
+const reqNumber = {
+  type: Number,
+  required: true
+}
+
+const currentCourseSchema = mongoose.Schema({
+  type: reqString,
+  number: reqString, // sometimes includes letters (i.e 491B)
+  dept: reqString,
+  title: reqString,
+  units: reqNumber,
+  term: reqString,
+  year: reqNumber,
+  designation: reqString,
+  additionalReq: reqString,
+  section: reqNumber,
+  startTime: reqString,
+  endTime: reqString,
+  days: {
+    type: Array,
+    required: true
+  },
+  location: reqString,
 });
 
 const completedCourseSchema = mongoose.Schema({
-  type: String,
-  number: String, // sometimes includes letters (i.e 491B)
-  dept: String,
-  title: String,
-  units: Number,
-  term: String,
-  year: Number,
-  grade: String,
-  designation: String,
-  additionalReq: String,
+  type: reqString,
+  number: reqString, // sometimes includes letters (i.e 491B)
+  dept: reqString,
+  title: reqString,
+  units: reqNumber,
+  term: reqString,
+  year: reqNumber,
+  grade: reqString,
+  designation: reqString,
+  additionalReq: reqString,
 });
 
 const userSchema = mongoose.Schema({
-  googleId: {
-    required: true,
-    type: String,
-  },
-  name: {
-    required: true,
-    type: String,
-  },
+  googleId: reqString,
+  name: reqString,
   createdAt: {
     type: Date,
     default: Date.now,
