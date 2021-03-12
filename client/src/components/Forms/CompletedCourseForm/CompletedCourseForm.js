@@ -71,7 +71,7 @@ export const CompletedCourseForm = (props) => {
 
   const handleCourseDeptChange = (e) => {
     const newCourseDept = courseDept.set(e.target.value);
-    courseData.set({ ...courseData.get(), name: newCourseDept });
+    courseData.set({ ...courseData.get(), dept: newCourseDept });
   };
 
   const handleCourseTitleChange = (e) => {
@@ -113,7 +113,7 @@ export const CompletedCourseForm = (props) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(courseData.get());
     addCompletedCourse(courseData.get());
   };

@@ -95,7 +95,7 @@ export const CurrentCourseForm = (props) => {
 
   const handleCourseDeptChange = (e) => {
     const newCourseDept = courseDept.set(e.target.value);
-    courseData.set({ ...courseData.get(), name: newCourseDept });
+    courseData.set({ ...courseData.get(), dept: newCourseDept });
   };
 
   const handleCourseTitleChange = (e) => {
@@ -168,7 +168,7 @@ export const CurrentCourseForm = (props) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(courseData.get());
     addCurrentCourse(courseData.get());
   };
@@ -205,7 +205,7 @@ export const CurrentCourseForm = (props) => {
                         />
                       </Form.Group>
 
-                      {/* COURSE NAME */}
+                      {/* COURSE Dept */}
                       <Form.Group controlId="courseDept">
                         <Form.Label>Course Department</Form.Label>
                         <Form.Control
