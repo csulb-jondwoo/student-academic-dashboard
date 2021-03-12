@@ -249,9 +249,9 @@ export const CurrentCourseForm = (props) => {
                         </Form.Control>
                       </Form.Group>
 
-                      <Row>
+                      {/* <Row>
                         <Col>
-                          {/* COURSE TERM */}
+                          COURSE TERM
                           <Form.Group controlId="courseTerm">
                             <Form.Label>Term</Form.Label>
                             <Form.Control
@@ -267,7 +267,7 @@ export const CurrentCourseForm = (props) => {
                           </Form.Group>
                         </Col>
                         <Col>
-                          {/* COURSE YEAR */}
+                          COURSE YEAR
                           <Form.Group controlId="courseYear">
                             <Form.Label>Year</Form.Label>
                             <Form.Control
@@ -277,7 +277,7 @@ export const CurrentCourseForm = (props) => {
                             />
                           </Form.Group>
                         </Col>
-                      </Row>
+                      </Row> */}
 
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
@@ -353,29 +353,34 @@ export const CurrentCourseForm = (props) => {
                         />
                       </Form.Group>
 
-                      {/* COURSE START TIME */}
-                      <Form.Group controlId="startTime">
-                        <Form.Label>Start Time</Form.Label>
-                        <TimePicker
-                          onChange={handleTimeStartChange}
-                          start="06:00"
-                          name="courseStartTime"
-                          value={timePickerStartTime}
-                          step={5}
-                        />
-                      </Form.Group>
-
-                      {/* COURSE END TIME */}
-                      <Form.Group controlId="endTime">
-                        <Form.Label>End Time</Form.Label>
-                        <TimePicker
-                          onChange={handleTimeEndChange}
-                          end="23:00"
-                          name="courseStartTime"
-                          value={timePickerEndTime}
-                          step={5}
-                        />
-                      </Form.Group>
+                      <Row>
+                        <Col>
+                          {/* COURSE START TIME */}
+                          <Form.Group controlId="startTime">
+                            <Form.Label>Start Time</Form.Label>
+                            <TimePicker
+                              onChange={handleTimeStartChange}
+                              start="06:00"
+                              name="courseStartTime"
+                              value={timePickerStartTime}
+                              step={5}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                          {/* COURSE END TIME */}
+                          <Form.Group controlId="endTime">
+                            <Form.Label>End Time</Form.Label>
+                            <TimePicker
+                              onChange={handleTimeEndChange}
+                              end="23:00"
+                              name="courseStartTime"
+                              value={timePickerEndTime}
+                              step={5}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
 
                       {/* COURSE DAYS */}
                       <Form.Group controlId="day">
