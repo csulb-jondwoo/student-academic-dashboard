@@ -3,6 +3,7 @@ const { PythonShell } = require('python-shell');
 const userSchema = require('../models/user.js');
 const { upload } = require('../utility/multer.js');
 
+// ADD
 const addCompletedCourse = async (req, res) => {
   try {
     const { userID } = req.body; // userID = googleId passed from completed course form
@@ -53,6 +54,7 @@ const addCurrentCourse = async (req, res) => {
   }
 };
 
+// DELETE
 const deleteCurrentCourse = async (req, res) => {
   try {
     const { userID } = req.body;
@@ -93,6 +95,7 @@ const deleteCompletedCourse = async (req, res) => {
   }
 };
 
+// GET
 const getCurrentCourses = async (req, res) => {
   try {
     const param = req.query.ID;
@@ -148,17 +151,27 @@ const uploadTranscript = (req, res) => {
     args: [''], //An argument which can be accessed in the script using sys.argv[1]
   };
 
-  PythonShell.run('parse.py', options, function (err, result) {
-    if (err) throw err;
-    // result is an array consisting of messages collected
-    //during execution of script.
-    const data = result;
-    const jsonData = JSON.parse(data);
-    console.log(jsonData);
-    console.log(jsonData['csulb']['2020']);
-    console.log(jsonData['csulb']['2020'][0]);
+  PythonShell.run('parse.py', options, (err, result) => {
+    if (err) {
+      throw err;
+    }
+
+    const data = JSON.parse(result);
+
+    const years = [];
+
+    // get all years for csulb courses
+    for (year in data['csulb']) {
+      years.push(year);
+    }
+
+    console.log(years);
+
+    // console.log(jsonData['csulb']['2020']);
+    // console.log(jsonData['csulb']['2020'][0]);
 
     // res.send(result.toString());
+    // return result;
   });
 };
 

@@ -1,4 +1,10 @@
-import React, { createContext, useEffect, useState, useReducer } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useReducer,
+  useCallback,
+} from 'react';
 import AppReducer from './AppReducer';
 import * as api from '../api';
 
@@ -41,7 +47,8 @@ export default function Context(props) {
     });
   }, []);
 
-  async function getCurrentCourses(userID) {
+  // useCallback to stabilize function on renders when called
+  const getCurrentCourses = useCallback(async (userID) => {
     try {
       const res = await api.getCurrentCourses(userID);
 
@@ -55,9 +62,10 @@ export default function Context(props) {
         payload: err.response.data.error,
       });
     }
-  }
+  }, []);
 
-  async function getCompletedCourses(userID) {
+  // useCallback to stabilize function on renders when called
+  const getCompletedCourses = useCallback(async (userID) => {
     try {
       const res = await api.getCompletedCourses(userID);
 
@@ -71,7 +79,7 @@ export default function Context(props) {
         payload: err.response.data.error,
       });
     }
-  }
+  }, []);
 
   async function deleteCurrentCourse(id) {
     try {

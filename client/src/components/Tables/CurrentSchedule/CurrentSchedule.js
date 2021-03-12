@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,18 +6,30 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 import '../../../utility/css/table-fixed-height.css';
-import CurrentCourse from './CurrentCourse'
-import { myContext } from "../../../context/Context"
+import CurrentCourse from './Course/Course';
+import { myContext } from '../../../context/Context';
 
 const CurrentSchedule = () => {
-  const { getCurrentCourses, getCompletedCourses, currentCourses, completedCourses, user } = useContext(myContext);
-  const userID = JSON.parse(user).googleId
+  const {
+    getCurrentCourses,
+    getCompletedCourses,
+    currentCourses,
+    completedCourses,
+    user,
+  } = useContext(myContext);
+  const userID = JSON.parse(user).googleId;
 
   useEffect(() => {
     getCurrentCourses(userID);
-    getCompletedCourses(userID);
-  }, []);
-  
+    // getCompletedCourses(userID);
+  }, [getCurrentCourses, userID]);
+
+  // const getUnits = (currentCourses) => {
+  //   console.log(currentCourses);
+  // };
+
+  // getUnits(currentCourses);
+
   return (
     <>
       <div className="shadow-sm">
@@ -25,9 +37,7 @@ const CurrentSchedule = () => {
           <Row>
             <Col>
               <Card.Body>
-                <Card.Title>
-                  Current Schedule (Fall 2020) - 7 Units
-                </Card.Title>
+                <Card.Title>Current Schedule (Fall 2020) - 7 Units</Card.Title>
               </Card.Body>
             </Col>
           </Row>
@@ -72,17 +82,20 @@ const CurrentSchedule = () => {
                 <td>12:00pm-1:15pm (Tues/Thurs)</td>
                 <td>online</td>
               </tr> */}
-              {currentCourses.map(course => (<CurrentCourse
-                key={course.number} 
-                courseName={course.title}
-                section={course.section}
-                units={course.units}
-                startTime={course.startTime}
-                endTime={course.endTime}
-                days={course.days}
-                location={course.location}
-                />))
-              }
+              {currentCourses.map((course, idx) => (
+                <CurrentCourse
+                  key={idx}
+                  number={course.number}
+                  dept={course.dept}
+                  title={course.title}
+                  section={course.section}
+                  units={course.units}
+                  startTime={course.startTime}
+                  endTime={course.endTime}
+                  days={course.days}
+                  location={course.location}
+                />
+              ))}
             </tbody>
           </Table>
         </div>
