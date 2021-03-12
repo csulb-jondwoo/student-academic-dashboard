@@ -37,7 +37,8 @@ const CurrentSchedule = () => {
             <Col>
               <Card.Body>
                 <Card.Title>
-                  Current Schedule (Fall 2020) - {totalUnits} Units
+                  {/* TODO: make term and year dynamic */}
+                  Current Schedule (Spring 2021) - {totalUnits} Units
                 </Card.Title>
               </Card.Body>
             </Col>
