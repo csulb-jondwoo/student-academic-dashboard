@@ -135,7 +135,7 @@ export const CompletedCourseForm = (props) => {
 
     const data = new FormData();
     data.append('file', selectedFile);
-    api.uploadCourse(data);
+    api.uploadTranscript(data, JSON.parse(user).googleId);
   };
   return (
     <>
