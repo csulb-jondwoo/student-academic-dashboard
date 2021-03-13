@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
@@ -11,6 +11,8 @@ import MajorRequirements from '../../components/Tables/Requirements/MajorRequire
 import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/GeRemaining';
 import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements';
 import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData';
+import { myContext } from '../../context/Context';
+import formatTime from '../../utility/formatTime/formatTime';
 
 const Dashboard = () => {
   const [radioValue, setRadioValue] = useState('ge');

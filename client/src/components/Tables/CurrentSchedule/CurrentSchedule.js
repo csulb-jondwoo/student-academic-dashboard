@@ -1,16 +1,38 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import MaterialTable, { MTableToolbar } from 'material-table';
+import MaterialTable from 'material-table';
+
+import formatTime from '../../../utility/formatTime/formatTime';
+import { myContext } from '../../../context/Context';
 
 import '../../../utility/css/table-fixed-height.css';
-import CurrentCourse from './Course/Course';
-import { myContext } from '../../../context/Context';
 
 const CurrentSchedule = () => {
   const { getCurrentCourses, currentCourses, user } = useContext(myContext);
 
-  const [columns, setColumns] = useState([
+  const userID = JSON.parse(user).googleId;
+
+  useEffect(() => {
+    getCurrentCourses(userID);
+  }, [getCurrentCourses, userID]);
+
+  const courses = currentCourses.map((course) => {
+    return {
+      course: course.dept + ' ' + course.number + ' - ' + course.title,
+      section: course.section,
+      units: course.units,
+      startTime: formatTime(course.startTime),
+      endTime: formatTime(course.endTime),
+      days: course.days.join('/'),
+      location: course.location,
+      designation: course.designation,
+      additionalReq: course.additionalReq,
+    };
+  });
+
+  // const [data, setData] = useState(courses);
+
+  const columns = [
     {
       title: 'Course',
       field: 'course',
@@ -42,72 +64,31 @@ const CurrentSchedule = () => {
       title: 'Location',
       field: 'location',
     },
-  ]);
+  ];
 
-  // const [data, setData] = useState([
-  //   {
-  //     course: 'CECS 100 - Intro to Technology',
-  //     section: 3,
-  //     units: 3,
-  //     time: '12:00pm - 2:00pm',
-  //     days: 'Mon / Wed',
-  //     location: 'Online',
-  //   },
-  //   {
-  //     course: 'CECS 100 - Intro to Technology',
-  //     section: 3,
-  //     units: 3,
-  //     time: '12:00pm - 2:00pm',
-  //     days: 'Mon / Wed',
-  //     location: 'Online',
-  //   },
-  // ]);
-  const [data, setData] = useState(currentCourses);
-
-  const userID = JSON.parse(user).googleId;
-
-  useEffect(() => {
-    getCurrentCourses(userID);
-  }, [getCurrentCourses, userID]);
-
-  console.log(currentCourses);
-
-  const formatDate = (date) => {
-    var d = new Date(date);
-    var hh = d.getHours();
-    var m = d.getMinutes();
-    var dd = 'AM';
-    var h = hh;
-    if (h >= 12) {
-      h = hh - 12;
-      dd = 'PM';
-    }
-    if (h === 0) {
-      h = 12;
-    }
-
-    var replacement = h + ':' + m;
-    replacement += ' ' + dd;
-
-    return replacement;
-  };
-
-  // accumulate total number of units
-  const totalUnits = currentCourses.reduce((sum, obj) => {
-    return sum + obj.units;
-  }, 0);
+  // const getTotalUnits = currentCourses.reduce((sum, obj) => {
+  //   return sum + obj.units;
+  // }, 0);
 
   // const handleUpdate = (params) => {
   //   alert('You want to edit ' + data.length + ' rows');
   // };
 
-  const handleDelete = (oldData) => {};
+  // const handleDelete = async (evt, data) => {
+  //   await setTimeout(() => {
+  //     console.log(data);
+  //     // const dataDelete = [...data];
+  //     // const index = oldData.tableData.id;
+  //     // dataDelete.splice(index, 1);
+  //     // setData([...dataDelete]);
+  //   }, 1000);
+  // };
 
   return (
     <MaterialTable
-      title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
+      // title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
       columns={columns.map((c) => ({ ...c, tableData: undefined }))}
-      data={data}
+      data={courses}
       options={{
         selection: true,
         actionsColumnIndex: -1,
@@ -131,8 +112,9 @@ const CurrentSchedule = () => {
           // onRowDelete: (oldData) =>
           //   new Promise((resolve, reject) => {
           //     setTimeout(() => {
-          //       const dataDelete = [...data];
+          //       const dataDelete = [...courses];
           //       const index = oldData.tableData.id;
+          //       console.log(index);
           //       dataDelete.splice(index, 1);
           //       setData([...dataDelete]);
           //       resolve();
@@ -140,18 +122,20 @@ const CurrentSchedule = () => {
           //   }),
         }
       }
-      actions={[
-        // {
-        //   tooltip: 'Edit All Selected Users',
-        //   icon: 'edit',
-        //   onClick: (evt, data) => handleUpdate(evt, data),
-        // },
-        {
-          tooltip: 'Remove All Selected Users',
-          icon: 'delete',
-          onClick: (evt, data) => handleDelete(evt, data),
-        },
-      ]}
+      actions={
+        [
+          // {
+          //   tooltip: 'Edit All Selected Users',
+          //   icon: 'edit',
+          //   onClick: (evt, data) => handleUpdate(evt, data),
+          // },
+          // {
+          //   tooltip: 'Remove All Selected Users',
+          //   icon: 'delete',
+          //   onClick: (evt, data) => handleDelete(evt, data),
+          // },
+        ]
+      }
     />
   );
 };
