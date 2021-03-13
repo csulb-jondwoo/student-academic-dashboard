@@ -10,8 +10,8 @@ import Button from 'react-bootstrap/Button';
 
 import useTrait from '../../../hooks/useTrait';
 import DragAndDrop from '../../../utility/DrapAndDrop/DragAndDrop';
-import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
-import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
+import { geDesignations } from '../../Tables/Requirements/GeRequirements/geDesignations/';
+import { cecsDesignations } from '../../Tables/Requirements/MajorRequirements/cecsDesignations/';
 import { myContext } from '../../../context/Context';
 import * as api from '../../../api';
 
@@ -247,7 +247,7 @@ export const CompletedCourseForm = (props) => {
                               name="designation"
                               onChange={handleCourseDesignationChange}
                             >
-                              {geReqData.slice(0, 13).map((ge, idx) => {
+                              {geDesignations.slice(0, 13).map((ge, idx) => {
                                 return (
                                   <option
                                     value={`${ge.designation} - ${ge.course}`}
@@ -289,7 +289,7 @@ export const CompletedCourseForm = (props) => {
                             name="designation"
                             onChange={handleCourseDesignationChange}
                           >
-                            {majorReqCategory.map((category, idx) => {
+                            {cecsDesignations.map((category, idx) => {
                               return (
                                 <option value={category} key={idx}>
                                   {category}

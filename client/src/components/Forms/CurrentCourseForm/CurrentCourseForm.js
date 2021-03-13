@@ -11,8 +11,8 @@ import Card from 'react-bootstrap/Card';
 
 import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
-import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
-import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
+import { geDesignations } from '../../Tables/Requirements/GeRequirements/geDesignations/';
+import { cecsDesignations } from '../../Tables/Requirements/MajorRequirements/cecsDesignations/';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
@@ -22,8 +22,8 @@ export const CurrentCourseForm = (props) => {
   const courseDept = useTrait(null);
   const courseTitle = useTrait(null);
   const courseUnits = useTrait(null);
-  const courseTerm = useTrait('Fall');
-  const courseYear = useTrait(null);
+  // const courseTerm = useTrait('Fall');
+  // const courseYear = useTrait(null);
   const courseDesignation = useTrait('A1 - Oral Communications');
   const courseAdditionalReq = useTrait('Human Diversity');
   const courseSection = useTrait(null);
@@ -251,7 +251,7 @@ export const CurrentCourseForm = (props) => {
                               name="designation"
                               onChange={handleCourseDesignationChange}
                             >
-                              {geReqData.slice(0, 13).map((ge, idx) => {
+                              {geDesignations.slice(0, 13).map((ge, idx) => {
                                 return (
                                   <option
                                     value={`${ge.designation} - ${ge.course}`}
@@ -293,7 +293,7 @@ export const CurrentCourseForm = (props) => {
                             name="designation"
                             onChange={handleCourseDesignationChange}
                           >
-                            {majorReqCategory.map((category, idx) => {
+                            {cecsDesignations.map((category, idx) => {
                               return (
                                 <option value={category} key={idx}>
                                   {category}

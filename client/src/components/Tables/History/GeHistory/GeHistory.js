@@ -2,8 +2,6 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 
-import { geHistoryData } from './GeHistoryData';
-
 import '../../../../utility/css/table-fixed-height.css';
 
 const GeHistory = () => {
@@ -28,7 +26,15 @@ const GeHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {geHistoryData.map((course, idx) => {
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+
+            {/* {geHistoryData.map((course, idx) => {
               return (
                 <tr key={idx}>
                   <td>
@@ -42,7 +48,7 @@ const GeHistory = () => {
                   <td>{course.status}</td>
                 </tr>
               );
-            })}
+            })} */}
           </tbody>
         </Table>
       </div>

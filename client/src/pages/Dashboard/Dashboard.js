@@ -6,11 +6,11 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import StudentInfo from '../../components/StudentInfo/StudentInfo';
 import CurrentSchedule from '../../components/Tables/CurrentSchedule/CurrentSchedule';
-import MajorRemaining from '../../components/Tables/RemainingCourses/MajorRemaining/MajorRemaining';
-import MajorRequirements from '../../components/Tables/Requirements/MajorRequirements/MajorRequirements';
+// import MajorRemaining from '../../components/Tables/RemainingCourses/MajorRemaining/MajorRemaining';
+// import MajorRequirements from '../../components/Tables/Requirements/MajorRequirements/MajorRequirements';
 import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/GeRemaining';
 import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements';
-import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData';
+// import { cecsCatalog } from '../../components/Tables/Requirements/MajorRequirements/cecsCatalog';
 
 const Dashboard = () => {
   const [radioValue, setRadioValue] = useState('ge');
@@ -32,7 +32,7 @@ const Dashboard = () => {
           <CurrentSchedule />
         </Col>
       </Row>
-      <Row className="mt-4">
+      {/* <Row className="mt-4">
         <Col className="d-flex justify-content-center">
           <ToggleButtonGroup
             className="mb-3"
@@ -45,13 +45,13 @@ const Dashboard = () => {
             <ToggleButton value="major">Major</ToggleButton>
           </ToggleButtonGroup>
         </Col>
-      </Row>
-      <Row className="mt-3 mb-5">
+      </Row> */}
+      {/* <Row className="mt-3 mb-5">
         <Col>{radioValue === 'ge' ? <GeRemaining /> : <MajorRemaining />}</Col>
         <Col>
           {radioValue === 'ge' ? <GeRequirements /> : <MajorRequirements />}
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };

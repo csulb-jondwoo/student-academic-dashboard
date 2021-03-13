@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
+// improt cecsCatalog =
 
-import { majorHistoryData } from './MajorHistoryData';
+import { myContext } from '../../../../context/Context';
 
 import '../../../../utility/css/table-fixed-height.css';
 
 // TODO: fetch real data
 const MajorHistory = () => {
+  const { getCompletedCourses, completedCourses, user } = useContext(myContext);
+  const userID = JSON.parse(user).googleId;
+
+  useEffect(() => {
+    getCompletedCourses(userID);
+  }, [getCompletedCourses, userID]);
+
+  console.log(completedCourses);
+  // courseData = {
+  //   ...courseData,
+  //   year,
+  //   term,
+  //   number,
+  //   dept,
+  //   title,
+  //   units,
+  //   grade,
+  //   //designation
+  //   //additionalReq
+  // };
   return (
     <>
       <Card className="mt-3">
@@ -29,19 +50,21 @@ const MajorHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {majorHistoryData.map((course, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>
-                    {course.course} - {course.title}
-                  </td>
-                  <td>{course.units}</td>
-                  <td>{course.term}</td>
-                  <td>{course.grade}</td>
-                  <td>{course.designation}</td>
-                  <td>{course.status}</td>
-                </tr>
-              );
+            {completedCourses.map((course, idx) => {
+              if (course.type === 'major') {
+                return (
+                  <tr key={idx}>
+                    <td>
+                      {course.dept} {course.number} - {course.title}
+                    </td>
+                    <td>{course.units}</td>
+                    <td>{course.term}</td>
+                    <td>{course.grade}</td>
+                    <td>{course.designation}</td>
+                    <td>{course.status}</td>
+                  </tr>
+                );
+              }
             })}
           </tbody>
         </Table>

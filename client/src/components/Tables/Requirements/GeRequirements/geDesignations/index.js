@@ -1,4 +1,4 @@
-export const geReqData = [
+export const geDesignations = [
   {
     course: 'Oral Communication',
     units: 3,

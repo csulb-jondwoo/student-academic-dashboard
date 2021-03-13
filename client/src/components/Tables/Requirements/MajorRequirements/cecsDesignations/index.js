@@ -1,4 +1,4 @@
-export const majorReqData = [
+export const cecsDesignations = [
   {
     course: 'CECS 100',
     title: 'Critical Thinking in the Digital Information Age',

@@ -5,9 +5,10 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
-import '../../../utility/css/table-fixed-height.css';
 import CurrentCourse from './Course/Course';
 import { myContext } from '../../../context/Context';
+
+import '../../../utility/css/table-fixed-height.css';
 
 const CurrentSchedule = () => {
   const {
