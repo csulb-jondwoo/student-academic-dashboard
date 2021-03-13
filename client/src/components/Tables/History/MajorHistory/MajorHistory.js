@@ -6,6 +6,7 @@ import { majorHistoryData } from './MajorHistoryData';
 
 import '../../../../utility/css/table-fixed-height.css';
 
+// TODO: fetch real data
 const MajorHistory = () => {
   return (
     <>
