@@ -1,9 +1,7 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
+import MaterialTable, { MTableToolbar } from 'material-table';
 
 import '../../../utility/css/table-fixed-height.css';
 import CurrentCourse from './Course/Course';
@@ -17,6 +15,105 @@ const CurrentSchedule = () => {
     completedCourses,
     user,
   } = useContext(myContext);
+
+  const [columns, setColumns] = useState([
+    {
+      title: 'Course',
+      field: 'course',
+      cellStyle: {
+        whiteSpace: 'nowrap',
+      },
+    },
+    {
+      title: 'Section',
+      field: 'section',
+    },
+    {
+      title: 'Units',
+      field: 'units',
+      width: 10,
+    },
+    {
+      title: 'Time',
+      field: 'time',
+    },
+    {
+      title: 'Days',
+      field: 'days',
+    },
+    {
+      title: 'Location',
+      field: 'location',
+    },
+  ]);
+
+  const [data, setData] = useState([
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+    {
+      course: 'CECS 100 - Intro to Technology',
+      section: 3,
+      units: 3,
+      time: '12:00pm - 2:00pm',
+      days: 'Mon / Wed',
+      location: 'Online',
+    },
+  ]);
+
   const userID = JSON.parse(user).googleId;
 
   useEffect(() => {
@@ -29,80 +126,71 @@ const CurrentSchedule = () => {
     return sum + obj.units;
   }, 0);
 
+  const handleUpdate = (params) => {
+    alert('You want to edit ' + data.length + ' rows');
+  };
+
+  const handleDelete = (params) => {
+    alert('You want to delete ' + data.length + ' rows');
+  };
+
   return (
-    <>
-      <div className="shadow-sm">
-        <Card>
-          <Row>
-            <Col>
-              <Card.Body>
-                <Card.Title>
-                  {/* TODO: make term and year dynamic */}
-                  Current Schedule (Spring 2021) - {totalUnits} Units
-                </Card.Title>
-              </Card.Body>
-            </Col>
-          </Row>
-        </Card>
-        <div className="table-wrapper">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Course</th>
-                <th>Section</th>
-                <th>Units</th>
-                <th>Time (Day)</th>
-                <th>Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* <tr>
-                <td>BIOL 200</td>
-                <td>2</td>
-                <td>4</td>
-                <td>9:30am-10:45am (Tues/Thurs)</td>
-                <td>online</td>
-              </tr>
-              <tr>
-                <td>BIOL 200 Lab</td>
-                <td>14</td>
-                <td>0</td>
-                <td>7:00pm-9:45pm (Tues)</td>
-                <td>online</td>
-              </tr>
-              <tr>
-                <td>CECS 491A</td>
-                <td>1</td>
-                <td>3</td>
-                <td>11:00am-11:50am (Tues/Thurs)</td>
-                <td>online</td>
-              </tr>
-              <tr>
-                <td>CECS 491A Lab</td>
-                <td>2</td>
-                <td>0</td>
-                <td>12:00pm-1:15pm (Tues/Thurs)</td>
-                <td>online</td>
-              </tr> */}
-              {currentCourses.map((course, idx) => (
-                <CurrentCourse
-                  key={idx}
-                  number={course.number}
-                  dept={course.dept}
-                  title={course.title}
-                  section={course.section}
-                  units={course.units}
-                  startTime={course.startTime}
-                  endTime={course.endTime}
-                  days={course.days}
-                  location={course.location}
-                />
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      </div>
-    </>
+    <MaterialTable
+      title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
+      columns={columns.map((c) => ({ ...c, tableData: undefined }))}
+      data={data}
+      options={{
+        selection: true,
+        actionsColumnIndex: -1,
+      }}
+      // detailPanel={(rowData) => {
+      //   return <p>test</p>;
+      // }}
+      editable={{
+        onRowAdd: (newData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+
+              resolve();
+            }, 1000);
+          }),
+        // onRowUpdate: (newData, oldData) =>
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       const dataUpdate = [...data];
+        //       const index = oldData.tableData.id;
+        //       dataUpdate[index] = newData;
+        //       setData([...dataUpdate]);
+
+        //       resolve();
+        //     }, 1000);
+        //   }),
+        // onRowDelete: (oldData) =>
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       const dataDelete = [...data];
+        //       const index = oldData.tableData.id;
+        //       dataDelete.splice(index, 1);
+        //       setData([...dataDelete]);
+
+        //       resolve();
+        //     }, 1000);
+        //   }),
+      }}
+      actions={[
+        {
+          tooltip: 'Edit All Selected Users',
+          icon: 'edit',
+          onClick: (evt, data) => handleUpdate(evt, data),
+        },
+        {
+          tooltip: 'Remove All Selected Users',
+          icon: 'delete',
+          onClick: (evt, data) => handleDelete(evt, data),
+        },
+      ]}
+    />
   );
 };
 
