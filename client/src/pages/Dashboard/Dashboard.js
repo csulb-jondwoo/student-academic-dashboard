@@ -32,7 +32,7 @@ const Dashboard = () => {
           <CurrentSchedule />
         </Col>
       </Row>
-      <Row className="mt-4">
+      {/* <Row className="mt-4">
         <Col className="d-flex justify-content-center">
           <ToggleButtonGroup
             className="mb-3"
@@ -51,7 +51,7 @@ const Dashboard = () => {
         <Col>
           {radioValue === 'ge' ? <GeRequirements /> : <MajorRequirements />}
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };
