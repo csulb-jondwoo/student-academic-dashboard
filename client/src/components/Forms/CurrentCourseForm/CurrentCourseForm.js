@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -13,17 +13,22 @@ import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
+import { useLocation } from 'react-router';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.state); // result: 'some_value'
+  }, [location]);
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(null);
   const courseDept = useTrait(null);
   const courseTitle = useTrait(null);
   const courseUnits = useTrait(null);
-  const courseTerm = useTrait('Fall');
-  const courseYear = useTrait(null);
   const courseDesignation = useTrait('A1 - Oral Communications');
   const courseAdditionalReq = useTrait('Human Diversity');
   const courseSection = useTrait(null);

@@ -1,18 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
 
 import '../../../utility/css/table-fixed-height.css';
+import PrivateRoute from '../../AppRoutes/PrivateRoute/PrivateRoute';
+import CurrentCourseForm from '../../Forms/CurrentCourseForm/CurrentCourseForm';
 
 const CurrentSchedule = () => {
+  const history = useHistory();
+
   const { getCurrentCourses, currentCourses, user } = useContext(myContext);
 
   const userID = JSON.parse(user).googleId;
 
   useEffect(() => {
+    // set state of currentCourses inside context via reducer
     getCurrentCourses(userID);
   }, [getCurrentCourses, userID]);
 
@@ -30,7 +35,7 @@ const CurrentSchedule = () => {
     };
   });
 
-  // const [data, setData] = useState(courses);
+  const [data, setData] = useState([]);
 
   const columns = [
     {
@@ -66,28 +71,25 @@ const CurrentSchedule = () => {
     },
   ];
 
-  // const getTotalUnits = currentCourses.reduce((sum, obj) => {
-  //   return sum + obj.units;
-  // }, 0);
+  const totalUnits = currentCourses.reduce((sum, obj) => {
+    return sum + obj.units;
+  }, 0);
 
-  // const handleUpdate = (params) => {
-  //   alert('You want to edit ' + data.length + ' rows');
-  // };
+  const handleUpdate = (data) => {
+    history.push({ pathname: 'add-current-course', state: data });
 
-  // const handleDelete = async (evt, data) => {
-  //   await setTimeout(() => {
-  //     console.log(data);
-  //     // const dataDelete = [...data];
-  //     // const index = oldData.tableData.id;
-  //     // dataDelete.splice(index, 1);
-  //     // setData([...dataDelete]);
-  //   }, 1000);
-  // };
+    // alert('You want to edit ' + data.length + ' rows');
+  };
+
+  const handleDelete = async (evt, data) => {
+    alert('You want to edit ' + data.length + ' rows');
+  };
 
   return (
     <MaterialTable
-      // title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
-      columns={columns.map((c) => ({ ...c, tableData: undefined }))}
+      title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
+      // columns={columns.map((c) => ({ ...c, tableData: undefined }))}
+      columns={columns}
       data={courses}
       options={{
         selection: true,
@@ -96,46 +98,44 @@ const CurrentSchedule = () => {
       // detailPanel={(rowData) => {
       //   return <p>test</p>;
       // }}
-      editable={
+      // editable={
+      //   {
+      //     // onRowAdd: async (newData) => await setData([...data, newData]),
+      //     // onRowUpdate: (newData, oldData) =>
+      //     //   new Promise((resolve, reject) => {
+      //     //     setTimeout(() => {
+      //     //       const dataDelete = [...data];
+      //     //       const index = oldData.tableData.id;
+      //     //       dataDelete.splice(index, 1);
+      //     //       setData([...dataDelete]);
+      //     //       resolve();
+      //     //     }, 1000);
+      //     //   }),
+      //     // onRowDelete: (oldData) =>
+      //     //   new Promise((resolve, reject) => {
+      //     //     setTimeout(() => {
+      //     //       const dataDelete = [...courses];
+      //     //       const index = oldData.tableData.id;
+      //     //       console.log(index);
+      //     //       dataDelete.splice(index, 1);
+      //     //       setData([...dataDelete]);
+      //     //       resolve();
+      //     //     }, 1000);
+      //     //   }),
+      //   }
+      // }
+      actions={[
         {
-          // onRowAdd: async (newData) => await setData([...data, newData]),
-          // onRowUpdate: (newData, oldData) =>
-          //   new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       const dataDelete = [...data];
-          //       const index = oldData.tableData.id;
-          //       dataDelete.splice(index, 1);
-          //       setData([...dataDelete]);
-          //       resolve();
-          //     }, 1000);
-          //   }),
-          // onRowDelete: (oldData) =>
-          //   new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       const dataDelete = [...courses];
-          //       const index = oldData.tableData.id;
-          //       console.log(index);
-          //       dataDelete.splice(index, 1);
-          //       setData([...dataDelete]);
-          //       resolve();
-          //     }, 1000);
-          //   }),
-        }
-      }
-      actions={
-        [
-          // {
-          //   tooltip: 'Edit All Selected Users',
-          //   icon: 'edit',
-          //   onClick: (evt, data) => handleUpdate(evt, data),
-          // },
-          // {
-          //   tooltip: 'Remove All Selected Users',
-          //   icon: 'delete',
-          //   onClick: (evt, data) => handleDelete(evt, data),
-          // },
-        ]
-      }
+          tooltip: 'Edit',
+          icon: 'edit',
+          onClick: (evt, data) => handleUpdate(data),
+        },
+        {
+          tooltip: 'Delete',
+          icon: 'delete',
+          onClick: (evt, data) => handleDelete(evt, data),
+        },
+      ]}
     />
   );
 };

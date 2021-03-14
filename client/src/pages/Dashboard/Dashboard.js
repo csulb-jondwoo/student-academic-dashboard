@@ -12,7 +12,6 @@ import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/Ge
 import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements';
 import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData';
 import { myContext } from '../../context/Context';
-import formatTime from '../../utility/formatTime/formatTime';
 
 const Dashboard = () => {
   const [radioValue, setRadioValue] = useState('ge');
