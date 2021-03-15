@@ -45,8 +45,8 @@ export const CurrentCourseForm = (props) => {
     designation: 'A1 - Oral Communication',
     additionalReq: '',
     section: 0,
-    startTime: '00:00',
-    endTime: '00:00',
+    startTime: '06:00',
+    endTime: '23:00',
     days: [],
     location: '',
   });
