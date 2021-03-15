@@ -106,7 +106,12 @@ const updateCurrentCourse = async (req, res) => {
     await userSchema.findOneAndUpdate(
       {
         googleId: userID,
-        'currentCourses._id': oldCourse._id,
+        currentCourses: {
+          $elemMatch: {
+            'currentCourses.number': oldCourse.number,
+            'currentCourses.dept': oldCourse.dept,
+          },
+        },
       },
       {
         $set: {
