@@ -1,29 +1,38 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import MaterialTable from 'material-table';
-import { useHistory } from 'react-router-dom';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import { confirmAlert } from 'react-confirm-alert';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import '../../../utility/css/table-fixed-height.css';
 
 const CurrentSchedule = () => {
   const {
-    getCurrentCourses,
-    currentCourses,
     user,
+    currentCourses,
+    getCurrentCourses,
     updateCurrentCourse,
     deleteCurrentCourse,
   } = useContext(myContext);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const userID = JSON.parse(user).googleId;
 
   useEffect(() => {
     // set state of currentCourses inside context via reducer
     getCurrentCourses(userID);
-  }, [getCurrentCourses, userID]);
+    setIsLoading(false);
+  }, [getCurrentCourses, userID, isLoading]);
 
-  const courses = currentCourses.map((course) => {
+  const tableData = currentCourses.map((course) => {
     return {
       userID: JSON.parse(user).googleId,
       type: course.type,
@@ -44,10 +53,6 @@ const CurrentSchedule = () => {
       title: 'Course',
       field: 'course',
       width: 1000,
-      // cellStyle: {
-      //   whiteSpace: 'nowrap',
-      // },
-      // editable: 'never',
     },
     {
       title: 'Section',
@@ -88,47 +93,106 @@ const CurrentSchedule = () => {
   }, 0);
 
   const handleCourseUpdate = (newCourse, oldCourse) => {
+    setIsLoading(true);
     updateCurrentCourse({ newCourse, oldCourse });
+    setIsLoading(false);
   };
 
   const handleCourseDelete = (data) => {
+    setIsLoading(true);
     deleteCurrentCourse(data);
+    setIsLoading(false);
+  };
+
+  const handleMarkAsComplete = (data) => {
+    console.log(data);
   };
 
   return (
     <MaterialTable
       title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
-      // columns={columns.map((c) => ({ ...c, tableData: undefined }))}
       columns={columns}
-      data={courses}
+      data={tableData}
+      isLoading={isLoading}
       options={{
         selection: true,
         actionsColumnIndex: -1,
         emptyRowsWhenPaging: false,
       }}
-      // detailPanel={(rowData) => {
-      //   return <p>test</p>;
-      // }}
       editable={{
-        // onRowAdd: async (newData) => await setData([...data, newData]),
-        onRowUpdate: async (newCourse, oldCourse) =>
-          await handleCourseUpdate(newCourse, oldCourse),
-        // onRowDelete: (oldData) =>
-        //   new Promise((resolve, reject) => {
-        //     console.log(oldData);
-        //     // const dataDelete = [...data];
-        //     // const index = oldData.tableData.id;
-        //     // dataDelete.splice(index, 1);
-        //     // setData([...dataDelete]);
-
-        //     resolve();
-        //   }),
+        onRowUpdate: (newCourse, oldCourse) =>
+          new Promise((resolve, reject) => {
+            // setTimeout(() => {
+            handleCourseUpdate(newCourse, oldCourse);
+            resolve();
+            // }, 600);
+          }),
       }}
       actions={[
         {
           tooltip: 'Delete',
           icon: 'delete',
-          onClick: (evt, data) => handleCourseDelete(data),
+          onClick: (evt, data) =>
+            new Promise((resolve, reject) => {
+              // setTimeout(() => {
+              // confirmAlert({
+              //   title: 'Confirm to delete',
+              //   message: 'Are you sure to do this.',
+              //   buttons: [
+              //     {
+              //       label: 'Yes',
+              //       onClick: () => handleCourseDelete(data),
+              //     },
+              //     {
+              //       label: 'No',
+              //       onClick: () => {},
+              //     },
+              //   ],
+              // });
+              confirmAlert({
+                customUI: ({ onClose }) => {
+                  return (
+                    <Card className="p-5">
+                      <Card.Title>
+                        <h1>Are you sure?</h1>
+                      </Card.Title>
+                      <div className="custom-ui">
+                        <Row>
+                          <Col className="d-flex justify-content-center">
+                            <Button
+                              size="lg"
+                              className="ml-auto"
+                              onClick={() => {
+                                handleCourseDelete(data);
+                                onClose();
+                              }}
+                            >
+                              Yes
+                            </Button>
+                          </Col>
+                          <Col className="d-flex justify-content-center">
+                            <Button
+                              size="lg"
+                              className="mr-auto"
+                              onClick={onClose}
+                            >
+                              No
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                  );
+                },
+              });
+              resolve();
+              // }, 600);
+            }),
+        },
+        {
+          tooltip: 'Mark as Complete',
+          icon: PlaylistAddCheckIcon,
+          onClick: (evt, data) => handleMarkAsComplete(data),
         },
       ]}
     />
