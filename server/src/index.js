@@ -23,7 +23,7 @@ mongoose
   .connect(CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
   })
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
