@@ -165,6 +165,11 @@ const CurrentSchedule = () => {
             resolve();
           }),
       }}
+      localization={{
+        header: {
+          actions: 'Edit',
+        },
+      }}
       actions={[
         {
           tooltip: 'Delete',
