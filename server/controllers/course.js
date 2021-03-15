@@ -209,15 +209,15 @@ const uploadTranscript = (req, res) => {
   const userID = req.body.userID;
   let courseData = {
     type: 'major',
-    number: null,
-    dept: null,
-    title: null,
+    number: 0,
+    dept: '',
+    title: '',
     units: 0,
-    term: null,
-    year: null,
-    grade: null,
-    designation: null,
-    additionalReq: null,
+    term: '',
+    year: 0,
+    grade: '',
+    designation: '',
+    additionalReq: '',
   };
 
   upload(req, res, function (err) {
@@ -255,6 +255,9 @@ const uploadTranscript = (req, res) => {
             const title = course[1];
             const units = course[2];
             const grade = course[3];
+            // doesnt exist yet
+            // const designation = course[4];
+            // const additinalReq = course[5];
 
             courseData = {
               ...courseData,
@@ -265,8 +268,8 @@ const uploadTranscript = (req, res) => {
               title,
               units,
               grade,
-              //designation
-              //additionalReq
+              // designation,
+              // additionalReq,
             };
 
             console.log(courseData);
