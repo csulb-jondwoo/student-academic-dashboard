@@ -12,7 +12,7 @@ const initialState = {
   completedCourses: [],
   currentCourses: [],
   error: null,
-  loading: true,
+  isLoading: true,
 };
 
 // Create Context
