@@ -2,6 +2,7 @@ const multer = require('multer');
 const { PythonShell } = require('python-shell');
 const userSchema = require('../models/user.js');
 const { upload } = require('../utility/multer.js');
+const { convertTo24hr } = require('../utility/convertTo24hr');
 
 // ADD
 const addCompletedCourse = async (req, res) => {
@@ -87,6 +88,63 @@ const deleteCompletedCourse = async (req, res) => {
       {
         $pull: {
           completedCourses: completed,
+        },
+      }
+    );
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+    const { userID } = req.body;
+  }
+};
+
+// UPDATE
+const updateCurrentCourse = async (req, res) => {
+  try {
+    const { userID } = req.body.oldCourse;
+    const { newCourse } = req.body;
+    const { oldCourse } = req.body;
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+        'currentCourses._id': oldCourse._id,
+      },
+      {
+        $set: {
+          'currentCourses.$.type': newCourse.type,
+          'currentCourses.$.number': newCourse.course.split(' ')[1],
+          'currentCourses.$.dept': newCourse.course.split(' ')[0],
+          'currentCourses.$.title': newCourse.course.split('- ')[1],
+          'currentCourses.$.units': newCourse.units,
+          'currentCourses.$.term': newCourse.term,
+          'currentCourses.$.designation': newCourse.designation,
+          'currentCourses.$.additionalReq': newCourse.additionalReq,
+          'currentCourses.$.section': newCourse.section,
+          // save as 24 hr format
+          'currentCourses.$.startTime': convertTo24hr(newCourse.startTime),
+          'currentCourses.$.endTime': convertTo24hr(newCourse.endTime),
+          // array
+          'currentCourses.$.days': newCourse.days.split('/'),
+          'currentCourses.$.location': newCourse.location,
+        },
+      }
+    );
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
+  }
+};
+
+const updateCompletedCourse = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const current = req.body;
+
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $set: {
+          currentCourses: current,
         },
       }
     );
@@ -224,5 +282,7 @@ module.exports = {
   addCompletedCourse,
   deleteCurrentCourse,
   deleteCompletedCourse,
+  updateCurrentCourse,
+  updateCompletedCourse,
   uploadTranscript,
 };

@@ -25,6 +25,10 @@ export default function Context(props) {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // actions
+  // Auth
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:5000/auth/google';
+  };
   const handleLogout = () => {
     api.googleLogout().then((res) => {
       if (res.data === 'done') {
@@ -32,10 +36,6 @@ export default function Context(props) {
         window.location.href = 'http://localhost:3000/login';
       }
     });
-  };
-
-  const handleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
   };
 
   useEffect(() => {
@@ -47,6 +47,7 @@ export default function Context(props) {
     });
   }, []);
 
+  // Get courses
   // useCallback to stabilize function on renders when called
   const getCurrentCourses = useCallback(async (userID) => {
     try {
@@ -81,6 +82,7 @@ export default function Context(props) {
     }
   }, []);
 
+  // Delete courses
   async function deleteCurrentCourse(id) {
     try {
       await api.deleteCurrentCourse();
@@ -113,6 +115,7 @@ export default function Context(props) {
     }
   }
 
+  // Add courses
   async function addCurrentCourse(course) {
     const config = {
       headers: {
@@ -157,6 +160,58 @@ export default function Context(props) {
     }
   }
 
+  // Update courses
+  async function updateCurrentCourse({ newCourse, oldCourse }) {
+    console.log(newCourse);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await api.updateCurrentCourse(
+        { newCourse, oldCourse },
+        config
+      );
+
+      dispatch({
+        type: 'UPDATE_COURSE',
+        payload: res.data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error,
+      });
+    }
+  }
+
+  async function updateCompletedCourse({ newCourse, oldCourse }) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await api.updateCurrentCourse(
+        { newCourse, oldCourse },
+        config
+      );
+
+      dispatch({
+        type: 'UPDATE_COURSE',
+        payload: res.data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'COURSE_ERROR',
+        payload: error.response.data.error,
+      });
+    }
+  }
+
   return (
     <myContext.Provider
       value={{
@@ -172,7 +227,8 @@ export default function Context(props) {
         addCompletedCourse,
         deleteCurrentCourse,
         deleteCompletedCourse,
-        //updateCourse
+        updateCurrentCourse,
+        updateCompletedCourse,
       }}
     >
       {props.children}
