@@ -29,9 +29,10 @@ const currentCourseSchema = mongoose.Schema(
       required: true,
     },
     location: reqString,
-  }
+  },
+
   // need id for updating and deleting
-  // { _id: false }
+  { _id: false }
 );
 
 const completedCourseSchema = mongoose.Schema(
@@ -46,9 +47,9 @@ const completedCourseSchema = mongoose.Schema(
     grade: reqString,
     designation: reqString,
     additionalReq: String, // not always required
-  }
+  },
   // need id for updating and deleting
-  // { _id: false }
+  { _id: false }
 );
 
 const userSchema = mongoose.Schema({
