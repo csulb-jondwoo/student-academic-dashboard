@@ -1,17 +1,11 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import MaterialTable from 'material-table';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import { confirmAlert } from 'react-confirm-alert';
 import { useConfirm } from 'material-ui-confirm';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
 
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import '../../../utility/css/table-fixed-height.css';
 
 const CurrentSchedule = () => {
