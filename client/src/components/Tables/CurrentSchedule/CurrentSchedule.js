@@ -93,6 +93,7 @@ const CurrentSchedule = () => {
     [currentCourses, userID]
   );
 
+  // table rerendering bc tableData is changing
   const [tableData, setTableData] = useState(courses);
 
   useEffect(() => {
@@ -116,12 +117,16 @@ const CurrentSchedule = () => {
   };
 
   const handleCourseDelete = (data) => {
-    // console.log(data);
     deleteCurrentCourse(data);
-    const dataDelete = [...tableData];
-    const index = data.tableData.id;
-    dataDelete.splice(index, 1);
-    setTableData([...dataDelete]);
+    for (const oldData of data) {
+      const dataDelete = [...tableData];
+
+      const index = oldData.tableData.id;
+      const removed = dataDelete.splice(index, 1);
+      console.log(removed);
+      console.log(dataDelete);
+      setTableData([...dataDelete]);
+    }
     setIsLoading(false);
   };
 
@@ -153,7 +158,6 @@ const CurrentSchedule = () => {
           tooltip: 'Delete',
           icon: 'delete',
           onClick: (evt, data) => {
-            console.log(data);
             confirmAlert({
               customUI: ({ onClose }) => {
                 return (
