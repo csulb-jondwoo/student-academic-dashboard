@@ -11,6 +11,10 @@ const formatTime = (time) => {
     h = 12;
   }
 
+  if (h < 10 && dd === 'AM') {
+    h = h.toString().split('')[1];
+  }
+
   let replacement = h + ':' + m;
   replacement += ' ' + dd;
 
