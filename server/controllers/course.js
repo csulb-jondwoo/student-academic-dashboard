@@ -63,14 +63,13 @@ const deleteCurrentCourse = async (req, res) => {
       const number = course.course.split(' ')[1];
       const dept = course.course.split(' ')[0];
       const { userID } = course;
-      console.log(course);
-      // TODO: delete course here
       await userSchema.findOneAndUpdate(
         {
           googleId: userID,
         },
         {
           $pull: {
+            // delete the course that matches number and dept
             currentCourses: { number, dept },
           },
         }
