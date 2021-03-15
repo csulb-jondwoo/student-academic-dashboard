@@ -16,6 +16,7 @@ module.exports = (passport) => {
         // Successful authentication
 
         // check if user exists
+
         User.findOne({ googleId: profile.id }, async (err, doc) => {
           if (err) {
             return done(err, null);
