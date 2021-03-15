@@ -25,37 +25,37 @@ export const CurrentCourseForm = (props) => {
   }, [location]);
 
   const courseType = useTrait('ge');
-  const courseNumber = useTrait(null);
-  const courseDept = useTrait(null);
-  const courseTitle = useTrait(null);
-  const courseUnits = useTrait(null);
+  const courseNumber = useTrait(0);
+  const courseDept = useTrait('');
+  const courseTitle = useTrait('');
+  const courseUnits = useTrait(0);
   const courseDesignation = useTrait('A1 - Oral Communications');
   const courseAdditionalReq = useTrait('Human Diversity');
-  const courseSection = useTrait(null);
-  const courseStartTime = useTrait('00:00');
-  const courseEndTime = useTrait('00:00');
+  const courseSection = useTrait(0);
+  const courseStartTime = useTrait('06:00');
+  const courseEndTime = useTrait('23:00');
   const courseDays = useTrait([]);
-  const courseLocation = useTrait(null);
+  const courseLocation = useTrait('');
   const [timePickerStartTime, setTimePickerStartTime] = useState(21600); // start at 6am
   const [timePickerEndTime, setTimePickerEndTime] = useState(82800); // end at 11pm
 
   const courseData = useTrait({
     userID: JSON.parse(user).googleId,
     type: 'ge',
-    number: null,
-    dept: null,
-    title: null,
+    number: 0,
+    dept: '',
+    title: '',
     units: 0,
     // hardcoded term and year
     term: 'Spring',
     year: 2021,
     designation: 'A1 - Oral Communication',
-    additionalReq: null,
-    section: null,
+    additionalReq: '',
+    section: 0,
     startTime: '00:00',
     endTime: '00:00',
     days: [],
-    location: null,
+    location: '',
   });
 
   const getTime = (dateTime, seconds) => {

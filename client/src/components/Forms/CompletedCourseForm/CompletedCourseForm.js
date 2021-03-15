@@ -21,28 +21,28 @@ export const CompletedCourseForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const courseType = useTrait('ge');
-  const courseNumber = useTrait(null);
-  const courseDept = useTrait(null);
-  const courseTitle = useTrait(null);
-  const courseUnits = useTrait(null);
+  const courseNumber = useTrait(0);
+  const courseDept = useTrait('');
+  const courseTitle = useTrait('');
+  const courseUnits = useTrait(0);
   const courseTerm = useTrait('Fall');
-  const courseYear = useTrait(null);
-  const courseGrade = useTrait(null);
+  const courseYear = useTrait(0);
+  const courseGrade = useTrait('');
   const courseDesignation = useTrait('A1 - Oral Communications');
   const courseAdditionalReq = useTrait('Human Diversity');
 
   const courseData = useTrait({
     userID: JSON.parse(user).googleId,
     type: 'ge',
-    number: null,
-    dept: null,
-    title: null,
+    number: 0,
+    dept: '',
+    title: '',
     units: 0,
     term: 'Fall',
-    year: null,
+    year: 0,
     grade: 'A',
     designation: 'A1 - Oral Communication',
-    additionalReq: null,
+    additionalReq: '',
   });
 
   const handleCourseTypeChange = (val) => {
