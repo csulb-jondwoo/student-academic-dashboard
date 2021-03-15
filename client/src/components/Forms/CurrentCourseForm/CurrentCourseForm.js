@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
@@ -13,16 +12,10 @@ import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
-import { useLocation } from 'react-router';
+import MySnackbarButton from './MySnackbar/MySnackbar';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log(location.state); // result: 'some_value'
-  }, [location]);
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(0);
@@ -172,8 +165,8 @@ export const CurrentCourseForm = (props) => {
     e.preventDefault();
 
     // TODO: alert user
-    console.log(courseData.get());
     addCurrentCourse(courseData.get());
+    e.target.reset();
   };
 
   return (
@@ -384,9 +377,7 @@ export const CurrentCourseForm = (props) => {
                         />
                       </Form.Group>
 
-                      <Button className variant="primary" type="submit">
-                        Submit
-                      </Button>
+                      <MySnackbarButton />
                     </Form>
                   </Col>
                 </Row>
