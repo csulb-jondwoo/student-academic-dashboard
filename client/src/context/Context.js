@@ -13,7 +13,6 @@ const initialState = {
   currentCourses: [],
   error: null,
   loading: true,
-  //needs user name?
 };
 
 // Create Context
