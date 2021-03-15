@@ -117,16 +117,20 @@ const CurrentSchedule = () => {
   };
 
   const handleCourseDelete = (data) => {
+    // change server side
     deleteCurrentCourse(data);
-    for (const oldData of data) {
-      const dataDelete = [...tableData];
 
-      const index = oldData.tableData.id;
-      const removed = dataDelete.splice(index, 1);
-      console.log(removed);
-      console.log(dataDelete);
-      setTableData([...dataDelete]);
+    // change client side
+    const valuesToRemove = [];
+    let dataDelete = [...tableData];
+
+    for (const oldData of data) {
+      valuesToRemove.push(oldData);
     }
+
+    dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1);
+    setTableData([...dataDelete]);
+
     setIsLoading(false);
   };
 
