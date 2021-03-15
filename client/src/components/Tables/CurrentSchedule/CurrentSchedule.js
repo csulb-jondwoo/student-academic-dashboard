@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import MaterialTable from 'material-table';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import { confirmAlert } from 'react-confirm-alert';
+import { useConfirm } from 'material-ui-confirm';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
@@ -22,9 +23,9 @@ const CurrentSchedule = () => {
     deleteCurrentCourse,
   } = useContext(myContext);
 
-  const userID = JSON.parse(user).googleId;
-
   const [isLoading, setIsLoading] = useState(true);
+  const userID = JSON.parse(user).googleId;
+  const confirm = useConfirm();
 
   useEffect(() => {
     // set state of currentCourses inside context via reducer
@@ -117,27 +118,40 @@ const CurrentSchedule = () => {
   };
 
   const handleCourseDelete = (data) => {
-    // change server side
-    deleteCurrentCourse(data);
-
-    // change client side
-    const valuesToRemove = [];
-    let dataDelete = [...tableData];
-
-    for (const oldData of data) {
-      valuesToRemove.push(oldData);
-    }
-
-    dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1);
-    setTableData([...dataDelete]);
-
-    setIsLoading(false);
+    confirm({ description: 'Delete selected courses' })
+      .then(() => {
+        // change server side
+        deleteCurrentCourse(data);
+        // change client side
+        const valuesToRemove = [];
+        let dataDelete = [...tableData];
+        for (const oldData of data) {
+          valuesToRemove.push(oldData);
+        }
+        dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1);
+        setTableData([...dataDelete]);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.log('cancelled');
+        setIsLoading(false);
+      });
   };
 
   const handleMarkAsComplete = (data) => {
-    console.log(data);
-    setIsLoading(false);
+    confirm({ description: 'Mark selected courses as complete' })
+      .then(() => {
+        // change server side
+
+        // change client side
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.log('cancelled');
+        setIsLoading(false);
+      });
   };
+
   return (
     <MaterialTable
       title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
@@ -162,76 +176,15 @@ const CurrentSchedule = () => {
           tooltip: 'Delete',
           icon: 'delete',
           onClick: (evt, data) => {
-            confirmAlert({
-              customUI: ({ onClose }) => {
-                return (
-                  <Card className="p-5">
-                    <Card.Title>
-                      <h2>Are you sure?</h2>
-                    </Card.Title>
-                    <div className="custom-ui">
-                      <Row>
-                        <Col className="d-flex justify-content-center">
-                          <Button
-                            className="ml-auto"
-                            onClick={() => {
-                              setIsLoading(true);
-                              handleCourseDelete(data);
-                              onClose();
-                            }}
-                          >
-                            Yes
-                          </Button>
-                        </Col>
-                        <Col className="d-flex justify-content-center">
-                          <Button className="mr-auto" onClick={onClose}>
-                            No
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Card>
-                );
-              },
-            });
+            handleCourseDelete(data);
           },
         },
         {
           tooltip: 'Mark as Complete',
           icon: PlaylistAddCheckIcon,
-          onClick: (evt, data) =>
-            confirmAlert({
-              customUI: ({ onClose }) => {
-                return (
-                  <Card className="p-5">
-                    <Card.Title>
-                      <h2>Are you sure?</h2>
-                    </Card.Title>
-                    <div className="custom-ui">
-                      <Row>
-                        <Col className="d-flex justify-content-center">
-                          <Button
-                            className="ml-auto"
-                            onClick={() => {
-                              setIsLoading(true);
-                              handleMarkAsComplete(data);
-                              onClose();
-                            }}
-                          >
-                            Yes
-                          </Button>
-                        </Col>
-                        <Col className="d-flex justify-content-center">
-                          <Button className="mr-auto" onClick={onClose}>
-                            No
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Card>
-                );
-              },
-            }),
+          onClick: (evt, data) => {
+            handleMarkAsComplete(data);
+          },
         },
       ]}
     />
