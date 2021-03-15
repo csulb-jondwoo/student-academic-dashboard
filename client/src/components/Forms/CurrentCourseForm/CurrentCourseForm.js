@@ -327,6 +327,7 @@ export const CurrentCourseForm = (props) => {
                             <TimePicker
                               onChange={handleTimeStartChange}
                               start="06:00"
+                              end="23:00"
                               name="courseStartTime"
                               value={timePickerStartTime}
                               step={5}
@@ -339,6 +340,7 @@ export const CurrentCourseForm = (props) => {
                             <Form.Label>End Time</Form.Label>
                             <TimePicker
                               onChange={handleTimeEndChange}
+                              start="06:00"
                               end="23:00"
                               name="courseStartTime"
                               value={timePickerEndTime}
