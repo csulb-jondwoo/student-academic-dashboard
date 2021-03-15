@@ -18,7 +18,6 @@ const convertTo24hr = (time) => {
   let sMinutes = minutes.toString();
   if (hours < 10) sHours = '0' + sHours;
   if (minutes < 10) sMinutes = '0' + sMinutes;
-  console.log(sHours + ':' + sMinutes);
   return sHours + ':' + sMinutes;
 };
 

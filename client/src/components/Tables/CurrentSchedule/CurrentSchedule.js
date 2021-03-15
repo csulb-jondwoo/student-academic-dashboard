@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import MaterialTable from 'material-table';
+import { useHistory } from 'react-router-dom';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
@@ -12,6 +13,7 @@ const CurrentSchedule = () => {
     currentCourses,
     user,
     updateCurrentCourse,
+    deleteCurrentCourse,
   } = useContext(myContext);
 
   const userID = JSON.parse(user).googleId;
@@ -24,7 +26,6 @@ const CurrentSchedule = () => {
   const courses = currentCourses.map((course) => {
     return {
       userID: JSON.parse(user).googleId,
-      _id: course._id,
       type: course.type,
       course: course.dept + ' ' + course.number + ' - ' + course.title,
       section: course.section,
@@ -37,8 +38,6 @@ const CurrentSchedule = () => {
       additionalReq: course.additionalReq,
     };
   });
-
-  console.log(courses);
 
   const columns = [
     {
@@ -88,8 +87,12 @@ const CurrentSchedule = () => {
     return sum + obj.units;
   }, 0);
 
-  const handleDelete = async (evt, data) => {
-    alert('You want to edit ' + data.length + ' rows');
+  const handleCourseUpdate = (newCourse, oldCourse) => {
+    updateCurrentCourse({ newCourse, oldCourse });
+  };
+
+  const handleCourseDelete = (data) => {
+    deleteCurrentCourse(data);
   };
 
   return (
@@ -108,37 +111,24 @@ const CurrentSchedule = () => {
       // }}
       editable={{
         // onRowAdd: async (newData) => await setData([...data, newData]),
-        onRowUpdate: (newCourse, oldCourse) =>
-          new Promise((resolve, reject) => {
-            // emulating server load time
-            setTimeout(() => {
-              updateCurrentCourse({ newCourse, oldCourse });
-              resolve();
-              // send data to db for update
-            }, 1000);
-          }),
+        onRowUpdate: async (newCourse, oldCourse) =>
+          await handleCourseUpdate(newCourse, oldCourse),
         // onRowDelete: (oldData) =>
         //   new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //       const dataDelete = [...courses];
-        //       const index = oldData.tableData.id;
-        //       console.log(index);
-        //       dataDelete.splice(index, 1);
-        //       setData([...dataDelete]);
-        //       resolve();
-        //     }, 1000);
+        //     console.log(oldData);
+        //     // const dataDelete = [...data];
+        //     // const index = oldData.tableData.id;
+        //     // dataDelete.splice(index, 1);
+        //     // setData([...dataDelete]);
+
+        //     resolve();
         //   }),
       }}
       actions={[
-        // {
-        //   tooltip: 'Edit',
-        //   icon: 'edit',
-        //   onClick: (evt, data) => handleUpdate(data),
-        // },
         {
           tooltip: 'Delete',
           icon: 'delete',
-          onClick: (evt, data) => handleDelete(evt, data),
+          onClick: (evt, data) => handleCourseDelete(data),
         },
       ]}
     />

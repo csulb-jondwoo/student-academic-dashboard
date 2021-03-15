@@ -30,8 +30,11 @@ export const addCompletedCourse = (course, config) =>
   API.post('/course/completed', course, config);
 
 // Delete courses
-export const deleteCurrentCourse = (id) => API.delete(`/course/${id}`);
-export const deleteCompletedCourse = (id) => API.delete(`/course/${id}`);
+export const deleteCurrentCourse = (payload, config) => {
+  API.delete('/course/delete-current', { data: payload }, config);
+};
+export const deleteCompletedCourse = (payload, config) =>
+  API.delete('/course/delete-completed', { data: payload }, config);
 
 // Update courses
 export const updateCurrentCourse = ({ newCourse, oldCourse }, config) =>

@@ -83,14 +83,19 @@ export default function Context(props) {
   }, []);
 
   // Delete courses
-  async function deleteCurrentCourse(id) {
+  async function deleteCurrentCourse(data) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
     try {
-      await api.deleteCurrentCourse();
+      await api.deleteCurrentCourse(data, config);
 
-      dispatch({
-        type: 'DELETE_COURSE',
-        payload: id,
-      });
+      // dispatch({
+      //   type: 'DELETE_COURSE',
+      //   payload: null,
+      // });
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -105,7 +110,7 @@ export default function Context(props) {
 
       dispatch({
         type: 'DELETE_COURSE',
-        payload: id,
+        payload: null,
       });
     } catch (error) {
       dispatch({
@@ -162,7 +167,6 @@ export default function Context(props) {
 
   // Update courses
   async function updateCurrentCourse({ newCourse, oldCourse }) {
-    console.log(newCourse);
     const config = {
       headers: {
         'Content-Type': 'application/json',

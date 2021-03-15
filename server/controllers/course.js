@@ -58,19 +58,24 @@ const addCurrentCourse = async (req, res) => {
 // DELETE
 const deleteCurrentCourse = async (req, res) => {
   try {
-    const { userID } = req.body;
-    const current = req.body;
-
-    await userSchema.findOneAndUpdate(
-      {
-        googleId: userID,
-      },
-      {
-        $pull: {
-          currentCourses: current,
+    const data = req.body;
+    for (const course of data) {
+      const number = course.course.split(' ')[1];
+      const dept = course.course.split(' ')[0];
+      const { userID } = course;
+      console.log(course);
+      // TODO: delete course here
+      await userSchema.findOneAndUpdate(
+        {
+          googleId: userID,
         },
-      }
-    );
+        {
+          $pull: {
+            currentCourses: { number, dept },
+          },
+        }
+      );
+    }
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -103,13 +108,17 @@ const updateCurrentCourse = async (req, res) => {
     const { userID } = req.body.oldCourse;
     const { newCourse } = req.body;
     const { oldCourse } = req.body;
+
+    const number = oldCourse.course.split(' ')[1];
+    const dept = oldCourse.course.split(' ')[0];
+
     await userSchema.findOneAndUpdate(
       {
         googleId: userID,
         currentCourses: {
           $elemMatch: {
-            'currentCourses.number': oldCourse.number,
-            'currentCourses.dept': oldCourse.dept,
+            number,
+            dept,
           },
         },
       },

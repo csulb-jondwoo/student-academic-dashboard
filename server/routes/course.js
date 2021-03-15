@@ -23,8 +23,8 @@ router.post('/completed', addCompletedCourse);
 router.post('/upload', uploadTranscript);
 
 // delete routes
-router.delete('/:id', deleteCurrentCourse);
-router.delete('/:id', deleteCompletedCourse);
+router.delete('/delete-current', deleteCurrentCourse);
+router.delete('/delete-completed', deleteCompletedCourse);
 
 // put routes
 router.put('/current', updateCurrentCourse);
