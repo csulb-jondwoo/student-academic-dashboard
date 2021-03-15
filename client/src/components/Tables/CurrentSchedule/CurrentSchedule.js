@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 import MaterialTable from 'material-table';
 
 import formatTime from '../../../utility/formatTime/formatTime';
 import { myContext } from '../../../context/Context';
 
 import '../../../utility/css/table-fixed-height.css';
-import PrivateRoute from '../../AppRoutes/PrivateRoute/PrivateRoute';
-import CurrentCourseForm from '../../Forms/CurrentCourseForm/CurrentCourseForm';
 
 const CurrentSchedule = () => {
-  const history = useHistory();
-
-  const { getCurrentCourses, currentCourses, user } = useContext(myContext);
+  const {
+    getCurrentCourses,
+    currentCourses,
+    user,
+    updateCurrentCourse,
+  } = useContext(myContext);
 
   const userID = JSON.parse(user).googleId;
 
@@ -23,6 +23,9 @@ const CurrentSchedule = () => {
 
   const courses = currentCourses.map((course) => {
     return {
+      userID: JSON.parse(user).googleId,
+      _id: course._id,
+      type: course.type,
       course: course.dept + ' ' + course.number + ' - ' + course.title,
       section: course.section,
       units: course.units,
@@ -35,13 +38,17 @@ const CurrentSchedule = () => {
     };
   });
 
-  const [data, setData] = useState([]);
+  console.log(courses);
 
   const columns = [
     {
       title: 'Course',
       field: 'course',
       width: 1000,
+      // cellStyle: {
+      //   whiteSpace: 'nowrap',
+      // },
+      // editable: 'never',
     },
     {
       title: 'Section',
@@ -75,12 +82,6 @@ const CurrentSchedule = () => {
     return sum + obj.units;
   }, 0);
 
-  const handleUpdate = (data) => {
-    history.push({ pathname: 'add-current-course', state: data });
-
-    // alert('You want to edit ' + data.length + ' rows');
-  };
-
   const handleDelete = async (evt, data) => {
     alert('You want to edit ' + data.length + ' rows');
   };
@@ -94,42 +95,40 @@ const CurrentSchedule = () => {
       options={{
         selection: true,
         actionsColumnIndex: -1,
+        emptyRowsWhenPaging: false,
       }}
       // detailPanel={(rowData) => {
       //   return <p>test</p>;
       // }}
-      // editable={
-      //   {
-      //     // onRowAdd: async (newData) => await setData([...data, newData]),
-      //     // onRowUpdate: (newData, oldData) =>
-      //     //   new Promise((resolve, reject) => {
-      //     //     setTimeout(() => {
-      //     //       const dataDelete = [...data];
-      //     //       const index = oldData.tableData.id;
-      //     //       dataDelete.splice(index, 1);
-      //     //       setData([...dataDelete]);
-      //     //       resolve();
-      //     //     }, 1000);
-      //     //   }),
-      //     // onRowDelete: (oldData) =>
-      //     //   new Promise((resolve, reject) => {
-      //     //     setTimeout(() => {
-      //     //       const dataDelete = [...courses];
-      //     //       const index = oldData.tableData.id;
-      //     //       console.log(index);
-      //     //       dataDelete.splice(index, 1);
-      //     //       setData([...dataDelete]);
-      //     //       resolve();
-      //     //     }, 1000);
-      //     //   }),
-      //   }
-      // }
+      editable={{
+        // onRowAdd: async (newData) => await setData([...data, newData]),
+        onRowUpdate: (newCourse, oldCourse) =>
+          new Promise((resolve, reject) => {
+            // emulating server load time
+            setTimeout(() => {
+              updateCurrentCourse({ newCourse, oldCourse });
+              resolve();
+              // send data to db for update
+            }, 1000);
+          }),
+        // onRowDelete: (oldData) =>
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       const dataDelete = [...courses];
+        //       const index = oldData.tableData.id;
+        //       console.log(index);
+        //       dataDelete.splice(index, 1);
+        //       setData([...dataDelete]);
+        //       resolve();
+        //     }, 1000);
+        //   }),
+      }}
       actions={[
-        {
-          tooltip: 'Edit',
-          icon: 'edit',
-          onClick: (evt, data) => handleUpdate(data),
-        },
+        // {
+        //   tooltip: 'Edit',
+        //   icon: 'edit',
+        //   onClick: (evt, data) => handleUpdate(data),
+        // },
         {
           tooltip: 'Delete',
           icon: 'delete',
