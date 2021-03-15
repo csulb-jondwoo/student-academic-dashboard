@@ -59,13 +59,19 @@ const CurrentSchedule = () => {
       field: 'units',
     },
     {
-      title: 'Start Time',
+      title: 'Start',
       field: 'startTime',
+      cellStyle: {
+        whiteSpace: 'nowrap',
+      },
       width: 1000,
     },
     {
-      title: 'End Time',
+      title: 'End',
       field: 'endTime',
+      cellStyle: {
+        whiteSpace: 'nowrap',
+      },
       width: 1000,
     },
     {
