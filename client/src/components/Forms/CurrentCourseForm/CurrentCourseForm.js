@@ -12,7 +12,7 @@ import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
-import MySnackbarButton from './MySnackbar/MySnackbar';
+import MySnackbarButton from '../MySnackbar/MySnackbar';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
