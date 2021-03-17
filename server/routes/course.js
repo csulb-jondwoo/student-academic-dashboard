@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { upload } = require('../utility/multer.js');
 const {
   getCurrentCourses,
   getCompletedCourses,
@@ -20,7 +21,7 @@ router.get('/completed', getCompletedCourses);
 router.post('/current', addCurrentCourse);
 router.post('/completed', addCompletedCourse);
 
-router.post('/upload', uploadTranscript);
+router.post('/upload', upload.single('file'), uploadTranscript);
 
 // delete routes
 router.delete('/delete-current', deleteCurrentCourse);
