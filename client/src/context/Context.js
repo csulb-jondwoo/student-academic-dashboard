@@ -56,7 +56,6 @@ export default function Context(props) {
         type: 'GET_CURRENT_COURSES',
         payload: res.data.data,
       });
-      return res;
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -74,7 +73,6 @@ export default function Context(props) {
         type: 'GET_COMPLETED_COURSES',
         payload: res.data.data,
       });
-      return res;
     } catch (err) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -97,7 +95,6 @@ export default function Context(props) {
       //   type: 'DELETE_COURSE',
       //   payload: null,
       // });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -114,7 +111,6 @@ export default function Context(props) {
         type: 'DELETE_COURSE',
         payload: null,
       });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -138,7 +134,6 @@ export default function Context(props) {
         type: 'ADD_CURRENT_COURSE',
         payload: res.data.data,
       });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -156,13 +151,11 @@ export default function Context(props) {
 
     try {
       const res = await api.addCompletedCourse(course, config);
-      console.log(res);
 
       dispatch({
         type: 'ADD_COMPLETED_COURSE',
         payload: res.data.data,
       });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -189,7 +182,6 @@ export default function Context(props) {
         type: 'UPDATE_COURSE',
         payload: res.data.data,
       });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
@@ -215,7 +207,6 @@ export default function Context(props) {
         type: 'UPDATE_COURSE',
         payload: res.data.data,
       });
-      return res;
     } catch (error) {
       dispatch({
         type: 'COURSE_ERROR',
