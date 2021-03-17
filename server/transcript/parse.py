@@ -6,12 +6,17 @@ from pathlib import Path
 from pdfreader import SimplePDFViewer
 
 
-# HELPER FUNCTIONS
-def initViewer():
-    # get absolute path of transcript to open
+def getFile():
     script_location = Path(__file__).absolute().parent
     file = script_location / "transcript.pdf"
     fd = open(file, "rb")
+
+    return fd
+
+
+# HELPER FUNCTIONS
+def initViewer(fd):
+    # get absolute path of transcript to open
 
     # create viewer instance
     viewer = SimplePDFViewer(fd)
@@ -242,6 +247,10 @@ def getParsedData(viewer):
 
 
 if __name__ == "__main__":
-    transcriptData = getParsedData(initViewer())
+    file = getFile()
+    transcriptData = getParsedData(initViewer(file))
     print(json.dumps(transcriptData))
-    # os.remove("transcript.pdf")
+
+    # close and delete
+    file.close()
+    os.remove(file.name)
