@@ -9,6 +9,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Button from 'react-bootstrap/Button';
 
 import useTrait from '../../../hooks/useTrait';
+import CircularIntegration from './CircularIntegration/CircularIntegration';
 import DragAndDrop from '../../../utility/DrapAndDrop/DragAndDrop';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
@@ -19,6 +20,8 @@ import * as api from '../../../api';
 export const CompletedCourseForm = (props) => {
   const { addCompletedCourse, user } = useContext(myContext);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(0);
@@ -123,19 +126,38 @@ export const CompletedCourseForm = (props) => {
 
     // TODO: alert user
     console.log(courseData.get());
-    addCompletedCourse(courseData.get());
+    const res = addCompletedCourse(courseData.get());
+    console.log(res);
   };
 
   const handleFileChange = (file) => {
     setSelectedFile(file[0]);
   };
 
-  const handleUploadClick = (e) => {
+  const handleUploadClick = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    data.append('file', selectedFile);
-    api.uploadTranscript(data, JSON.parse(user).googleId);
+    try {
+      if (!isLoading) {
+        setSuccess(false);
+        setIsLoading(true);
+
+        const formData = new FormData();
+
+        formData.append('file', selectedFile);
+        formData.append('userID', JSON.parse(user).googleId);
+
+        const res = await api.uploadTranscript(formData);
+        console.log(res);
+
+        if (res.data.success === true) {
+          setSuccess(true);
+          setIsLoading(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -158,7 +180,6 @@ export const CompletedCourseForm = (props) => {
                         <ToggleButton value="ge">GE Course</ToggleButton>
                         <ToggleButton value="major">Major Course</ToggleButton>
                       </ToggleButtonGroup>
-
                       {/* COURSE NUMBER */}
                       <Form.Group controlId="courseNo">
                         <Form.Label>Course Number</Form.Label>
@@ -168,7 +189,6 @@ export const CompletedCourseForm = (props) => {
                           onChange={handleCourseNumberChange}
                         />
                       </Form.Group>
-
                       {/* COURSE DEPT */}
                       <Form.Group controlId="courseDept">
                         <Form.Label>Course Department</Form.Label>
@@ -178,7 +198,6 @@ export const CompletedCourseForm = (props) => {
                           onChange={handleCourseDeptChange}
                         />
                       </Form.Group>
-
                       {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
                         <Form.Label>Course Title</Form.Label>
@@ -188,7 +207,6 @@ export const CompletedCourseForm = (props) => {
                           onChange={handleCourseTitleChange}
                         />
                       </Form.Group>
-
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
                         <Form.Label>Units</Form.Label>
@@ -205,7 +223,6 @@ export const CompletedCourseForm = (props) => {
                           <option value="5">5</option>
                         </Form.Control>
                       </Form.Group>
-
                       <Row>
                         <Col>
                           {/* COURSE TERM */}
@@ -235,7 +252,6 @@ export const CompletedCourseForm = (props) => {
                           </Form.Group>
                         </Col>
                       </Row>
-
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
                         // ge designation
@@ -299,7 +315,6 @@ export const CompletedCourseForm = (props) => {
                           </Form.Control>
                         </Form.Group>
                       )}
-
                       {/* COURSE GRADE */}
                       <Form.Group controlId="courseGrade">
                         <Form.Label>Grade</Form.Label>
@@ -317,7 +332,6 @@ export const CompletedCourseForm = (props) => {
                           <option value="NC">NC</option>
                         </Form.Control>
                       </Form.Group>
-
                       <Button className="mt-3" variant="primary" type="submit">
                         Submit
                       </Button>
@@ -338,14 +352,23 @@ export const CompletedCourseForm = (props) => {
           <Col md={9}>
             <Card className="text-center shadow-sm mb-5">
               <Card.Body>
-                <DragAndDrop handleFileChange={handleFileChange} />
-                <Button
-                  onClick={handleUploadClick}
-                  variant="primary"
-                  type="submit"
-                >
-                  Add via transcript
-                </Button>
+                <Form>
+                  <DragAndDrop handleFileChange={handleFileChange} />
+                  {/* {!isLoading && (
+                  <Button
+                    onClick={handleUploadClick}
+                    variant="primary"
+                    type="submit"
+                  >
+                    Add via transcript
+                  </Button>
+                )} */}
+                  <CircularIntegration
+                    handleButtonClick={handleUploadClick}
+                    isLoading={isLoading}
+                    success={success}
+                  />
+                </Form>
               </Card.Body>
             </Card>
           </Col>
