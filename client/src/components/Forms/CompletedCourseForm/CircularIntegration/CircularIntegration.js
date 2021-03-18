@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
   fabProgress: {
     color: green[500],
     position: 'absolute',
-    top: -6,
-    left: 339,
+    top: -5.8,
+    left: 174,
     zIndex: 1,
   },
   buttonProgress: {
@@ -39,11 +39,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CircularIntegration = ({ isLoading, success, handleButtonClick }) => {
+const CircularIntegration = ({
+  isLoading,
+  success,
+  handleButtonClick,
+  isTranscriptSubmit,
+}) => {
   const classes = useStyles();
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
+    // [classes.buttonSuccess]: success,
+    [classes.buttonSuccess]: isTranscriptSubmit ? success : '',
   });
 
   return (
@@ -55,7 +61,7 @@ const CircularIntegration = ({ isLoading, success, handleButtonClick }) => {
           className={buttonClassname}
           onClick={handleButtonClick}
         >
-          {success ? <CheckIcon /> : <SaveIcon />}
+          {success && isTranscriptSubmit ? <CheckIcon /> : <SaveIcon />}
         </Fab>
         {isLoading && (
           <CircularProgress size={68} className={classes.fabProgress} />
