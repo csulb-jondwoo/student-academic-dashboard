@@ -171,6 +171,8 @@ export const CurrentCourseForm = (props) => {
     courseData.set({ ...courseData.get(), location: newCourseLocation });
   };
 
+  // -----------------------------------------------------
+  // TODO: possibly move to context
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -178,6 +180,7 @@ export const CurrentCourseForm = (props) => {
 
     setOpen(false);
   };
+  // -----------------------------------------------------
 
   const handleSubmit = async (e) => {
     e.preventDefault();

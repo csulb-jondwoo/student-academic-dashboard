@@ -166,7 +166,7 @@ export const CompletedCourseForm = (props) => {
   };
 
   // -----------------------------------------------------
-  // possibly move to context
+  // TODO: possibly move to context
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
