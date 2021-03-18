@@ -15,14 +15,23 @@ import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
 import { myContext } from '../../../context/Context';
 import * as api from '../../../api';
+import MySnackbar from '../MySnackbar/MySnackbar';
 
 // MAKE FIELDS REQUIRED
 export const CompletedCourseForm = (props) => {
   const { addCompletedCourse, user } = useContext(myContext);
-  const [selectedFile, setSelectedFile] = useState(null);
+
+  // -------------------------------------------------------------------
+  // TODO: possibly move to context or AddCourse component after refactoring
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [severity, setSeverity] = useState(null);
+  const [error, setError] = useState(null);
+  // -------------------------------------------------------------------
 
+  const [isTranscriptSubmit, setIsTranscriptSubmit] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const courseType = useTrait('ge');
   const courseNumber = useTrait(0);
   const courseDept = useTrait('');
@@ -121,25 +130,61 @@ export const CompletedCourseForm = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setIsTranscriptSubmit(false);
 
-    // TODO: alert user
-    console.log(courseData.get());
-    const res = addCompletedCourse(courseData.get());
-    console.log(res);
+    try {
+      const res = await addCompletedCourse(courseData.get());
+      // why is res undefined
+      if (res.data.success === true) {
+        setSuccess(true);
+        setSeverity('success');
+        setOpen(true);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setSeverity('error');
+      setOpen(true);
+      setError(error.message);
+    }
   };
 
   const handleFileChange = (file) => {
     setSelectedFile(file[0]);
   };
 
+  const checkMimeType = (event) => {
+    let file = selectedFile;
+    const type = 'application/pdf';
+    if (file.type !== type) {
+      throw new Error(`${file.type} is not a supported format`);
+    }
+
+    return true;
+  };
+
+  // -----------------------------------------------------
+  // possibly move to context
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+  // -----------------------------------------------------
+
   const handleUploadClick = async (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setIsTranscriptSubmit(true);
 
     try {
+      checkMimeType(e);
+
       if (!isLoading) {
-        setSuccess(false);
         setIsLoading(true);
 
         const formData = new FormData();
@@ -147,18 +192,24 @@ export const CompletedCourseForm = (props) => {
         formData.append('file', selectedFile);
         formData.append('userID', JSON.parse(user).googleId);
 
+        // api not in context
         const res = await api.uploadTranscript(formData);
-        console.log(res);
 
         if (res.data.success === true) {
           setSuccess(true);
+          setSeverity('success');
+          setOpen(true);
           setIsLoading(false);
+          setSelectedFile(null);
         }
       }
     } catch (error) {
-      console.log(error);
+      setSeverity('error');
+      setOpen(true);
+      setError(error.message);
     }
   };
+
   return (
     <>
       <Container>
@@ -332,43 +383,68 @@ export const CompletedCourseForm = (props) => {
                           <option value="NC">NC</option>
                         </Form.Control>
                       </Form.Group>
+                      {/* COURSE SUBMIT */}
+                      {/* TODO: Implement loader */}
                       <Button className="mt-3" variant="primary" type="submit">
                         Submit
                       </Button>
+
+                      <Row className="mt-3 d-flex justify-content-center">
+                        <Col md={9} className="d-flex justify-content-center">
+                          <p> - or - </p>
+                        </Col>
+                      </Row>
+
+                      {/* TRANSCRIPT SUBMIT */}
+                      <Form.Group>
+                        <DragAndDrop handleFileChange={handleFileChange} />
+                      </Form.Group>
+                      <CircularIntegration
+                        handleButtonClick={handleUploadClick}
+                        isLoading={isLoading}
+                        success={success}
+                        isTranscriptSubmit={isTranscriptSubmit}
+                      />
                     </Form>
+
+                    {/* ALERT */}
+                    <MySnackbar
+                      open={open}
+                      severity={severity}
+                      error={error}
+                      success={success}
+                      handleClose={handleClose}
+                    />
                   </Col>
                 </Row>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row className="d-flex justify-content-center">
-          <Col md={9} className="d-flex justify-content-center">
-            <p> - or - </p>
-          </Col>
-        </Row>
-        <Row className="d-flex justify-content-center">
-          <Col md={9}>
-            <Card className="text-center shadow-sm mb-5">
-              <Card.Body>
-                <Form>
-                  <DragAndDrop handleFileChange={handleFileChange} />
-                  {/* {!isLoading && (
-                  <Button
-                    onClick={handleUploadClick}
-                    variant="primary"
-                    type="submit"
-                  >
-                    Add via transcript
-                  </Button>
-                )} */}
-                  <CircularIntegration
-                    handleButtonClick={handleUploadClick}
-                    isLoading={isLoading}
-                    success={success}
-                  />
-                </Form>
+                {/* <Row className="d-flex justify-content-center">
+                  <Col md={9} className="d-flex justify-content-center">
+                    <p> - or - </p>
+                  </Col>
+                </Row> */}
+                {/* <Row className="d-flex justify-content-center">
+                  <Col md={9}>
+                    <Card className="text-center shadow-sm mb-5">
+                      <Card.Body>
+                        <Form>
+                          <DragAndDrop handleFileChange={handleFileChange} />
+                          <CircularIntegration
+                            handleButtonClick={handleUploadClick}
+                            isLoading={isLoading}
+                            success={transcriptSuccess}
+                          />
+                          <MySnackbar
+                            open={open}
+                            severity={severity}
+                            error={error}
+                            success={transcriptSuccess}
+                            handleClose={handleClose}
+                          />
+                        </Form>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row> */}
               </Card.Body>
             </Card>
           </Col>

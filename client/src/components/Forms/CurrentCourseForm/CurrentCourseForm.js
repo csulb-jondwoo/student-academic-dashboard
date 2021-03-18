@@ -7,15 +7,25 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import TimePicker from 'react-bootstrap-time-picker';
 import Container from 'react-bootstrap/esm/Container';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 import useTrait from '../../../hooks/useTrait';
 import { myContext } from '../../../context/Context';
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData';
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData';
-import MySnackbarButton from '../MySnackbar/MySnackbar';
+import MySnackbar from '../MySnackbar/MySnackbar';
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext);
+
+  // -------------------------------------------------------------------
+  // TODO: possibly move to context or AddCourse component after refactoring
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [severity, setSeverity] = useState(null);
+  const [error, setError] = useState(null);
+  // -------------------------------------------------------------------
 
   const courseType = useTrait('ge');
   const courseNumber = useTrait(0);
@@ -161,12 +171,32 @@ export const CurrentCourseForm = (props) => {
     courseData.set({ ...courseData.get(), location: newCourseLocation });
   };
 
-  const handleSubmit = (e) => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: alert user
-    addCurrentCourse(courseData.get());
-    e.target.reset();
+    try {
+      const res = await addCurrentCourse(courseData.get());
+      // why is res undefined
+      if (res.data.success === true) {
+        setSuccess(true);
+        setSeverity('success');
+        setOpen(true);
+        setIsLoading(false);
+        e.target.reset();
+      }
+    } catch (error) {
+      setSeverity('error');
+      setOpen(true);
+      setError(error.message);
+    }
   };
 
   return (
@@ -190,7 +220,6 @@ export const CurrentCourseForm = (props) => {
                         <ToggleButton value="ge">GE Course</ToggleButton>
                         <ToggleButton value="major">Major Course</ToggleButton>
                       </ToggleButtonGroup>
-
                       {/* COURSE NUMBER */}
                       <Form.Group controlId="courseNo">
                         <Form.Label>Course Number</Form.Label>
@@ -200,7 +229,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseNumberChange}
                         />
                       </Form.Group>
-
                       {/* COURSE Dept */}
                       <Form.Group controlId="courseDept">
                         <Form.Label>Course Department</Form.Label>
@@ -210,7 +238,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseDeptChange}
                         />
                       </Form.Group>
-
                       {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
                         <Form.Label>Course Title</Form.Label>
@@ -220,7 +247,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseTitleChange}
                         />
                       </Form.Group>
-
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
                         <Form.Label>Units</Form.Label>
@@ -237,7 +263,6 @@ export const CurrentCourseForm = (props) => {
                           <option value="5">5</option>
                         </Form.Control>
                       </Form.Group>
-
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
                         // ge designation
@@ -301,7 +326,6 @@ export const CurrentCourseForm = (props) => {
                           </Form.Control>
                         </Form.Group>
                       )}
-
                       {/* COURSE SECTION */}
                       <Form.Group controlId="section">
                         <Form.Label>Section</Form.Label>
@@ -311,7 +335,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseSectionChange}
                         />
                       </Form.Group>
-
                       <Row>
                         <Col>
                           {/* COURSE START TIME */}
@@ -342,7 +365,6 @@ export const CurrentCourseForm = (props) => {
                           </Form.Group>
                         </Col>
                       </Row>
-
                       {/* COURSE DAYS */}
                       <Form.Group controlId="day">
                         <Row>
@@ -366,7 +388,6 @@ export const CurrentCourseForm = (props) => {
                           </Col>
                         </Row>
                       </Form.Group>
-
                       {/* COURSE LOCATION */}
                       <Form.Group controlId="location">
                         <Form.Label>Location</Form.Label>
@@ -376,8 +397,17 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseLocationChange}
                         />
                       </Form.Group>
-
-                      <MySnackbarButton />
+                      {/* TODO: Implement loader */}
+                      <Button className="mt-3" variant="primary" type="submit">
+                        Submit
+                      </Button>
+                      <MySnackbar
+                        open={open}
+                        severity={severity}
+                        error={error}
+                        success={success}
+                        handleClose={handleClose}
+                      />
                     </Form>
                   </Col>
                 </Row>
