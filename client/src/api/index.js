@@ -56,6 +56,5 @@ export const updateCompletedCourse = ({ newCourse, oldCourse }, config) => {
 
 // Upload Transcript
 export const uploadTranscript = (formData) => {
-  // API.post('/course/upload', { data, userID });
   return API.post('/course/upload', formData);
 };
