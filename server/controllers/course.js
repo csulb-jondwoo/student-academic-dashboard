@@ -230,7 +230,6 @@ const uploadTranscript = (req, res) => {
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
       data = JSON.parse(result);
-      console.log(data);
       // get individual courses
       for (year in data['csulb']) {
         for (termIdx in data['csulb'][year]) {
