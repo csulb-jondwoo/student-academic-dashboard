@@ -417,34 +417,6 @@ export const CompletedCourseForm = (props) => {
                     />
                   </Col>
                 </Row>
-                {/* <Row className="d-flex justify-content-center">
-                  <Col md={9} className="d-flex justify-content-center">
-                    <p> - or - </p>
-                  </Col>
-                </Row> */}
-                {/* <Row className="d-flex justify-content-center">
-                  <Col md={9}>
-                    <Card className="text-center shadow-sm mb-5">
-                      <Card.Body>
-                        <Form>
-                          <DragAndDrop handleFileChange={handleFileChange} />
-                          <CircularIntegration
-                            handleButtonClick={handleUploadClick}
-                            isLoading={isLoading}
-                            success={transcriptSuccess}
-                          />
-                          <MySnackbar
-                            open={open}
-                            severity={severity}
-                            error={error}
-                            success={transcriptSuccess}
-                            handleClose={handleClose}
-                          />
-                        </Form>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                </Row> */}
               </Card.Body>
             </Card>
           </Col>
