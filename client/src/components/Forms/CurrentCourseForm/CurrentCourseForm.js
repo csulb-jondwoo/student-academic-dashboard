@@ -471,7 +471,7 @@ export const CurrentCourseForm = (props) => {
 
                       {/* TODO: Implement loader */}
                       <Button
-                        disabled={validated}
+                        disabled={!validated}
                         className="mt-3"
                         variant="primary"
                         type="submit"
@@ -486,6 +486,7 @@ export const CurrentCourseForm = (props) => {
                         success={success}
                         handleClose={handleClose}
                       />
+                      {/* <MySnackbarButton disabled={!validated} /> */}
                     </Form>
                   </Col>
                 </Row>
