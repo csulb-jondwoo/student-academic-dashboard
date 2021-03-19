@@ -453,7 +453,7 @@ export const CurrentCourseForm = (props) => {
                         
                       </Form.Group>
 
-                      <MySnackbarButton disabled={!validated}/>
+                      <MySnackbarButton disabled={validated}/>
                     </Form>
                   </Col>
                 </Row>
