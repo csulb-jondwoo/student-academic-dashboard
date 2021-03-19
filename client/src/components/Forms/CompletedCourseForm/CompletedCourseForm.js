@@ -32,6 +32,7 @@ export const CompletedCourseForm = (props) => {
 
   const [isTranscriptSubmit, setIsTranscriptSubmit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [validated, setValidated] = useState(false);
   const courseType = useTrait('ge');
   const courseNumber = useTrait(0);
   const courseDept = useTrait('');
@@ -135,6 +136,13 @@ export const CompletedCourseForm = (props) => {
     setSuccess(false);
     setIsTranscriptSubmit(false);
 
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setValidated(true);
+
     try {
       const res = await addCompletedCourse(courseData.get());
       // why is res undefined
@@ -220,7 +228,11 @@ export const CompletedCourseForm = (props) => {
                 <Row className="my-2">
                   <Col className="d-flex justify-content-center">
                     {/* COURSE TYPE */}
-                    <Form onSubmit={handleSubmit}>
+                    <Form
+                      noValidate
+                      validated={validated}
+                      onSubmit={handleSubmit}
+                    >
                       <ToggleButtonGroup
                         className="mb-3"
                         type="radio"
@@ -238,7 +250,11 @@ export const CompletedCourseForm = (props) => {
                           type="input"
                           name="courseNo"
                           onChange={handleCourseNumberChange}
+                          required
                         />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter a course number.
+                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE DEPT */}
                       <Form.Group controlId="courseDept">
@@ -247,7 +263,11 @@ export const CompletedCourseForm = (props) => {
                           type="input"
                           name="courseDept"
                           onChange={handleCourseDeptChange}
+                          required
                         />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter the course department.
+                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
@@ -256,7 +276,11 @@ export const CompletedCourseForm = (props) => {
                           type="input"
                           name="courseTitle"
                           onChange={handleCourseTitleChange}
+                          required
                         />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter the course title.
+                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
@@ -265,14 +289,18 @@ export const CompletedCourseForm = (props) => {
                           as="select"
                           name="courseUnits"
                           onChange={handleCourseUnitChange}
+                          required
                         >
-                          <option value="0">0</option>
+                          <option value=""></option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
                           <option value="5">5</option>
                         </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                          Please select the amount of units.
+                        </Form.Control.Feedback>
                       </Form.Group>
                       <Row>
                         <Col>
@@ -283,14 +311,20 @@ export const CompletedCourseForm = (props) => {
                               as="select"
                               name="courseTerm"
                               onChange={handleCourseTermChange}
+                              required
                             >
+                              <option value=""></option>
                               <option value="Fall">Fall</option>
                               <option value="Spring">Spring</option>
                               <option value="Summer">Summer</option>
                               <option value="Winter">Winter</option>
                             </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                              Please enter a course section number.
+                            </Form.Control.Feedback>
                           </Form.Group>
                         </Col>
+
                         <Col>
                           {/* COURSE YEAR */}
                           <Form.Group controlId="courseYear">
@@ -299,7 +333,11 @@ export const CompletedCourseForm = (props) => {
                               type="input"
                               name="courseYear"
                               onChange={handleCourseYearChange}
+                              required
                             />
+                            <Form.Control.Feedback type="invalid">
+                              Please enter the year the course was taken.
+                            </Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>
@@ -313,6 +351,7 @@ export const CompletedCourseForm = (props) => {
                               as="select"
                               name="designation"
                               onChange={handleCourseDesignationChange}
+                              required
                             >
                               {geReqData.slice(0, 13).map((ge, idx) => {
                                 return (
@@ -325,6 +364,9 @@ export const CompletedCourseForm = (props) => {
                                 );
                               })}
                             </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                              Please select a course designation.
+                            </Form.Control.Feedback>
                           </Form.Group>
 
                           {/* Additional Req */}
@@ -334,6 +376,7 @@ export const CompletedCourseForm = (props) => {
                               as="select"
                               name="additionalReq"
                               onChange={handleCourseAdditionalReqChange}
+                              required
                             >
                               <option value="-" key={1}>
                                 -
@@ -355,6 +398,7 @@ export const CompletedCourseForm = (props) => {
                             as="select"
                             name="designation"
                             onChange={handleCourseDesignationChange}
+                            required
                           >
                             {majorReqCategory.map((category, idx) => {
                               return (
@@ -364,6 +408,9 @@ export const CompletedCourseForm = (props) => {
                               );
                             })}
                           </Form.Control>
+                          <Form.Control.Feedback type="invalid">
+                            Please select a course designation.
+                          </Form.Control.Feedback>
                         </Form.Group>
                       )}
                       {/* COURSE GRADE */}
@@ -373,7 +420,9 @@ export const CompletedCourseForm = (props) => {
                           as="select"
                           name="courseGrade"
                           onChange={handleCourseGradeChange}
+                          required
                         >
+                          <option value=""></option>
                           <option value="A">A</option>
                           <option value="B">B</option>
                           <option value="C">C</option>
@@ -382,10 +431,18 @@ export const CompletedCourseForm = (props) => {
                           <option value="CR">CR</option>
                           <option value="NC">NC</option>
                         </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                          Please select a grade for the course.
+                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE SUBMIT */}
                       {/* TODO: Implement loader */}
-                      <Button className="mt-3" variant="primary" type="submit">
+                      <Button
+                        disabled={validated}
+                        className="mt-3"
+                        variant="primary"
+                        type="submit"
+                      >
                         Submit
                       </Button>
 
