@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MySnackbarButton = () => {
+const MySnackbarButton = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -37,7 +37,7 @@ const MySnackbarButton = () => {
   return (
     // <div className={classes.root}>
     <>
-      <Button variant="primary" type="submit" onClick={handleClick}>
+      <Button disabled={props.disabled} variant="primary" type="submit" onClick={handleClick}>
         Submit
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
