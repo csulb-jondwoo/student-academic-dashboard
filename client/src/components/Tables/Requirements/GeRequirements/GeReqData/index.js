@@ -101,4 +101,4 @@ export const geReqData = [
     designation: 'Human Diversity',
     category: 'Additional Req',
   },
-];
+]

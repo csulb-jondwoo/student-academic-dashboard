@@ -1,10 +1,10 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import { majorReqData } from './CecsReqData';
+import { majorReqData } from './CecsReqData'
 
-import '../../../../utility/css/table-fixed-height.css';
+import '../../../../utility/css/table-fixed-height.css'
 
 const MajorRequirements = () => {
   return (
@@ -33,9 +33,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -60,9 +60,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
               <tr>
@@ -79,9 +79,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -101,9 +101,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -123,9 +123,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -145,9 +145,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -167,9 +167,9 @@ const MajorRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -177,7 +177,7 @@ const MajorRequirements = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MajorRequirements;
+export default MajorRequirements

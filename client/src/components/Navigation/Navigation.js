@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+import React, { useContext } from 'react'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import Container from 'react-bootstrap/Container'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
-import './Navigation.css';
-import { myContext } from '../../context/Context';
+import './Navigation.css'
+import { myContext } from '../../context/Context'
 
 const Navigation = () => {
-  const { user, handleLogout } = useContext(myContext);
+  const { user, handleLogout } = useContext(myContext)
 
   return (
     <Navbar className="nav-color" collapseOnSelect expand="lg" variant="light">
@@ -45,7 +45,7 @@ const Navigation = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation

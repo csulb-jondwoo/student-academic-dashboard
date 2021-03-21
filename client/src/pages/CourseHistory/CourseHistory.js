@@ -1,13 +1,13 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 
-import MajorHistory from '../../components/Tables/History/MajorHistory/MajorHistory';
-import GeHistory from '../../components/Tables/History/GeHistory/GeHistory';
+import MajorHistory from '../../components/Tables/History/MajorHistory/MajorHistory'
+import GeHistory from '../../components/Tables/History/GeHistory/GeHistory'
 
-import '../../utility/css/table-fixed-height.css';
+import '../../utility/css/table-fixed-height.css'
 
 const CourseHistory = () => {
   return (
@@ -30,7 +30,7 @@ const CourseHistory = () => {
         <GeHistory />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CourseHistory;
+export default CourseHistory

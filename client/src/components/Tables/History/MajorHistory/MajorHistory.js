@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import { majorHistoryData } from './MajorHistoryData';
+import { majorHistoryData } from './MajorHistoryData'
 
-import '../../../../utility/css/table-fixed-height.css';
-import { myContext } from '../../../../context/Context';
-import formatTime from '../../../../utility/formatTime/formatTime';
+import '../../../../utility/css/table-fixed-height.css'
+import { myContext } from '../../../../context/Context'
+import formatTime from '../../../../utility/formatTime/formatTime'
 
 const MajorHistory = () => {
-  const { user, completedCourses, getCompletedCourses } = useContext(myContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const userID = JSON.parse(user).googleId;
+  const { user, completedCourses, getCompletedCourses } = useContext(myContext)
+  const [isLoading, setIsLoading] = useState(true)
+  const userID = JSON.parse(user).googleId
 
   useEffect(() => {
     // set state of currentCourses inside context via reducer
-    getCompletedCourses(userID);
-    setIsLoading(false);
-  }, [getCompletedCourses, userID, setIsLoading]);
+    getCompletedCourses(userID)
+    setIsLoading(false)
+  }, [getCompletedCourses, userID, setIsLoading])
 
   const columns = [
     {
@@ -57,7 +57,7 @@ const MajorHistory = () => {
       title: 'Location',
       field: 'location',
     },
-  ];
+  ]
 
   const courses = useMemo(
     () =>
@@ -71,12 +71,12 @@ const MajorHistory = () => {
           designation: course.designation,
           additionalReq: course.additionalReq,
           termYear: course.term + ' ' + course.year.toString(),
-        };
+        }
       }),
-    [completedCourses, userID]
-  );
+    [completedCourses, userID],
+  )
 
-  console.log(courses);
+  console.log(courses)
 
   return (
     <>
@@ -109,13 +109,13 @@ const MajorHistory = () => {
                   <td>{course.designation}</td>
                   <td>{course.term}</td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </Table>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MajorHistory;
+export default MajorHistory

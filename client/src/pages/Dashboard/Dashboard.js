@@ -1,24 +1,24 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import React, { useContext, useState, useEffect } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 
-import StudentInfo from '../../components/StudentInfo/StudentInfo';
-import CurrentSchedule from '../../components/Tables/CurrentSchedule/CurrentSchedule';
-import MajorRemaining from '../../components/Tables/RemainingCourses/MajorRemaining/MajorRemaining';
-import MajorRequirements from '../../components/Tables/Requirements/MajorRequirements/MajorRequirements';
-import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/GeRemaining';
-import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements';
-import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData';
-import { myContext } from '../../context/Context';
+import StudentInfo from '../../components/StudentInfo/StudentInfo'
+import CurrentSchedule from '../../components/Tables/CurrentSchedule/CurrentSchedule'
+import MajorRemaining from '../../components/Tables/RemainingCourses/MajorRemaining/MajorRemaining'
+import MajorRequirements from '../../components/Tables/Requirements/MajorRequirements/MajorRequirements'
+import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/GeRemaining'
+import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements'
+import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData'
+import { myContext } from '../../context/Context'
 
 const Dashboard = () => {
-  const [radioValue, setRadioValue] = useState('ge');
+  const [radioValue, setRadioValue] = useState('ge')
 
   const handleCourseChange = (value) => {
-    setRadioValue(value);
-  };
+    setRadioValue(value)
+  }
 
   return (
     <>
@@ -54,7 +54,7 @@ const Dashboard = () => {
         </Col>
       </Row> */}
     </>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

@@ -205,4 +205,4 @@ export const majorHistoryData = [
     term: 'Spring 2020',
     grade: 'A',
   },
-];
+]

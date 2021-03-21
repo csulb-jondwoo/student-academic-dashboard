@@ -1,12 +1,12 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { FaGoogle } from 'react-icons/fa';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import { FaGoogle } from 'react-icons/fa'
 
-import './Login.css';
+import './Login.css'
 
 const Login = ({ handleLogin }) => {
   return (
@@ -28,7 +28,7 @@ const Login = ({ handleLogin }) => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

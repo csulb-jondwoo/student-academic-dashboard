@@ -3,5 +3,6 @@
 **/.env
 **/.vscode
 .vscode/
-**/.prettierrc.json
 **/TODO.txt
+**/.prettier*
+**/.eslint*

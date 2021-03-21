@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
 
-import DragAndDrop from '../../utility/DragAndDrop';
+import DragAndDrop from '../../utility/DragAndDrop'
 
 function NewStudent() {
   return (
@@ -54,7 +54,7 @@ function NewStudent() {
         </Card>
       </Col>
     </Row>
-  );
+  )
 }
 
-export default NewStudent;
+export default NewStudent

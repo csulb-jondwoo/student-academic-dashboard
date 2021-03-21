@@ -153,4 +153,4 @@ export const geHistoryData = [
     status: 'In-Progress',
     additionalReq: null,
   },
-];
+]

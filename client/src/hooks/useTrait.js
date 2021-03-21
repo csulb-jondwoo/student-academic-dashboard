@@ -1,22 +1,22 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 const useTrait = (initialValue) => {
-  const [trait, updateTrait] = useState(initialValue);
+  const [trait, updateTrait] = useState(initialValue)
 
-  let current = trait;
+  let current = trait
 
-  const get = () => current;
+  const get = () => current
 
   const set = (newValue) => {
-    current = newValue;
-    updateTrait(newValue);
-    return current;
-  };
+    current = newValue
+    updateTrait(newValue)
+    return current
+  }
 
   return {
     get,
     set,
-  };
-};
+  }
+}
 
-export default useTrait;
+export default useTrait

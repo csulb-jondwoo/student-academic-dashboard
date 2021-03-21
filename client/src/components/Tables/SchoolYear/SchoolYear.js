@@ -1,9 +1,9 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const SchoolYear = () => {
   return (
@@ -130,7 +130,7 @@ const SchoolYear = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SchoolYear;
+export default SchoolYear

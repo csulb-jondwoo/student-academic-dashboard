@@ -1,9 +1,9 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import getMajorRemaining from './MajorRemainingData/majorRemainingData';
-import '../../../../utility/css/table-fixed-height.css';
+import getMajorRemaining from './MajorRemainingData/majorRemainingData'
+import '../../../../utility/css/table-fixed-height.css'
 
 const RemainingCourses = () => {
   const {
@@ -20,7 +20,7 @@ const RemainingCourses = () => {
     WRITING_INTENSIVE_UNITS,
     CORE_ELECTIVE_UNITS,
     APPLIED_ELECTIVE_UNITS,
-  } = getMajorRemaining();
+  } = getMajorRemaining()
   return (
     <>
       <div className="shadow-sm">
@@ -50,9 +50,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -81,9 +81,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
               <tr>
@@ -100,9 +100,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -125,9 +125,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -151,9 +151,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -176,9 +176,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -202,9 +202,9 @@ const RemainingCourses = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -212,7 +212,7 @@ const RemainingCourses = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RemainingCourses;
+export default RemainingCourses

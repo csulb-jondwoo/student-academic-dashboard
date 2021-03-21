@@ -1,10 +1,10 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import { geHistoryData } from './GeHistoryData';
+import { geHistoryData } from './GeHistoryData'
 
-import '../../../../utility/css/table-fixed-height.css';
+import '../../../../utility/css/table-fixed-height.css'
 
 const GeHistory = () => {
   return (
@@ -39,13 +39,13 @@ const GeHistory = () => {
                   <td>{course.additionalReq}</td>
                   <td>{course.term}</td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </Table>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default GeHistory;
+export default GeHistory

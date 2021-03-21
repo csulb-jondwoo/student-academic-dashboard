@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 
-import './DragAndDrop.css';
+import './DragAndDrop.css'
 /**
  * Drag and drop a file
  * @author Ryan Stehle
@@ -9,10 +9,10 @@ import './DragAndDrop.css';
 export default function Accept({ handleFileChange }) {
   const onDrop = useCallback(
     (acceptedFiles) => {
-      handleFileChange(acceptedFiles);
+      handleFileChange(acceptedFiles)
     },
-    [handleFileChange]
-  );
+    [handleFileChange],
+  )
 
   const {
     acceptedFiles,
@@ -24,15 +24,15 @@ export default function Accept({ handleFileChange }) {
   } = useDropzone({
     accept: '',
     onDrop,
-  });
+  })
 
   const acceptedFilesItems = acceptedFiles.map((file) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
-  ));
+  ))
 
-  const dragStatus = isDragAccept ? 'accept' : isDragReject ? 'reject' : '';
+  const dragStatus = isDragAccept ? 'accept' : isDragReject ? 'reject' : ''
 
   return (
     <section className="container">
@@ -51,5 +51,5 @@ export default function Accept({ handleFileChange }) {
         <ul>{acceptedFilesItems}</ul>
       </aside>
     </section>
-  );
+  )
 }

@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const test = ""
 const App = () => {
   const classes = useStyles()
 

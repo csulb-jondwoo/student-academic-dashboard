@@ -1,11 +1,11 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { green } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
+import React from 'react'
+import clsx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { green } from '@material-ui/core/colors'
+import Fab from '@material-ui/core/Fab'
+import CheckIcon from '@material-ui/icons/Check'
+import SaveIcon from '@material-ui/icons/Save'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -12,
     marginLeft: -12,
   },
-}));
+}))
 
 const CircularIntegration = ({
   isLoading,
@@ -45,12 +45,12 @@ const CircularIntegration = ({
   handleButtonClick,
   isTranscriptSubmit,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const buttonClassname = clsx({
     // [classes.buttonSuccess]: success,
     [classes.buttonSuccess]: isTranscriptSubmit ? success : '',
-  });
+  })
 
   return (
     <div className={classes.root}>
@@ -68,7 +68,7 @@ const CircularIntegration = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CircularIntegration;
+export default CircularIntegration

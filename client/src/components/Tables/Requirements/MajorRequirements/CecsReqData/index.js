@@ -335,7 +335,7 @@ export const majorReqData = [
     units: 3,
     designation: 'Applied Elective',
   },
-];
+]
 
 export const majorReqCategory = [
   'Lower Div',
@@ -345,4 +345,4 @@ export const majorReqCategory = [
   'Writing Intensive',
   'Core Elective',
   'Applied Elective',
-];
+]

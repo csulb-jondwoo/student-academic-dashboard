@@ -1,10 +1,10 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import getGeRemaining from './GeRemainingData/geRemainingData';
+import getGeRemaining from './GeRemainingData/geRemainingData'
 
-import '../../../../utility/css/table-fixed-height.css';
+import '../../../../utility/css/table-fixed-height.css'
 
 const GeRemaining = () => {
   const {
@@ -23,7 +23,7 @@ const GeRemaining = () => {
     CAT_E,
     CAT_F,
     CAT_ADDITIONAL_REQ,
-  } = getGeRemaining();
+  } = getGeRemaining()
 
   return (
     <>
@@ -54,9 +54,9 @@ const GeRemaining = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -78,9 +78,9 @@ const GeRemaining = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -102,9 +102,9 @@ const GeRemaining = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -127,9 +127,9 @@ const GeRemaining = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -150,9 +150,9 @@ const GeRemaining = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -170,9 +170,9 @@ const GeRemaining = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -194,9 +194,9 @@ const GeRemaining = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
               {geRemaining.map((course, idx) => {
@@ -206,9 +206,9 @@ const GeRemaining = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -216,7 +216,7 @@ const GeRemaining = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default GeRemaining;
+export default GeRemaining

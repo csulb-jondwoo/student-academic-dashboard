@@ -1,8 +1,9 @@
 import itertools
 import json
-import re
 import os
+import re
 from pathlib import Path
+
 from pdfreader import SimplePDFViewer
 
 

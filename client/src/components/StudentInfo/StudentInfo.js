@@ -1,27 +1,27 @@
-import React, { useContext } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import React, { useContext } from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
-import Progress from '../../components/Progress/Progress';
-import { myContext } from '../../context/Context';
+import Progress from '../../components/Progress/Progress'
+import { myContext } from '../../context/Context'
 
 const StudentInfo = () => {
-  const { user } = useContext(myContext);
+  const { user } = useContext(myContext)
 
   const renderTotalGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Total GPA
     </Tooltip>
-  );
+  )
 
   const renderCurrentGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Current GPA
     </Tooltip>
-  );
+  )
 
   return (
     <>
@@ -79,7 +79,7 @@ const StudentInfo = () => {
         <Progress />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default StudentInfo;
+export default StudentInfo

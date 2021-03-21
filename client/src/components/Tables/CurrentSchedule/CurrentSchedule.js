@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
-import MaterialTable from 'material-table';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import { useConfirm } from 'material-ui-confirm';
+import React, { useContext, useEffect, useState, useMemo } from 'react'
+import MaterialTable from 'material-table'
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
+import { useConfirm } from 'material-ui-confirm'
 
-import formatTime from '../../../utility/formatTime/formatTime';
-import { myContext } from '../../../context/Context';
+import formatTime from '../../../utility/formatTime/formatTime'
+import { myContext } from '../../../context/Context'
 
-import '../../../utility/css/table-fixed-height.css';
+import '../../../utility/css/table-fixed-height.css'
 
 const CurrentSchedule = () => {
   const {
@@ -15,17 +15,17 @@ const CurrentSchedule = () => {
     getCurrentCourses,
     updateCurrentCourse,
     deleteCurrentCourse,
-  } = useContext(myContext);
+  } = useContext(myContext)
 
-  const [isLoading, setIsLoading] = useState(true);
-  const userID = JSON.parse(user).googleId;
-  const confirm = useConfirm();
+  const [isLoading, setIsLoading] = useState(true)
+  const userID = JSON.parse(user).googleId
+  const confirm = useConfirm()
 
   useEffect(() => {
     // set state of currentCourses inside context via reducer
-    getCurrentCourses(userID);
-    setIsLoading(false);
-  }, [getCurrentCourses, userID, setIsLoading]);
+    getCurrentCourses(userID)
+    setIsLoading(false)
+  }, [getCurrentCourses, userID, setIsLoading])
 
   const columns = [
     {
@@ -65,7 +65,7 @@ const CurrentSchedule = () => {
       title: 'Location',
       field: 'location',
     },
-  ];
+  ]
 
   // memoize courses so does not change on rerenders
   const courses = useMemo(
@@ -83,54 +83,54 @@ const CurrentSchedule = () => {
           location: course.location,
           designation: course.designation,
           additionalReq: course.additionalReq,
-        };
+        }
       }),
-    [currentCourses, userID]
-  );
+    [currentCourses, userID],
+  )
 
   // table rerendering bc tableData is changing
-  const [tableData, setTableData] = useState(courses);
+  const [tableData, setTableData] = useState(courses)
 
   useEffect(() => {
-    setTableData(courses);
-  }, [currentCourses, courses]);
+    setTableData(courses)
+  }, [currentCourses, courses])
 
   const totalUnits = currentCourses.reduce((sum, obj) => {
-    return sum + obj.units;
-  }, 0);
+    return sum + obj.units
+  }, 0)
 
   const handleCourseUpdate = (newCourse, oldCourse) => {
     // change server side
-    updateCurrentCourse({ newCourse, oldCourse });
+    updateCurrentCourse({ newCourse, oldCourse })
 
     // change client side
-    const dataUpdate = [...tableData];
-    const index = oldCourse.tableData.id;
-    dataUpdate[index] = newCourse;
-    setTableData([...dataUpdate]);
-    setIsLoading(false);
-  };
+    const dataUpdate = [...tableData]
+    const index = oldCourse.tableData.id
+    dataUpdate[index] = newCourse
+    setTableData([...dataUpdate])
+    setIsLoading(false)
+  }
 
   const handleCourseDelete = (data) => {
     confirm({ description: 'Delete selected courses' })
       .then(() => {
         // change server side
-        deleteCurrentCourse(data);
+        deleteCurrentCourse(data)
         // change client side
-        const valuesToRemove = [];
-        let dataDelete = [...tableData];
+        const valuesToRemove = []
+        let dataDelete = [...tableData]
         for (const oldData of data) {
-          valuesToRemove.push(oldData);
+          valuesToRemove.push(oldData)
         }
-        dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1);
-        setTableData([...dataDelete]);
-        setIsLoading(false);
+        dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1)
+        setTableData([...dataDelete])
+        setIsLoading(false)
       })
       .catch(() => {
-        console.log('cancelled');
-        setIsLoading(false);
-      });
-  };
+        console.log('cancelled')
+        setIsLoading(false)
+      })
+  }
 
   const handleMarkAsComplete = (data) => {
     confirm({ description: 'Mark selected courses as complete' })
@@ -138,13 +138,13 @@ const CurrentSchedule = () => {
         // change server side
 
         // change client side
-        setIsLoading(false);
+        setIsLoading(false)
       })
       .catch(() => {
-        console.log('cancelled');
-        setIsLoading(false);
-      });
-  };
+        console.log('cancelled')
+        setIsLoading(false)
+      })
+  }
 
   return (
     <MaterialTable
@@ -160,9 +160,9 @@ const CurrentSchedule = () => {
       editable={{
         onRowUpdate: async (newCourse, oldCourse) =>
           new Promise((resolve, reject) => {
-            setIsLoading(true);
-            handleCourseUpdate(newCourse, oldCourse);
-            resolve();
+            setIsLoading(true)
+            handleCourseUpdate(newCourse, oldCourse)
+            resolve()
           }),
       }}
       localization={{
@@ -175,19 +175,19 @@ const CurrentSchedule = () => {
           tooltip: 'Delete',
           icon: 'delete',
           onClick: (evt, data) => {
-            handleCourseDelete(data);
+            handleCourseDelete(data)
           },
         },
         {
           tooltip: 'Mark as Complete',
           icon: PlaylistAddCheckIcon,
           onClick: (evt, data) => {
-            handleMarkAsComplete(data);
+            handleMarkAsComplete(data)
           },
         },
       ]}
     />
-  );
-};
+  )
+}
 
-export default CurrentSchedule;
+export default CurrentSchedule

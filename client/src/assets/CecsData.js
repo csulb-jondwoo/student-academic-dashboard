@@ -623,4 +623,4 @@ export const cecsData = {
         'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40073',
     },
   ],
-};
+}

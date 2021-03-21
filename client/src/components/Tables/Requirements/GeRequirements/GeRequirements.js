@@ -1,10 +1,10 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 
-import { geReqData } from './GeReqData';
+import { geReqData } from './GeReqData'
 
-import '../../../../utility/css/table-fixed-height.css';
+import '../../../../utility/css/table-fixed-height.css'
 
 const GeRequirements = () => {
   return (
@@ -33,9 +33,9 @@ const GeRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -55,9 +55,9 @@ const GeRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -77,9 +77,9 @@ const GeRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -99,9 +99,9 @@ const GeRequirements = () => {
                       </td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -119,9 +119,9 @@ const GeRequirements = () => {
                       <td>{course.designation}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -139,9 +139,9 @@ const GeRequirements = () => {
                       <td>{course.designation}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -159,9 +159,9 @@ const GeRequirements = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
               {geReqData.map((course, idx) => {
@@ -171,9 +171,9 @@ const GeRequirements = () => {
                       <td>{course.course}</td>
                       <td>{course.units}</td>
                     </tr>
-                  );
+                  )
                 } else {
-                  return null;
+                  return null
                 }
               })}
             </tbody>
@@ -181,7 +181,7 @@ const GeRequirements = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default GeRequirements;
+export default GeRequirements
