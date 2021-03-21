@@ -1,26 +1,23 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ConfirmProvider } from 'material-ui-confirm';
+import React from 'react'
+import Container from 'react-bootstrap/Container'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ConfirmProvider } from 'material-ui-confirm'
 
-import Navigation from './components/Navigation/Navigation';
-import AppRoutes from './components/AppRoutes/AppRoutes';
+import Navigation from './components/Navigation/Navigation'
+import AppRoutes from './components/AppRoutes/AppRoutes'
 
-import './App.css';
-import { makeStyles } from '@material-ui/core';
+import './App.css'
+import { makeStyles } from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    // width: '100%',
-    // '& > * + *': {
-    //   marginTop: theme.spacing(2),
-    // },
     color: '#2a9d8f',
   },
-}));
+}))
 
+const test = ""
 const App = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <ConfirmProvider
@@ -35,7 +32,7 @@ const App = () => {
         </Container>
       </Router>
     </ConfirmProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App
