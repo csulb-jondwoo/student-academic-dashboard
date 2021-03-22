@@ -1,8 +1,8 @@
 /*global process*/
 
-const mongoose = require('mongoose');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/user');
+const mongoose = require('mongoose')
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+const User = require('../models/user')
 
 module.exports = (passport) => {
   passport.use(
@@ -19,37 +19,37 @@ module.exports = (passport) => {
 
         User.findOne({ googleId: profile.id }, async (err, doc) => {
           if (err) {
-            return done(err, null);
+            return done(err, null)
           }
 
           if (!doc) {
-            console.log('no doc');
+            console.log('no doc')
             // if no user, create one
             const newUser = new User({
               _id: new mongoose.Types.ObjectId(),
               googleId: profile.id,
               name: profile.name.givenName,
-            });
+            })
             // Insert into database
-            await newUser.save();
-            done(null, newUser);
+            await newUser.save()
+            done(null, newUser)
           } else {
             // user already exists in db
-            done(null, doc);
+            done(null, doc)
           }
-        });
-      }
-    )
-  );
+        })
+      },
+    ),
+  )
 
   passport.serializeUser((user, done) => {
-    return done(null, user._id);
-  });
+    return done(null, user._id)
+  })
 
   passport.deserializeUser((id, done) => {
     User.findById(id, async (err, doc) => {
       // Whatever we return goes to the client
-      return done(null, doc);
-    });
-  });
-};
+      return done(null, doc)
+    })
+  })
+}

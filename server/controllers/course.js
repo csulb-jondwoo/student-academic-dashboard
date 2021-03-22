@@ -1,14 +1,14 @@
 // const multer = require('multer');
-const { PythonShell } = require('python-shell');
+const { PythonShell } = require('python-shell')
 
-const userSchema = require('../models/user.js');
-const { convertTo24hr } = require('../utility/convertTo24hr');
+const userSchema = require('../models/user.js')
+const { convertTo24hr } = require('../utility/convertTo24hr')
 
 // ADD
 const addCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body; // userID = googleId passed from completed course form
-    const completed = req.body;
+    const { userID } = req.body // userID = googleId passed from completed course form
+    const completed = req.body
 
     await userSchema.findOneAndUpdate(
       {
@@ -18,22 +18,22 @@ const addCompletedCourse = async (req, res) => {
         $addToSet: {
           completedCourses: completed,
         },
-      }
-    );
+      },
+    )
 
     return res.status(201).json({
       success: true,
       data: completed,
-    });
+    })
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    return res.status(409).json({ message: error.message })
   }
-};
+}
 
 const addCurrentCourse = async (req, res) => {
   try {
-    const { userID } = req.body;
-    const current = req.body;
+    const { userID } = req.body
+    const current = req.body
 
     await userSchema.findOneAndUpdate(
       {
@@ -43,26 +43,26 @@ const addCurrentCourse = async (req, res) => {
         $addToSet: {
           currentCourses: current,
         },
-      }
-    );
+      },
+    )
 
     return res.status(201).json({
       success: true,
       data: current,
-    });
+    })
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    return res.status(409).json({ message: error.message })
   }
-};
+}
 
 // DELETE
 const deleteCurrentCourse = async (req, res) => {
   try {
-    const data = req.body;
+    const data = req.body
     for (const course of data) {
-      const number = course.course.split(' ')[1];
-      const dept = course.course.split(' ')[0];
-      const { userID } = course;
+      const number = course.course.split(' ')[1]
+      const dept = course.course.split(' ')[0]
+      const { userID } = course
       await userSchema.findOneAndUpdate(
         {
           googleId: userID,
@@ -72,18 +72,18 @@ const deleteCurrentCourse = async (req, res) => {
             // delete the course that matches number and dept
             currentCourses: { number, dept },
           },
-        }
-      );
+        },
+      )
     }
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    return res.status(409).json({ message: error.message })
   }
-};
+}
 
 const deleteCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body;
-    const completed = req.body;
+    const { userID } = req.body
+    const completed = req.body
 
     await userSchema.findOneAndUpdate(
       {
@@ -93,23 +93,23 @@ const deleteCompletedCourse = async (req, res) => {
         $pull: {
           completedCourses: completed,
         },
-      }
-    );
+      },
+    )
   } catch (error) {
-    return res.status(409).json({ message: error.message });
-    const { userID } = req.body;
+    return res.status(409).json({ message: error.message })
+    const { userID } = req.body
   }
-};
+}
 
 // UPDATE
 const updateCurrentCourse = async (req, res) => {
   try {
-    const { userID } = req.body.oldCourse;
-    const { newCourse } = req.body;
-    const { oldCourse } = req.body;
+    const { userID } = req.body.oldCourse
+    const { newCourse } = req.body
+    const { oldCourse } = req.body
 
-    const number = oldCourse.course.split(' ')[1];
-    const dept = oldCourse.course.split(' ')[0];
+    const number = oldCourse.course.split(' ')[1]
+    const dept = oldCourse.course.split(' ')[0]
 
     await userSchema.findOneAndUpdate(
       {
@@ -139,17 +139,17 @@ const updateCurrentCourse = async (req, res) => {
           'currentCourses.$.days': newCourse.days.split('/'),
           'currentCourses.$.location': newCourse.location,
         },
-      }
-    );
+      },
+    )
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    return res.status(409).json({ message: error.message })
   }
-};
+}
 
 const updateCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body;
-    const current = req.body;
+    const { userID } = req.body
+    const current = req.body
 
     await userSchema.findOneAndUpdate(
       {
@@ -159,54 +159,54 @@ const updateCompletedCourse = async (req, res) => {
         $set: {
           currentCourses: current,
         },
-      }
-    );
+      },
+    )
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    return res.status(409).json({ message: error.message })
   }
-};
+}
 
 // GET
 const getCurrentCourses = async (req, res) => {
   try {
-    const param = req.query.ID;
+    const param = req.query.ID
     const currentCourses = await userSchema.findOne({
       googleId: param,
-    });
+    })
 
     return res.status(200).json({
       success: true,
       data: currentCourses.currentCourses,
-    });
+    })
   } catch (err) {
     return res.status(500).json({
       success: false,
       error: 'Server Error',
-    });
+    })
   }
-};
+}
 
 const getCompletedCourses = async (req, res) => {
   try {
-    const param = req.query.ID;
+    const param = req.query.ID
     const completedCourses = await userSchema.findOne({
       googleId: param,
-    });
+    })
 
     return res.status(200).json({
       success: true,
       data: completedCourses.completedCourses,
-    });
+    })
   } catch (err) {
     return res.status(500).json({
       success: false,
       error: 'Server Error',
-    });
+    })
   }
-};
+}
 
 const uploadTranscript = (req, res) => {
-  const userID = req.body.userID;
+  const userID = req.body.userID
   let courseData = {
     type: 'major',
     number: 0,
@@ -218,30 +218,30 @@ const uploadTranscript = (req, res) => {
     grade: '',
     designation: '',
     additionalReq: '',
-  };
+  }
 
-  let options = {
+  const options = {
     mode: 'text',
     pythonOptions: ['-u'], // get print results in real-time
     scriptPath: './transcript',
     args: [''], //An argument which can be accessed in the script using sys.argv[1]
-  };
+  }
 
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
-      data = JSON.parse(result);
+      data = JSON.parse(result)
       // get individual courses
       for (year in data['csulb']) {
         for (termIdx in data['csulb'][year]) {
           for (term in data['csulb'][year][termIdx]) {
             for (courseIdx in data['csulb'][year][termIdx][term]) {
               // create courseData obj
-              course = data['csulb'][year][termIdx][term][courseIdx];
-              const dept = course[0].split(' ')[0];
-              const number = course[0].split(' ')[1];
-              const title = course[1];
-              const units = course[2];
-              const grade = course[3];
+              course = data['csulb'][year][termIdx][term][courseIdx]
+              const dept = course[0].split(' ')[0]
+              const number = course[0].split(' ')[1]
+              const title = course[1]
+              const units = course[2]
+              const grade = course[3]
               // doesnt exist yet
               // const designation = course[4];
               // const additinalReq = course[5];
@@ -256,8 +256,8 @@ const uploadTranscript = (req, res) => {
                 grade,
                 // designation,
                 // additionalReq,
-              };
-              console.log(courseData);
+              }
+              console.log(courseData)
               // add to completed courses
               await userSchema.findOneAndUpdate(
                 {
@@ -267,18 +267,18 @@ const uploadTranscript = (req, res) => {
                   $addToSet: {
                     completedCourses: courseData,
                   },
-                }
-              );
+                },
+              )
             }
           }
         }
       }
-      return res.status(200).send({ success: true });
-    });
+      return res.status(200).send({ success: true })
+    })
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 module.exports = {
   getCurrentCourses,
@@ -290,4 +290,4 @@ module.exports = {
   updateCurrentCourse,
   updateCompletedCourse,
   uploadTranscript,
-};
+}

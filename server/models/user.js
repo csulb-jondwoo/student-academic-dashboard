@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const reqString = {
   type: String,
   required: true,
-};
+}
 
 const reqNumber = {
   type: Number,
   required: true,
-};
+}
 
 const currentCourseSchema = mongoose.Schema(
   {
@@ -32,8 +32,8 @@ const currentCourseSchema = mongoose.Schema(
   },
 
   // need id for updating and deleting
-  { _id: false }
-);
+  { _id: false },
+)
 
 const completedCourseSchema = mongoose.Schema(
   {
@@ -49,8 +49,8 @@ const completedCourseSchema = mongoose.Schema(
     additionalReq: String, // not always required
   },
   // need id for updating and deleting
-  { _id: false }
-);
+  { _id: false },
+)
 
 const userSchema = mongoose.Schema({
   googleId: reqString,
@@ -61,6 +61,6 @@ const userSchema = mongoose.Schema({
   },
   currentCourses: [currentCourseSchema],
   completedCourses: [completedCourseSchema],
-});
+})
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema)
