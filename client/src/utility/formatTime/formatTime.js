@@ -1,6 +1,6 @@
 const formatTime = (time) => {
-  let hh = time.split(':')[0]
-  let m = time.split(':')[1]
+  const hh = time.split(':')[0]
+  const m = time.split(':')[1]
   let dd = 'AM'
   let h = hh
   if (h >= 12) {
