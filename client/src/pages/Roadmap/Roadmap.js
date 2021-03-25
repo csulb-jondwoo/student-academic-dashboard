@@ -52,9 +52,19 @@ const Roadmap = () => {
 
   return (
     <Container>
+      <Row>
+        <Col>
+          <Card className="text-center shadow-sm">
+            <Card.Body>
+              <Card.Title>CECS Roadmap</Card.Title>
+              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       <Row className="d-flex mt-5 justify-content-center">
         <Col>
-          <Card className="mt-3">
+          <Card className="text-center shadow-sm">
             <Card.Body>
               <Card.Title>CECS Course Catalog</Card.Title>
             </Card.Body>
@@ -72,14 +82,6 @@ const Roadmap = () => {
               </tbody>
             </Table>
           </div>
-        </Col>
-        <Col>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>CECS Roadmap</Card.Title>
-              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
-            </Card.Body>
-          </Card>
         </Col>
       </Row>
       <Row className="mt-3">
