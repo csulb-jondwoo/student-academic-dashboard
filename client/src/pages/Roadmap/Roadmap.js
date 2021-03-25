@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -6,8 +6,8 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
-import {cecsData} from '../../assets/CecsData'
-import {Course} from '../../components/Tables/SchoolYear/Course'
+import { cecsData } from '../../assets/CecsData'
+import { Course } from '../../components/Tables/SchoolYear/Course'
 
 /*
 Roadmap:
@@ -37,16 +37,14 @@ Clicking a course adds it to the term?
 */
 
 const Roadmap = () => {
-  const [yearList, setYearList] = useState([]);
+  const [yearList, setYearList] = useState([])
 
-  const cecsReqCourses = cecsData.cecs.map(course => {
-    return (
-      <Course key={course.name} name={course.name} url={course.url} />
-    )
+  const cecsReqCourses = cecsData.cecs.map((course) => {
+    return <Course key={course.name} name={course.name} url={course.url} />
   })
   console.log(cecsReqCourses)
 
-  const handleAddYear = event => {
+  const handleAddYear = (event) => {
     setYearList(yearList.concat(<SchoolYear key={yearList.length} />))
   }
 
@@ -67,9 +65,7 @@ const Roadmap = () => {
                   <th>Units</th>
                 </tr>
               </thead>
-              <tbody>
-                {cecsReqCourses}
-              </tbody>
+              <tbody>{cecsReqCourses}</tbody>
             </Table>
           </div>
         </Col>
@@ -77,15 +73,15 @@ const Roadmap = () => {
           <Card className="text-center shadow-sm">
             <Card.Body>
               <Card.Title>CECS Roadmap</Card.Title>
-              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+              <Button onClick={handleAddYear} size="sm">
+                Add School Year
+              </Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col>
-          {yearList}
-        </Col>
+        <Col>{yearList}</Col>
       </Row>
       <Row className="mt-5">
         <Col className="d-flex justify-content-end">
