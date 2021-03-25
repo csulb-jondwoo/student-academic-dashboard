@@ -70,9 +70,6 @@ const SchoolYear = () => {
                   </Form.Control.Feedback>
               </Form.Group>
             </Form>
-            <Card.Title>{term} - {year}</Card.Title>
-          </Card.Body>
-        </Card>
         <div className="table-wrapper mb-5">
           <Table className="mb-3" striped hover bordered responsive="sm">
             <thead>
@@ -95,6 +92,8 @@ const SchoolYear = () => {
             </tbody>
           </Table>
         </div>
+        </Card.Body>
+        </Card>
       </div>
     </>
   )
