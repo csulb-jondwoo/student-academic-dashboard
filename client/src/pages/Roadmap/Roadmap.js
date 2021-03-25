@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -34,6 +34,12 @@ Clicking a course adds it to the term?
 */
 
 const Roadmap = () => {
+  const [yearList, setYearList] = useState([]);
+
+  const handleAddYear = event => {
+    setYearList(yearList.concat(<SchoolYear key={yearList.length} />))
+  }
+
   return (
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
@@ -41,14 +47,14 @@ const Roadmap = () => {
           <Card className="text-center shadow-sm">
             <Card.Body>
               <Card.Title>CECS Roadmap</Card.Title>
-              <Button size="sm">Add School Year</Button>
+              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
       <Row className="mt-3">
         <Col>
-          <SchoolYear />
+          {yearList}
         </Col>
       </Row>
       <Row className="mt-5">
@@ -56,7 +62,7 @@ const Roadmap = () => {
           <Button className="mb-4">Downlad PDF</Button>
         </Col>
         <Col>
-          <Button>Add Term</Button>
+          <Button>Save Roadmap</Button>
         </Col>
       </Row>
     </Container>
