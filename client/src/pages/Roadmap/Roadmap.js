@@ -4,7 +4,10 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
+import {cecsData} from '../../assets/CecsData'
+import {Course} from '../../components/Tables/SchoolYear/Course'
 
 /*
 Roadmap:
@@ -36,6 +39,13 @@ Clicking a course adds it to the term?
 const Roadmap = () => {
   const [yearList, setYearList] = useState([]);
 
+  const cecsReqCourses = cecsData.cecs.map(course => {
+    return (
+      <Course key={course.name} name={course.name} url={course.url} />
+    )
+  })
+  console.log(cecsReqCourses)
+
   const handleAddYear = event => {
     setYearList(yearList.concat(<SchoolYear key={yearList.length} />))
   }
@@ -43,6 +53,26 @@ const Roadmap = () => {
   return (
     <Container>
       <Row className="d-flex mt-5 justify-content-center">
+        <Col>
+          <Card className="mt-3">
+            <Card.Body>
+              <Card.Title>CECS Course Catalog</Card.Title>
+            </Card.Body>
+          </Card>
+          <div className="table-wrapper">
+            <Table className="mb-3" striped hover bordered responsive="sm">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Units</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cecsReqCourses}
+              </tbody>
+            </Table>
+          </div>
+        </Col>
         <Col>
           <Card className="text-center shadow-sm">
             <Card.Body>
