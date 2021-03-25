@@ -8,6 +8,8 @@ import Table from 'react-bootstrap/Table'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import {cecsData} from '../../assets/CecsData'
 import {Course} from '../../components/Tables/SchoolYear/Course'
+import '../../utility/css/table-fixed-height.css'
+
 
 /*
 Roadmap:
@@ -52,7 +54,7 @@ const Roadmap = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="row-padding">
         <Col>
           <Card className="text-center shadow-sm">
             <Card.Body>
@@ -84,12 +86,12 @@ const Roadmap = () => {
           </div>
         </Col>
       </Row>
-      <Row className="mt-3">
+      <Row className="mt-3 row-padding">
         <Col>
           {yearList}
         </Col>
       </Row>
-      <Row className="mt-5">
+      <Row className="mt-5 row-padding">
         <Col className="d-flex justify-content-end">
           <Button className="mb-4">Downlad PDF</Button>
         </Col>

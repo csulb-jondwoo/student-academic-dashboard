@@ -1,17 +1,14 @@
 import React, {useState} from 'react'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import {Course} from './Course'
+
 
 const SchoolYear = () => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
-  const [courses, setCourses] = useState([])
-
 
   const handleYearChange = event => {
     setYear(event.target.value)
@@ -20,10 +17,6 @@ const SchoolYear = () => {
   const handleTermChange = event => {
     setTerm(event.target.value)
     console.log(term)
-  }
-
-  const handleAddCourse = event => {
-    setCourses(courses.concat(<Course key={courses.length} />))
   }
 
   return (
@@ -77,10 +70,7 @@ const SchoolYear = () => {
                 <th>
                   <Row>
                     <Col>
-                      Course{' '}
-                      <Button onClick={handleAddCourse} className="ml-1" size="sm">
-                        +
-                      </Button>
+                      Course
                     </Col>
                   </Row>
                 </th>
@@ -88,7 +78,6 @@ const SchoolYear = () => {
               </tr>
             </thead>
             <tbody>
-              {courses}
             </tbody>
           </Table>
         </div>
