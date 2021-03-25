@@ -11,11 +11,9 @@ const SchoolYear = () => {
 
   const handleYearChange = event => {
     setYear(event.target.value)
-    console.log(year)
   }
   const handleTermChange = (event) => {
     setTerm(event.target.value)
-    console.log(term)
   }
 
   return (
@@ -39,7 +37,7 @@ const SchoolYear = () => {
                   <option value="Winter">Winter</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a course section number.
+                  Please select a term.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -58,7 +56,7 @@ const SchoolYear = () => {
                   <option value="2024">2024</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a course section number.
+                  Please select a year.
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
