@@ -9,14 +9,16 @@ import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 /*
 Roadmap:
 
-1. if user has no roadmap -> render "create a new roadmap" // else load saved roadmap. 
-This means I must create a "Roadmap" schema to save for the user. The roadmap object would have an array of "terms"
-Each term has the year, the season, and the courses for that term.
+1. if user has no roadmap -> render "create a new roadmap"  
+- create a "Roadmap" schema to save for the user. The roadmap object would have an array of "terms"
+Each term has the year, the season, and the courses for that term. To store the term in the appropriate position, 
+write a comparison loop -> find year, then spring -> summer -> fall -> winter
 
-Clicking this button renders a "road map" (or term) component with at least a select year, select term, "+ (add course)", then a surrounding Container.
-Save the term, year, courses in state.
+- create Roadmap button saves an empty Roadmap object into the DB for the user. 
+- add Term button renders a new Term component with at least a select year, select term, "+ (add course)", then a surrounding Container.
+Save the term, year, courses in state. When the user hits the "save" button, the roadmap is updated with the new Term in the correct position.
 
-2. if user has a saved roadmap -> load saved roadmap into right  for editing. each term in the roadmap would have to be mapped to create a component
+2. if user has a saved roadmap -> load saved roadmap into right  for editing. each term in the roadmap would have to be mapped to create a Term component
 on the Roadmap page. This would be done in the useEffect, making a call to the DB to fetch whether or not the student has a roadmap.
 
 3. Remove CECS Roadmap, remove Add School Year (should be add term at bottom)
@@ -25,12 +27,9 @@ on the Roadmap page. This would be done in the useEffect, making a call to the D
 
 5. "+" functionality: a modal window perhaps? new page? 
 maybe populate a list of all required CECS courses on the side for the user to pick from. Have a modal window with a list of required cecs courses.
-Clicking a course adds it to the term?
-
-6. 
-
-Additional idea
-Map the cecs data (name & url) to create components with the link and URL for student to choose from in the roadmap.
+Clicking a course adds it to the term? 
+- Drag & drop features where users can select from list of required cecs courses and drag them into the Term component.
+- Map the cecs data (name & url) to create Course components with the link and URL for student to choose from in this list 
 
 */
 
