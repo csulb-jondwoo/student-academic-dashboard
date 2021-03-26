@@ -9,6 +9,7 @@ import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import {cecsData} from '../../assets/CecsData'
 import {Course} from '../../components/Tables/SchoolYear/Course'
 import '../../utility/css/table-fixed-height.css'
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
 
 /*
@@ -51,55 +52,57 @@ const Roadmap = () => {
   }
 
   return (
-    <Container>
-      <Row className="row-padding">
-        <Col>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>CECS Roadmap</Card.Title>
-              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row className="d-flex mt-5 justify-content-center">
-        <Col>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>CECS Course Catalog</Card.Title>
-            </Card.Body>
-          </Card>
-          <div className="table-wrapper">
-            <Table className="mb-3" striped hover bordered responsive="sm">
-              <thead>
-                <tr>
-                  <th>Course</th>
-                  <th>Units</th>
-                </tr>
-              </thead>
-              <tbody>{cecsReqCourses}</tbody>
-            </Table>
-          </div>
-        </Col>
-      </Row>
-      <Row className="mt-3 row-padding">
-        <Col>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              {yearList}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row className="mt-5 row-padding">
-        <Col className="d-flex justify-content-end">
-          <Button className="mb-4">Downlad PDF</Button>
-        </Col>
-        <Col>
-          <Button>Save Roadmap</Button>
-        </Col>
-      </Row>
-    </Container>
+    <DragDropContext>
+      <Container>
+        <Row className="row-padding">
+          <Col>
+            <Card className="text-center shadow-sm">
+              <Card.Body>
+                <Card.Title>CECS Roadmap</Card.Title>
+                <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row className="d-flex mt-5 justify-content-center">
+          <Col>
+            <Card className="text-center shadow-sm">
+              <Card.Body>
+                <Card.Title>CECS Course Catalog</Card.Title>
+              </Card.Body>
+            </Card>
+            <div className="table-wrapper">
+              <Table className="mb-3" striped hover bordered responsive="sm">
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Units</th>
+                  </tr>
+                </thead>
+                <tbody>{cecsReqCourses}</tbody>
+              </Table>
+            </div>
+          </Col>
+        </Row>
+        <Row className="mt-3 row-padding">
+          <Col>
+            <Card className="text-center shadow-sm">
+              <Card.Body>
+                {yearList}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row className="mt-5 row-padding">
+          <Col className="d-flex justify-content-end">
+            <Button className="mb-4">Downlad PDF</Button>
+          </Col>
+          <Col>
+            <Button>Save Roadmap</Button>
+          </Col>
+        </Row>
+      </Container>
+    </DragDropContext>
   )
 }
 
