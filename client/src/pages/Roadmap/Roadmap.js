@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
+//import Table from 'react-bootstrap/Table'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import {cecsData} from '../../assets/CecsData'
-import {Course} from '../../components/Tables/SchoolYear/Course'
+//import {Course} from '../../components/Tables/SchoolYear/Course'
 import '../../utility/css/table-fixed-height.css'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
@@ -41,18 +42,25 @@ Clicking a course adds it to the term?
 
 const Roadmap = () => {
   const [yearList, setYearList] = useState([])
+  const [courses, updateCourses] = useState(cecsData.cecs)
 
-  const cecsReqCourses = cecsData.cecs.map((course) => {
-    return <Course key={course.name} name={course.name} url={course.url} />
-  })
-  console.log(cecsReqCourses)
 
   const handleAddYear = (event) => {
     setYearList(yearList.concat(<SchoolYear key={yearList.length} />))
   }
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(courses)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination.index, 0, reorderedItem)
+
+    updateCourses(items)
+  }
+
   return (
-    <DragDropContext>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
       <Container>
         <Row className="row-padding">
           <Col>
@@ -72,15 +80,28 @@ const Roadmap = () => {
               </Card.Body>
             </Card>
             <div className="table-wrapper">
-              <Table className="mb-3" striped hover bordered responsive="sm">
-                <thead>
-                  <tr>
-                    <th>Course</th>
-                    <th>Units</th>
-                  </tr>
-                </thead>
-                <tbody>{cecsReqCourses}</tbody>
-              </Table>
+              <Row>
+                <Col>Course</Col>
+                <Col>Units</Col>
+              </Row>
+              <Droppable droppableId="courses">
+                    {(provided) => (
+                        <ul {...provided.droppableProps} ref={provided.innerRef}>
+                            {courses.map(({id, units, name, url}, index) => {
+                                return (
+                                    <Draggable key={id} draggableId={name} index={index}>
+                                    {(provided) => (
+                                        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                          <Link to={{pathname: url}} target="_blank">{name}</Link>
+                                        </li>
+                                    )}
+                                    </Draggable>
+                                )
+                            })}
+                            {provided.placeholder}
+                        </ul>
+                    )}
+                </Droppable>
             </div>
           </Col>
         </Row>

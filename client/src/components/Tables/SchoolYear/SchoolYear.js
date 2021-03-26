@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 const SchoolYear = () => {
   const [term, setTerm] = useState()
@@ -60,25 +61,18 @@ const SchoolYear = () => {
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
-        <div className="table-wrapper mb-5">
-          <Table className="mb-3" striped hover bordered responsive="sm">
-            <thead>
-              <tr>
-                <th>
-                  <Row>
-                    <Col>
-                      Course
-                    </Col>
-                  </Row>
-                </th>
-                <th>Units</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </Table>
-        </div>
-        </Card.Body>
+          <div className="table-wrapper mb-5">
+            <DragDropContext>
+              <Droppable droppableId="addedCourses">
+                    {(provided) => (
+                        <ul {...provided.droppableProps} ref={provided.innerRef}>
+                                
+                        </ul>
+                    )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+          </Card.Body>
         </Card>
       </div>
     </>
