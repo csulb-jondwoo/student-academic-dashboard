@@ -14,7 +14,6 @@ const MajorHistory = () => {
   useEffect(() => {
     // set state of currentCourses inside context via reducer
     getCompletedCourses(userID)
-    setIsLoading(false)
   }, [getCompletedCourses, userID, setIsLoading])
 
   const columns = [
@@ -78,9 +77,8 @@ const MajorHistory = () => {
 
   useEffect(() => {
     setTableData(courses)
+    setIsLoading(false)
   }, [completedCourses, courses])
-
-  console.log(courses)
 
   return (
     <MaterialTable
@@ -93,14 +91,14 @@ const MajorHistory = () => {
         actionsColumnIndex: -1,
         emptyRowsWhenPaging: false,
       }}
-      // editable={{
-      //   onRowUpdate: async (newCourse, oldCourse) =>
-      //     new Promise((resolve, reject) => {
-      //       setIsLoading(true)
-      //       handleCourseUpdate(newCourse, oldCourse)
-      //       resolve()
-      //     }),
-      // }}
+      editable={{
+        onRowUpdate: async (newCourse, oldCourse) =>
+          new Promise((resolve, reject) => {
+            setIsLoading(true)
+            // handleCourseUpdate(newCourse, oldCourse)
+            resolve()
+          }),
+      }}
       localization={{
         header: {
           actions: 'Edit',

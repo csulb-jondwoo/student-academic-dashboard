@@ -14,7 +14,6 @@ const OtherHistory = () => {
   useEffect(() => {
     // set state of currentCourses inside context via reducer
     getCompletedCourses(userID)
-    setIsLoading(false)
   }, [getCompletedCourses, userID, setIsLoading])
 
   const columns = [
@@ -41,6 +40,10 @@ const OtherHistory = () => {
       //   whiteSpace: 'nowrap',
       // },
       // width: 1000,
+    },
+    {
+      title: 'Additional Req',
+      field: 'additionalReq',
     },
     {
       title: 'Term',
@@ -78,9 +81,8 @@ const OtherHistory = () => {
 
   useEffect(() => {
     setTableData(courses)
+    setIsLoading(false)
   }, [completedCourses, courses])
-
-  console.log(courses)
 
   return (
     <MaterialTable
@@ -93,14 +95,14 @@ const OtherHistory = () => {
         actionsColumnIndex: -1,
         emptyRowsWhenPaging: false,
       }}
-      // editable={{
-      //   onRowUpdate: async (newCourse, oldCourse) =>
-      //     new Promise((resolve, reject) => {
-      //       setIsLoading(true)
-      //       handleCourseUpdate(newCourse, oldCourse)
-      //       resolve()
-      //     }),
-      // }}
+      editable={{
+        onRowUpdate: async (newCourse, oldCourse) =>
+          new Promise((resolve, reject) => {
+            setIsLoading(true)
+            // handleCourseUpdate(newCourse, oldCourse)
+            resolve()
+          }),
+      }}
       localization={{
         header: {
           actions: 'Edit',
