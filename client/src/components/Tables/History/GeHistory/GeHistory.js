@@ -45,28 +45,33 @@ const GeHistory = () => {
     },
     {
       title: 'Term',
-      field: 'term',
+      field: 'termYear',
       // cellStyle: {
       //   whiteSpace: 'nowrap', // history.push('dashboard');
       // },
-      // width: 1000,
+      width: 500,
     },
   ]
 
   const courses = useMemo(
     () =>
-      completedCourses.map((course) => {
-        return {
-          userID: userID,
-          type: course.type,
-          course: course.dept + ' ' + course.number + ' - ' + course.title,
-          grade: course.grade,
-          units: course.units,
-          designation: course.designation,
-          additionalReq: course.additionalReq,
-          termYear: course.term + ' ' + course.year.toString(),
-        }
-      }),
+      completedCourses
+        .filter((course) => {
+          return course.type === 'ge' && course.designation !== ''
+        })
+        .map((course) => {
+          return {
+            userID: userID,
+            type: course.type,
+            course: course.dept + ' ' + course.number + ' - ' + course.title,
+            grade: course.grade,
+            units: course.units,
+            designation: course.designation,
+            additionalReq: course.additionalReq,
+            termYear: course.term + ' ' + course.year.toString(),
+          }
+        }),
+
     [completedCourses, userID],
   )
 
@@ -76,11 +81,11 @@ const GeHistory = () => {
     setTableData(courses)
   }, [completedCourses, courses])
 
-  // console.log(courses)
+  console.log(courses)
 
   return (
     <MaterialTable
-      title={'CECS History'}
+      title={'GE History'}
       columns={columns}
       data={tableData}
       isLoading={isLoading}
