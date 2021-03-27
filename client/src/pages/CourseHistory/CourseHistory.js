@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -10,6 +11,12 @@ import GeHistory from '../../components/Tables/History/GeHistory/GeHistory'
 import '../../utility/css/table-fixed-height.css'
 
 const CourseHistory = () => {
+  const history = useHistory()
+
+  const handleAddCompletedCourse = () => {
+    history.push('add-completed-course')
+  }
+
   return (
     <>
       <Card className="mt-5 text-center shadow-sm">
@@ -17,7 +24,9 @@ const CourseHistory = () => {
           <Col>
             <Card.Body>
               <Card.Title>Course History</Card.Title>
-              <Button size="sm">Add Completed Course</Button>
+              <Button onClick={handleAddCompletedCourse} size="sm">
+                Add Completed Course
+              </Button>
             </Card.Body>
           </Col>
         </Row>
