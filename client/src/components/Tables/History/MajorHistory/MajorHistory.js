@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import Card from 'react-bootstrap/Card'
-import Table from 'react-bootstrap/Table'
+import MaterialTable from 'material-table'
 
-import { majorHistoryData } from './MajorHistoryData'
+// import { majorHistoryData } from './MajorHistoryData'
 
-import '../../../../utility/css/table-fixed-height.css'
 import { myContext } from '../../../../context/Context'
-import formatTime from '../../../../utility/formatTime/formatTime'
+import '../../../../utility/css/table-fixed-height.css'
 
 const MajorHistory = () => {
   const { user, completedCourses, getCompletedCourses } = useContext(myContext)
@@ -23,98 +21,101 @@ const MajorHistory = () => {
     {
       title: 'Course',
       field: 'course',
-      width: 1000,
+      cellStyle: {
+        whiteSpace: 'nowrap',
+      },
     },
     {
-      title: 'Section',
-      field: 'section',
+      title: 'Grade',
+      field: 'grade',
+      width: 1000,
     },
     {
       title: 'Units',
       field: 'units',
     },
     {
-      title: 'Start',
-      field: 'startTime',
-      cellStyle: {
-        whiteSpace: 'nowrap',
-      },
-      width: 1000,
+      title: 'Designation',
+      field: 'designation',
+      // cellStyle: {
+      //   whiteSpace: 'nowrap',
+      // },
+      // width: 1000,
     },
     {
-      title: 'End',
-      field: 'endTime',
-      cellStyle: {
-        whiteSpace: 'nowrap', // history.push('dashboard');
-      },
-      width: 1000,
-    },
-    {
-      title: 'Days',
-      field: 'days',
-    },
-    {
-      title: 'Location',
-      field: 'location',
+      title: 'Term',
+      field: 'termYear',
+      // cellStyle: {
+      //   whiteSpace: 'nowrap', // history.push('dashboard');
+      // },
+      width: 500,
     },
   ]
 
   const courses = useMemo(
     () =>
-      completedCourses.map((course) => {
-        return {
-          userID: userID,
-          type: course.type,
-          course: course.dept + ' ' + course.number + ' - ' + course.title,
-          grade: course.grade,
-          units: course.units,
-          designation: course.designation,
-          additionalReq: course.additionalReq,
-          termYear: course.term + ' ' + course.year.toString(),
-        }
-      }),
+      completedCourses
+        .filter((course) => {
+          return course.type === 'major'
+        })
+        .map((course) => {
+          return {
+            userID: userID,
+            type: course.type,
+            course: course.dept + ' ' + course.number + ' - ' + course.title,
+            grade: course.grade,
+            units: course.units,
+            designation: course.designation,
+            additionalReq: course.additionalReq,
+            termYear: course.term + ' ' + course.year.toString(),
+          }
+        }),
+
     [completedCourses, userID],
   )
+
+  const [tableData, setTableData] = useState(courses)
+
+  useEffect(() => {
+    setTableData(courses)
+  }, [completedCourses, courses])
 
   console.log(courses)
 
   return (
-    <>
-      <Card className="mt-3">
-        <Card.Body>
-          <Card.Title>CECS History</Card.Title>
-        </Card.Body>
-      </Card>
-
-      <div className="table-wrapper">
-        <Table striped hover bordered responsive="sm">
-          <thead>
-            <tr>
-              <th>Course</th>
-              <th>Grade</th>
-              <th>Units</th>
-              <th>Designation</th>
-              <th>Term</th>
-            </tr>
-          </thead>
-          <tbody>
-            {majorHistoryData.map((course, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>
-                    {course.course} - {course.title}
-                  </td>
-                  <td>{course.grade}</td>
-                  <td>{course.units}</td>
-                  <td>{course.designation}</td>
-                  <td>{course.term}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </Table>
-      </div>
-    </>
+    <MaterialTable
+      title={'CECS Major History'}
+      columns={columns}
+      data={tableData}
+      isLoading={isLoading}
+      options={{
+        selection: true,
+        actionsColumnIndex: -1,
+        emptyRowsWhenPaging: false,
+      }}
+      // editable={{
+      //   onRowUpdate: async (newCourse, oldCourse) =>
+      //     new Promise((resolve, reject) => {
+      //       setIsLoading(true)
+      //       handleCourseUpdate(newCourse, oldCourse)
+      //       resolve()
+      //     }),
+      // }}
+      localization={{
+        header: {
+          actions: 'Edit',
+        },
+      }}
+      actions={[
+        {
+          tooltip: 'Delete',
+          icon: 'delete',
+          // onClick: (evt, data) => {
+          //   handleCourseDelete(data)
+          // },
+        },
+      ]}
+    />
   )
 }
 
