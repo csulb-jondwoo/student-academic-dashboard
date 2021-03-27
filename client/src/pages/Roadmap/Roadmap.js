@@ -55,7 +55,9 @@ const Roadmap = () => {
           <Card className="text-center shadow-sm">
             <Card.Body>
               <Card.Title>CECS Roadmap</Card.Title>
-              <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+              <Button onClick={handleAddYear} size="sm">
+                Add School Year
+              </Button>
             </Card.Body>
           </Card>
         </Col>
