@@ -209,7 +209,7 @@ const getCompletedCourses = async (req, res) => {
 
 const uploadTranscript = (req, res) => {
   const courseList = []
-  const cecsCourse = []
+  const cecsCourses = []
   const userID = req.body.userID
   let courseData = {
     type: 'major',
@@ -221,7 +221,7 @@ const uploadTranscript = (req, res) => {
     year: 0,
     grade: '',
     designation: '',
-    additionalReq: '',
+    additionalReq: 'N/A',
   }
 
   const options = {
@@ -272,21 +272,26 @@ const uploadTranscript = (req, res) => {
         for (const catalogCourse of cecsCatalog) {
           if (courseName === catalogCourse.course) {
             course.designation = catalogCourse.designation
-            cecsCourse.push(course)
+            cecsCourses.push(course)
             break
           }
         }
       }
 
       // separate list of ge course
-      const geCourse = courseList.filter((course) => {
-        return !cecsCourse.includes(course)
+      const geCourses = courseList.filter((course) => {
+        return !cecsCourses.includes(course)
       })
 
+
       // convert type to ge
-      for (const course of geCourse) {
-        const idx = geCourse.findIndex((elem => elem.number === course.number))
-        geCourse[idx].type = 'ge'
+      for (const course of geCourses) {
+        const idx = geCourses.findIndex((elem => elem.dept === course.dept && elem.number === course.number))
+        geCourses[idx].type = 'ge'
+      }
+
+      for (const course of geCourses) {
+        console.log(course.dept + ' ' + course.number, course.type)
       }
 
       // append designation to cecs
@@ -302,7 +307,7 @@ const uploadTranscript = (req, res) => {
        
 
       // append designation and additional req to ge
-      for (const course of geCourse) {
+      for (const course of geCourses) {
         const courseName = course.dept + ' ' + course.number
         for (const catalogCourse of geCatalog) {
           if (courseName === catalogCourse.course) {
@@ -315,14 +320,14 @@ const uploadTranscript = (req, res) => {
             }
             if (additionalReqIdx !== undefined) {
               course.additionalReq = catalogCourse.additionalReq[additionalReqIdx]
-            }
+            } 
             break
           }
         }
       }
 
       // add cecs course to db
-      for (const course of cecsCourse) {
+      for (const course of cecsCourses) {
         await userSchema.findOneAndUpdate(
           {
             googleId: userID,
@@ -336,7 +341,7 @@ const uploadTranscript = (req, res) => {
       }
 
       // add ge course to db
-      for (const course of geCourse) {
+      for (const course of geCourses) {
         await userSchema.findOneAndUpdate(
           {
             googleId: userID,
