@@ -1,28 +1,20 @@
 import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import { Course } from './Course'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 const SchoolYear = () => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
-  const [courses, setCourses] = useState([])
 
   const handleYearChange = (event) => {
     setYear(event.target.value)
-    console.log(year)
   }
   const handleTermChange = (event) => {
     setTerm(event.target.value)
-    console.log(term)
-  }
-
-  const handleAddCourse = (event) => {
-    setCourses(courses.concat(<Course key={courses.length} />))
   }
 
   return (
@@ -46,7 +38,7 @@ const SchoolYear = () => {
                   <option value="Winter">Winter</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a course section number.
+                  Please select a term.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -65,33 +57,21 @@ const SchoolYear = () => {
                   <option value="2024">2024</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a course section number.
+                  Please select a year.
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
             <div className="table-wrapper mb-5">
-              <Table className="mb-3" striped hover bordered responsive="sm">
-                <thead>
-                  <tr>
-                    <th>
-                      <Row>
-                        <Col>
-                          Course{' '}
-                          <Button
-                            onClick={handleAddCourse}
-                            className="ml-1"
-                            size="sm"
-                          >
-                            +
-                          </Button>
-                        </Col>
-                      </Row>
-                    </th>
-                    <th>Units</th>
-                  </tr>
-                </thead>
-                <tbody>{courses}</tbody>
-              </Table>
+              <DragDropContext>
+                <Droppable droppableId="addedCourses">
+                  {(provided) => (
+                    <ul
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    ></ul>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </div>
           </Card.Body>
         </Card>
