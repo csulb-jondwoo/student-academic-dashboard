@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 
 import MajorHistory from '../../components/Tables/History/MajorHistory/MajorHistory'
 import GeHistory from '../../components/Tables/History/GeHistory/GeHistory'
+import OtherHistory from '../../components/Tables/History/OtherHistory/OtherHistory'
 
 import '../../utility/css/table-fixed-height.css'
 
@@ -37,6 +38,9 @@ const CourseHistory = () => {
       </div>
       <div className="shadow-sm mb-5">
         <GeHistory />
+      </div>
+      <div className="shadow-sm mb-5">
+        <OtherHistory />
       </div>
     </>
   )
