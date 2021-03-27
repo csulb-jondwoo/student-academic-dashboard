@@ -33,6 +33,7 @@ const CourseHistory = () => {
         </Row>
       </Card>
 
+      {/* TODO: make one table component and pass each data as props */}
       <div className="shadow-sm mb-5">
         <MajorHistory />
       </div>
