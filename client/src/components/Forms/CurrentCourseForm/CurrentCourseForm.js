@@ -8,7 +8,6 @@ import TimePicker from 'react-bootstrap-time-picker'
 import Container from 'react-bootstrap/esm/Container'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
 
 import useTrait from '../../../hooks/useTrait'
 import { myContext } from '../../../context/Context'

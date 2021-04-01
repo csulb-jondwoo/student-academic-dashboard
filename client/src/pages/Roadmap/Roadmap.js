@@ -5,12 +5,13 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-//import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import {cecsData} from '../../assets/CecsData'
 //import {Course} from '../../components/Tables/SchoolYear/Course'
 import '../../utility/css/table-fixed-height.css'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import {v4} from "uuid";
 
 
 /*
@@ -42,36 +43,61 @@ Clicking a course adds it to the term?
 
 const Roadmap = () => {
   const [yearList, setYearList] = useState([])
-  const [courses, updateCourses] = useState(cecsData.cecs)
+  const [courses, setCourses] = useState(cecsData)
 
-
-  const handleAddYear = (event) => {
-    setYearList(yearList.concat(<SchoolYear key={yearList.length} />))
+  const handleAddYear = () => {
+    setYearList(yearList.concat(
+      {
+        id: v4(),
+        term: "", 
+        year: ""
+      })
+    )
   }
 
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return;
+  const handleOnDragEnd = ({ source, destination }) => {
+    console.log(source)
+    console.log(destination)
+    // out of bounds
+    if (!destination) return;
 
-    const items = Array.from(courses)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination.index, 0, reorderedItem)
+    // not moved
+    if (destination.index === source.index && destination.droppableId === source.droppableId) {
+      return
+    }
 
-    updateCourses(items)
+    // Creating a copy of item before removing it from state
+    const itemCopy = {...courses.cecs[source.index]}
+
+    setCourses(prev => {
+      prev = {...prev}
+      // Remove from previous items array
+      prev.cecs.splice(source.index, 1)
+      // Adding to new items array location
+      prev.cecs.splice(destination.index, 0, itemCopy)
+
+      return prev
+    })
+
+    // if (destination.source === "")
   }
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Container>
+        {/* Title */}
         <Row className="row-padding">
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
                 <Card.Title>CECS Roadmap</Card.Title>
+                { /* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1> */}
                 <Button onClick={handleAddYear} size="sm">Add School Year</Button>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        {/* Catalog */}
         <Row className="d-flex mt-5 justify-content-center">
           <Col>
             <Card className="text-center shadow-sm">
@@ -80,43 +106,78 @@ const Roadmap = () => {
               </Card.Body>
             </Card>
             <div className="table-wrapper">
-              <Row>
-                <Col>Course</Col>
-                <Col>Units</Col>
-              </Row>
-              <Droppable droppableId="courses">
-                    {(provided) => (
-                        <ul {...provided.droppableProps} ref={provided.innerRef}>
-                            {courses.map(({id, units, name, url}, index) => {
-                                return (
-                                    <Draggable key={id} draggableId={name} index={index}>
+              {/* Table Wrapper */}
+              <Table className="mb-3" striped hover bordered responsive="sm">
+                <thead>
+                  <tr>
+                    <th>
+                      <Row>
+                        <Col>
+                          Course
+                        </Col>
+                      </Row>
+                    </th>
+                    <th>Units</th>
+                  </tr>
+                </thead>
+                {/* Start of Draggable/Droppable Courses */}
+                  {courses.cecs.map(({id, units, name, url}, index) => {
+                    return (
+                      <Droppable key={id} droppableId={name}>
+                        {(provided) => {
+                          return (
+                            <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                              <Draggable key={id} draggableId={name} index={index}>
                                     {(provided) => (
-                                        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                          <Link to={{pathname: url}} target="_blank">{name}</Link>
-                                        </li>
+                                        <tr {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                          <td>
+                                            <Link to={{pathname: url}} target="_blank">{name}</Link>
+                                          </td>
+                                          <td>{units}</td>
+                                        </tr>
                                     )}
-                                    </Draggable>
-                                )
-                            })}
-                            {provided.placeholder}
-                        </ul>
-                    )}
-                </Droppable>
+                              </Draggable>
+                              {provided.placeholder}
+                            </tbody>
+                          )
+                        }}
+                      </Droppable>
+                    )})}  
+                {/* End of Draggable/Droppable Courses */}
+              </Table>
             </div>
           </Col>
         </Row>
+        {/* Add Semester/Term */}
         <Row className="mt-3 row-padding">
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
-                {yearList}
+                {yearList.map(({id, term, year}, index) => {
+                  return (
+                    <Droppable key={id} droppableId={id}>
+                      {(provided) => {
+                        return (
+                          <div {...provided.droppableProps} ref={provided.innerRef}>
+                            <Draggable key={id} draggableId={id} index={index}>
+                              {(provided) => (
+                                <SchoolYear provided={provided} innerRef={provided.innerRef} key={id} term={term} year={year} />
+                              )}
+                            </Draggable>
+                            {provided.placeholder}
+                          </div>
+                        )
+                      }}
+                    </Droppable>
+                  )
+                })}
               </Card.Body>
             </Card>
           </Col>
         </Row>
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
-            <Button className="mb-4">Downlad PDF</Button>
+            <Button className="mb-4">Download PDF</Button>
           </Col>
           <Col>
             <Button>Save Roadmap</Button>

@@ -4,11 +4,12 @@ import Table from 'react-bootstrap/Table'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
-const SchoolYear = () => {
+const SchoolYear = (props) => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
+  const {provided, innerRef} = props
+  // term, year
 
   const handleYearChange = event => {
     setYear(event.target.value)
@@ -19,7 +20,12 @@ const SchoolYear = () => {
 
   return (
     <>
-      <div className="shadow-sm">
+      <div 
+        className="shadow-sm"
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref={innerRef}
+      >
         <Card className="text-center">
           <Card.Body>
             <Form>
@@ -62,15 +68,7 @@ const SchoolYear = () => {
               </Form.Group>
             </Form>
           <div className="table-wrapper mb-5">
-            <DragDropContext>
-              <Droppable droppableId="addedCourses">
-                    {(provided) => (
-                        <ul {...provided.droppableProps} ref={provided.innerRef}>
-                                
-                        </ul>
-                    )}
-              </Droppable>
-            </DragDropContext>
+            
           </div>
           </Card.Body>
         </Card>
