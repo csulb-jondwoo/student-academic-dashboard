@@ -109,7 +109,6 @@ def getCourseInfo(termInfo, isTransferData=False):
     courses = []
 
     # filter out irrelevant data
-    # TODO: fix zacks 3 spring term courses (it is parsing out but only the first one three times)
     if isTransferData:
         termInfo = listToString(termInfo)
 

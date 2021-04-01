@@ -436,7 +436,6 @@ export const CompletedCourseForm = (props) => {
                         </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE SUBMIT */}
-                      {/* TODO: Implement loader */}
                       <Button
                         disabled={validated}
                         className="mt-3"

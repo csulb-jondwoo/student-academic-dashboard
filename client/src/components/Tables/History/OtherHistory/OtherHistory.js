@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import MaterialTable from 'material-table'
 
-// import { geHistoryData } from './GeHistoryData'
+// import { majorHistoryData } from './MajorHistoryData'
 
-import { myContext } from '../../../../context/Context.js'
-
+import { myContext } from '../../../../context/Context'
 import '../../../../utility/css/table-fixed-height.css'
 
-const GeHistory = () => {
+const OtherHistory = () => {
   const { user, completedCourses, getCompletedCourses } = useContext(myContext)
   const [isLoading, setIsLoading] = useState(true)
   const userID = JSON.parse(user).googleId
@@ -60,7 +59,7 @@ const GeHistory = () => {
     () =>
       completedCourses
         .filter((course) => {
-          return course.type === 'ge' && course.designation !== ''
+          return course.designation === ''
         })
         .map((course) => {
           return {
@@ -87,7 +86,7 @@ const GeHistory = () => {
 
   return (
     <MaterialTable
-      title={'GE History'}
+      title={'Other History'}
       columns={columns}
       data={tableData}
       isLoading={isLoading}
@@ -122,4 +121,4 @@ const GeHistory = () => {
   )
 }
 
-export default GeHistory
+export default OtherHistory

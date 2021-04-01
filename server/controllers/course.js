@@ -3,6 +3,8 @@ const { PythonShell } = require('python-shell')
 
 const userSchema = require('../models/user.js')
 const { convertTo24hr } = require('../utility/convertTo24hr')
+const { cecsCatalog } = require('../assets/cecsCatalog/cecsCatalog.js')
+const { geCatalog } = require('../assets/geCatalog/geCatalog.js')
 
 // ADD
 const addCompletedCourse = async (req, res) => {
@@ -97,7 +99,7 @@ const deleteCompletedCourse = async (req, res) => {
     )
   } catch (error) {
     return res.status(409).json({ message: error.message })
-    const { userID } = req.body
+    // const { userID } = req.body
   }
 }
 
@@ -206,6 +208,8 @@ const getCompletedCourses = async (req, res) => {
 }
 
 const uploadTranscript = (req, res) => {
+  const courseList = []
+  const cecsCourses = []
   const userID = req.body.userID
   let courseData = {
     type: 'major',
@@ -217,7 +221,7 @@ const uploadTranscript = (req, res) => {
     year: 0,
     grade: '',
     designation: '',
-    additionalReq: '',
+    additionalReq: 'N/A',
   }
 
   const options = {
@@ -229,22 +233,20 @@ const uploadTranscript = (req, res) => {
 
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
-      data = JSON.parse(result)
+      const data = JSON.parse(result)
       // get individual courses
-      for (year in data['csulb']) {
-        for (termIdx in data['csulb'][year]) {
-          for (term in data['csulb'][year][termIdx]) {
-            for (courseIdx in data['csulb'][year][termIdx][term]) {
+      for (const year in data['csulb']) {
+        for (const termIdx in data['csulb'][year]) {
+          for (const term in data['csulb'][year][termIdx]) {
+            for (const courseIdx in data['csulb'][year][termIdx][term]) {
               // create courseData obj
-              course = data['csulb'][year][termIdx][term][courseIdx]
+              const course = data['csulb'][year][termIdx][term][courseIdx]
               const dept = course[0].split(' ')[0]
               const number = course[0].split(' ')[1]
               const title = course[1]
               const units = course[2]
               const grade = course[3]
-              // doesnt exist yet
-              // const designation = course[4];
-              // const additinalReq = course[5];
+
               courseData = {
                 ...courseData,
                 year,
@@ -254,25 +256,105 @@ const uploadTranscript = (req, res) => {
                 title,
                 units,
                 grade,
-                // designation,
-                // additionalReq,
               }
-              console.log(courseData)
-              // add to completed courses
-              await userSchema.findOneAndUpdate(
-                {
-                  googleId: userID,
-                },
-                {
-                  $addToSet: {
-                    completedCourses: courseData,
-                  },
-                },
-              )
+
+              // create list of completed courses with year and term
+              courseList.push(courseData)
+              
             }
           }
         }
       }
+
+      // separate list of major courses
+      for (const course of courseList) {
+        const courseName = course.dept + ' ' + course.number
+        for (const catalogCourse of cecsCatalog) {
+          if (courseName === catalogCourse.course) {
+            course.designation = catalogCourse.designation
+            cecsCourses.push(course)
+            break
+          }
+        }
+      }
+
+      // separate list of ge course
+      const geCourses = courseList.filter((course) => {
+        return !cecsCourses.includes(course)
+      })
+
+
+      // convert type to ge
+      for (const course of geCourses) {
+        const idx = geCourses.findIndex((elem => elem.dept === course.dept && elem.number === course.number))
+        geCourses[idx].type = 'ge'
+      }
+
+      for (const course of geCourses) {
+        console.log(course.dept + ' ' + course.number, course.type)
+      }
+
+      // append designation to cecs
+      for (const course of courseList) {
+        const courseName = course.dept + ' ' + course.number
+        for (const catalogCourse of cecsCatalog) {
+          if (courseName === catalogCourse.course) {
+            course.designation = catalogCourse.designation
+            break
+          }
+        }
+      }
+       
+
+      // append designation and additional req to ge
+      for (const course of geCourses) {
+        const courseName = course.dept + ' ' + course.number
+        for (const catalogCourse of geCatalog) {
+          if (courseName === catalogCourse.course) {
+            let additionalReqIdx
+            course.designation = catalogCourse.designation[0]
+            for (const req of catalogCourse.additionalReq) {
+              if (req === 'Human Diversity' || req === 'Global Issues') {
+                additionalReqIdx = catalogCourse.additionalReq.indexOf(req)
+              }
+            }
+            if (additionalReqIdx !== undefined) {
+              course.additionalReq = catalogCourse.additionalReq[additionalReqIdx]
+            } 
+            break
+          }
+        }
+      }
+
+      // add cecs course to db
+      for (const course of cecsCourses) {
+        await userSchema.findOneAndUpdate(
+          {
+            googleId: userID,
+          },
+          {
+            $addToSet: {
+              completedCourses: course,
+            },
+          },
+        )
+      }
+
+      // add ge course to db
+      for (const course of geCourses) {
+        await userSchema.findOneAndUpdate(
+          {
+            googleId: userID,
+          },
+          {
+            $addToSet: {
+              completedCourses: course,
+            },
+          },
+        )
+      }
+
+      
       return res.status(200).send({ success: true })
     })
   } catch (error) {

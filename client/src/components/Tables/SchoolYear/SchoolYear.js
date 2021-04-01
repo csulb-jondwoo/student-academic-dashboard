@@ -11,7 +11,7 @@ const SchoolYear = (props) => {
   const {provided, innerRef} = props
   // term, year
 
-  const handleYearChange = event => {
+  const handleYearChange = (event) => {
     setYear(event.target.value)
   }
   const handleTermChange = (event) => {
