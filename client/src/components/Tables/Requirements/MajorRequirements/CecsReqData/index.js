@@ -67,60 +67,70 @@ export const majorReqData = [
     title: 'Introduction to the Engineering Profession',
     units: 1,
     designation: 'Lower Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=41479'
   },
   {
     course: 'ENGR 102',
     title: 'Academic Success Skills',
     units: 1,
     designation: 'Lower Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=41480'
   },
   {
     course: 'MATH 122',
     title: 'Calculus I',
     units: 4,
     designation: 'Lower Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=42941'
   },
   {
     course: 'MATH 123',
     title: 'Calculus II',
     units: 4,
     designation: 'Lower Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=42942'
   },
   {
     course: 'PHYS 151',
     title: 'Mechanics and Heat',
     units: 4,
     designation: 'Physical Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=43489'
   },
   {
     course: 'CHEM 111A',
     title: 'General Chemistry',
     units: 5,
     designation: 'Physical Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40229'
   },
   {
     course: 'BIOL 153',
     title: 'Introduction to Marine Biology',
     units: 3,
     designation: 'Life Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=39572'
   },
   {
     course: 'BIOL 200',
     title: 'General Biology',
     units: 4,
     designation: 'Life Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=39573'
   },
   {
     course: 'BIOL 205',
     title: 'Human Biology',
     units: 4,
     designation: 'Life Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=39574'
   },
   {
     course: 'BIOL 207',
     title: 'Human Physiology',
     units: 4,
     designation: 'Life Science',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=39575'
   },
   {
     course: 'CECS 323',
@@ -190,12 +200,14 @@ export const majorReqData = [
     title: 'Probability and Statistics with Applications to Computing',
     units: 3,
     designation: 'Upper Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40854'
   },
   {
     course: 'ENGR 350',
     title: 'Computers, Ethics and Society',
     units: 3,
     designation: 'Upper Div',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=41489'
   },
   {
     course: 'CECS 491A',
@@ -216,18 +228,21 @@ export const majorReqData = [
     title: 'Scientific Research Communication',
     units: 3,
     designation: 'Writing Intensive',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=44730'
   },
   {
     course: 'ENGR 390',
     title: 'Information and Communication Technology for Sustainability',
     units: 3,
     designation: 'Writing Intensive',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=41493'
   },
   {
     course: 'MATH 323',
     title: 'Introduction to Numerical Analysis',
     units: 4,
     designation: 'Core Elective',
+    url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=42952'
   },
   {
     course: 'CECS 419',
