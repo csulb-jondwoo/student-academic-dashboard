@@ -10,10 +10,9 @@ import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
 //import {Course} from '../../components/Tables/SchoolYear/Course'
 import '../../utility/css/table-fixed-height.css'
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import {v4} from "uuid";
-import _ from "lodash"
-
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { v4 } from 'uuid'
+import _ from 'lodash'
 
 /*
 Roadmap:
@@ -47,30 +46,33 @@ const Roadmap = () => {
   const [courses, setCourses] = useState(majorReqData)
 
   const handleAddYear = () => {
-    setYearList(yearList.concat(
-      {
+    setYearList(
+      yearList.concat({
         id: v4(),
-        term: "", 
-        year: ""
-      })
+        term: '',
+        year: '',
+      }),
     )
   }
 
   const handleOnDragEnd = ({ source, destination }) => {
     // out of bounds
-    if (!destination) return;
+    if (!destination) return
 
     // not moved
-    if (destination.index === source.index && destination.droppableId === source.droppableId) {
+    if (
+      destination.index === source.index &&
+      destination.droppableId === source.droppableId
+    ) {
       return
     }
 
     // Creating a copy of item before removing it from state
-    const itemCopy = {...courses[source.droppableId][source.index]}
+    const itemCopy = { ...courses[source.droppableId][source.index] }
     console.log(itemCopy)
 
-    setCourses(prev => {
-      prev = {...prev}
+    setCourses((prev) => {
+      prev = { ...prev }
       // Remove from previous items array
       prev[source.droppableId].splice(source.index, 1)
       // Adding to new items array location
@@ -89,8 +91,10 @@ const Roadmap = () => {
             <Card className="text-center shadow-sm">
               <Card.Body>
                 <Card.Title>CECS Roadmap</Card.Title>
-                { /* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1> */}
-                <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+                {/* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1> */}
+                <Button onClick={handleAddYear} size="sm">
+                  Add School Year
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -111,14 +115,19 @@ const Roadmap = () => {
               <Col>
                 <div className="table-wrapper">
                   {/* Table Wrapper */}
-                  <Table key={key} className="mb-3" striped hover bordered responsive="sm">
+                  <Table
+                    key={key}
+                    className="mb-3"
+                    striped
+                    hover
+                    bordered
+                    responsive="sm"
+                  >
                     <thead>
                       <tr>
                         <th>
                           <Row>
-                            <Col>
-                              Course
-                            </Col>
+                            <Col>Course</Col>
                           </Row>
                         </th>
                         <th>Units</th>
@@ -129,32 +138,48 @@ const Roadmap = () => {
                     <Droppable key={key} droppableId={key}>
                       {(provided) => {
                         return (
-                          <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                          <tbody
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                          >
                             {data.map((el, index) => {
                               return (
-                                <Draggable key={el.course} index={index} draggableId={el.course}>
-                                      {(provided) => (
-                                          <tr {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                            <td>
-                                              <Link to={{pathname: el.url}} target="_blank">{`${el.course} - ${el.title}`}</Link>
-                                            </td>
-                                            <td>{el.units}</td>
-                                            <td>{el.designation}</td>
-                                          </tr>
-                                      )}
+                                <Draggable
+                                  key={el.course}
+                                  index={index}
+                                  draggableId={el.course}
+                                >
+                                  {(provided) => (
+                                    <tr
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                    >
+                                      <td>
+                                        <Link
+                                          to={{ pathname: el.url }}
+                                          target="_blank"
+                                        >{`${el.course} - ${el.title}`}</Link>
+                                      </td>
+                                      <td>{el.units}</td>
+                                      <td>{el.designation}</td>
+                                    </tr>
+                                  )}
                                 </Draggable>
-                              )})}
+                              )
+                            })}
                             {provided.placeholder}
                           </tbody>
                         )
                       }}
                     </Droppable>
                   </Table>
-                {/* End of Draggable/Droppable Courses */}
-              </div>
-            </Col>
-          </Row>
-        )})}
+                  {/* End of Draggable/Droppable Courses */}
+                </div>
+              </Col>
+            </Row>
+          )
+        })}
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
             <Button className="mb-4">Download PDF</Button>

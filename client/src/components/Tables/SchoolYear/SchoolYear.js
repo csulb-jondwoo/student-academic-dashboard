@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 const SchoolYear = (props) => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
-  const {provided, innerRef} = props
+  const { provided, innerRef } = props
   // term, year
 
   const handleYearChange = (event) => {
@@ -20,7 +20,7 @@ const SchoolYear = (props) => {
 
   return (
     <>
-      <div 
+      <div
         className="shadow-sm"
         {...provided.draggableProps}
         {...provided.dragHandleProps}
@@ -67,9 +67,7 @@ const SchoolYear = (props) => {
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
-          <div className="table-wrapper mb-5">
-            
-          </div>
+            <div className="table-wrapper mb-5"></div>
           </Card.Body>
         </Card>
       </div>

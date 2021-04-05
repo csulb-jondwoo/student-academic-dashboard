@@ -22,10 +22,10 @@ export const cecsData = {
         'CECS 105H - Introduction to Computer Engineering and Computer Science',
       url:
         'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40074',
-    }
-  ]
+    },
+  ],
 }
-    /*
+/*
     {
       id: 4,
       units: 3,
