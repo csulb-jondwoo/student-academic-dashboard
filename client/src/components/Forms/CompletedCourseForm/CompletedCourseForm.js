@@ -71,7 +71,7 @@ export const CompletedCourseForm = (props) => {
       courseData.set({
         ...courseData.get(),
         type: newCourseType,
-        designation: 'Lower div',
+        designation: 'Lower Div',
         additionalReq: null,
       })
     }
@@ -144,6 +144,7 @@ export const CompletedCourseForm = (props) => {
     setValidated(true)
 
     try {
+      console.log(courseData.get())
       const res = await addCompletedCourse(courseData.get())
       // why is res undefined
       if (res.data.success === true) {

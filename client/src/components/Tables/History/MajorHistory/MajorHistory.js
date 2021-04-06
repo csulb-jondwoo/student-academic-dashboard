@@ -10,6 +10,7 @@ const MajorHistory = () => {
     user,
     completedCourses,
     getCompletedCourses,
+    updateCompletedCourse,
     deleteCompletedCourse,
   } = useContext(myContext)
 
@@ -49,12 +50,12 @@ const MajorHistory = () => {
       title: 'Units',
       field: 'units',
       lookup: {
-        0: '0',
-        1: '1',
-        2: '2',
-        3: '3',
-        4: '4',
-        5: '5',
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
       },
     },
     {
@@ -77,7 +78,6 @@ const MajorHistory = () => {
     {
       title: 'Term',
       field: 'termYear',
-      editable: 'never',
       // cellStyle: {
       //   whiteSpace: 'nowrap', // history.push('dashboard');
       // },
@@ -89,7 +89,7 @@ const MajorHistory = () => {
     () =>
       completedCourses
         .filter((course) => {
-          return course.type === 'major'
+          return course.type === 'major' && course.designation !== ''
         })
         .map((course) => {
           return {
@@ -113,6 +113,18 @@ const MajorHistory = () => {
     setTableData(courses)
     setIsLoading(false)
   }, [completedCourses, courses])
+
+  const handleCourseUpdate = (newCourse, oldCourse) => {
+    // change server side
+    updateCompletedCourse({ newCourse, oldCourse })
+
+    // change client side
+    const dataUpdate = [...tableData]
+    const index = oldCourse.tableData.id
+    dataUpdate[index] = newCourse
+    setTableData([...dataUpdate])
+    setIsLoading(false)
+  }
 
   const handleCourseDelete = (data) => {
     confirm({ description: 'Delete selected courses' })
@@ -150,7 +162,7 @@ const MajorHistory = () => {
         onRowUpdate: async (newCourse, oldCourse) =>
           new Promise((resolve, reject) => {
             setIsLoading(true)
-            // handleCourseUpdate(newCourse, oldCourse)
+            handleCourseUpdate(newCourse, oldCourse)
             resolve()
           }),
       }}

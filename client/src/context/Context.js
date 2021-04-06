@@ -210,7 +210,7 @@ export default function Context(props) {
     }
 
     try {
-      const res = await api.updateCurrentCourse(
+      const res = await api.updateCompletedCourse(
         { newCourse, oldCourse },
         config,
       )

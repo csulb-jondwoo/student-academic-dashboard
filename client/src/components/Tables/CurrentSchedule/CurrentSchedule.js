@@ -98,6 +98,7 @@ const CurrentSchedule = () => {
 
   // table rerendering bc tableData is changing
   const [tableData, setTableData] = useState(courses)
+  console.log(tableData)
 
   useEffect(() => {
     setTableData(courses)
@@ -140,6 +141,7 @@ const CurrentSchedule = () => {
       })
   }
 
+  // TODO
   const handleMarkAsComplete = (data) => {
     confirm({ description: 'Mark selected courses as complete' })
       .then(() => {
@@ -180,17 +182,17 @@ const CurrentSchedule = () => {
       }}
       actions={[
         {
-          tooltip: 'Delete',
-          icon: 'delete',
-          onClick: (evt, data) => {
-            handleCourseDelete(data)
-          },
-        },
-        {
           tooltip: 'Mark as Complete',
           icon: PlaylistAddCheckIcon,
           onClick: (evt, data) => {
             handleMarkAsComplete(data)
+          },
+        },
+        {
+          tooltip: 'Delete',
+          icon: 'delete',
+          onClick: (evt, data) => {
+            handleCourseDelete(data)
           },
         },
       ]}

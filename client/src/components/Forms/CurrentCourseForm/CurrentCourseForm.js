@@ -93,7 +93,7 @@ export const CurrentCourseForm = (props) => {
       courseData.set({
         ...courseData.get(),
         type: newCourseType,
-        designation: 'Lower div',
+        designation: 'Lower Div',
         additionalReq: null,
       })
     }
