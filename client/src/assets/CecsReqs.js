@@ -392,7 +392,7 @@ export const majorReqData = {
       designation: 'Applied Elective',
       url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40020'
     },
-    ],
+    ]/*,
     "addedCourses": [
     {
         course: ' ',
@@ -401,5 +401,5 @@ export const majorReqData = {
         designation: ' ',
         url: ' '
     }
-    ]
+    ]*/
 }

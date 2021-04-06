@@ -6,12 +6,12 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Tab from 'react-bootstrap/Tab'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
-//import {Course} from '../../components/Tables/SchoolYear/Course'
 import '../../utility/css/table-fixed-height.css'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import {v4} from "uuid";
 import _ from "lodash"
 
 
@@ -43,18 +43,36 @@ Clicking a course adds it to the term?
 */
 
 const Roadmap = () => {
-  const [yearList, setYearList] = useState([])
+  const [termList, setTermList] = useState([])
   const [courses, setCourses] = useState(majorReqData)
+  const [term, setTerm] = useState()
+  const [year, setYear] = useState()
+  const [validated, setValidated] = useState(false)
 
-  const handleAddYear = () => {
-    setYearList(yearList.concat(
-      {
-        id: v4(),
-        term: "", 
-        year: ""
-      })
-    )
+  const handleYearChange = (event) => {
+    setYear(event.target.value)
   }
+
+  const handleTermChange = (event) => {
+    setTerm(event.target.value)
+
+  }
+
+  const handleAddTerm = (e) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    if (form.checkValidity() === false) {
+      e.stopPropagation()
+    }
+    setValidated(true)
+    setTermList(termList.concat(
+      {
+        term: term, 
+        year: year
+      }
+    ))
+  }
+  console.log(termList)
 
   const handleOnDragEnd = ({ source, destination }) => {
     // out of bounds
@@ -67,7 +85,6 @@ const Roadmap = () => {
 
     // Creating a copy of item before removing it from state
     const itemCopy = {...courses[source.droppableId][source.index]}
-    console.log(itemCopy)
 
     setCourses(prev => {
       prev = {...prev}
@@ -89,8 +106,14 @@ const Roadmap = () => {
             <Card className="text-center shadow-sm">
               <Card.Body>
                 <Card.Title>CECS Roadmap</Card.Title>
-                { /* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1> */}
-                <Button onClick={handleAddYear} size="sm">Add School Year</Button>
+                <SchoolYear 
+                  handleAddTerm={handleAddTerm} 
+                  handleTermChange={handleTermChange}
+                  handleYearChange={handleYearChange}
+                  validated={validated}
+                />
+                { /* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1>
+                <Button onClick={handleAddYear} size="sm">Add School Year</Button> */}
               </Card.Body>
             </Card>
           </Col>
@@ -111,7 +134,7 @@ const Roadmap = () => {
               <Col>
                 <div className="table-wrapper">
                   {/* Table Wrapper */}
-                  <Table key={key} className="mb-3" striped hover bordered responsive="sm">
+                  <Table key={key} className="mb-3" striped hover bordered responsive="sm" size="sm">
                     <thead>
                       <tr>
                         <th>
@@ -150,11 +173,42 @@ const Roadmap = () => {
                       }}
                     </Droppable>
                   </Table>
-                {/* End of Draggable/Droppable Courses */}
               </div>
             </Col>
           </Row>
         )})}
+        <Tab.Container id="addedTerms" defaultActiveKey={`#${term}${year}`}>
+          <Row>
+            <Col sm={4}>
+              <ListGroup>
+                {termList.map(({term, year}) => {
+                  return (
+                    <ListGroup.Item action href={`#${term}${year}`}>
+                      {`${term} ${year}`} 
+                    </ListGroup.Item>
+                  )
+                })}
+              </ListGroup>
+            </Col>
+            <Col sm={8}>
+              <Tab.Content>
+                {termList.map(({term, year}) => {
+                  <Droppable key={`${term} ${year}`} droppableId={`${term} ${year}`}>
+                    {(provided) => {
+                      return (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                          <Tab.Pane eventKey={`#${term}${year}`}>
+                            
+                          </Tab.Pane>
+                        </div>
+                      )
+                    }}
+                  </Droppable>
+                })}
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
             <Button className="mb-4">Download PDF</Button>

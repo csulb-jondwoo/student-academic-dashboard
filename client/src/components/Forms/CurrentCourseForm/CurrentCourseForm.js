@@ -469,7 +469,6 @@ export const CurrentCourseForm = (props) => {
                       </Form.Group>
 
                       <Button
-                        disabled={validated}
                         className="mt-3"
                         variant="primary"
                         type="submit"

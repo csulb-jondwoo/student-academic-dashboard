@@ -437,7 +437,6 @@ export const CompletedCourseForm = (props) => {
                       </Form.Group>
                       {/* COURSE SUBMIT */}
                       <Button
-                        disabled={validated}
                         className="mt-3"
                         variant="primary"
                         type="submit"
