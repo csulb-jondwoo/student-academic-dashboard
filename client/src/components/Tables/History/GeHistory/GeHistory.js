@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react'
 import MaterialTable from 'material-table'
-
-// import { geHistoryData } from './GeHistoryData'
+import { useConfirm } from 'material-ui-confirm'
 
 import { myContext } from '../../../../context/Context.js'
 
 import '../../../../utility/css/table-fixed-height.css'
 
 const GeHistory = () => {
-  const { user, completedCourses, getCompletedCourses } = useContext(myContext)
+  const {
+    user,
+    completedCourses,
+    getCompletedCourses,
+    deleteCompletedCourse,
+  } = useContext(myContext)
+
   const [isLoading, setIsLoading] = useState(true)
   const userID = JSON.parse(user).googleId
+  const confirm = useConfirm()
 
   useEffect(() => {
     // set state of currentCourses inside context via reducer
@@ -85,6 +91,27 @@ const GeHistory = () => {
     setIsLoading(false)
   }, [completedCourses, courses])
 
+  const handleCourseDelete = (data) => {
+    confirm({ description: 'Delete selected courses' })
+      .then(() => {
+        // change server side
+        deleteCompletedCourse(data)
+        // change client side
+        const valuesToRemove = []
+        let dataDelete = [...tableData]
+        for (const oldData of data) {
+          valuesToRemove.push(oldData)
+        }
+        dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1)
+        setTableData([...dataDelete])
+        setIsLoading(false)
+      })
+      .catch(() => {
+        console.log('cancelled')
+        setIsLoading(false)
+      })
+  }
+
   return (
     <MaterialTable
       title={'GE History'}
@@ -113,9 +140,9 @@ const GeHistory = () => {
         {
           tooltip: 'Delete',
           icon: 'delete',
-          // onClick: (evt, data) => {
-          //   handleCourseDelete(data)
-          // },
+          onClick: (evt, data) => {
+            handleCourseDelete(data)
+          },
         },
       ]}
     />

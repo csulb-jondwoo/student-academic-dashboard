@@ -436,11 +436,7 @@ export const CompletedCourseForm = (props) => {
                         </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE SUBMIT */}
-                      <Button
-                        className="mt-3"
-                        variant="primary"
-                        type="submit"
-                      >
+                      <Button className="mt-3" variant="primary" type="submit">
                         Submit
                       </Button>
 

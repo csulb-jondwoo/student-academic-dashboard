@@ -106,9 +106,14 @@ export default function Context(props) {
     }
   }
 
-  async function deleteCompletedCourse(id) {
+  async function deleteCompletedCourse(data) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
     try {
-      const res = await api.deleteCompletedCourse()
+      const res = await api.deleteCompletedCourse(data, config)
 
       dispatch({
         type: 'DELETE_COURSE',

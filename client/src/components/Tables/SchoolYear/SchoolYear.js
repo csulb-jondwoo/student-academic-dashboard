@@ -3,14 +3,16 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-const SchoolYear = ({handleAddTerm, handleTermChange, handleYearChange, validated}) => {
-
+const SchoolYear = ({
+  handleAddTerm,
+  handleTermChange,
+  handleYearChange,
+  validated,
+}) => {
   return (
     <Card className="text-center">
       <Card.Body>
-        <Form noValidate
-              validated={validated}
-              onSubmit={handleAddTerm}>
+        <Form noValidate validated={validated} onSubmit={handleAddTerm}>
           <Form.Group controlId="term">
             <Form.Label>Term</Form.Label>
             <Form.Control
@@ -47,11 +49,7 @@ const SchoolYear = ({handleAddTerm, handleTermChange, handleYearChange, validate
               Please select a year.
             </Form.Control.Feedback>
           </Form.Group>
-          <Button
-            className="mt-3"
-            variant="primary"
-            type="submit"
-          >
+          <Button className="mt-3" variant="primary" type="submit">
             Create New Term
           </Button>
         </Form>

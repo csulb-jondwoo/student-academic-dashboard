@@ -445,9 +445,10 @@ export const majorReqData = {
       title: 'System and Network Administration',
       units: 3,
       designation: 'Applied Elective',
-      url: 'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40020'
+      url:
+        'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40020',
     },
-    ]/*,
+  ] /*,
     "addedCourses": [
     {
         course: ' ',
@@ -456,5 +457,5 @@ export const majorReqData = {
         designation: ' ',
         url: ' '
     }
-    ]*/
+    ]*/,
 }

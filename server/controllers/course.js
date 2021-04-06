@@ -84,23 +84,44 @@ const deleteCurrentCourse = async (req, res) => {
 
 const deleteCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body
-    const completed = req.body
-
-    await userSchema.findOneAndUpdate(
-      {
-        googleId: userID,
-      },
-      {
-        $pull: {
-          completedCourses: completed,
+    const data = req.body
+    for (const course of data) {
+      const number = course.course.split(' ')[1]
+      const dept = course.course.split(' ')[0]
+      const { userID } = course
+      await userSchema.findOneAndUpdate(
+        {
+          googleId: userID,
         },
-      },
-    )
+        {
+          $pull: {
+            // delete the course that matches number and dept
+            completedCourses: { number, dept },
+          },
+        },
+      )
+    }
   } catch (error) {
     return res.status(409).json({ message: error.message })
-    // const { userID } = req.body
   }
+  // try {
+  //   const { userID } = req.body
+  //   const completed = req.body
+
+  //   await userSchema.findOneAndUpdate(
+  //     {
+  //       googleId: userID,
+  //     },
+  //     {
+  //       $pull: {
+  //         completedCourses: completed,
+  //       },
+  //     },
+  //   )
+  // } catch (error) {
+  //   return res.status(409).json({ message: error.message })
+  //   // const { userID } = req.body
+  // }
 }
 
 // UPDATE
