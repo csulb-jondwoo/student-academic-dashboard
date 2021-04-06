@@ -76,18 +76,21 @@ const Roadmap = () => {
 
   const handleOnDragEnd = ({ source, destination }) => {
     // out of bounds
-    if (!destination) return;
+    if (!destination) return
 
     // not moved
-    if (destination.index === source.index && destination.droppableId === source.droppableId) {
+    if (
+      destination.index === source.index &&
+      destination.droppableId === source.droppableId
+    ) {
       return
     }
 
     // Creating a copy of item before removing it from state
     const itemCopy = {...courses[source.droppableId][source.index]}
 
-    setCourses(prev => {
-      prev = {...prev}
+    setCourses((prev) => {
+      prev = { ...prev }
       // Remove from previous items array
       prev[source.droppableId].splice(source.index, 1)
       // Adding to new items array location
@@ -139,9 +142,7 @@ const Roadmap = () => {
                       <tr>
                         <th>
                           <Row>
-                            <Col>
-                              Course
-                            </Col>
+                            <Col>Course</Col>
                           </Row>
                         </th>
                         <th>Units</th>
@@ -152,21 +153,36 @@ const Roadmap = () => {
                     <Droppable key={key} droppableId={key}>
                       {(provided) => {
                         return (
-                          <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                          <tbody
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                          >
                             {data.map((el, index) => {
                               return (
-                                <Draggable key={el.course} index={index} draggableId={el.course}>
-                                      {(provided) => (
-                                          <tr {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                            <td>
-                                              <Link to={{pathname: el.url}} target="_blank">{`${el.course} - ${el.title}`}</Link>
-                                            </td>
-                                            <td>{el.units}</td>
-                                            <td>{el.designation}</td>
-                                          </tr>
-                                      )}
+                                <Draggable
+                                  key={el.course}
+                                  index={index}
+                                  draggableId={el.course}
+                                >
+                                  {(provided) => (
+                                    <tr
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                    >
+                                      <td>
+                                        <Link
+                                          to={{ pathname: el.url }}
+                                          target="_blank"
+                                        >{`${el.course} - ${el.title}`}</Link>
+                                      </td>
+                                      <td>{el.units}</td>
+                                      <td>{el.designation}</td>
+                                    </tr>
+                                  )}
                                 </Draggable>
-                              )})}
+                              )
+                            })}
                             {provided.placeholder}
                           </tbody>
                         )
