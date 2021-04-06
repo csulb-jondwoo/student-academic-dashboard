@@ -34,15 +34,50 @@ const GeHistory = () => {
     {
       title: 'Grade',
       field: 'grade',
+      lookup: {
+        A: 'A',
+        B: 'B',
+        C: 'C',
+        D: 'D',
+        F: 'F',
+        W: 'W',
+        CR: 'CR',
+        NC: 'NC',
+      },
       width: 1000,
     },
     {
       title: 'Units',
       field: 'units',
+      lookup: {
+        0: '0',
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+      },
     },
     {
       title: 'Designation',
       field: 'designation',
+      lookup: {
+        A1: 'A1',
+        A2: 'A2',
+        A3: 'A3',
+        B1: 'B1',
+        B2: 'B2',
+        B3: 'B3',
+        B4: 'B4',
+        C1: 'C1',
+        C2: 'C2',
+        C3: 'C3',
+        D1: 'D1',
+        D2: 'D2',
+        D3: 'D3',
+        E: 'E',
+        F: 'F',
+      },
       // cellStyle: {
       //   whiteSpace: 'nowrap',
       // },
@@ -51,10 +86,16 @@ const GeHistory = () => {
     {
       title: 'Additional Req',
       field: 'additionalReq',
+      lookup: {
+        'N/A': 'N/A',
+        'Global Issues': 'Global Issues',
+        'Human Diversity': 'Human Diversity',
+      },
     },
     {
       title: 'Term',
       field: 'termYear',
+      editable: 'never',
       // cellStyle: {
       //   whiteSpace: 'nowrap', // history.push('dashboard');
       // },

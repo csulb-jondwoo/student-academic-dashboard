@@ -104,24 +104,6 @@ const deleteCompletedCourse = async (req, res) => {
   } catch (error) {
     return res.status(409).json({ message: error.message })
   }
-  // try {
-  //   const { userID } = req.body
-  //   const completed = req.body
-
-  //   await userSchema.findOneAndUpdate(
-  //     {
-  //       googleId: userID,
-  //     },
-  //     {
-  //       $pull: {
-  //         completedCourses: completed,
-  //       },
-  //     },
-  //   )
-  // } catch (error) {
-  //   return res.status(409).json({ message: error.message })
-  //   // const { userID } = req.body
-  // }
 }
 
 // UPDATE

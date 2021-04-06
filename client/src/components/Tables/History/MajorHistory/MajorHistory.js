@@ -33,15 +33,42 @@ const MajorHistory = () => {
     {
       title: 'Grade',
       field: 'grade',
+      lookup: {
+        A: 'A',
+        B: 'B',
+        C: 'C',
+        D: 'D',
+        F: 'F',
+        W: 'W',
+        CR: 'CR',
+        NC: 'NC',
+      },
       width: 1000,
     },
     {
       title: 'Units',
       field: 'units',
+      lookup: {
+        0: '0',
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+      },
     },
     {
       title: 'Designation',
       field: 'designation',
+      lookup: {
+        'Lower Div': 'Lower Div',
+        'Physical Science': 'Physical Science',
+        'Life Science': 'Life Science',
+        'Upper Div': 'Upper Div',
+        'Writing Intensive': 'Writing Intensive',
+        'Core Elective': 'Core Elective',
+        'Applied Elective': 'Applied Elective',
+      },
       // cellStyle: {
       //   whiteSpace: 'nowrap',
       // },
@@ -50,6 +77,7 @@ const MajorHistory = () => {
     {
       title: 'Term',
       field: 'termYear',
+      editable: 'never',
       // cellStyle: {
       //   whiteSpace: 'nowrap', // history.push('dashboard');
       // },
