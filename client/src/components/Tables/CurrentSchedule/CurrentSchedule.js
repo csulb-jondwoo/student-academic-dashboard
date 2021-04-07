@@ -40,6 +40,14 @@ const CurrentSchedule = () => {
     {
       title: 'Units',
       field: 'units',
+      lookup: {
+        0: '0',
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+      },
     },
     {
       title: 'Start',
@@ -132,6 +140,7 @@ const CurrentSchedule = () => {
       })
   }
 
+  // TODO
   const handleMarkAsComplete = (data) => {
     confirm({ description: 'Mark selected courses as complete' })
       .then(() => {
@@ -172,17 +181,17 @@ const CurrentSchedule = () => {
       }}
       actions={[
         {
-          tooltip: 'Delete',
-          icon: 'delete',
-          onClick: (evt, data) => {
-            handleCourseDelete(data)
-          },
-        },
-        {
           tooltip: 'Mark as Complete',
           icon: PlaylistAddCheckIcon,
           onClick: (evt, data) => {
             handleMarkAsComplete(data)
+          },
+        },
+        {
+          tooltip: 'Delete',
+          icon: 'delete',
+          onClick: (evt, data) => {
+            handleCourseDelete(data)
           },
         },
       ]}

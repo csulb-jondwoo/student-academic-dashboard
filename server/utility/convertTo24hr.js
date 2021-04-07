@@ -6,11 +6,11 @@ const convertTo24hr = (time) => {
 
   const AMPM = time.split(':')[1].split(' ')[1]
 
-  if (AMPM == 'PM' && hours < 12) {
+  if (AMPM === 'PM' && hours < 12) {
     hours = hours + 12
   }
 
-  if (AMPM == 'AM' && hours == 12) {
+  if (AMPM === 'AM' && hours === 12) {
     hours = hours - 12
   }
 

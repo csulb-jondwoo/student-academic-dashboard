@@ -11,9 +11,8 @@ import Tab from 'react-bootstrap/Tab'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import _ from "lodash"
-
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import _ from 'lodash'
 
 /*
 Roadmap:
@@ -55,7 +54,6 @@ const Roadmap = () => {
 
   const handleTermChange = (event) => {
     setTerm(event.target.value)
-
   }
 
   const handleAddTerm = (e) => {
@@ -65,12 +63,12 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList(termList.concat(
-      {
-        term: term, 
-        year: year
-      }
-    ))
+    setTermList(
+      termList.concat({
+        term: term,
+        year: year,
+      }),
+    )
   }
   console.log(termList)
 
@@ -115,13 +113,13 @@ const Roadmap = () => {
             <Card className="text-center shadow-sm">
               <Card.Body>
                 <Card.Title>CECS Roadmap</Card.Title>
-                <SchoolYear 
-                  handleAddTerm={handleAddTerm} 
+                <SchoolYear
+                  handleAddTerm={handleAddTerm}
                   handleTermChange={handleTermChange}
                   handleYearChange={handleYearChange}
                   validated={validated}
                 />
-                { /* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1>
+                {/* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1>
                 <Button onClick={handleAddYear} size="sm">Add School Year</Button> */}
               </Card.Body>
             </Card>
@@ -214,10 +212,10 @@ const Roadmap = () => {
           <Row className="d-flex mt-5 justify-content-center padding">
             <Col sm={4}>
               <ListGroup>
-                {termList.map(({term, year}) => {
+                {termList.map(({ term, year }, idx) => {
                   return (
-                    <ListGroup.Item action href={`#${term}${year}`}>
-                      {`${term} ${year}`} 
+                    <ListGroup.Item key={idx} action href={`#${term}${year}`}>
+                      {`${term} ${year}`}
                     </ListGroup.Item>
                   )
                 })}

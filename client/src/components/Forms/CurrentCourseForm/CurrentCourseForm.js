@@ -93,7 +93,7 @@ export const CurrentCourseForm = (props) => {
       courseData.set({
         ...courseData.get(),
         type: newCourseType,
-        designation: 'Lower div',
+        designation: 'Lower Div',
         additionalReq: null,
       })
     }
@@ -468,11 +468,7 @@ export const CurrentCourseForm = (props) => {
                         </Form.Control.Feedback>
                       </Form.Group>
 
-                      <Button
-                        className="mt-3"
-                        variant="primary"
-                        type="submit"
-                      >
+                      <Button className="mt-3" variant="primary" type="submit">
                         Submit
                       </Button>
 

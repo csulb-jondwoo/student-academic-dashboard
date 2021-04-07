@@ -84,22 +84,25 @@ const deleteCurrentCourse = async (req, res) => {
 
 const deleteCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body
-    const completed = req.body
-
-    await userSchema.findOneAndUpdate(
-      {
-        googleId: userID,
-      },
-      {
-        $pull: {
-          completedCourses: completed,
+    const data = req.body
+    for (const course of data) {
+      const number = course.course.split(' ')[1]
+      const dept = course.course.split(' ')[0]
+      const { userID } = course
+      await userSchema.findOneAndUpdate(
+        {
+          googleId: userID,
         },
-      },
-    )
+        {
+          $pull: {
+            // delete the course that matches number and dept
+            completedCourses: { number, dept },
+          },
+        },
+      )
+    }
   } catch (error) {
     return res.status(409).json({ message: error.message })
-    // const { userID } = req.body
   }
 }
 
@@ -150,22 +153,72 @@ const updateCurrentCourse = async (req, res) => {
 
 const updateCompletedCourse = async (req, res) => {
   try {
-    const { userID } = req.body
-    const current = req.body
+    const { userID } = req.body.oldCourse
+    const { newCourse } = req.body
+    const { oldCourse } = req.body
+    let courseType = 'ge'
+
+    // if course updated desig to cecs desigs, change type to major
+    if (
+      newCourse.designation === 'Lower Div' ||
+      newCourse.designation === 'Physical Science'||
+      newCourse.designation === 'Life Science'||
+      newCourse.designation === 'Upper Div'||
+      newCourse.designation === 'Writing Intensive'||
+      newCourse.designation === 'Core Elective'||
+      newCourse.designation === 'Applied Elective'
+    ) {
+      courseType = 'major'
+    } 
+
+    const number = oldCourse.course.split(' ')[1]
+    const dept = oldCourse.course.split(' ')[0]
 
     await userSchema.findOneAndUpdate(
       {
         googleId: userID,
+        completedCourses: {
+          $elemMatch: {
+            number,
+            dept,
+          },
+        },
       },
       {
         $set: {
-          currentCourses: current,
+          'completedCourses.$.type': courseType,
+          'completedCourses.$.number': newCourse.course.split(' ')[1],
+          'completedCourses.$.dept': newCourse.course.split(' ')[0],
+          'completedCourses.$.title': newCourse.course.split('- ')[1],
+          'completedCourses.$.grade': newCourse.grade,
+          'completedCourses.$.units': newCourse.units,
+          'completedCourses.$.designation': newCourse.designation,
+          'completedCourses.$.additionalReq': newCourse.additionalReq,
+          'completedCourses.$.term': newCourse.termYear.split(' ')[0],
+          'completedCourses.$.year': newCourse.termYear.split(' ')[1],
         },
       },
     )
   } catch (error) {
     return res.status(409).json({ message: error.message })
   }
+  // try {
+  //   const { userID } = req.body
+  //   const current = req.body
+
+  //   await userSchema.findOneAndUpdate(
+  //     {
+  //       googleId: userID,
+  //     },
+  //     {
+  //       $set: {
+  //         currentCourses: current,
+  //       },
+  //     },
+  //   )
+  // } catch (error) {
+  //   return res.status(409).json({ message: error.message })
+  // }
 }
 
 // GET
@@ -234,6 +287,10 @@ const uploadTranscript = (req, res) => {
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
       const data = JSON.parse(result)
+      // TODO: Error if not transcript
+      // if(Object.keys(data['csulb']).length === 0) {
+      //   throw new Error('Not a transcript')
+      // }
       // get individual courses
       for (const year in data['csulb']) {
         for (const termIdx in data['csulb'][year]) {
@@ -288,10 +345,6 @@ const uploadTranscript = (req, res) => {
       for (const course of geCourses) {
         const idx = geCourses.findIndex((elem => elem.dept === course.dept && elem.number === course.number))
         geCourses[idx].type = 'ge'
-      }
-
-      for (const course of geCourses) {
-        console.log(course.dept + ' ' + course.number, course.type)
       }
 
       // append designation to cecs
@@ -359,6 +412,8 @@ const uploadTranscript = (req, res) => {
     })
   } catch (error) {
     console.log(error)
+    // res.status(400).send(JSON.stringify(error, undefined, 2))
+    // return error
   }
 }
 
