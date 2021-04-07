@@ -88,9 +88,11 @@ const Roadmap = () => {
 
     // Creating a copy of item before removing it from state
     const itemCopy = {...courses[source.droppableId][source.index]}
+    console.log(itemCopy)
 
     setCourses((prev) => {
       prev = { ...prev }
+      console.log(prev)
       // Remove from previous items array
       prev[source.droppableId].splice(source.index, 1)
       // Adding to new items array location
@@ -100,11 +102,15 @@ const Roadmap = () => {
     })
   }
 
+  const handleAddCourses = () => {
+    return
+  }
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Container>
         {/* Title */}
-        <Row className="d-flex mt-5 justify-content-center">
+        <Row className="d-flex mt-5 justify-content-center padding">
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
@@ -122,7 +128,7 @@ const Roadmap = () => {
           </Col>
         </Row>
         {/* Catalog */}
-        <Row className="d-flex mt-5 justify-content-center">
+        <Row className="d-flex mt-5 justify-content-center padding">
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
@@ -131,12 +137,12 @@ const Roadmap = () => {
             </Card>
           </Col>
         </Row>
+        <Row className="d-flex mt-5 justify-content-center padding">
         {_.map(courses, (data, key) => {
           return (
-            <Row className="d-flex mt-5 justify-content-center">
-              <Col>
-                <div className="table-wrapper">
-                  {/* Table Wrapper */}
+            <Col>
+              <div className="table-wrapper">
+                {/* Table Wrapper */}
                   <Table key={key} className="mb-3" striped hover bordered responsive="sm" size="sm">
                     <thead>
                       <tr>
@@ -191,10 +197,21 @@ const Roadmap = () => {
                   </Table>
               </div>
             </Col>
-          </Row>
-        )})}
+          )})}
+        </Row>
+        <Row className="d-flex mt-5 justify-content-center padding">
+          <Col>
+            <Card className="text-center shadow-sm">
+              <Card.Body>
+                <Card.Title>Current Semester: {term}</Card.Title>
+                <Card.Title>Current Year: {year}</Card.Title>
+                <Button className="mb-4 padding" onClick={handleAddCourses} size="sm">Add Courses To Term</Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
         <Tab.Container id="addedTerms" defaultActiveKey={`#${term}${year}`}>
-          <Row>
+          <Row className="d-flex mt-5 justify-content-center padding">
             <Col sm={4}>
               <ListGroup>
                 {termList.map(({term, year}) => {
@@ -209,18 +226,12 @@ const Roadmap = () => {
             <Col sm={8}>
               <Tab.Content>
                 {termList.map(({term, year}) => {
-                  <Droppable key={`${term} ${year}`} droppableId={`${term} ${year}`}>
-                    {(provided) => {
-                      return (
-                        <div ref={provided.innerRef} {...provided.droppableProps}>
-                          <Tab.Pane eventKey={`#${term}${year}`}>
-                            
-                          </Tab.Pane>
-                        </div>
-                      )
-                    }}
-                  </Droppable>
-                })}
+                  return (
+                    <Tab.Pane eventKey={`#${term}${year}`}>
+                      <p>{term} - {year}</p>
+                      {/* new variable will go here*/}
+                    </Tab.Pane>
+                  )})}
               </Tab.Content>
             </Col>
           </Row>
