@@ -287,6 +287,10 @@ const uploadTranscript = (req, res) => {
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
       const data = JSON.parse(result)
+      // TODO: Error if not transcript
+      // if(Object.keys(data['csulb']).length === 0) {
+      //   throw new Error('Not a transcript')
+      // }
       // get individual courses
       for (const year in data['csulb']) {
         for (const termIdx in data['csulb'][year]) {
@@ -408,6 +412,8 @@ const uploadTranscript = (req, res) => {
     })
   } catch (error) {
     console.log(error)
+    // res.status(400).send(JSON.stringify(error, undefined, 2))
+    // return error
   }
 }
 

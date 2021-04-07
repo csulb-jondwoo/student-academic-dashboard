@@ -139,15 +139,20 @@ const OtherHistory = () => {
   }, [completedCourses, courses])
 
   const handleCourseUpdate = (newCourse, oldCourse) => {
-    // change server side
-    updateCompletedCourse({ newCourse, oldCourse })
+    try {
+      // change server side
+      updateCompletedCourse({ newCourse, oldCourse })
 
-    // change client side
-    const dataUpdate = [...tableData]
-    const index = oldCourse.tableData.id
-    dataUpdate[index] = newCourse
-    setTableData([...dataUpdate])
-    setIsLoading(false)
+      // change client side
+      const dataUpdate = [...tableData]
+      const index = oldCourse.tableData.id
+      dataUpdate[index] = newCourse
+      setTableData([...dataUpdate])
+      setIsLoading(false)
+    } catch (error) {
+      // TODO: change to alert
+      console.log(error)
+    }
   }
 
   const handleCourseDelete = (data) => {

@@ -98,7 +98,6 @@ const CurrentSchedule = () => {
 
   // table rerendering bc tableData is changing
   const [tableData, setTableData] = useState(courses)
-  console.log(tableData)
 
   useEffect(() => {
     setTableData(courses)
