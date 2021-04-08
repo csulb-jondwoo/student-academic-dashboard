@@ -119,8 +119,6 @@ const Roadmap = () => {
                   handleYearChange={handleYearChange}
                   validated={validated}
                 />
-                {/* yearList.length === 0 ? <h1>Add a new term</h1> : <h1>you have terms added</h1>
-                <Button onClick={handleAddYear} size="sm">Add School Year</Button> */}
               </Card.Body>
             </Card>
           </Col>
