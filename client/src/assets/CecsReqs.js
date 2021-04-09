@@ -448,14 +448,14 @@ export const majorReqData = {
       url:
         'http://catalog.csulb.edu/preview_course_nopop.php?catoid=5&coid=40020',
     },
-    ],
-    "addedCourses": [
+  ],
+  addedCourses: [
     {
-        course: ' ',
-        title: ' ',
-        units: '',
-        designation: ' ',
-        url: ' '
-    }
-    ]
+      course: ' ',
+      title: ' ',
+      units: '',
+      designation: ' ',
+      url: ' ',
+    },
+  ],
 }

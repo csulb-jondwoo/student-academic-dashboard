@@ -85,7 +85,7 @@ const Roadmap = () => {
     }
 
     // Creating a copy of item before removing it from state
-    const itemCopy = {...courses[source.droppableId][source.index]}
+    const itemCopy = { ...courses[source.droppableId][source.index] }
     console.log(itemCopy)
 
     setCourses((prev) => {
@@ -134,12 +134,20 @@ const Roadmap = () => {
           </Col>
         </Row>
         <Row className="d-flex mt-5 justify-content-center padding">
-        {_.map(courses, (data, key) => {
-          return (
-            <Col>
-              <div className="table-wrapper">
-                {/* Table Wrapper */}
-                  <Table key={key} className="mb-3" striped hover bordered responsive="sm" size="sm">
+          {_.map(courses, (data, key) => {
+            return (
+              <Col>
+                <div className="table-wrapper">
+                  {/* Table Wrapper */}
+                  <Table
+                    key={key}
+                    className="mb-3"
+                    striped
+                    hover
+                    bordered
+                    responsive="sm"
+                    size="sm"
+                  >
                     <thead>
                       <tr>
                         <th>
@@ -191,9 +199,10 @@ const Roadmap = () => {
                       }}
                     </Droppable>
                   </Table>
-              </div>
-            </Col>
-          )})}
+                </div>
+              </Col>
+            )
+          })}
         </Row>
         <Row className="d-flex mt-5 justify-content-center padding">
           <Col>
@@ -201,7 +210,13 @@ const Roadmap = () => {
               <Card.Body>
                 <Card.Title>Current Semester: {term}</Card.Title>
                 <Card.Title>Current Year: {year}</Card.Title>
-                <Button className="mb-4 padding" onClick={handleAddCourses} size="sm">Add Courses To Term</Button>
+                <Button
+                  className="mb-4 padding"
+                  onClick={handleAddCourses}
+                  size="sm"
+                >
+                  Add Courses To Term
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -221,13 +236,16 @@ const Roadmap = () => {
             </Col>
             <Col sm={8}>
               <Tab.Content>
-                {termList.map(({term, year}) => {
+                {termList.map(({ term, year }, idx) => {
                   return (
-                    <Tab.Pane eventKey={`#${term}${year}`}>
-                      <p>{term} - {year}</p>
+                    <Tab.Pane key={idx} eventKey={`#${term}${year}`}>
+                      <p>
+                        {term} - {year}
+                      </p>
                       {/* new variable will go here*/}
                     </Tab.Pane>
-                  )})}
+                  )
+                })}
               </Tab.Content>
             </Col>
           </Row>
