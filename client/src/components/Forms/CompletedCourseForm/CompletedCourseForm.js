@@ -1,223 +1,223 @@
-import React, { useContext, useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import Container from 'react-bootstrap/Container'
-import ToggleButton from 'react-bootstrap/ToggleButton'
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import Button from 'react-bootstrap/Button'
+import React, { useContext, useState } from "react";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import Button from "react-bootstrap/Button";
 
-import useTrait from '../../../hooks/useTrait'
-import CircularIntegration from './CircularIntegration/CircularIntegration'
-import DragAndDrop from '../../../utility/DrapAndDrop/DragAndDrop'
-import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData'
-import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData'
-import { myContext } from '../../../context/Context'
-import * as api from '../../../api'
-import MySnackbar from '../MySnackbar/MySnackbar'
+import useTrait from "../../../hooks/useTrait";
+import CircularIntegration from "./CircularIntegration/CircularIntegration";
+import DragAndDrop from "../../../utility/DrapAndDrop/DragAndDrop";
+import { geReqData } from "../../Tables/Requirements/GeRequirements/GeReqData";
+import { majorReqCategory } from "../../Tables/Requirements/MajorRequirements/CecsReqData";
+import { myContext } from "../../../context/Context";
+import * as api from "../../../api";
+import MySnackbar from "../../../utility/MySnackbar/MySnackbar";
 
 // MAKE FIELDS REQUIRED
 export const CompletedCourseForm = (props) => {
-  const { addCompletedCourse, user } = useContext(myContext)
+  const { addCompletedCourse, user } = useContext(myContext);
 
   // -------------------------------------------------------------------
   // TODO: possibly move to context or AddCourse component after refactoring
-  const [open, setOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [severity, setSeverity] = useState(null)
-  const [error, setError] = useState(null)
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [severity, setSeverity] = useState(null);
+  const [error, setError] = useState(null);
   // -------------------------------------------------------------------
 
-  const [isTranscriptSubmit, setIsTranscriptSubmit] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [validated, setValidated] = useState(false)
-  const courseType = useTrait('ge')
-  const courseNumber = useTrait(0)
-  const courseDept = useTrait('')
-  const courseTitle = useTrait('')
-  const courseUnits = useTrait(0)
-  const courseTerm = useTrait('Fall')
-  const courseYear = useTrait(0)
-  const courseGrade = useTrait('')
-  const courseDesignation = useTrait('A1 - Oral Communications')
-  const courseAdditionalReq = useTrait('Human Diversity')
+  const [isTranscriptSubmit, setIsTranscriptSubmit] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [validated, setValidated] = useState(false);
+  const courseType = useTrait("ge");
+  const courseNumber = useTrait(0);
+  const courseDept = useTrait("");
+  const courseTitle = useTrait("");
+  const courseUnits = useTrait(0);
+  const courseTerm = useTrait("Fall");
+  const courseYear = useTrait(0);
+  const courseGrade = useTrait("");
+  const courseDesignation = useTrait("A1 - Oral Communications");
+  const courseAdditionalReq = useTrait("Human Diversity");
 
   const courseData = useTrait({
     userID: JSON.parse(user).googleId,
-    type: 'ge',
+    type: "ge",
     number: 0,
-    dept: '',
-    title: '',
+    dept: "",
+    title: "",
     units: 0,
-    term: 'Fall',
+    term: "Fall",
     year: 0,
-    grade: 'A',
-    designation: 'A1 - Oral Communication',
-    additionalReq: '',
-  })
+    grade: "A",
+    designation: "A1 - Oral Communication",
+    additionalReq: "",
+  });
 
   const handleCourseTypeChange = (val) => {
-    const newCourseType = courseType.set(val)
-    if (val === 'ge') {
+    const newCourseType = courseType.set(val);
+    if (val === "ge") {
       courseData.set({
         ...courseData.get(),
         type: newCourseType,
-        designation: 'A1 - Oral Communication',
+        designation: "A1 - Oral Communication",
         additionalReq: null,
-      })
+      });
     } else {
       courseData.set({
         ...courseData.get(),
         type: newCourseType,
-        designation: 'Lower Div',
+        designation: "Lower Div",
         additionalReq: null,
-      })
+      });
     }
-  }
+  };
 
   const handleCourseNumberChange = (e) => {
-    const newCourseNumber = courseNumber.set(e.target.value)
-    courseData.set({ ...courseData.get(), number: newCourseNumber })
-  }
+    const newCourseNumber = courseNumber.set(e.target.value);
+    courseData.set({ ...courseData.get(), number: newCourseNumber });
+  };
 
   const handleCourseDeptChange = (e) => {
-    const newCourseDept = courseDept.set(e.target.value)
-    courseData.set({ ...courseData.get(), dept: newCourseDept })
-  }
+    const newCourseDept = courseDept.set(e.target.value);
+    courseData.set({ ...courseData.get(), dept: newCourseDept });
+  };
 
   const handleCourseTitleChange = (e) => {
-    const newCourseTitle = courseTitle.set(e.target.value)
-    courseData.set({ ...courseData.get(), title: newCourseTitle })
-  }
+    const newCourseTitle = courseTitle.set(e.target.value);
+    courseData.set({ ...courseData.get(), title: newCourseTitle });
+  };
 
   const handleCourseUnitChange = (e) => {
-    const newCourseUnits = courseUnits.set(e.target.value)
-    courseData.set({ ...courseData.get(), units: newCourseUnits })
-  }
+    const newCourseUnits = courseUnits.set(e.target.value);
+    courseData.set({ ...courseData.get(), units: newCourseUnits });
+  };
 
   const handleCourseTermChange = (e) => {
-    const newCourseTerm = courseTerm.set(e.target.value)
-    courseData.set({ ...courseData.get(), term: newCourseTerm })
-  }
+    const newCourseTerm = courseTerm.set(e.target.value);
+    courseData.set({ ...courseData.get(), term: newCourseTerm });
+  };
 
   const handleCourseYearChange = (e) => {
-    const newCourseYear = courseYear.set(e.target.value)
-    courseData.set({ ...courseData.get(), year: newCourseYear })
-  }
+    const newCourseYear = courseYear.set(e.target.value);
+    courseData.set({ ...courseData.get(), year: newCourseYear });
+  };
 
   const handleCourseGradeChange = (e) => {
-    const newCourseGrade = courseGrade.set(e.target.value)
-    courseData.set({ ...courseData.get(), grade: newCourseGrade })
-  }
+    const newCourseGrade = courseGrade.set(e.target.value);
+    courseData.set({ ...courseData.get(), grade: newCourseGrade });
+  };
 
   const handleCourseDesignationChange = (e) => {
-    const newCourseDesignation = courseDesignation.set(e.target.value)
-    courseData.set({ ...courseData.get(), designation: newCourseDesignation })
-  }
+    const newCourseDesignation = courseDesignation.set(e.target.value);
+    courseData.set({ ...courseData.get(), designation: newCourseDesignation });
+  };
 
   const handleCourseAdditionalReqChange = (e) => {
-    let newCourseAdditionalReq
+    let newCourseAdditionalReq;
 
-    if (e.target.value === '-') {
-      newCourseAdditionalReq = courseAdditionalReq.set(null)
+    if (e.target.value === "-") {
+      newCourseAdditionalReq = courseAdditionalReq.set(null);
     } else {
-      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
+      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value);
     }
     courseData.set({
       ...courseData.get(),
       additionalReq: newCourseAdditionalReq,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setSuccess(false)
-    setIsTranscriptSubmit(false)
+    e.preventDefault();
+    setSuccess(false);
+    setIsTranscriptSubmit(false);
 
-    const form = e.currentTarget
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      e.preventDefault()
-      e.stopPropagation()
+      e.preventDefault();
+      e.stopPropagation();
     }
-    setValidated(true)
+    setValidated(true);
 
     try {
-      console.log(courseData.get())
-      const res = await addCompletedCourse(courseData.get())
+      console.log(courseData.get());
+      const res = await addCompletedCourse(courseData.get());
       // why is res undefined
       if (res.data.success === true) {
-        setSuccess(true)
-        setSeverity('success')
-        setOpen(true)
-        setIsLoading(false)
+        setSuccess(true);
+        setSeverity("success");
+        setOpen(true);
+        setIsLoading(false);
       }
     } catch (error) {
-      setSeverity('error')
-      setOpen(true)
-      setError(error.message)
+      setSeverity("error");
+      setOpen(true);
+      setError(error.message);
     }
-  }
+  };
 
   const handleFileChange = (file) => {
-    setSelectedFile(file[0])
-  }
+    setSelectedFile(file[0]);
+  };
 
   const checkMimeType = (event) => {
-    const file = selectedFile
-    const type = 'application/pdf'
+    const file = selectedFile;
+    const type = "application/pdf";
     if (file.type !== type) {
-      throw new Error(`${file.type} is not a supported format`)
+      throw new Error(`${file.type} is not a supported format`);
     }
 
-    return true
-  }
+    return true;
+  };
 
   // -----------------------------------------------------
   // TODO: possibly move to context
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
 
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   // -----------------------------------------------------
 
   const handleUploadClick = async (e) => {
-    e.preventDefault()
-    setSuccess(false)
-    setIsTranscriptSubmit(true)
+    e.preventDefault();
+    setSuccess(false);
+    setIsTranscriptSubmit(true);
 
     try {
-      checkMimeType(e)
+      checkMimeType(e);
 
       if (!isLoading) {
-        setIsLoading(true)
+        setIsLoading(true);
 
-        const formData = new FormData()
+        const formData = new FormData();
 
-        formData.append('file', selectedFile)
-        formData.append('userID', JSON.parse(user).googleId)
+        formData.append("file", selectedFile);
+        formData.append("userID", JSON.parse(user).googleId);
 
         // api not in context
-        const res = await api.uploadTranscript(formData)
+        const res = await api.uploadTranscript(formData);
 
         if (res.data.success === true) {
-          setSuccess(true)
-          setSeverity('success')
-          setOpen(true)
-          setIsLoading(false)
-          setSelectedFile(null)
+          setSuccess(true);
+          setSeverity("success");
+          setOpen(true);
+          setIsLoading(false);
+          setSelectedFile(null);
         }
       }
     } catch (error) {
-      setSeverity('error')
-      setOpen(true)
-      setError(error.message)
+      setSeverity("error");
+      setOpen(true);
+      setError(error.message);
     }
-  }
+  };
 
   return (
     <>
@@ -343,7 +343,7 @@ export const CompletedCourseForm = (props) => {
                         </Col>
                       </Row>
                       {/* COURSE DESIGNATION */}
-                      {courseType.get() === 'ge' ? (
+                      {courseType.get() === "ge" ? (
                         // ge designation
                         <>
                           <Form.Group controlId="designation">
@@ -362,7 +362,7 @@ export const CompletedCourseForm = (props) => {
                                   >
                                     {ge.designation} - {ge.course}
                                   </option>
-                                )
+                                );
                               })}
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">
@@ -406,7 +406,7 @@ export const CompletedCourseForm = (props) => {
                                 <option value={category} key={idx}>
                                   {category}
                                 </option>
-                              )
+                              );
                             })}
                           </Form.Control>
                           <Form.Control.Feedback type="invalid">
@@ -475,7 +475,7 @@ export const CompletedCourseForm = (props) => {
         </Row>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default CompletedCourseForm
+export default CompletedCourseForm;

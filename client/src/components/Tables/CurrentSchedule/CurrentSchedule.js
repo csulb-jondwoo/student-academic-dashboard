@@ -98,7 +98,7 @@ const CurrentSchedule = () => {
         designation: course.designation,
         additionalReq: course.additionalReq,
       })),
-    [currentCourses, userID],
+    [currentCourses, userID]
   )
 
   // table rerendering bc tableData is changing
@@ -148,19 +148,19 @@ const CurrentSchedule = () => {
   }
 
   // TODO
-  // const handleMarkAsComplete = (data) => {
-  //   confirm({ description: 'Mark selected courses as complete' })
-  //     .then(() => {
-  //       setConfirmed(true)
-  //       setOpen(true)
-  //       setSelectedCourses(data)
-  //       // setCourseTitle(data[0].course)
-  //     })
-  //     .catch(() => {
-  //       console.log('cancelled')
-  //       setIsLoading(false)
-  //     })
-  // }
+  const handleMarkAsComplete = (data) => {
+    confirm({ description: 'Mark selected courses as complete' })
+      .then(() => {
+        setConfirmed(true)
+        setOpen(true)
+        setSelectedCourses(data)
+        // setCourseTitle(data[0].course)
+      })
+      .catch(() => {
+        console.log('cancelled')
+        setIsLoading(false)
+      })
+  }
 
   const handleDialogClose = () => {
     setOpen(false)
@@ -211,13 +211,13 @@ const CurrentSchedule = () => {
           },
         }}
         actions={[
-          // {
-          //   tooltip: 'Mark as Complete',
-          //   icon: PlaylistAddCheckIcon,
-          //   onClick: (evt, data) => {
-          //     handleMarkAsComplete(data)
-          //   },
-          // },
+          {
+            tooltip: 'Mark as Complete',
+            icon: PlaylistAddCheckIcon,
+            onClick: (evt, data) => {
+              handleMarkAsComplete(data)
+            },
+          },
           {
             tooltip: 'Delete',
             icon: 'delete',
@@ -238,11 +238,11 @@ const CurrentSchedule = () => {
           handleGradeChange={handleGradeChange}
         />
       ) : null} */}
-      {/* {confirmed && selectedCourses
+      {confirmed && selectedCourses
         ? selectedCourses.map((course, idx) => (
             <DialogSelect key={idx} open={open} />
           ))
-        : null} */}
+        : null}
     </>
   )
 }

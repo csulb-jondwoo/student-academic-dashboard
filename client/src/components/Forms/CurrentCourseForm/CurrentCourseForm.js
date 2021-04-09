@@ -13,7 +13,7 @@ import useTrait from '../../../hooks/useTrait'
 import { myContext } from '../../../context/Context'
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData'
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData'
-import MySnackbar from '../MySnackbar/MySnackbar'
+import MySnackbar from '../../../utility/MySnackbar/MySnackbar'
 import { Input } from '@material-ui/core'
 
 export const CurrentCourseForm = (props) => {
