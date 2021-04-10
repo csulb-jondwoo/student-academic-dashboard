@@ -12,6 +12,8 @@ const StudentInfo = () => {
   const [GPA, setGPA] = useState(undefined)
   const { user, completedCourses, getCompletedCourses } = useContext(myContext)
   const userID = JSON.parse(user).googleId
+  const studentId = JSON.parse(user).studentId
+  console.log(studentId)
 
   useEffect(() => {
     getCompletedCourses(userID)
@@ -63,7 +65,7 @@ const StudentInfo = () => {
       }
     }
 
-    courses.map((course) => {
+    courses.forEach((course) => {
       points += calculatePoints(course.grade, course.units)
       earned += calculateEarned(course.grade, course.units)
     })
@@ -71,6 +73,7 @@ const StudentInfo = () => {
     const calculateGPA = () => {
       setGPA(points / earned)
     }
+
     calculateGPA()
   }, [courses])
 
@@ -83,6 +86,12 @@ const StudentInfo = () => {
   const renderCurrentGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Current GPA
+    </Tooltip>
+  )
+
+  const renderStudentIdTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Student ID
     </Tooltip>
   )
 
@@ -99,7 +108,13 @@ const StudentInfo = () => {
                     {user ? JSON.parse(user).name : 123456789}
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    Placeholder ID
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderStudentIdTooltip}
+                    >
+                      <span>{studentId === '0' ? '-' : studentId}</span>
+                    </OverlayTrigger>
                   </Card.Subtitle>
                 </Card.Body>
               </Col>

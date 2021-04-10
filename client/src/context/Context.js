@@ -46,6 +46,16 @@ export default function Context(props) {
     })
   }, [])
 
+  const updateUserAfterTranscriptUpload = async () => {
+    localStorage.clear()
+    await api.fetchUser().then((res) => {
+      if (res.data) {
+        localStorage.setItem('user', JSON.stringify(res.data))
+        setUser(localStorage.getItem('user'))
+      }
+    })
+  }
+
   // Get courses
   // useCallback to stabilize function on renders when called
   const getCurrentCourses = useCallback(async (userID) => {
@@ -186,7 +196,7 @@ export default function Context(props) {
     try {
       const res = await api.updateCurrentCourse(
         { newCourse, oldCourse },
-        config,
+        config
       )
 
       dispatch({
@@ -212,7 +222,7 @@ export default function Context(props) {
     try {
       const res = await api.updateCompletedCourse(
         { newCourse, oldCourse },
-        config,
+        config
       )
 
       dispatch({
@@ -245,6 +255,7 @@ export default function Context(props) {
         deleteCompletedCourse,
         updateCurrentCourse,
         updateCompletedCourse,
+        updateUserAfterTranscriptUpload,
       }}
     >
       {props.children}

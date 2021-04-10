@@ -23,11 +23,11 @@ module.exports = (passport) => {
           }
 
           if (!doc) {
-            console.log('no doc')
             // if no user, create one
             const newUser = new User({
               _id: new mongoose.Types.ObjectId(),
               googleId: profile.id,
+              studentId: 0,
               name: profile.name.givenName,
             })
             // Insert into database
@@ -38,8 +38,8 @@ module.exports = (passport) => {
             done(null, doc)
           }
         })
-      },
-    ),
+      }
+    )
   )
 
   passport.serializeUser((user, done) => {

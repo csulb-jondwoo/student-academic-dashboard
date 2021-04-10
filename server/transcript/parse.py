@@ -159,6 +159,7 @@ def getTermInfo(dataSection, currentTerm):
 
 
 def formatTranscriptData(
+    studentId,
     transferText,
     transferTermsByYear,
     transferTermPair,
@@ -166,7 +167,7 @@ def formatTranscriptData(
     csulbTermsByYear,
     csulbTermPair,
 ):
-    body = {"transfer": {}, "csulb": {}}
+    body = {"studentId": studentId, "transfer": {}, "csulb": {}}
 
     # populate transfer terms
     for term in transferTermPair:
@@ -221,9 +222,16 @@ def getCsulbPdfText(pdfString):
     return csulbText
 
 
+def getStudentID(pdfString):
+  studentId = re.search(r"\D(\d{9})\D", pdfString).group(1)
+
+  return studentId
+
+
 def getParsedData(viewer):
     pdfString = convertPDFtoString(viewer)
 
+    studentId = getStudentID(pdfString)
     transferText = getTransferPdfText(pdfString)
     csulbText = getCsulbPdfText(pdfString)
 
@@ -235,6 +243,7 @@ def getParsedData(viewer):
     csulbTermPair = getTermPairs(csulbTermsByYear)
 
     data = formatTranscriptData(
+        studentId,
         transferText,
         transferTermsByYear,
         transferTermPair,

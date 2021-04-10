@@ -32,7 +32,7 @@ const currentCourseSchema = mongoose.Schema(
   },
 
   // need id for updating and deleting
-  { _id: false },
+  { _id: false }
 )
 
 const completedCourseSchema = mongoose.Schema(
@@ -49,11 +49,12 @@ const completedCourseSchema = mongoose.Schema(
     additionalReq: String, // not always required
   },
   // need id for updating and deleting
-  { _id: false },
+  { _id: false }
 )
 
 const userSchema = mongoose.Schema({
   googleId: reqString,
+  studentId: reqString,
   name: reqString,
   createdAt: {
     type: Date,

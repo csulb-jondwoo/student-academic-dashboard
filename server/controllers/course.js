@@ -241,6 +241,7 @@ const getCompletedCourses = async (req, res) => {
   }
 }
 
+// TODO: Refactor
 const uploadTranscript = (req, res) => {
   const courseList = []
   const cecsCourses = []
@@ -268,6 +269,7 @@ const uploadTranscript = (req, res) => {
   try {
     PythonShell.run('parse.py', options, async (err, result) => {
       const data = JSON.parse(result)
+      const studentId = data['studentId']
       // TODO: Error if not transcript
       // if(Object.keys(data['csulb']).length === 0) {
       //   throw new Error('Not a transcript')
@@ -387,6 +389,15 @@ const uploadTranscript = (req, res) => {
           }
         )
       }
+
+      await userSchema.updateOne(
+        {
+          googleId: userID,
+        },
+        {
+          studentId: studentId,
+        }
+      )
 
       return res.status(200).send({ success: true })
     })
