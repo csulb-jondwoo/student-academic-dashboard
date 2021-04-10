@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
   },
   formControl: {
     margin: theme.spacing(1),
@@ -26,7 +27,7 @@ export default function DialogSelect({
   open,
   handleDialogClose,
   handleDialogConfirm,
-  // courseTitle,
+  courseTitle,
   grade,
   handleGradeChange,
 }) {
@@ -40,7 +41,7 @@ export default function DialogSelect({
         open={open}
         onClose={handleDialogClose}
       >
-        <DialogTitle>Enter Grade for </DialogTitle>
+        <DialogTitle>Enter Grade for {courseTitle.split('-')[0]}</DialogTitle>
         <DialogContent>
           <form className={classes.container}>
             <FormControl className={classes.formControl}>
@@ -51,7 +52,6 @@ export default function DialogSelect({
                 value={grade}
                 onChange={handleGradeChange}
                 input={<Input />}
-                fullWidth
               >
                 <MenuItem value="">
                   <em>None</em>
