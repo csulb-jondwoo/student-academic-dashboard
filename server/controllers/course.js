@@ -20,7 +20,7 @@ const addCompletedCourse = async (req, res) => {
         $addToSet: {
           completedCourses: completed,
         },
-      },
+      }
     )
 
     return res.status(201).json({
@@ -45,7 +45,7 @@ const addCurrentCourse = async (req, res) => {
         $addToSet: {
           currentCourses: current,
         },
-      },
+      }
     )
 
     return res.status(201).json({
@@ -61,22 +61,20 @@ const addCurrentCourse = async (req, res) => {
 const deleteCurrentCourse = async (req, res) => {
   try {
     const data = req.body
-    for (const course of data) {
-      const number = course.course.split(' ')[1]
-      const dept = course.course.split(' ')[0]
-      const { userID } = course
-      await userSchema.findOneAndUpdate(
-        {
-          googleId: userID,
+    const number = data.course.split(' ')[1]
+    const dept = data.course.split(' ')[0]
+    const { userID } = data
+    await userSchema.findOneAndUpdate(
+      {
+        googleId: userID,
+      },
+      {
+        $pull: {
+          // delete the course that matches number and dept
+          currentCourses: { number, dept },
         },
-        {
-          $pull: {
-            // delete the course that matches number and dept
-            currentCourses: { number, dept },
-          },
-        },
-      )
-    }
+      }
+    )
   } catch (error) {
     return res.status(409).json({ message: error.message })
   }
@@ -98,7 +96,7 @@ const deleteCompletedCourse = async (req, res) => {
             // delete the course that matches number and dept
             completedCourses: { number, dept },
           },
-        },
+        }
       )
     }
   } catch (error) {
@@ -144,7 +142,7 @@ const updateCurrentCourse = async (req, res) => {
           'currentCourses.$.days': newCourse.days.split('/'),
           'currentCourses.$.location': newCourse.location,
         },
-      },
+      }
     )
   } catch (error) {
     return res.status(409).json({ message: error.message })
@@ -161,15 +159,15 @@ const updateCompletedCourse = async (req, res) => {
     // if course updated desig to cecs desigs, change type to major
     if (
       newCourse.designation === 'Lower Div' ||
-      newCourse.designation === 'Physical Science'||
-      newCourse.designation === 'Life Science'||
-      newCourse.designation === 'Upper Div'||
-      newCourse.designation === 'Writing Intensive'||
-      newCourse.designation === 'Core Elective'||
+      newCourse.designation === 'Physical Science' ||
+      newCourse.designation === 'Life Science' ||
+      newCourse.designation === 'Upper Div' ||
+      newCourse.designation === 'Writing Intensive' ||
+      newCourse.designation === 'Core Elective' ||
       newCourse.designation === 'Applied Elective'
     ) {
       courseType = 'major'
-    } 
+    }
 
     const number = oldCourse.course.split(' ')[1]
     const dept = oldCourse.course.split(' ')[0]
@@ -197,28 +195,11 @@ const updateCompletedCourse = async (req, res) => {
           'completedCourses.$.term': newCourse.termYear.split(' ')[0],
           'completedCourses.$.year': newCourse.termYear.split(' ')[1],
         },
-      },
+      }
     )
   } catch (error) {
     return res.status(409).json({ message: error.message })
   }
-  // try {
-  //   const { userID } = req.body
-  //   const current = req.body
-
-  //   await userSchema.findOneAndUpdate(
-  //     {
-  //       googleId: userID,
-  //     },
-  //     {
-  //       $set: {
-  //         currentCourses: current,
-  //       },
-  //     },
-  //   )
-  // } catch (error) {
-  //   return res.status(409).json({ message: error.message })
-  // }
 }
 
 // GET
@@ -317,7 +298,6 @@ const uploadTranscript = (req, res) => {
 
               // create list of completed courses with year and term
               courseList.push(courseData)
-              
             }
           }
         }
@@ -340,10 +320,11 @@ const uploadTranscript = (req, res) => {
         return !cecsCourses.includes(course)
       })
 
-
       // convert type to ge
       for (const course of geCourses) {
-        const idx = geCourses.findIndex((elem => elem.dept === course.dept && elem.number === course.number))
+        const idx = geCourses.findIndex(
+          (elem) => elem.dept === course.dept && elem.number === course.number
+        )
         geCourses[idx].type = 'ge'
       }
 
@@ -357,7 +338,6 @@ const uploadTranscript = (req, res) => {
           }
         }
       }
-       
 
       // append designation and additional req to ge
       for (const course of geCourses) {
@@ -372,8 +352,9 @@ const uploadTranscript = (req, res) => {
               }
             }
             if (additionalReqIdx !== undefined) {
-              course.additionalReq = catalogCourse.additionalReq[additionalReqIdx]
-            } 
+              course.additionalReq =
+                catalogCourse.additionalReq[additionalReqIdx]
+            }
             break
           }
         }
@@ -389,7 +370,7 @@ const uploadTranscript = (req, res) => {
             $addToSet: {
               completedCourses: course,
             },
-          },
+          }
         )
       }
 
@@ -403,11 +384,10 @@ const uploadTranscript = (req, res) => {
             $addToSet: {
               completedCourses: course,
             },
-          },
+          }
         )
       }
 
-      
       return res.status(200).send({ success: true })
     })
   } catch (error) {
