@@ -19,7 +19,6 @@ const MajorHistory = () => {
   const confirm = useConfirm()
 
   useEffect(() => {
-    // set state of currentCourses inside context via reducer
     getCompletedCourses(userID)
   }, [getCompletedCourses, userID, setIsLoading])
 
@@ -70,17 +69,10 @@ const MajorHistory = () => {
         'Core Elective': 'Core Elective',
         'Applied Elective': 'Applied Elective',
       },
-      // cellStyle: {
-      //   whiteSpace: 'nowrap',
-      // },
-      // width: 1000,
     },
     {
       title: 'Term',
       field: 'termYear',
-      // cellStyle: {
-      //   whiteSpace: 'nowrap', // history.push('dashboard');
-      // },
       width: 500,
     },
   ]
@@ -104,7 +96,7 @@ const MajorHistory = () => {
           }
         }),
 
-    [completedCourses, userID],
+    [completedCourses, userID]
   )
 
   const [tableData, setTableData] = useState(courses)

@@ -122,7 +122,7 @@ const GeHistory = () => {
           }
         }),
 
-    [completedCourses, userID],
+    [completedCourses, userID]
   )
 
   const [tableData, setTableData] = useState(courses)
