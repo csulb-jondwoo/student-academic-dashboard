@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
@@ -9,7 +9,70 @@ import Progress from '../../components/Progress/Progress'
 import { myContext } from '../../context/Context'
 
 const StudentInfo = () => {
-  const { user } = useContext(myContext)
+  const [GPA, setGPA] = useState(undefined)
+  const { user, completedCourses, getCompletedCourses } = useContext(myContext)
+  const userID = JSON.parse(user).googleId
+
+  useEffect(() => {
+    getCompletedCourses(userID)
+  }, [getCompletedCourses, userID])
+
+  const courses = useMemo(
+    () =>
+      completedCourses.map((course) => {
+        return {
+          userID: userID,
+          type: course.type,
+          course: course.dept + ' ' + course.number + ' - ' + course.title,
+          grade: course.grade,
+          units: course.units,
+          designation: course.designation,
+          additionalReq: course.additionalReq,
+          termYear: course.term + ' ' + course.year.toString(),
+        }
+      }),
+
+    [completedCourses, userID]
+  )
+
+  useEffect(() => {
+    let points = 0
+    let earned = 0
+    const calculatePoints = (grade, units) => {
+      switch (grade) {
+        case 'A':
+          return units * 4
+        case 'B':
+          return units * 3
+        case 'C':
+          return units * 2
+        default:
+          return 0
+      }
+    }
+    const calculateEarned = (grade, units) => {
+      switch (grade) {
+        case 'A':
+          return units
+        case 'B':
+          return units
+        case 'C':
+          return units
+        default:
+          return 0
+      }
+    }
+
+    courses.map((course) => {
+      points += calculatePoints(course.grade, course.units)
+      earned += calculateEarned(course.grade, course.units)
+    })
+
+    const calculateGPA = () => {
+      setGPA(points / earned)
+    }
+    calculateGPA()
+  }, [courses])
 
   const renderTotalGpaTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -37,9 +100,6 @@ const StudentInfo = () => {
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
                     Placeholder ID
-                    {/* {isAuth
-                      ? 'authenticated email'
-                      : 'john.smith@student.csulb.edu'} */}
                   </Card.Subtitle>
                 </Card.Body>
               </Col>
@@ -57,10 +117,7 @@ const StudentInfo = () => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderCurrentGpaTooltip}
                     >
-                      <span>
-                        Placeholder GPA
-                        {/* {isAuth ? 'authenticated gpa' : 3.1} */}
-                      </span>
+                      <span>{GPA ? GPA : '-'}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger

@@ -1,6 +1,5 @@
 import '../../../utility/css/table-fixed-height.css'
 
-// import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import MaterialTable from 'material-table'
 import { useConfirm } from 'material-ui-confirm'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
@@ -10,7 +9,6 @@ import { Menu, MenuItem } from '@material-ui/core'
 import { myContext } from '../../../context/Context'
 import DialogSelect from '../../../utility/DialogSelect/DialogSelect'
 import formatTime from '../../../utility/formatTime/formatTime'
-import useTrait from '../../../hooks/useTrait'
 import { addCompletedCourse } from '../../../api'
 
 const CurrentSchedule = () => {
