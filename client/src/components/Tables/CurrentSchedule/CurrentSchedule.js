@@ -156,7 +156,7 @@ const CurrentSchedule = () => {
 
   const handleDialogConfirm = async () => {
     // delete server side
-    // deleteCurrentCourse(selectedRow)
+    deleteCurrentCourse(selectedRow)
 
     // delete from current
     const valuesToRemove = []
