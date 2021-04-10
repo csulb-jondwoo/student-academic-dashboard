@@ -1,13 +1,17 @@
 import '../../../utility/css/table-fixed-height.css'
 
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
+// import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import MaterialTable from 'material-table'
 import { useConfirm } from 'material-ui-confirm'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { Menu, MenuItem } from '@material-ui/core'
 
 import { myContext } from '../../../context/Context'
 import DialogSelect from '../../../utility/DialogSelect/DialogSelect'
 import formatTime from '../../../utility/formatTime/formatTime'
+import useTrait from '../../../hooks/useTrait'
+import { addCompletedCourse } from '../../../api'
 
 const CurrentSchedule = () => {
   const {
@@ -18,12 +22,16 @@ const CurrentSchedule = () => {
     deleteCurrentCourse,
   } = useContext(myContext)
 
+  const [courseData, setCourseData] = useState({})
+
+  const [currentTerm, setCurrentTerm] = useState('Spring')
+  const [currentYear, setCurrentYear] = useState(2021)
   const [isLoading, setIsLoading] = useState(true)
-  const [confirmed, setConfirmed] = useState(false)
-  const [selectedCourses, setSelectedCourses] = useState(false)
-  const [courseTitle, setCourseTitle] = useState(null)
+  const [courseTitle, setCourseTitle] = useState(undefined)
   const [grade, setGrade] = useState('')
   const [open, setOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [selectedRow, setSelectedRow] = useState(undefined)
 
   const userID = JSON.parse(user).googleId
   const confirm = useConfirm()
@@ -38,7 +46,9 @@ const CurrentSchedule = () => {
     {
       title: 'Course',
       field: 'course',
-      width: 1000,
+      cellStyle: {
+        whiteSpace: 'nowrap',
+      },
     },
     {
       title: 'section',
@@ -62,15 +72,13 @@ const CurrentSchedule = () => {
       cellStyle: {
         whiteSpace: 'nowrap',
       },
-      width: 1000,
     },
     {
       title: 'End',
       field: 'endTime',
       cellStyle: {
-        whiteSpace: 'nowrap', // history.push('dashboard');
+        whiteSpace: 'nowrap',
       },
-      width: 1000,
     },
     {
       title: 'Days',
@@ -108,7 +116,81 @@ const CurrentSchedule = () => {
     setTableData(courses)
   }, [currentCourses, courses])
 
+  useEffect(() => {
+    async function markAsComplete() {
+      console.log(courseData)
+      try {
+        // TODO: success alert
+        const res = await addCompletedCourse(courseData)
+        // why is res undefined
+        // if (res.data.success === true) {
+        //   setSuccess(true)
+        //   setSeverity('success')
+        //   setOpen(true)
+        //   setIsLoading(false)
+        // }
+      } catch (error) {
+        console.log(error)
+        // setSeverity('error')
+        // setOpen(true)
+        // setError(error.message)
+      }
+    }
+    markAsComplete()
+  }, [courseData])
+
   const totalUnits = currentCourses.reduce((sum, obj) => sum + obj.units, 0)
+
+  const handleMenuClick = (event, rowData) => {
+    setAnchorEl(event.currentTarget)
+    setSelectedRow(rowData)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleDialogClose = () => {
+    setOpen(false)
+  }
+
+  const handleDialogConfirm = async () => {
+    // delete server side
+    // deleteCurrentCourse(selectedRow)
+
+    // delete from current
+    const valuesToRemove = []
+    let dataDelete = [...tableData]
+    valuesToRemove.push(selectedRow)
+    dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1)
+    setTableData([...dataDelete])
+
+    // cause useEffect to add courseData to complete
+    setCourseData({
+      userID: JSON.parse(user).googleId,
+      type: selectedRow.type,
+      number: selectedRow.course.split(' ')[1],
+      dept: selectedRow.course.split(' ')[0],
+      title: selectedRow.course.split('- ')[1],
+      units: selectedRow.units,
+      term: currentTerm,
+      year: currentYear,
+      grade: grade,
+      // only ge desig will have '-'
+      designation: selectedRow.designation.split(' ').includes('-')
+        ? selectedRow.designation.split(' ')[0]
+        : selectedRow.designation,
+      additionalReq: selectedRow.additionalReq
+        ? selectedRow.additionalReq
+        : 'N/A',
+    })
+
+    setOpen(false)
+  }
+
+  const handleGradeChange = (event) => {
+    setGrade(event.target.value || '')
+  }
 
   const handleCourseUpdate = (newCourse, oldCourse) => {
     // change server side
@@ -122,81 +204,51 @@ const CurrentSchedule = () => {
     setIsLoading(false)
   }
 
-  const handleCourseDelete = (data) => {
-    confirm({ description: 'Delete selected courses' })
+  const handleCourseDelete = () => {
+    confirm({ description: 'Delete selected course' })
       .then(() => {
         // change server side
-        deleteCurrentCourse(data)
+        deleteCurrentCourse(selectedRow)
+
         // change client side
         const valuesToRemove = []
         let dataDelete = [...tableData]
-        for (const oldData of data) {
-          valuesToRemove.push(oldData)
-        }
+        valuesToRemove.push(selectedRow)
         dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1)
         setTableData([...dataDelete])
+
+        handleMenuClose()
         setIsLoading(false)
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e) {
+          console.log(`error: ${e}`)
+        }
         console.log('cancelled')
+        handleMenuClose()
         setIsLoading(false)
       })
   }
 
-  const handleGradeChange = (event) => {
-    setGrade(event.target.value || '')
-  }
-
-  // TODO
-  const handleMarkAsComplete = (data) => {
-    confirm({ description: 'Mark selected courses as complete' })
-      .then(() => {
-        setConfirmed(true)
-        setOpen(true)
-        setSelectedCourses(data)
-        // setCourseTitle(data[0].course)
-      })
-      .catch(() => {
-        console.log('cancelled')
-        setIsLoading(false)
-      })
-  }
-
-  const handleDialogClose = () => {
-    setOpen(false)
-  }
-
-  const handleDialogConfirm = () => {
-    console.log(grade)
-    // server side
-    // delete from current
-
-    // automatically add to complete
-
-    // client side
-    const valuesToRemove = []
-    let dataDelete = [...tableData]
-    for (const oldData of selectedCourses) {
-      valuesToRemove.push(oldData)
-    }
-    dataDelete = dataDelete.filter((i) => valuesToRemove.indexOf(i) === -1)
-    setTableData([...dataDelete])
-    setIsLoading(false)
-    setOpen(false)
+  const handleMarkAsComplete = () => {
+    setOpen(true)
+    setCourseTitle(selectedRow.course)
+    handleMenuClose()
   }
 
   return (
     <>
       <MaterialTable
-        title={`Current Schedule - Spring 2021 (${totalUnits} Units)`}
+        title={`Current Schedule - ${currentTerm} ${currentYear} (${totalUnits} Units)`}
         columns={columns}
         data={tableData}
         isLoading={isLoading}
         options={{
-          selection: true,
           actionsColumnIndex: -1,
           emptyRowsWhenPaging: false,
         }}
+        // TODO: refactor into menu
+        // https://github.com/Domino987/material-table-blog/blob/3671ee2250e626a6c0f3a68b47dd41d3850def2c/blog/src/GroupedActions/GroupedActions.tsx#L42
         editable={{
           onRowUpdate: async (newCourse, oldCourse) =>
             new Promise((resolve, reject) => {
@@ -205,31 +257,28 @@ const CurrentSchedule = () => {
               resolve()
             }),
         }}
-        localization={{
-          header: {
-            actions: 'Edit',
-          },
-        }}
         actions={[
           {
-            tooltip: 'Mark as Complete',
-            icon: PlaylistAddCheckIcon,
-            onClick: (evt, data) => {
-              handleMarkAsComplete(data)
-            },
-          },
-          {
-            tooltip: 'Delete',
-            icon: 'delete',
-            onClick: (evt, data) => {
-              handleCourseDelete(data)
-            },
+            icon: MoreVertIcon,
+            tooltip: 'More',
+            onClick: handleMenuClick,
           },
         ]}
       />
-      {/* {confirmed ? (
+      <Menu
+        id="more-menu"
+        anchorEl={anchorEl}
+        keepMounted={true}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        {/* TODO */}
+        {/* <MenuItem onClick={handleCourseUpdate}>Edit</MenuItem> */}
+        <MenuItem onClick={handleCourseDelete}>Delete</MenuItem>
+        <MenuItem onClick={handleMarkAsComplete}>Mark As Complete</MenuItem>
+      </Menu>
+      {open && courseTitle ? (
         <DialogSelect
-          // key={idx}
           open={open}
           handleDialogClose={handleDialogClose}
           handleDialogConfirm={handleDialogConfirm}
@@ -237,12 +286,7 @@ const CurrentSchedule = () => {
           grade={grade}
           handleGradeChange={handleGradeChange}
         />
-      ) : null} */}
-      {confirmed && selectedCourses
-        ? selectedCourses.map((course, idx) => (
-            <DialogSelect key={idx} open={open} />
-          ))
-        : null}
+      ) : null}
     </>
   )
 }
