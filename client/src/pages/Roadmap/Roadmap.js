@@ -47,6 +47,7 @@ const Roadmap = () => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
   const [validated, setValidated] = useState(false)
+  const [addedCourses, setAddedCourses] = useState([])
 
   const handleYearChange = (event) => {
     setYear(event.target.value)
@@ -70,7 +71,6 @@ const Roadmap = () => {
       }),
     )
   }
-  console.log(termList)
 
   const handleOnDragEnd = ({ source, destination }) => {
     // out of bounds
@@ -86,11 +86,9 @@ const Roadmap = () => {
 
     // Creating a copy of item before removing it from state
     const itemCopy = { ...courses[source.droppableId][source.index] }
-    console.log(itemCopy)
 
     setCourses((prev) => {
       prev = { ...prev }
-      console.log(prev)
       // Remove from previous items array
       prev[source.droppableId].splice(source.index, 1)
       // Adding to new items array location
@@ -101,7 +99,17 @@ const Roadmap = () => {
   }
 
   const handleAddCourses = () => {
-    return
+    if (!term || !year) {
+      alert("You must select a term and year before adding courses.")
+    }
+    /* 
+      When hitting "add courses to term" I must search for the correct term+year combo to add the courses to.
+      If that term+year already exists, notify the user of it. If it doesn't exist, create/append to addedCourses with the "term + year" as key, array with courses as data.
+      So addedCourses must be an object like:
+      "term + year" (key): [{course: "", title: "", etc}] (value)
+  
+    setAddedCourses(prev => [...prev, courses.addedCourses])
+    */
   }
 
   return (
@@ -236,13 +244,15 @@ const Roadmap = () => {
             </Col>
             <Col sm={8}>
               <Tab.Content>
+              {console.log(addedCourses)}
                 {termList.map(({ term, year }, idx) => {
                   return (
                     <Tab.Pane key={idx} eventKey={`#${term}${year}`}>
-                      <p>
-                        {term} - {year}
-                      </p>
-                      {/* new variable will go here*/}
+                      {addedCourses.map(added => {
+                        return (
+                          <p>hello</p>
+                        )
+                      })}
                     </Tab.Pane>
                   )
                 })}

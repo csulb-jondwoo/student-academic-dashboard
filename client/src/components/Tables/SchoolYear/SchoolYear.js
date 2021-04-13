@@ -14,7 +14,7 @@ const SchoolYear = ({
       <Card.Body>
         <Form noValidate validated={validated} onSubmit={handleAddTerm}>
           <Form.Group controlId="term">
-            <Form.Label>Term</Form.Label>
+            <Form.Label>Select a Term</Form.Label>
             <Form.Control
               as="select"
               name="term"
@@ -32,7 +32,7 @@ const SchoolYear = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="year">
-            <Form.Label>Year</Form.Label>
+            <Form.Label>Select a Year</Form.Label>
             <Form.Control
               as="select"
               name="year"
