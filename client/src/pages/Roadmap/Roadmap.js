@@ -9,7 +9,6 @@ import Table from 'react-bootstrap/Table'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Tab from 'react-bootstrap/Tab'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
-import { Course } from '../../components/Tables/SchoolYear/Course'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -37,7 +36,7 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList(prev => [...prev, {term: term, year: year, addedCourses: [courses.addedCourses]}]);
+    setTermList(prev => [...prev, {term: term, year: year, addedCourses: courses.addedCourses}]);
   }
 
   const handleOnDragEnd = ({ source, destination }) => {
@@ -184,8 +183,12 @@ const Roadmap = () => {
                 {termList.map(({term, year, addedCourses}) => {
                   return (
                     <Tab.Pane eventKey={`#${term}${year}`}>
-                      <ul>
-                        {console.log(addedCourses)}
+                      <ul className="white">
+                        {addedCourses.map((course, index) => {
+                          return (
+                            <li className="white" key={index}><Link to={{ pathname: course.url }} target="_blank">{course.course} - {course.title} - {course.units}</Link></li>
+                          )
+                        })}
                       </ul>
                     </Tab.Pane>
                   )
