@@ -30,6 +30,7 @@ const Roadmap = () => {
   }
 
   const handleAddTerm = (e) => {
+    /* will also need to first check that the term doesn't already exist */
     e.preventDefault()
     const form = e.currentTarget
     if (form.checkValidity() === false) {
@@ -37,6 +38,7 @@ const Roadmap = () => {
     }
     setValidated(true)
     setTermList(prev => [...prev, {term: term, year: year, addedCourses: courses.addedCourses}]);
+    /* once the termList is created, clear the "addedCourses" column */
   }
 
   const handleOnDragEnd = ({ source, destination }) => {
