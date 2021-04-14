@@ -453,9 +453,9 @@ export const majorReqData = {
     {
       course: ' ',
       title: ' ',
-      units: '',
+      units: ' ',
       designation: ' ',
-      url: ' ',
-    },
+      url: ' '
+    }
   ],
 }

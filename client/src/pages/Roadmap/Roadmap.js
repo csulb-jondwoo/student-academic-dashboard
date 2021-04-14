@@ -9,37 +9,11 @@ import Table from 'react-bootstrap/Table'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Tab from 'react-bootstrap/Tab'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
+import { Course } from '../../components/Tables/SchoolYear/Course'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import _ from 'lodash'
-
-/*
-Roadmap:
-
-1. if user has no roadmap -> render "create a new roadmap"  
-- create a "Roadmap" schema to save for the user. The roadmap object would have an array of "terms"
-Each term has the year, the season, and the courses for that term. To store the term in the appropriate position, 
-write a comparison loop -> find year, then spring -> summer -> fall -> winter
-
-- create Roadmap button saves an empty Roadmap object into the DB for the user. 
-- add Term button renders a new Term component with at least a select year, select term, "+ (add course)", then a surrounding Container.
-Save the term, year, courses in state. When the user hits the "save" button, the roadmap is updated with the new Term in the correct position.
-
-2. if user has a saved roadmap -> load saved roadmap into right  for editing. each term in the roadmap would have to be mapped to create a Term component
-on the Roadmap page. This would be done in the useEffect, making a call to the DB to fetch whether or not the student has a roadmap.
-
-3. Remove CECS Roadmap, remove Add School Year (should be add term at bottom)
-
-4. Should allow user to select from dropdown (fall, winter, spring, summer), then year. 
-
-5. "+" functionality: a modal window perhaps? new page? 
-maybe populate a list of all required CECS courses on the side for the user to pick from. Have a modal window with a list of required cecs courses.
-Clicking a course adds it to the term? 
-- Drag & drop features where users can select from list of required cecs courses and drag them into the Term component.
-- Map the cecs data (name & url) to create Course components with the link and URL for student to choose from in this list 
-
-*/
 
 const Roadmap = () => {
   const [termList, setTermList] = useState([])
@@ -47,7 +21,6 @@ const Roadmap = () => {
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
   const [validated, setValidated] = useState(false)
-  const [addedCourses, setAddedCourses] = useState([])
 
   const handleYearChange = (event) => {
     setYear(event.target.value)
@@ -64,12 +37,7 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList(
-      termList.concat({
-        term: term,
-        year: year,
-      }),
-    )
+    setTermList(prev => [...prev, {term: term, year: year, addedCourses: [courses.addedCourses]}]);
   }
 
   const handleOnDragEnd = ({ source, destination }) => {
@@ -96,20 +64,6 @@ const Roadmap = () => {
 
       return prev
     })
-  }
-
-  const handleAddCourses = () => {
-    if (!term || !year) {
-      alert("You must select a term and year before adding courses.")
-    }
-    /* 
-      When hitting "add courses to term" I must search for the correct term+year combo to add the courses to.
-      If that term+year already exists, notify the user of it. If it doesn't exist, create/append to addedCourses with the "term + year" as key, array with courses as data.
-      So addedCourses must be an object like:
-      "term + year" (key): [{course: "", title: "", etc}] (value)
-  
-    setAddedCourses(prev => [...prev, courses.addedCourses])
-    */
   }
 
   return (
@@ -212,23 +166,6 @@ const Roadmap = () => {
             )
           })}
         </Row>
-        <Row className="d-flex mt-5 justify-content-center padding">
-          <Col>
-            <Card className="text-center shadow-sm">
-              <Card.Body>
-                <Card.Title>Current Semester: {term}</Card.Title>
-                <Card.Title>Current Year: {year}</Card.Title>
-                <Button
-                  className="mb-4 padding"
-                  onClick={handleAddCourses}
-                  size="sm"
-                >
-                  Add Courses To Term
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
         <Tab.Container id="addedTerms" defaultActiveKey={`#${term}${year}`}>
           <Row className="d-flex mt-5 justify-content-center padding">
             <Col sm={4}>
@@ -244,15 +181,12 @@ const Roadmap = () => {
             </Col>
             <Col sm={8}>
               <Tab.Content>
-              {console.log(addedCourses)}
-                {termList.map(({ term, year }, idx) => {
+                {termList.map(({term, year, addedCourses}) => {
                   return (
-                    <Tab.Pane key={idx} eventKey={`#${term}${year}`}>
-                      {addedCourses.map(added => {
-                        return (
-                          <p>hello</p>
-                        )
-                      })}
+                    <Tab.Pane eventKey={`#${term}${year}`}>
+                      <ul>
+                        {console.log(addedCourses)}
+                      </ul>
                     </Tab.Pane>
                   )
                 })}
