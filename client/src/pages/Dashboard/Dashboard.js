@@ -12,12 +12,14 @@ import GeRemaining from '../../components/Tables/RemainingCourses/GeRemaining/Ge
 import GeRequirements from '../../components/Tables/Requirements/GeRequirements/GeRequirements'
 import { majorReqCategory } from '../../components/Tables/Requirements/MajorRequirements/CecsReqData'
 import { myContext } from '../../context/Context'
+import RemainingCourses from '../../components/Tables/RemainingCourses/RemainingCourses'
+import Requirements from '../../components/Tables/Requirements/Requirements'
 
 const Dashboard = () => {
-  const [radioValue, setRadioValue] = useState('ge')
+  const [type, setType] = useState('ge')
 
   const handleCourseChange = (value) => {
-    setRadioValue(value)
+    setType(value)
   }
 
   return (
@@ -33,7 +35,7 @@ const Dashboard = () => {
           <CurrentSchedule />
         </Col>
       </Row>
-      {/* <Row className="mt-4">
+      <Row className="mt-4">
         <Col className="d-flex justify-content-center">
           <ToggleButtonGroup
             className="mb-3"
@@ -48,11 +50,13 @@ const Dashboard = () => {
         </Col>
       </Row>
       <Row className="mt-3 mb-5">
-        <Col>{radioValue === 'ge' ? <GeRemaining /> : <MajorRemaining />}</Col>
         <Col>
-          {radioValue === 'ge' ? <GeRequirements /> : <MajorRequirements />}
+          <RemainingCourses type={type} />
         </Col>
-      </Row> */}
+        <Col>
+          <Requirements type={type} />
+        </Col>
+      </Row>
     </>
   )
 }
