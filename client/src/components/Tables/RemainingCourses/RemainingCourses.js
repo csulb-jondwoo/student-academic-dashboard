@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import Col from 'react-bootstrap/Col'
 
 import GeRemaining from '../RemainingCourses/GeRemaining/GeRemaining'
 import { myContext } from '../../../context/Context'
+import MajorRemaining from './MajorRemaining/MajorRemaining'
 
 const RemainingCourses = ({ type }) => {
   const { user, completedCourses, getCompletedCourses } = useContext(myContext)
@@ -61,9 +62,9 @@ const RemainingCourses = ({ type }) => {
     <>
       <Col>
         {type === 'ge' ? (
-          <GeRemaining majorCourses={majorCourses} geCourses={geCourses} />
+          <GeRemaining geCourses={geCourses} majorCourses={majorCourses} />
         ) : (
-          '<MajorRemaining />'
+          <MajorRemaining majorCourses={majorCourses} />
         )}
       </Col>
     </>
