@@ -12,10 +12,15 @@ import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import _ from 'lodash'
+
 
 const Roadmap = () => {
-  const [termList, setTermList] = useState([])
+  const [termList, setTermList] = useState({
+    initialTable: {
+      name: "Required CECS Courses",
+      items: [majorReqData]
+    }
+  })
   const [courses, setCourses] = useState(majorReqData)
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
@@ -37,41 +42,67 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList((prev) => [
-      ...prev,
-      { term: term, year: year, addedCourses: courses.addedCourses },
-    ])
+    setTermList(prevState => {
+      return {
+        ...prevState,
+        [`${term}${year}`]: {
+          term: term,
+          year: year,
+          items: []
+        }
+      }
+    })
     /* once the termList is created, clear the "addedCourses" column */
   }
 
-  const handleOnDragEnd = ({ source, destination }) => {
-    // out of bounds
-    if (!destination) return
+  const onDragEnd = (result, termList, setTermList) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    console.log(termList[source.droppableId])
 
-    // not moved
-    if (
-      destination.index === source.index &&
-      destination.droppableId === source.droppableId
-    ) {
+    if (source.droppableId === destination.droppableId === "initialTable") {
       return
     }
 
-    // Creating a copy of item before removing it from state
-    const itemCopy = { ...courses[source.droppableId][source.index] }
-
-    setCourses((prev) => {
-      prev = { ...prev }
-      // Remove from previous items array
-      prev[source.droppableId].splice(source.index, 1)
-      // Adding to new items array location
-      prev[destination.droppableId].splice(destination.index, 0, itemCopy)
-
-      return prev
-    })
-  }
+   /*  if (source.droppableId === "initialTable" && source.droppableId !== destination.droppableId) {
+      const sourceColumn = initialTab
+    } */
+  
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = termList[source.droppableId];
+      const destColumn = termList[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destItems.splice(destination.index, 0, removed);
+      setTermList({
+        ...termList,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          items: destItems
+        }
+      });
+    } else {
+      const column = termList[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      setTermList({
+        ...termList,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems
+        }
+      });
+    }
+  };
 
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
+    <DragDropContext onDragEnd={result => onDragEnd(result, termList, setTermList)}>
       <Container>
         {/* Title */}
         <Row className="d-flex mt-5 justify-content-center padding">
@@ -90,7 +121,7 @@ const Roadmap = () => {
           </Col>
         </Row>
         {/* Catalog */}
-        <Row className="d-flex mt-5 justify-content-center padding">
+        <Row className="d-flex mt-5 justify-content-center row-padding">
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
@@ -99,117 +130,121 @@ const Roadmap = () => {
             </Card>
           </Col>
         </Row>
-        <Row className="d-flex mt-5 justify-content-center padding">
-          {_.map(courses, (data, key) => {
-            return (
+        <Row className="d-flex mt-5 justify-content-center row-padding">
+
               <Col>
-                <div className="table-wrapper">
+                <div className="table-wrapper row-padding">
                   {/* Table Wrapper */}
-                  <Table
-                    key={key}
-                    className="mb-3"
-                    striped
-                    hover
-                    bordered
-                    responsive="sm"
-                    size="sm"
-                  >
-                    <thead>
-                      <tr>
-                        <th>
-                          <Row>
-                            <Col>Course</Col>
-                          </Row>
-                        </th>
-                        <th>Units</th>
-                        <th>Designation</th>
-                      </tr>
-                    </thead>
+                  
                     {/* Start of Draggable/Droppable Courses */}
-                    <Droppable key={key} droppableId={key}>
+                    <Droppable droppableId={"initialTable"}>
                       {(provided) => {
                         return (
-                          <tbody
+                          <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                           >
-                            {data.map((el, index) => {
+                            {courses.map((item, index) => {
                               return (
                                 <Draggable
-                                  key={el.course}
+                                  key={item.course}
                                   index={index}
-                                  draggableId={el.course}
+                                  draggableId={item.course}
                                 >
-                                  {(provided) => (
-                                    <tr
+                                  {(provided) => {
+                                    return (
+                                    <ul
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       ref={provided.innerRef}
                                     >
-                                      <td>
+                                      <li>
                                         <Link
-                                          to={{ pathname: el.url }}
+                                          to={{ pathname: item.url }}
                                           target="_blank"
-                                        >{`${el.course} - ${el.title}`}</Link>
-                                      </td>
-                                      <td>{el.units}</td>
-                                      <td>{el.designation}</td>
-                                    </tr>
-                                  )}
+                                        >{`${item.course} - ${item.title} - ${item.units} Units - ${item.designation}`}</Link>
+                                      </li>
+                                    </ul>
+                                    )
+                                  }}
                                 </Draggable>
                               )
                             })}
                             {provided.placeholder}
-                          </tbody>
+                          </div>
                         )
                       }}
                     </Droppable>
-                  </Table>
                 </div>
               </Col>
-            )
-          })}
+
         </Row>
-        <Tab.Container id="addedTerms" defaultActiveKey={`#${term}${year}`}>
-          <Row className="d-flex mt-5 justify-content-center padding">
-            <Col sm={4}>
-              <ListGroup>
-                {termList.map(({ term, year }, idx) => {
-                  return (
-                    <ListGroup.Item key={idx} action href={`#${term}${year}`}>
-                      {`${term} ${year}`}
-                    </ListGroup.Item>
-                  )
-                })}
-              </ListGroup>
-            </Col>
-            <Col sm={8}>
-              <Tab.Content>
-                {termList.map(({ term, year, addedCourses }) => {
-                  return (
-                    <Tab.Pane eventKey={`#${term}${year}`}>
-                      <ul className="white">
-                        {addedCourses.map((course, index) => {
+        <Row className="d-flex mt-5 justify-content-center row-padding">
+        {Object.entries(termList).map(([key, value], index) => {
+          return (
+            <Col className="table-wrapper"
+              key={key}
+            >
+              <h2>{`${value.term} ${value.year}`}</h2>
+              <div style={{ margin: 8 }}>
+                <Droppable droppableId={key} key={key}>
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{
+                          background: snapshot.isDraggingOver
+                            ? "lightblue"
+                            : "lightgrey",
+                          padding: 4,
+                          width: 250,
+                          minHeight: 500
+                        }}
+                      >
+                        {value.items.map((item, index) => {
                           return (
-                            <li className="white" key={index}>
-                              <Link
-                                to={{ pathname: course.url }}
-                                target="_blank"
-                              >
-                                {course.course} - {course.title} -{' '}
-                                {course.units}
-                              </Link>
-                            </li>
-                          )
+                            <Draggable
+                              key={item.course}
+                              draggableId={item.course}
+                              index={index}
+                            >
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={{
+                                      userSelect: "none",
+                                      padding: 16,
+                                      margin: "0 0 8px 0",
+                                      minHeight: "50px",
+                                      backgroundColor: snapshot.isDragging
+                                        ? "#263B4A"
+                                        : "#456C86",
+                                      color: "white",
+                                      ...provided.draggableProps.style
+                                    }}
+                                  >
+                                    {`${item.course} ${item.title}`}
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
                         })}
-                      </ul>
-                    </Tab.Pane>
-                  )
-                })}
-              </Tab.Content>
+                        {provided.placeholder}
+                      </div>
+                    );
+                  }}
+                </Droppable>
+              </div>
             </Col>
-          </Row>
-        </Tab.Container>
+          );
+        })}
+        </Row>
+
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
             <Button className="mb-4">Download PDF</Button>
