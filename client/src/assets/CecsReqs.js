@@ -1,6 +1,12 @@
 export const majorReqData = {
   reqCourses: [
     {
+      /* 
+      name: "Required Courses"
+      courses: [
+
+      ]
+      */
       course: 'CECS 100',
       title: 'Critical Thinking in the Digital Information Age',
       units: 3,
