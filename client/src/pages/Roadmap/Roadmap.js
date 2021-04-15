@@ -37,7 +37,10 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList(prev => [...prev, {term: term, year: year, addedCourses: courses.addedCourses}]);
+    setTermList((prev) => [
+      ...prev,
+      { term: term, year: year, addedCourses: courses.addedCourses },
+    ])
     /* once the termList is created, clear the "addedCourses" column */
   }
 
@@ -182,13 +185,21 @@ const Roadmap = () => {
             </Col>
             <Col sm={8}>
               <Tab.Content>
-                {termList.map(({term, year, addedCourses}) => {
+                {termList.map(({ term, year, addedCourses }) => {
                   return (
                     <Tab.Pane eventKey={`#${term}${year}`}>
                       <ul className="white">
                         {addedCourses.map((course, index) => {
                           return (
-                            <li className="white" key={index}><Link to={{ pathname: course.url }} target="_blank">{course.course} - {course.title} - {course.units}</Link></li>
+                            <li className="white" key={index}>
+                              <Link
+                                to={{ pathname: course.url }}
+                                target="_blank"
+                              >
+                                {course.course} - {course.title} -{' '}
+                                {course.units}
+                              </Link>
+                            </li>
                           )
                         })}
                       </ul>

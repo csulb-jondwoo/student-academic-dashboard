@@ -128,7 +128,7 @@ const OtherHistory = () => {
           }
         }),
 
-    [completedCourses, userID],
+    [completedCourses, userID]
   )
 
   const [tableData, setTableData] = useState(courses)

@@ -17,7 +17,7 @@ router.get(
     // Successful authentication
 
     res.redirect('http://localhost:3000/dashboard')
-  },
+  }
 )
 
 // @desc log current user out

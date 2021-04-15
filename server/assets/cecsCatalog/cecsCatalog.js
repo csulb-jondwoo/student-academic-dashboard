@@ -339,5 +339,5 @@ const cecsCatalog = [
 ]
 
 module.exports = {
-  cecsCatalog
+  cecsCatalog,
 }

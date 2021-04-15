@@ -26,7 +26,7 @@ mongoose
     useFindAndModify: false,
   })
   .then(() =>
-    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)),
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
   .catch((error) => console.log(error.message))
 
@@ -38,7 +38,7 @@ app.use(
     secret: 'secretcode',
     resave: true,
     saveUninitialized: true,
-  }),
+  })
 )
 app.use(passport.initialize())
 app.use(passport.session())

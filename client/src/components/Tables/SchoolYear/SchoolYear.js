@@ -50,7 +50,10 @@ const SchoolYear = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="year">
-            <Form.Label>To add courses, drag a course from the right table to left table. When ready, select Create New Term.</Form.Label>
+            <Form.Label>
+              To add courses, drag a course from the right table to left table.
+              When ready, select Create New Term.
+            </Form.Label>
           </Form.Group>
           <Button className="mt-3" variant="primary" type="submit">
             Create New Term

@@ -11,7 +11,7 @@ export default function Accept({ handleFileChange }) {
     (acceptedFiles) => {
       handleFileChange(acceptedFiles)
     },
-    [handleFileChange],
+    [handleFileChange]
   )
 
   const {

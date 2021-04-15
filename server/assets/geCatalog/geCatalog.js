@@ -782,7 +782,11 @@ const geCatalog = [
   {
     course: 'CHLS 370',
     designation: ['C2a'],
-    additionalReq: ['Interdisciplinary', 'Writing Intensive', 'Human Diversity'],
+    additionalReq: [
+      'Interdisciplinary',
+      'Writing Intensive',
+      'Human Diversity',
+    ],
   },
   {
     course: 'CHLS 450',
@@ -957,7 +961,11 @@ const geCatalog = [
   {
     course: 'ENGL 370',
     designation: ['C2a'],
-    additionalReq: ['Interdisciplinary', 'Writing Intensive', 'Human Diversity'],
+    additionalReq: [
+      'Interdisciplinary',
+      'Writing Intensive',
+      'Human Diversity',
+    ],
   },
   {
     course: 'ENGL 372',
@@ -967,7 +975,11 @@ const geCatalog = [
   {
     course: 'ENGL 375',
     designation: ['C2a'],
-    additionalReq: ['Interdisciplinary', 'Writing Intensive', 'Human Diversity'],
+    additionalReq: [
+      'Interdisciplinary',
+      'Writing Intensive',
+      'Human Diversity',
+    ],
   },
   {
     course: 'ENGL 382',
@@ -987,7 +999,11 @@ const geCatalog = [
   {
     course: 'ENGL 387',
     designation: ['C2a'],
-    additionalReq: ['Interdisciplinary', 'Writing Intensive', 'Human Diversity'],
+    additionalReq: [
+      'Interdisciplinary',
+      'Writing Intensive',
+      'Human Diversity',
+    ],
   },
   {
     course: 'ENGL 444',

@@ -455,7 +455,7 @@ export const majorReqData = {
       title: ' ',
       units: ' ',
       designation: ' ',
-      url: ' '
-    }
+      url: ' ',
+    },
   ],
 }

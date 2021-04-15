@@ -13,5 +13,5 @@ ReactDOM.render(
       <App />
     </Context>
   </>,
-  document.getElementById('root'),
+  document.getElementById('root')
 )
