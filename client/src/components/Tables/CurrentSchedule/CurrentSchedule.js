@@ -116,7 +116,6 @@ const CurrentSchedule = () => {
 
   useEffect(() => {
     async function markAsComplete() {
-      console.log(courseData)
       try {
         // TODO: success alert
         const res = await addCompletedCourse(courseData)
