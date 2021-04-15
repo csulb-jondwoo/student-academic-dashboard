@@ -1967,7 +1967,7 @@ const geCatalog = [
   },
   {
     course: 'ANTH 120',
-    designation: ['D2'],
+    designation: ['D3'],
     additionalReq: ['Explorations', 'Global Issues'],
   },
   {
