@@ -13,7 +13,6 @@ const StudentInfo = () => {
   const { user, completedCourses, getCompletedCourses } = useContext(myContext)
   const userID = JSON.parse(user).googleId
   const studentId = JSON.parse(user).studentId
-  console.log(studentId)
 
   useEffect(() => {
     getCompletedCourses(userID)
@@ -132,7 +131,7 @@ const StudentInfo = () => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderCurrentGpaTooltip}
                     >
-                      <span>{GPA ? GPA : '-'}</span>
+                      <span>{GPA ? GPA.toFixed(2) : '-'}</span>
                     </OverlayTrigger>
                     /
                     <OverlayTrigger
