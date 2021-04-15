@@ -87,7 +87,7 @@ export const geReqData = [
     course: 'F',
     units: 3,
     designation: 'F',
-    category: 'E',
+    category: 'F',
   },
   {
     course: 'Global Issues',
