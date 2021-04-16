@@ -18,9 +18,10 @@ const Roadmap = () => {
   const [termList, setTermList] = useState({
     initialTable: {
       name: "Required CECS Courses",
-      items: [majorReqData]
+      items: majorReqData
     }
   })
+
   const [courses, setCourses] = useState(majorReqData)
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
@@ -58,15 +59,10 @@ const Roadmap = () => {
   const onDragEnd = (result, termList, setTermList) => {
     const { source, destination } = result;
     if (!destination) return;
-    console.log(termList[source.droppableId])
 
     if (source.droppableId === destination.droppableId === "initialTable") {
       return
     }
-
-   /*  if (source.droppableId === "initialTable" && source.droppableId !== destination.droppableId) {
-      const sourceColumn = initialTab
-    } */
   
     if (source.droppableId !== destination.droppableId) {
       const sourceColumn = termList[source.droppableId];
@@ -144,7 +140,7 @@ const Roadmap = () => {
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                           >
-                            {courses.map((item, index) => {
+                            {termList.initialTable.items.map((item, index) => {
                               return (
                                 <Draggable
                                   key={item.course}
@@ -180,7 +176,9 @@ const Roadmap = () => {
 
         </Row>
         <Row className="d-flex mt-5 justify-content-center row-padding">
-        {Object.entries(termList).map(([key, value], index) => {
+        {Object.entries(termList).filter(([key, value]) => {
+          return key !== "initialTable"
+        }).map(([key, value], index) => {
           return (
             <Col className="table-wrapper"
               key={key}
