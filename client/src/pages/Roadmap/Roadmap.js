@@ -5,13 +5,13 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Tab from 'react-bootstrap/Tab'
 import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import DeleteIcon from "@material-ui/icons/Delete"
+import axios from 'axios'
+import { saveAs } from 'file-saver'
 
 
 const Roadmap = () => {
@@ -22,7 +22,6 @@ const Roadmap = () => {
     }
   })
 
-  const [courses, setCourses] = useState(majorReqData)
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
   const [validated, setValidated] = useState(false)
@@ -36,7 +35,6 @@ const Roadmap = () => {
   }
 
   const handleAddTerm = (e) => {
-    /* will also need to first check that the term doesn't already exist */
     e.preventDefault()
     const form = e.currentTarget
     if (form.checkValidity() === false) {
@@ -53,7 +51,15 @@ const Roadmap = () => {
         }
       }
     })
-    /* once the termList is created, clear the "addedCourses" column */
+  }
+
+  const createAndDownloadPDF = () => {
+    axios.post('/create-pdf', termList)
+      .then(() => axios.get('fetch-pdf', { responseType: 'blob'}))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], {type: 'application/pdf'})
+        saveAs(pdfBlob, 'roadmap.pdf')
+      })
   }
 
   const onDragEnd = (result, termList, setTermList) => {
@@ -175,77 +181,82 @@ const Roadmap = () => {
               </Col>
 
         </Row>
+
         <Row className="d-flex mt-5 justify-content-center row-padding">
-        {Object.entries(termList).filter(([key, value]) => {
-          return key !== "initialTable"
-        }).map(([key, value], index) => {
-          return (
-            <Col className="table-wrapper"
-              key={key}
-            >
-              <h2>{`${value.term} ${value.year}`}</h2>
-              <div style={{ margin: 8 }}>
-                <Droppable droppableId={key} key={key}>
-                  {(provided, snapshot) => {
-                    return (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={{
-                          background: snapshot.isDraggingOver
+          {Object.entries(termList).filter(([key, value]) => {
+            return key !== "initialTable"
+          }).map(([key, value], index) => {
+            return (
+              <Col className="table-wrapper">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>
+                      {`${value.term} ${value.year}`}
+                    </Card.Title>
+                    <Droppable droppableId={key} key={key}>
+                      {(provided, snapshot) => {
+                        return (
+                          <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          style={{
+                            background: snapshot.isDraggingOver
                             ? "lightblue"
                             : "lightgrey",
-                          padding: 4,
-                          width: 250,
-                          minHeight: 500
-                        }}
-                      >
-                        {value.items.map((item, index) => {
-                          return (
-                            <Draggable
-                              key={item.course}
-                              draggableId={item.course}
-                              index={index}
-                            >
-                              {(provided, snapshot) => {
-                                return (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      backgroundColor: snapshot.isDragging
+                            padding: 4,
+                            width: 280,
+                            minHeight: 280
+                          }}
+                          >
+                            {value.items.map((item, index) => {
+                              return (
+                                <Draggable
+                                key={item.course}
+                                draggableId={item.course}
+                                index={index}
+                                >
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      style={{
+                                        userSelect: "none",
+                                        padding: 16,
+                                        margin: "0 0 8px 0",
+                                        minHeight: "50px",
+                                        backgroundColor: snapshot.isDragging
                                         ? "#263B4A"
                                         : "#456C86",
-                                      color: "white",
-                                      ...provided.draggableProps.style
-                                    }}
-                                  >
-                                    {`${item.course} ${item.title}`}
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                        {provided.placeholder}
-                      </div>
-                    );
-                  }}
-                </Droppable>
-              </div>
-            </Col>
-          );
-        })}
+                                        color: "white",
+                                        ...provided.draggableProps.style
+                                      }}
+                                      >
+                                        {`${item.course} ${item.title}`}
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            })}
+                            {provided.placeholder}
+                          </div>
+                        );
+                      }}
+                    </Droppable>
+                    <Button size="small" color="primary"><DeleteIcon fontSize="small" />Delete</Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
+
 
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
-            <Button className="mb-4">Download PDF</Button>
+            <Button className="mb-4" onClick={createAndDownloadPDF}>Download PDF</Button>
           </Col>
           <Col>
             <Button>Save Roadmap</Button>
