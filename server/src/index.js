@@ -54,14 +54,16 @@ app.use('/user', userRoutes)
 app.use('/course', courseRoutes)
 
 app.post('/create-pdf', (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile('roadmap.pdf', (err) => {
+  pdf.create(pdfTemplate(req.body), {}).toFile(`${__dirname}/result.pdf`, (err) => {
       if(err) {
-          res.send(Promise.reject());
+        console.log("Error creating file.")
+        res.send(Promise.reject());
       }
+      console.log("File created successfully.")
       res.send(Promise.resolve());
   });
 });
 
 app.get('/fetch-pdf', (req, res) => {
-  res.sendFile(`${__dirname}/roadmap.pdf`)
+  res.sendFile(`${__dirname}/result.pdf`)
 })
