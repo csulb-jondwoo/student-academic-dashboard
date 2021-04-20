@@ -10,47 +10,11 @@ module.exports = (termList) => {
        </head>
        <body>
           <div>
-             <table cellpadding="0" cellspacing="0">
-                <tr class="top">
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td></td>
-                            <td>
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr>
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td>
-                               
-                            </td>
-                            <td>
-                               
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr>
-                   <td></td>
-                   <td></td>
-                </tr>
-                <tr>
-                   <td></td>
-                   <td></td>
-                </tr>
-                <tr>
-                   <td></td>
-                   <td></td>
-                </tr>
-             </table>
-             <br />
-             <h1></h1></h1>
+            ${`{Object.entries(termList).filter(([key, value]) => {
+               return (
+                  <h2>Term: {key}</h2> 
+               )
+            })}`}
           </div>
        </body>
     </html>

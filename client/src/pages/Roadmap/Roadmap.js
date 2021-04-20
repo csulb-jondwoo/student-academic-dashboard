@@ -22,6 +22,8 @@ const Roadmap = () => {
     }
   })
 
+  {Object.entries(termList).filter(([key, value]) => console.log(value.name))}
+
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
   const [validated, setValidated] = useState(false)
@@ -53,14 +55,17 @@ const Roadmap = () => {
     })
   }
 
-  const createAndDownloadPDF = () => {
-    axios.post('/create-pdf', termList)
-      .then(() => axios.get('fetch-pdf', { responseType: 'blob'}))
+  
+  const createAndDownloadPdf = () => {
+    const API = axios.create({ baseURL: 'http://localhost:5000' })
+    API.post('/create-pdf', termList)
+      .then(() => API.get('fetch-pdf', { responseType: 'blob' }))
       .then((res) => {
-        const pdfBlob = new Blob([res.data], {type: 'application/pdf'})
-        saveAs(pdfBlob, 'roadmap.pdf')
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+
+        saveAs(pdfBlob, 'myRoadmap.pdf');
       })
-  }
+  } 
 
   const onDragEnd = (result, termList, setTermList) => {
     const { source, destination } = result;
@@ -202,7 +207,7 @@ const Roadmap = () => {
                           style={{
                             background: snapshot.isDraggingOver
                             ? "lightblue"
-                            : "lightgrey",
+                            : "white",
                             padding: 4,
                             width: 280,
                             minHeight: 280
@@ -256,7 +261,7 @@ const Roadmap = () => {
 
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
-            <Button className="mb-4" onClick={createAndDownloadPDF}>Download PDF</Button>
+            <Button className="mb-4" onClick={createAndDownloadPdf}>Download PDF</Button>
           </Col>
           <Col>
             <Button>Save Roadmap</Button>

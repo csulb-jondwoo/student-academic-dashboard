@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 const pdf = require('html-pdf')
@@ -54,13 +55,16 @@ app.use('/user', userRoutes)
 app.use('/course', courseRoutes)
 
 app.post('/create-pdf', (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
-    if (err) {
-      res.send(Promise.reject())
-    }
-
-    res.send(Promise.resolve())
-  })
+  pdf
+    .create(pdfTemplate(req.body), {})
+    .toFile(`${__dirname}/result.pdf`, (err) => {
+      if (err) {
+        console.log('Error creating file.')
+        res.send(Promise.reject())
+      }
+      console.log('File created successfully.')
+      res.send(Promise.resolve())
+    })
 })
 
 app.get('/fetch-pdf', (req, res) => {
