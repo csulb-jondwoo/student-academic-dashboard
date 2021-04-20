@@ -6,6 +6,7 @@ const cors = require('cors')
 const session = require('express-session')
 const passport = require('passport')
 const pdf = require('html-pdf')
+const bodyParser = require('body-parser')
 
 const pdfTemplate = require('../documents')
 
@@ -43,7 +44,7 @@ app.use(
     saveUninitialized: true,
   })
 )
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -54,13 +55,13 @@ app.use('/course', courseRoutes)
 
 app.post('/create-pdf', (req, res) => {
   pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
-      if(err) {
-          res.send(Promise.reject());
-      }
+    if (err) {
+      res.send(Promise.reject())
+    }
 
-      res.send(Promise.resolve());
-  });
-});
+    res.send(Promise.resolve())
+  })
+})
 
 app.get('/fetch-pdf', (req, res) => {
   res.sendFile(`${__dirname}/result.pdf`)
