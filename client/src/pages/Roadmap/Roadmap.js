@@ -22,6 +22,8 @@ const Roadmap = () => {
     }
   })
 
+  {Object.entries(termList).filter(([key, value]) => console.log(value.name))}
+
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
   const [validated, setValidated] = useState(false)

@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const bodyParser = require('body-parser');
 const session = require('express-session')
 const passport = require('passport')
 const pdf = require('html-pdf')
@@ -53,15 +54,14 @@ app.use('/user', userRoutes)
 app.use('/course', courseRoutes)
 
 app.post('/create-pdf', (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
+  pdf.create(pdfTemplate(req.body), {}).toFile('roadmap.pdf', (err) => {
       if(err) {
           res.send(Promise.reject());
       }
-
       res.send(Promise.resolve());
   });
 });
 
 app.get('/fetch-pdf', (req, res) => {
-  res.sendFile(`${__dirname}/result.pdf`)
+  res.sendFile(`${__dirname}/roadmap.pdf`)
 })
