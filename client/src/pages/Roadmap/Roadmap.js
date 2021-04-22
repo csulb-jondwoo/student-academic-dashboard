@@ -17,12 +17,13 @@ import { saveAs } from 'file-saver'
 const Roadmap = () => {
   const [termList, setTermList] = useState({
     initialTable: {
-      name: "Required CECS Courses",
+      term: "",
+      year: "",
       items: majorReqData
     }
   })
 
-  {Object.entries(termList).filter(([key, value]) => console.log(value.name))}
+  {Object.entries(termList).filter(([key, value]) => console.log(value.term))}
 
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
@@ -54,7 +55,6 @@ const Roadmap = () => {
       }
     })
   }
-
   
   const createAndDownloadPdf = () => {
     const API = axios.create({ baseURL: 'http://localhost:5000' })
@@ -132,7 +132,7 @@ const Roadmap = () => {
           <Col>
             <Card className="text-center shadow-sm">
               <Card.Body>
-                <Card.Title>CECS Course Catalog</Card.Title>
+                <Card.Title>CECS Required Courses</Card.Title>
               </Card.Body>
             </Card>
           </Col>
@@ -250,7 +250,7 @@ const Roadmap = () => {
                         );
                       }}
                     </Droppable>
-                    <Button size="small" color="primary"><DeleteIcon fontSize="small" />Delete</Button>
+                    <Button size="small" color="primary"><DeleteIcon fontSize="small"/>Delete</Button>
                   </Card.Body>
                 </Card>
               </Col>
