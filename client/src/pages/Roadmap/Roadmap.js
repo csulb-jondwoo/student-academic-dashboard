@@ -10,6 +10,7 @@ import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import DeleteIcon from "@material-ui/icons/Delete"
+import { ExportPdf } from './ExportPdf'
 import axios from 'axios'
 import { saveAs } from 'file-saver'
 
@@ -22,11 +23,9 @@ const Roadmap = () => {
       items: majorReqData
     }
   })
-
-  {Object.entries(termList).filter(([key, value]) => console.log(value.term))}
-
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
+  const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
 
   const handleYearChange = (event) => {
@@ -107,6 +106,10 @@ const Roadmap = () => {
       });
     }
   };
+
+  const handleClick = () => {
+    setShow(true)
+  }
 
   return (
     <DragDropContext onDragEnd={result => onDragEnd(result, termList, setTermList)}>
@@ -258,10 +261,15 @@ const Roadmap = () => {
           })}
         </Row>
 
+        {/* {show ?
+           <ExportPdf data={termList} /> :
+           null
+        } */}
+
 
         <Row className="mt-5 row-padding">
           <Col className="d-flex justify-content-end">
-            <Button className="mb-4" onClick={createAndDownloadPdf}>Download PDF</Button>
+            <Button className="mb-4" onClick={handleClick}>Create PDF</Button>
           </Col>
           <Col>
             <Button>Save Roadmap</Button>
