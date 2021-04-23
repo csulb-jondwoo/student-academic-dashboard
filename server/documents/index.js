@@ -5,17 +5,26 @@ module.exports = (termList) => {
        <head>
           <meta charset="utf-8">
           <title>PDF Template</title>
-          <style>
-          </style>
+          <style></style>
+          <script>
+            
+          </script>
        </head>
        <body>
-          <div>
-            ${`{Object.entries(termList).filter(([key, value]) => {
-               return (
-                  <h2>Term: {key}</h2> 
-               )
-            })}`}
-          </div>
+         <header>CECS Roadmap</header>
+         <table>
+            <tr>
+               <th>Term</th>
+               <th>Year</th>
+               <th>Course</th>
+            </tr>
+            <tr>
+               <td id="test"></td>
+               <script>
+                  
+               </script>
+            </tr>
+         </table>
        </body>
     </html>
     `;
