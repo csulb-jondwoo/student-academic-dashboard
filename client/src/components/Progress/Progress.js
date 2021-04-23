@@ -8,6 +8,7 @@ import { myContext } from '../../context/Context'
 
 const Progress = () => {
   const { percentCompleted } = useContext(myContext)
+  console.log(percentCompleted)
   const renderOverallProgress = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Degree Completion: {percentCompleted}%

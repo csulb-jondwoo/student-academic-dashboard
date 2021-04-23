@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
 
@@ -6,55 +6,17 @@ import '../../../../utility/css/table-fixed-height.css'
 import getGeRemaining from './getGeRemaining/getGeRemaining'
 
 const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
-  const [remainingData, setRemainingData] = useState(undefined)
-
-  useEffect(() => {
-    const {
-      geRemaining,
-      CAT_E,
-      CAT_F,
-      geEUnitCount,
-      geFUnitCount,
-    } = getGeRemaining(geCourses, majorCourses)
-
-    setRemainingData({
-      geRemaining,
-      CAT_E,
-      CAT_F,
-      geEUnitCount,
-      geFUnitCount,
-    })
-  }, [geCourses, majorCourses])
-
-  // useEffect(() => {
-  //   let unitsRemaining = 0
-  //   let total = 0
-
-  //   if (remainingData) {
-  //     unitsRemaining += remainingData.CAT_E - remainingData.geEUnitCount
-  //     unitsRemaining += remainingData.CAT_F - remainingData.geFUnitCount
-
-  //     for (const remainingCategory of remainingData.geRemaining) {
-  //       if (
-  //         remainingCategory.course === 'Human Diversity' ||
-  //         remainingCategory.course === 'Global Issues' ||
-  //         remainingCategory.course === 'E' ||
-  //         remainingCategory.course === 'F'
-  //       ) {
-  //         continue
-  //       } else {
-  //         unitsRemaining += remainingCategory.units
-  //       }
-  //     }
-
-  //     unitsRemaining += total
-  //   }
-  //   handleGeRemainingUnits(unitsRemaining)
-  // }, [remainingData, handleGeRemainingUnits])
+  const {
+    geRemaining,
+    CAT_E,
+    CAT_F,
+    geEUnitCount,
+    geFUnitCount,
+  } = getGeRemaining(geCourses, majorCourses)
 
   return (
     <>
-      {remainingData ? (
+      {geRemaining ? (
         <div className="shadow-sm">
           <Card>
             <Card.Body>
@@ -70,7 +32,7 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('A')) {
                     return (
                       <tr key={idx}>
@@ -92,7 +54,7 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('B')) {
                     return (
                       <tr key={idx}>
@@ -114,7 +76,7 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('C')) {
                     return (
                       <tr key={idx}>
@@ -136,7 +98,7 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('D')) {
                     return (
                       <tr key={idx}>
@@ -154,15 +116,14 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
               <thead>
                 <tr>
                   <th>
-                    LIFELONG LEARNING & SELF DEVELOPMENT (
-                    {remainingData.CAT_E - remainingData.geEUnitCount} unit(s)
-                    left)
+                    LIFELONG LEARNING & SELF DEVELOPMENT ({CAT_E - geEUnitCount}{' '}
+                    unit(s) left)
                   </th>
                   <th>Units</th>
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('E')) {
                     return (
                       <tr key={idx}>
@@ -177,15 +138,12 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
               </tbody>
               <thead>
                 <tr>
-                  <th>
-                    CAPSTONE ({remainingData.CAT_F - remainingData.geFUnitCount}{' '}
-                    unit(s) left)
-                  </th>
+                  <th>CAPSTONE ({CAT_F - geFUnitCount} unit(s) left)</th>
                   <th>Units</th>
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation.startsWith('F')) {
                     return (
                       <tr key={idx}>
@@ -205,24 +163,24 @@ const GeRemaining = ({ geCourses, majorCourses, handleGeRemainingUnits }) => {
                 </tr>
               </thead>
               <tbody>
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation === 'Global Issues') {
                     return (
                       <tr key={idx}>
                         <td>{course.course}</td>
-                        <td>{course.units}</td>
+                        <td> </td>
                       </tr>
                     )
                   } else {
                     return null
                   }
                 })}
-                {remainingData.geRemaining.map((course, idx) => {
+                {geRemaining.map((course, idx) => {
                   if (course.designation === 'Human Diversity') {
                     return (
                       <tr key={idx}>
                         <td>{course.course}</td>
-                        <td>{course.units}</td>
+                        <td> </td>
                       </tr>
                     )
                   } else {

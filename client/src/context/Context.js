@@ -27,8 +27,8 @@ export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'))
   const [geCourses, setGeCourses] = useState(undefined)
   const [majorCourses, setMajorCourses] = useState(undefined)
-  const [majorRemainingUnits, setMajorRemainingUnits] = useState(undefined)
-  const [geRemainingUnits, setGeRemainingUnits] = useState(undefined)
+  const [majorRemainingUnits, setMajorRemainingUnits] = useState(0)
+  const [geRemainingUnits, setGeRemainingUnits] = useState(0)
   const [percentCompleted, setPercentCompleted] = useState(undefined)
   const [state, dispatch] = useReducer(AppReducer, initialState)
 
@@ -113,7 +113,6 @@ export default function Context(props) {
       } = getGeRemaining(geCourses, majorCourses)
 
       const {
-        majorRemaining,
         lowerDivUnitCount,
         approvedScienceUnitCount,
         upperDivUnitCount,
@@ -159,8 +158,8 @@ export default function Context(props) {
   useEffect(() => {
     const calculatePercentageCompleted = () => {
       if (geRemainingUnits && majorRemainingUnits) {
-        const GE_TOTAL_UNITS_REQUIRED = 45
-        const MAJOR_TOTAL_UNITS_REQUIRED = 92
+        const GE_TOTAL_UNITS_REQUIRED = 50
+        const MAJOR_TOTAL_UNITS_REQUIRED = 94
         const TOTAL_UNITS_REQUIRED =
           GE_TOTAL_UNITS_REQUIRED + MAJOR_TOTAL_UNITS_REQUIRED
 

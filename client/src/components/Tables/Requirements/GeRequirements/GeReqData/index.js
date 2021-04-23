@@ -19,13 +19,13 @@ export const geReqData = [
   },
   {
     course: 'Physical Science',
-    units: '4-5',
+    units: 4,
     designation: 'B1',
     category: 'B',
   },
   {
     course: 'Life Science',
-    units: '3-4',
+    units: 4,
     designation: 'B2',
     category: 'B',
   },
