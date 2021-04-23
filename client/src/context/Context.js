@@ -5,7 +5,11 @@ import React, {
   useReducer,
   useCallback,
 } from 'react'
+
 import AppReducer from './AppReducer'
+import getGeRemaining from '../components/Tables/RemainingCourses/GeRemaining/getGeRemaining/getGeRemaining'
+import getMajorRemaining from '../components/Tables/RemainingCourses/MajorRemaining/getMajorRemaining/getMajorRemaining'
+
 import * as api from '../api'
 
 const initialState = {
@@ -21,6 +25,11 @@ export const myContext = createContext(initialState)
 // Provider Component
 export default function Context(props) {
   const [user, setUser] = useState(localStorage.getItem('user'))
+  const [geCourses, setGeCourses] = useState(undefined)
+  const [majorCourses, setMajorCourses] = useState(undefined)
+  const [majorRemainingUnits, setMajorRemainingUnits] = useState(undefined)
+  const [geRemainingUnits, setGeRemainingUnits] = useState(undefined)
+  const [percentCompleted, setPercentCompleted] = useState(undefined)
   const [state, dispatch] = useReducer(AppReducer, initialState)
 
   // actions
@@ -46,6 +55,129 @@ export default function Context(props) {
     })
   }, [])
 
+  useEffect(() => {
+    if (user) {
+      const userID = JSON.parse(user).googleId
+
+      setGeCourses(
+        state.completedCourses
+          .filter((course) => {
+            return course.type === 'ge' && course.designation !== ''
+          })
+          .map((course) => {
+            return {
+              userID: userID,
+              type: course.type,
+              course: course.dept + ' ' + course.number + ' - ' + course.title,
+              grade: course.grade,
+              units: course.units,
+              designation: course.designation,
+              additionalReq: course.additionalReq,
+              termYear: course.term + ' ' + course.year.toString(),
+            }
+          })
+      )
+
+      setMajorCourses(
+        state.completedCourses
+          .filter((course) => {
+            return course.type === 'major' && course.designation !== ''
+          })
+          .map((course) => {
+            return {
+              userID: userID,
+              type: course.type,
+              course: course.dept + ' ' + course.number + ' - ' + course.title,
+              grade: course.grade,
+              units: course.units,
+              designation: course.designation,
+              additionalReq: course.additionalReq,
+              termYear: course.term + ' ' + course.year.toString(),
+            }
+          })
+      )
+    }
+  }, [user, state.completedCourses])
+
+  useEffect(() => {
+    let majorUnitsRemaining = 0
+    let geUnitsRemaining = 0
+
+    if (geCourses && majorCourses) {
+      const {
+        geRemaining,
+        CAT_E,
+        CAT_F,
+        geEUnitCount,
+        geFUnitCount,
+      } = getGeRemaining(geCourses, majorCourses)
+
+      const {
+        majorRemaining,
+        lowerDivUnitCount,
+        approvedScienceUnitCount,
+        upperDivUnitCount,
+        writingIntensiveUnitCount,
+        coreElectiveUnitCount,
+        appliedElectiveUnitCount,
+        LOWER_DIV_UNITS,
+        APPROVED_SCIENCE_UNITS,
+        UPPER_DIV_UNITS,
+        WRITING_INTENSIVE_UNITS,
+        CORE_ELECTIVE_UNITS,
+        APPLIED_ELECTIVE_UNITS,
+      } = getMajorRemaining(majorCourses)
+
+      majorUnitsRemaining += LOWER_DIV_UNITS - lowerDivUnitCount
+      majorUnitsRemaining += APPROVED_SCIENCE_UNITS - approvedScienceUnitCount
+      majorUnitsRemaining += UPPER_DIV_UNITS - upperDivUnitCount
+      majorUnitsRemaining += WRITING_INTENSIVE_UNITS - writingIntensiveUnitCount
+      majorUnitsRemaining += CORE_ELECTIVE_UNITS - coreElectiveUnitCount
+      majorUnitsRemaining += APPLIED_ELECTIVE_UNITS - appliedElectiveUnitCount
+
+      geUnitsRemaining += CAT_E - geEUnitCount
+      geUnitsRemaining += CAT_F - geFUnitCount
+
+      for (const remainingCategory of geRemaining) {
+        if (
+          remainingCategory.course === 'Human Diversity' ||
+          remainingCategory.course === 'Global Issues' ||
+          remainingCategory.course === 'E' ||
+          remainingCategory.course === 'F'
+        ) {
+          continue
+        } else {
+          geUnitsRemaining += remainingCategory.units
+        }
+      }
+    }
+
+    setGeRemainingUnits(geUnitsRemaining)
+    setMajorRemainingUnits(majorUnitsRemaining)
+  }, [geCourses, majorCourses])
+
+  useEffect(() => {
+    const calculatePercentageCompleted = () => {
+      if (geRemainingUnits && majorRemainingUnits) {
+        const GE_TOTAL_UNITS_REQUIRED = 45
+        const MAJOR_TOTAL_UNITS_REQUIRED = 92
+        const TOTAL_UNITS_REQUIRED =
+          GE_TOTAL_UNITS_REQUIRED + MAJOR_TOTAL_UNITS_REQUIRED
+
+        const totalRemainingUnits = geRemainingUnits + majorRemainingUnits
+
+        setPercentCompleted(
+          (
+            ((TOTAL_UNITS_REQUIRED - totalRemainingUnits) /
+              TOTAL_UNITS_REQUIRED) *
+            100
+          ).toFixed(2)
+        )
+      }
+    }
+    calculatePercentageCompleted()
+  }, [geRemainingUnits, majorRemainingUnits])
+
   const updateUserAfterTranscriptUpload = async () => {
     localStorage.clear()
     await api.fetchUser().then((res) => {
@@ -54,6 +186,14 @@ export default function Context(props) {
         setUser(localStorage.getItem('user'))
       }
     })
+  }
+
+  const handleGeRemainingUnits = (units) => {
+    setGeRemainingUnits(units)
+  }
+
+  const handleMajorRemainingUnits = (units) => {
+    setMajorRemainingUnits(units)
   }
 
   // Get courses
@@ -242,11 +382,16 @@ export default function Context(props) {
     <myContext.Provider
       value={{
         user,
+        percentCompleted,
+        geCourses,
+        majorCourses,
         currentCourses: state.currentCourses,
         completedCourses: state.completedCourses,
         loading: state.loading,
         handleLogin,
         handleLogout,
+        handleMajorRemainingUnits,
+        handleGeRemainingUnits,
         getCompletedCourses,
         getCurrentCourses,
         addCurrentCourse,
