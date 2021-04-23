@@ -7,7 +7,6 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 const pdf = require('html-pdf')
-const bodyParser = require('body-parser')
 
 const pdfTemplate = require('../documents')
 
