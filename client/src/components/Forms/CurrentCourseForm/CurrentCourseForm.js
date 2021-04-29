@@ -1,4 +1,7 @@
 import React, { useState, useContext } from 'react'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/esm/Col'
@@ -30,17 +33,17 @@ export const CurrentCourseForm = (props) => {
   // -------------------------------------------------------------------
 
   const courseType = useTrait('ge')
-  const courseNumber = useTrait(0)
-  const courseDept = useTrait('')
-  const courseTitle = useTrait('')
-  const courseUnits = useTrait(0)
-  const courseDesignation = useTrait('A1 - Oral Communications')
-  const courseAdditionalReq = useTrait('Human Diversity')
-  const courseSection = useTrait(0)
+  // const courseNumber = useTrait(0)
+  // const courseDept = useTrait('')
+  // const courseTitle = useTrait('')
+  // const courseUnits = useTrait(0)
+  // const courseDesignation = useTrait('A1 - Oral Communications')
+  // const courseAdditionalReq = useTrait('Human Diversity')
+  // const courseSection = useTrait(0)
   const courseStartTime = useTrait('06:00')
   const courseEndTime = useTrait('23:00')
   const courseDays = useTrait([])
-  const courseLocation = useTrait('')
+  // const courseLocation = useTrait('')
   const [timePickerStartTime, setTimePickerStartTime] = useState(21600) // start at 6am
   const [timePickerEndTime, setTimePickerEndTime] = useState(82800) // end at 11pm
 
@@ -61,6 +64,32 @@ export const CurrentCourseForm = (props) => {
     endTime: '23:00',
     days: [],
     location: '',
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      courseNumber: '',
+      courseDept: '',
+      courseTitle: '',
+      courseUnits: '',
+      courseDesignation: '',
+      courseAdditionalReq: '',
+      courseSection: '',
+      location: '',
+    },
+    validationSchema: Yup.object({
+      courseNumber: Yup.string()
+        .required('This field is required')
+        .typeError('You must specify a number'),
+      courseDept: Yup.string().required('This field is required'),
+      courseTitle: Yup.string().required('This field is required'),
+      courseUnits: Yup.string().required('This field is required'),
+      courseSection: Yup.number().required('This field is required'),
+      location: Yup.string().required('This field is required'),
+    }),
+    onSubmit: (values) => {
+      handleSubmit(values)
+    },
   })
 
   const getTime = (dateTime, seconds) => {
@@ -99,49 +128,49 @@ export const CurrentCourseForm = (props) => {
     }
   }
 
-  const handleCourseNumberChange = (e) => {
-    const newCourseNumber = courseNumber.set(e.target.value)
-    courseData.set({ ...courseData.get(), number: newCourseNumber })
-  }
+  // const handleCourseNumberChange = (e) => {
+  //   const newCourseNumber = courseNumber.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), number: newCourseNumber })
+  // }
 
-  const handleCourseDeptChange = (e) => {
-    const newCourseDept = courseDept.set(e.target.value)
-    courseData.set({ ...courseData.get(), dept: newCourseDept })
-  }
+  // const handleCourseDeptChange = (e) => {
+  //   const newCourseDept = courseDept.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), dept: newCourseDept })
+  // }
 
-  const handleCourseTitleChange = (e) => {
-    const newCourseTitle = courseTitle.set(e.target.value)
-    courseData.set({ ...courseData.get(), title: newCourseTitle })
-  }
+  // const handleCourseTitleChange = (e) => {
+  //   const newCourseTitle = courseTitle.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), title: newCourseTitle })
+  // }
 
-  const handleCourseUnitChange = (e) => {
-    const newCourseUnits = courseUnits.set(e.target.value)
-    courseData.set({ ...courseData.get(), units: newCourseUnits })
-  }
+  // const handleCourseUnitChange = (e) => {
+  //   const newCourseUnits = courseUnits.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), units: newCourseUnits })
+  // }
 
-  const handleCourseDesignationChange = (e) => {
-    const newCourseDesignation = courseDesignation.set(e.target.value)
-    courseData.set({ ...courseData.get(), designation: newCourseDesignation })
-  }
+  // const handleCourseDesignationChange = (e) => {
+  //   const newCourseDesignation = courseDesignation.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), designation: newCourseDesignation })
+  // }
 
-  const handleCourseAdditionalReqChange = (e) => {
-    let newCourseAdditionalReq
+  // const handleCourseAdditionalReqChange = (e) => {
+  //   let newCourseAdditionalReq
 
-    if (e.target.value === '-') {
-      newCourseAdditionalReq = courseAdditionalReq.set(null)
-    } else {
-      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
-    }
-    courseData.set({
-      ...courseData.get(),
-      additionalReq: newCourseAdditionalReq,
-    })
-  }
+  //   if (e.target.value === '-') {
+  //     newCourseAdditionalReq = courseAdditionalReq.set(null)
+  //   } else {
+  //     newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
+  //   }
+  //   courseData.set({
+  //     ...courseData.get(),
+  //     additionalReq: newCourseAdditionalReq,
+  //   })
+  // }
 
-  const handleCourseSectionChange = (e) => {
-    const newCourseSection = courseSection.set(e.target.value)
-    courseData.set({ ...courseData.get(), section: newCourseSection })
-  }
+  // const handleCourseSectionChange = (e) => {
+  //   const newCourseSection = courseSection.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), section: newCourseSection })
+  // }
 
   const handleTimeStartChange = (seconds) => {
     const dateTime = new Date('July 1, 1999')
@@ -168,10 +197,10 @@ export const CurrentCourseForm = (props) => {
     courseData.set({ ...courseData.get(), days: newCourseDays })
   }
 
-  const handleCourseLocationChange = (e) => {
-    const newCourseLocation = courseLocation.set(e.target.value)
-    courseData.set({ ...courseData.get(), location: newCourseLocation })
-  }
+  // const handleCourseLocationChange = (e) => {
+  //   const newCourseLocation = courseLocation.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), location: newCourseLocation })
+  // }
 
   // -----------------------------------------------------
   // TODO: possibly move to context
@@ -184,24 +213,46 @@ export const CurrentCourseForm = (props) => {
   }
   // -----------------------------------------------------
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.preventDefault()
-      e.stopPropagation()
+  const handleSubmit = async ({
+    courseNumber,
+    courseDept,
+    courseTitle,
+    courseUnits,
+    courseDesignation,
+    courseAdditionalReq,
+    courseSection,
+    location,
+  }) => {
+    if (courseType.get() === 'ge') {
+      if (courseDesignation === '') {
+        courseDesignation = 'A1 - Oral Communication'
+      }
+    } else {
+      if (courseDesignation === '') {
+        courseDesignation = 'Lower Div'
+      }
     }
-    setValidated(true)
+
+    if (courseAdditionalReq === '') {
+      courseAdditionalReq = 'N/A'
+    }
+
+    courseData.set({ ...courseData.get(), number: courseNumber })
+    courseData.set({ ...courseData.get(), dept: courseDept })
+    courseData.set({ ...courseData.get(), title: courseTitle })
+    courseData.set({ ...courseData.get(), units: courseUnits })
+    courseData.set({ ...courseData.get(), designation: courseDesignation })
+    courseData.set({ ...courseData.get(), additionalReq: courseAdditionalReq })
+    courseData.set({ ...courseData.get(), section: courseSection })
+    courseData.set({ ...courseData.get(), location: location })
 
     try {
       const res = await addCurrentCourse(courseData.get())
-      // why is res undefined
       if (res.data.success === true) {
         setSuccess(true)
         setSeverity('success')
         setOpen(true)
         setIsLoading(false)
-        e.target.reset()
       }
     } catch (error) {
       setSeverity('error')
@@ -219,7 +270,7 @@ export const CurrentCourseForm = (props) => {
               <Card.Body>
                 <Row className="my-2">
                   <Col className="d-flex justify-content-center">
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={formik.handleSubmit}>
                       {/* COURSE TYPE */}
                       <ToggleButtonGroup
                         className="mb-3"
@@ -232,48 +283,59 @@ export const CurrentCourseForm = (props) => {
                         <ToggleButton value="major">Major Course</ToggleButton>
                       </ToggleButtonGroup>
                       {/* COURSE NUMBER */}
-                      <Form.Group controlId="courseNo">
+                      <Form.Group controlId="courseNumber">
                         <Form.Label>Course Number</Form.Label>
-
                         <Form.Control
-                          type="input"
-                          name="courseNo"
-                          onChange={handleCourseNumberChange}
-                          required
+                          type="text"
+                          name="courseNumber"
+                          {...formik.getFieldProps('courseNumber')}
                         />
                       </Form.Group>
-                      {/* COURSE Dept */}
+                      {formik.touched.courseNumber &&
+                      formik.errors.courseNumber ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseNumber}
+                        </div>
+                      ) : null}
+
+                      {/* COURSE DEPT */}
                       <Form.Group controlId="courseDept">
                         <Form.Label>Course Department</Form.Label>
-
                         <Form.Control
-                          type="input"
+                          type="text"
                           name="courseDept"
-                          onChange={handleCourseDeptChange}
-                          required
+                          {...formik.getFieldProps('courseDept')}
                         />
                       </Form.Group>
+                      {formik.touched.courseDept && formik.errors.courseDept ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseDept}
+                        </div>
+                      ) : null}
 
                       {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
                         <Form.Label>Course Title</Form.Label>
-
                         <Form.Control
-                          type="input"
+                          type="text"
                           name="courseTitle"
-                          onChange={handleCourseTitleChange}
-                          required
+                          {...formik.getFieldProps('courseTitle')}
                         />
                       </Form.Group>
+                      {formik.touched.courseTitle &&
+                      formik.errors.courseTitle ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseTitle}
+                        </div>
+                      ) : null}
+
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
                         <Form.Label>Units</Form.Label>
-
                         <Form.Control
                           as="select"
                           name="courseUnits"
-                          onChange={handleCourseUnitChange}
-                          required
+                          {...formik.getFieldProps('courseUnits')}
                         >
                           <option value=""></option>
                           <option value="1">1</option>
@@ -283,18 +345,23 @@ export const CurrentCourseForm = (props) => {
                           <option value="5">5</option>
                         </Form.Control>
                       </Form.Group>
+                      {formik.touched.courseUnits &&
+                      formik.errors.courseUnits ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseUnits}
+                        </div>
+                      ) : null}
+
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
                         // ge designation
                         <>
                           <Form.Group controlId="designation">
                             <Form.Label>Designation</Form.Label>
-
                             <Form.Control
                               as="select"
                               name="designation"
-                              onChange={handleCourseDesignationChange}
-                              required
+                              {...formik.getFieldProps('courseDesignation')}
                             >
                               {geReqData.slice(0, 13).map((ge, idx) => {
                                 return (
@@ -315,10 +382,11 @@ export const CurrentCourseForm = (props) => {
                             <Form.Control
                               as="select"
                               name="additionalReq"
-                              onChange={handleCourseAdditionalReqChange}
-                              required
+                              {...formik.getFieldProps('courseAdditionalReq')}
                             >
-                              <option value="-" key={1}></option>
+                              <option value="-" key={1}>
+                                -
+                              </option>
                               <option value="Human Diversity" key={2}>
                                 Human Diversity
                               </option>
@@ -332,12 +400,10 @@ export const CurrentCourseForm = (props) => {
                         // major designation
                         <Form.Group controlId="designation">
                           <Form.Label>Designation</Form.Label>
-
                           <Form.Control
                             as="select"
                             name="designation"
-                            onChange={handleCourseDesignationChange}
-                            required
+                            {...formik.getFieldProps('courseDesignation')}
                           >
                             {majorReqCategory.map((category, idx) => {
                               return (
@@ -349,6 +415,7 @@ export const CurrentCourseForm = (props) => {
                           </Form.Control>
                         </Form.Group>
                       )}
+
                       {/* COURSE SECTION */}
                       <Form.Group controlId="section">
                         <Form.Label>Section</Form.Label>
@@ -356,10 +423,15 @@ export const CurrentCourseForm = (props) => {
                         <Form.Control
                           type="input"
                           name="courseSection"
-                          onChange={handleCourseSectionChange}
-                          required
+                          {...formik.getFieldProps('courseSection')}
                         />
                       </Form.Group>
+                      {formik.touched.courseSection &&
+                      formik.errors.courseSection ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseSection}
+                        </div>
+                      ) : null}
                       <Row>
                         <Col>
                           {/* COURSE START TIME */}
@@ -367,15 +439,21 @@ export const CurrentCourseForm = (props) => {
                             <Form.Label>Start Time</Form.Label>
 
                             <TimePicker
-                              onChange={handleTimeStartChange}
                               start="06:00"
                               end="23:00"
                               name="courseStartTime"
                               value={timePickerStartTime}
                               step={5}
-                              required
+                              onChange={handleTimeStartChange}
+                              onBlur={formik.handleBlur}
                             />
                           </Form.Group>
+                          {formik.touched.startTime &&
+                          formik.errors.startTime ? (
+                            <div style={{ color: 'red' }}>
+                              {formik.errors.startTime}
+                            </div>
+                          ) : null}
                         </Col>
                         <Col>
                           {/* COURSE END TIME */}
@@ -383,17 +461,18 @@ export const CurrentCourseForm = (props) => {
                             <Form.Label>End Time</Form.Label>
 
                             <TimePicker
-                              onChange={handleTimeEndChange}
                               start="06:00"
                               end="23:00"
-                              name="courseStartTime"
+                              name="courseEndTime"
+                              onChange={handleTimeEndChange}
                               value={timePickerEndTime}
                               step={5}
-                              required
+                              onBlur={formik.handleBlur}
                             />
                           </Form.Group>
                         </Col>
                       </Row>
+
                       {/* COURSE DAYS */}
                       <Form.Group controlId="day">
                         <Row>
@@ -404,9 +483,8 @@ export const CurrentCourseForm = (props) => {
                               <ToggleButtonGroup
                                 type="checkbox"
                                 name="courseDays"
-                                value={courseDays.get()}
                                 onChange={handleCourseDayChange}
-                                required
+                                value={courseDays.get()}
                               >
                                 <ToggleButton value="Mon">M</ToggleButton>
                                 <ToggleButton value="Tues">T</ToggleButton>
@@ -419,6 +497,10 @@ export const CurrentCourseForm = (props) => {
                           </Col>
                         </Row>
                       </Form.Group>
+                      {formik.touched.days && formik.errors.days ? (
+                        <div style={{ color: 'red' }}>{formik.errors.days}</div>
+                      ) : null}
+
                       {/* COURSE LOCATION */}
                       <Form.Group controlId="location">
                         <Form.Label>Location</Form.Label>
@@ -426,10 +508,14 @@ export const CurrentCourseForm = (props) => {
                         <Form.Control
                           type="input"
                           name="courseLocation"
-                          onChange={handleCourseLocationChange}
-                          required
+                          {...formik.getFieldProps('location')}
                         />
                       </Form.Group>
+                      {formik.touched.location && formik.errors.location ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.location}
+                        </div>
+                      ) : null}
 
                       <Button className="mt-3" variant="primary" type="submit">
                         Submit
@@ -442,8 +528,6 @@ export const CurrentCourseForm = (props) => {
                         success={success}
                         handleClose={handleClose}
                       />
-                      {/* <MySnackbarButton disabled={!validated} /> */}
-                      {/* <MySnackbarButton disabled={validated} /> */}
                     </Form>
                   </Col>
                 </Row>
