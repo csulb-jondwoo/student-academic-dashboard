@@ -17,11 +17,9 @@ import { myContext } from '../../../context/Context'
 import { geReqData } from '../../Tables/Requirements/GeRequirements/GeReqData'
 import { majorReqCategory } from '../../Tables/Requirements/MajorRequirements/CecsReqData'
 import MySnackbar from '../../../utility/MySnackbar/MySnackbar'
-import { Input } from '@material-ui/core'
 
 export const CurrentCourseForm = (props) => {
   const { addCurrentCourse, user } = useContext(myContext)
-  const [validated, setValidated] = useState(false)
 
   // -------------------------------------------------------------------
   // TODO: possibly move to context or AddCourse component after refactoring
@@ -33,17 +31,9 @@ export const CurrentCourseForm = (props) => {
   // -------------------------------------------------------------------
 
   const courseType = useTrait('ge')
-  // const courseNumber = useTrait(0)
-  // const courseDept = useTrait('')
-  // const courseTitle = useTrait('')
-  // const courseUnits = useTrait(0)
-  // const courseDesignation = useTrait('A1 - Oral Communications')
-  // const courseAdditionalReq = useTrait('Human Diversity')
-  // const courseSection = useTrait(0)
   const courseStartTime = useTrait('06:00')
   const courseEndTime = useTrait('23:00')
   const courseDays = useTrait([])
-  // const courseLocation = useTrait('')
   const [timePickerStartTime, setTimePickerStartTime] = useState(21600) // start at 6am
   const [timePickerEndTime, setTimePickerEndTime] = useState(82800) // end at 11pm
 
@@ -128,50 +118,6 @@ export const CurrentCourseForm = (props) => {
     }
   }
 
-  // const handleCourseNumberChange = (e) => {
-  //   const newCourseNumber = courseNumber.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), number: newCourseNumber })
-  // }
-
-  // const handleCourseDeptChange = (e) => {
-  //   const newCourseDept = courseDept.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), dept: newCourseDept })
-  // }
-
-  // const handleCourseTitleChange = (e) => {
-  //   const newCourseTitle = courseTitle.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), title: newCourseTitle })
-  // }
-
-  // const handleCourseUnitChange = (e) => {
-  //   const newCourseUnits = courseUnits.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), units: newCourseUnits })
-  // }
-
-  // const handleCourseDesignationChange = (e) => {
-  //   const newCourseDesignation = courseDesignation.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), designation: newCourseDesignation })
-  // }
-
-  // const handleCourseAdditionalReqChange = (e) => {
-  //   let newCourseAdditionalReq
-
-  //   if (e.target.value === '-') {
-  //     newCourseAdditionalReq = courseAdditionalReq.set(null)
-  //   } else {
-  //     newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
-  //   }
-  //   courseData.set({
-  //     ...courseData.get(),
-  //     additionalReq: newCourseAdditionalReq,
-  //   })
-  // }
-
-  // const handleCourseSectionChange = (e) => {
-  //   const newCourseSection = courseSection.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), section: newCourseSection })
-  // }
-
   const handleTimeStartChange = (seconds) => {
     const dateTime = new Date('July 1, 1999')
 
@@ -196,11 +142,6 @@ export const CurrentCourseForm = (props) => {
     const newCourseDays = courseDays.set(days)
     courseData.set({ ...courseData.get(), days: newCourseDays })
   }
-
-  // const handleCourseLocationChange = (e) => {
-  //   const newCourseLocation = courseLocation.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), location: newCourseLocation })
-  // }
 
   // -----------------------------------------------------
   // TODO: possibly move to context
