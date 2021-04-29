@@ -219,11 +219,7 @@ export const CurrentCourseForm = (props) => {
               <Card.Body>
                 <Row className="my-2">
                   <Col className="d-flex justify-content-center">
-                    <Form
-                      noValidate
-                      validated={validated}
-                      onSubmit={handleSubmit}
-                    >
+                    <Form onSubmit={handleSubmit}>
                       {/* COURSE TYPE */}
                       <ToggleButtonGroup
                         className="mb-3"
@@ -245,9 +241,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseNumberChange}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter a course number.
-                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE Dept */}
                       <Form.Group controlId="courseDept">
@@ -259,9 +252,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseDeptChange}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter the course department.
-                        </Form.Control.Feedback>
                       </Form.Group>
 
                       {/* COURSE TITLE */}
@@ -274,9 +264,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseTitleChange}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter the course title.
-                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
@@ -295,9 +282,6 @@ export const CurrentCourseForm = (props) => {
                           <option value="4">4</option>
                           <option value="5">5</option>
                         </Form.Control>
-                        <Form.Control.Feedback type="invalid">
-                          Please select the amount of units.
-                        </Form.Control.Feedback>
                       </Form.Group>
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
@@ -323,9 +307,6 @@ export const CurrentCourseForm = (props) => {
                                 )
                               })}
                             </Form.Control>
-                            <Form.Control.Feedback type="invalid">
-                              Please select a designation.
-                            </Form.Control.Feedback>
                           </Form.Group>
 
                           {/* Additional Req */}
@@ -366,9 +347,6 @@ export const CurrentCourseForm = (props) => {
                               )
                             })}
                           </Form.Control>
-                          <Form.Control.Feedback type="invalid">
-                            Please select a designation.
-                          </Form.Control.Feedback>
                         </Form.Group>
                       )}
                       {/* COURSE SECTION */}
@@ -381,9 +359,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseSectionChange}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter a course section number.
-                        </Form.Control.Feedback>
                       </Form.Group>
                       <Row>
                         <Col>
@@ -400,9 +375,6 @@ export const CurrentCourseForm = (props) => {
                               step={5}
                               required
                             />
-                            <Form.Control.Feedback type="invalid">
-                              Please enter a course starting time.
-                            </Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                         <Col>
@@ -419,9 +391,6 @@ export const CurrentCourseForm = (props) => {
                               step={5}
                               required
                             />
-                            <Form.Control.Feedback type="invalid">
-                              Please enter a course ending time.
-                            </Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>
@@ -447,9 +416,6 @@ export const CurrentCourseForm = (props) => {
                                 <ToggleButton value="Sat">S</ToggleButton>
                               </ToggleButtonGroup>
                             </Container>
-                            <Form.Control.Feedback type="invalid">
-                              Please select the day(s) the course takes place.
-                            </Form.Control.Feedback>
                           </Col>
                         </Row>
                       </Form.Group>
@@ -463,9 +429,6 @@ export const CurrentCourseForm = (props) => {
                           onChange={handleCourseLocationChange}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter the course location.
-                        </Form.Control.Feedback>
                       </Form.Group>
 
                       <Button className="mt-3" variant="primary" type="submit">

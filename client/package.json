@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "file-saver": "^2.0.5",
+    "formik": "^2.2.6",
     "lodash": "^4.17.21",
     "material-table": "^1.69.2",
     "material-ui-confirm": "^2.1.1",
