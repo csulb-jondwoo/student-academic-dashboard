@@ -261,10 +261,10 @@ const Roadmap = () => {
           })}
         </Row>
 
-        {/* {show ?
+        {show ?
            <ExportPdf data={termList} /> :
            null
-        } */}
+        }
 
 
         <Row className="mt-5 row-padding">
