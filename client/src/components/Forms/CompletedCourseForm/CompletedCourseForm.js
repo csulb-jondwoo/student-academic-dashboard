@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -18,24 +20,7 @@ import { myContext } from '../../../context/Context'
 import * as api from '../../../api'
 import MySnackbar from '../../../utility/MySnackbar/MySnackbar'
 
-// MAKE FIELDS REQUIRED
 export const CompletedCourseForm = (props) => {
-  const formik = useFormik({
-    initialValues: {
-      courseNumber: '',
-      courseDept: '',
-      courseTitle: '',
-      courseUnits: '',
-      courseTerm: '',
-      courseYear: '',
-      courseDesignation: '',
-      courseAdditionalReq: '',
-      courseGrade: '',
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
-  })
   const {
     addCompletedCourse,
     user,
@@ -65,109 +50,164 @@ export const CompletedCourseForm = (props) => {
   const courseDesignation = useTrait('A1 - Oral Communications')
   const courseAdditionalReq = useTrait('Human Diversity')
 
-  const courseData = useTrait({
-    userID: JSON.parse(user).googleId,
-    type: 'ge',
-    number: 0,
-    dept: '',
-    title: '',
-    units: 0,
-    term: 'Fall',
-    year: 0,
-    grade: 'A',
-    designation: 'A1 - Oral Communication',
-    additionalReq: '',
+  const formik = useFormik({
+    initialValues: {
+      courseNumber: '',
+      courseDept: '',
+      courseTitle: '',
+      courseUnits: '',
+      courseTerm: '',
+      courseYear: '',
+      courseDesignation: '',
+      courseAdditionalReq: '',
+      courseGrade: '',
+    },
+    validationSchema: Yup.object({
+      courseNumber: Yup.string()
+        .required('This field is required')
+        .typeError('You must specify a number'),
+      courseDept: Yup.string().required('This field is required'),
+      courseTitle: Yup.string().required('This field is required'),
+      courseUnits: Yup.string().required('This field is required'),
+      courseTerm: Yup.string().required('This field is required'),
+      courseYear: Yup.number()
+        .required('This field is required')
+        .typeError('You must specify a number'),
+      courseGrade: Yup.string().required('This field is required'),
+    }),
+    onSubmit: (values) => {
+      handleSubmit(values)
+      // alert(JSON.stringify(values, null, 2))
+    },
   })
+
+  // const courseData = useTrait({
+  //   userID: JSON.parse(user).googleId,
+  //   type: 'ge',
+  //   number: 0,
+  //   dept: '',
+  //   title: '',
+  //   units: 0,
+  //   term: 'Fall',
+  //   year: 0,
+  //   grade: 'A',
+  //   designation: 'A1 - Oral Communication',
+  //   additionalReq: '',
+  // })
 
   const handleCourseTypeChange = (val) => {
     const newCourseType = courseType.set(val)
-    if (val === 'ge') {
-      courseData.set({
-        ...courseData.get(),
-        type: newCourseType,
-        designation: 'A1 - Oral Communication',
-        additionalReq: null,
-      })
+    // if (val === 'ge') {
+    //   courseData.set({
+    //     ...courseData.get(),
+    //     type: newCourseType,
+    //     designation: 'A1 - Oral Communication',
+    //     additionalReq: null,
+    //   })
+    // } else {
+    //   courseData.set({
+    //     ...courseData.get(),
+    //     type: newCourseType,
+    //     designation: 'Lower Div',
+    //     additionalReq: null,
+    //   })
+    // }
+  }
+
+  // const handleCourseNumberChange = (e) => {
+  //   const newCourseNumber = courseNumber.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), number: newCourseNumber })
+  // }
+
+  // const handleCourseDeptChange = (e) => {
+  //   const newCourseDept = courseDept.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), dept: newCourseDept })
+  // }
+
+  // const handleCourseTitleChange = (e) => {
+  //   const newCourseTitle = courseTitle.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), title: newCourseTitle })
+  // }
+
+  // const handleCourseUnitChange = (e) => {
+  //   const newCourseUnits = courseUnits.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), units: newCourseUnits })
+  // }
+
+  // const handleCourseTermChange = (e) => {
+  //   const newCourseTerm = courseTerm.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), term: newCourseTerm })
+  // }
+
+  // const handleCourseYearChange = (e) => {
+  //   const newCourseYear = courseYear.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), year: newCourseYear })
+  // }
+
+  // const handleCourseGradeChange = (e) => {
+  //   const newCourseGrade = courseGrade.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), grade: newCourseGrade })
+  // }
+
+  // const handleCourseDesignationChange = (e) => {
+  //   const newCourseDesignation = courseDesignation.set(e.target.value)
+  //   courseData.set({ ...courseData.get(), designation: newCourseDesignation })
+  // }
+
+  // const handleCourseAdditionalReqChange = (e) => {
+  //   let newCourseAdditionalReq
+
+  //   if (e.target.value === '-') {
+  //     newCourseAdditionalReq = courseAdditionalReq.set(null)
+  //   } else {
+  //     newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
+  //   }
+  //   courseData.set({
+  //     ...courseData.get(),
+  //     additionalReq: newCourseAdditionalReq,
+  //   })
+  // }
+
+  const handleSubmit = async ({
+    courseNumber,
+    courseDept,
+    courseTitle,
+    courseUnits,
+    courseTerm,
+    courseYear,
+    courseGrade,
+    courseDesignation,
+    courseAdditionalReq,
+  }) => {
+    if (courseType.get() === 'ge') {
+      if (courseDesignation === '') {
+        courseDesignation = 'A1 - Oral Communication'
+      }
     } else {
-      courseData.set({
-        ...courseData.get(),
-        type: newCourseType,
-        designation: 'Lower Div',
-        additionalReq: null,
-      })
+      if (courseDesignation === '') {
+        courseDesignation = 'Lower Div'
+      }
     }
-  }
 
-  const handleCourseNumberChange = (e) => {
-    const newCourseNumber = courseNumber.set(e.target.value)
-    courseData.set({ ...courseData.get(), number: newCourseNumber })
-  }
-
-  const handleCourseDeptChange = (e) => {
-    const newCourseDept = courseDept.set(e.target.value)
-    courseData.set({ ...courseData.get(), dept: newCourseDept })
-  }
-
-  const handleCourseTitleChange = (e) => {
-    const newCourseTitle = courseTitle.set(e.target.value)
-    courseData.set({ ...courseData.get(), title: newCourseTitle })
-  }
-
-  const handleCourseUnitChange = (e) => {
-    const newCourseUnits = courseUnits.set(e.target.value)
-    courseData.set({ ...courseData.get(), units: newCourseUnits })
-  }
-
-  const handleCourseTermChange = (e) => {
-    const newCourseTerm = courseTerm.set(e.target.value)
-    courseData.set({ ...courseData.get(), term: newCourseTerm })
-  }
-
-  const handleCourseYearChange = (e) => {
-    const newCourseYear = courseYear.set(e.target.value)
-    courseData.set({ ...courseData.get(), year: newCourseYear })
-  }
-
-  const handleCourseGradeChange = (e) => {
-    const newCourseGrade = courseGrade.set(e.target.value)
-    courseData.set({ ...courseData.get(), grade: newCourseGrade })
-  }
-
-  const handleCourseDesignationChange = (e) => {
-    const newCourseDesignation = courseDesignation.set(e.target.value)
-    courseData.set({ ...courseData.get(), designation: newCourseDesignation })
-  }
-
-  const handleCourseAdditionalReqChange = (e) => {
-    let newCourseAdditionalReq
-
-    if (e.target.value === '-') {
-      newCourseAdditionalReq = courseAdditionalReq.set(null)
-    } else {
-      newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
+    const courseData = {
+      userID: JSON.parse(user).googleId,
+      type: courseType.get(),
+      number: courseNumber,
+      dept: courseDept,
+      title: courseTitle,
+      units: courseUnits,
+      term: courseTerm,
+      year: courseYear,
+      grade: courseGrade,
+      designation: courseDesignation,
+      additionalReq: courseAdditionalReq,
     }
-    courseData.set({
-      ...courseData.get(),
-      additionalReq: newCourseAdditionalReq,
-    })
-  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
     setSuccess(false)
     setIsTranscriptSubmit(false)
 
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    setValidated(true)
-
     try {
-      console.log(courseData.get())
-      const res = await addCompletedCourse(courseData.get())
-      // why is res undefined
+      const res = await addCompletedCourse(courseData)
       if (res.data.success === true) {
         setSuccess(true)
         setSeverity('success')
@@ -251,8 +291,8 @@ export const CompletedCourseForm = (props) => {
               <Card.Body>
                 <Row className="my-2">
                   <Col className="d-flex justify-content-center">
-                    {/* COURSE TYPE */}
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={formik.handleSubmit}>
+                      {/* COURSE TYPE */}
                       <ToggleButtonGroup
                         className="mb-3"
                         type="radio"
@@ -263,43 +303,61 @@ export const CompletedCourseForm = (props) => {
                         <ToggleButton value="ge">GE Course</ToggleButton>
                         <ToggleButton value="major">Major Course</ToggleButton>
                       </ToggleButtonGroup>
+
                       {/* COURSE NUMBER */}
-                      <Form.Group controlId="courseNo">
+                      <Form.Group controlId="courseNumber">
                         <Form.Label>Course Number</Form.Label>
                         <Form.Control
-                          id="courseNo"
-                          type="input"
-                          name="courseNo"
-                          // onChange={handleCourseNumberChange}
-                          onChange={formik.handleChange}
-                          value={formik.values.courseNumber}
+                          type="text"
+                          name="courseNumber"
+                          {...formik.getFieldProps('courseNumber')}
                         />
                       </Form.Group>
+                      {formik.touched.courseNumber &&
+                      formik.errors.courseNumber ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseNumber}
+                        </div>
+                      ) : null}
+
                       {/* COURSE DEPT */}
                       <Form.Group controlId="courseDept">
                         <Form.Label>Course Department</Form.Label>
                         <Form.Control
-                          type="input"
+                          type="text"
                           name="courseDept"
-                          onChange={handleCourseDeptChange}
+                          {...formik.getFieldProps('courseDept')}
                         />
                       </Form.Group>
+                      {formik.touched.courseDept && formik.errors.courseDept ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseDept}
+                        </div>
+                      ) : null}
+
                       {/* COURSE TITLE */}
                       <Form.Group controlId="courseTitle">
                         <Form.Label>Course Title</Form.Label>
                         <Form.Control
-                          type="input"
+                          type="text"
                           name="courseTitle"
-                          onChange={handleCourseTitleChange}
+                          {...formik.getFieldProps('courseTitle')}
                         />
                       </Form.Group>
+                      {formik.touched.courseTitle &&
+                      formik.errors.courseTitle ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseTitle}
+                        </div>
+                      ) : null}
+
                       {/* COURSE UNITS */}
                       <Form.Group controlId="courseUnits">
                         <Form.Label>Units</Form.Label>
                         <Form.Control
                           as="select"
                           name="courseUnits"
-                          onChange={handleCourseUnitChange}
+                          {...formik.getFieldProps('courseUnits')}
                         >
                           <option value=""></option>
                           <option value="1">1</option>
@@ -309,6 +367,13 @@ export const CompletedCourseForm = (props) => {
                           <option value="5">5</option>
                         </Form.Control>
                       </Form.Group>
+                      {formik.touched.courseUnits &&
+                      formik.errors.courseUnits ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseUnits}
+                        </div>
+                      ) : null}
+
                       <Row>
                         <Col>
                           {/* COURSE TERM */}
@@ -317,7 +382,7 @@ export const CompletedCourseForm = (props) => {
                             <Form.Control
                               as="select"
                               name="courseTerm"
-                              onChange={handleCourseTermChange}
+                              {...formik.getFieldProps('courseTerm')}
                             >
                               <option value=""></option>
                               <option value="Fall">Fall</option>
@@ -326,8 +391,13 @@ export const CompletedCourseForm = (props) => {
                               <option value="Winter">Winter</option>
                             </Form.Control>
                           </Form.Group>
+                          {formik.touched.courseTerm &&
+                          formik.errors.courseTerm ? (
+                            <div style={{ color: 'red' }}>
+                              {formik.errors.courseTerm}
+                            </div>
+                          ) : null}
                         </Col>
-
                         <Col>
                           {/* COURSE YEAR */}
                           <Form.Group controlId="courseYear">
@@ -335,11 +405,18 @@ export const CompletedCourseForm = (props) => {
                             <Form.Control
                               type="input"
                               name="courseYear"
-                              onChange={handleCourseYearChange}
+                              {...formik.getFieldProps('courseYear')}
                             />
                           </Form.Group>
+                          {formik.touched.courseYear &&
+                          formik.errors.courseYear ? (
+                            <div style={{ color: 'red' }}>
+                              {formik.errors.courseYear}
+                            </div>
+                          ) : null}
                         </Col>
                       </Row>
+
                       {/* COURSE DESIGNATION */}
                       {courseType.get() === 'ge' ? (
                         // ge designation
@@ -349,7 +426,7 @@ export const CompletedCourseForm = (props) => {
                             <Form.Control
                               as="select"
                               name="designation"
-                              onChange={handleCourseDesignationChange}
+                              {...formik.getFieldProps('courseDesignation')}
                             >
                               {geReqData.slice(0, 13).map((ge, idx) => {
                                 return (
@@ -370,7 +447,7 @@ export const CompletedCourseForm = (props) => {
                             <Form.Control
                               as="select"
                               name="additionalReq"
-                              onChange={handleCourseAdditionalReqChange}
+                              {...formik.getFieldProps('courseAdditionalReq')}
                             >
                               <option value="-" key={1}>
                                 -
@@ -391,7 +468,7 @@ export const CompletedCourseForm = (props) => {
                           <Form.Control
                             as="select"
                             name="designation"
-                            onChange={handleCourseDesignationChange}
+                            {...formik.getFieldProps('courseDesignation')}
                           >
                             {majorReqCategory.map((category, idx) => {
                               return (
@@ -403,13 +480,14 @@ export const CompletedCourseForm = (props) => {
                           </Form.Control>
                         </Form.Group>
                       )}
+
                       {/* COURSE GRADE */}
                       <Form.Group controlId="courseGrade">
                         <Form.Label>Grade</Form.Label>
                         <Form.Control
                           as="select"
                           name="courseGrade"
-                          onChange={handleCourseGradeChange}
+                          {...formik.getFieldProps('courseGrade')}
                         >
                           <option value=""></option>
                           <option value="A">A</option>
@@ -421,7 +499,14 @@ export const CompletedCourseForm = (props) => {
                           <option value="NC">NC</option>
                         </Form.Control>
                       </Form.Group>
-                      {/* COURSE SUBMIT */}
+                      {formik.touched.courseGrade &&
+                      formik.errors.courseGrade ? (
+                        <div style={{ color: 'red' }}>
+                          {formik.errors.courseGrade}
+                        </div>
+                      ) : null}
+
+                      {/* SUBMIT */}
                       <Button className="mt-3" variant="primary" type="submit">
                         Submit
                       </Button>
