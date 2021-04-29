@@ -38,17 +38,7 @@ export const CompletedCourseForm = (props) => {
 
   const [isTranscriptSubmit, setIsTranscriptSubmit] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
-  const [validated, setValidated] = useState(false)
   const courseType = useTrait('ge')
-  const courseNumber = useTrait(0)
-  const courseDept = useTrait('')
-  const courseTitle = useTrait('')
-  const courseUnits = useTrait(0)
-  const courseTerm = useTrait('Fall')
-  const courseYear = useTrait(0)
-  const courseGrade = useTrait('')
-  const courseDesignation = useTrait('A1 - Oral Communications')
-  const courseAdditionalReq = useTrait('Human Diversity')
 
   const formik = useFormik({
     initialValues: {
@@ -77,96 +67,12 @@ export const CompletedCourseForm = (props) => {
     }),
     onSubmit: (values) => {
       handleSubmit(values)
-      // alert(JSON.stringify(values, null, 2))
     },
   })
 
-  // const courseData = useTrait({
-  //   userID: JSON.parse(user).googleId,
-  //   type: 'ge',
-  //   number: 0,
-  //   dept: '',
-  //   title: '',
-  //   units: 0,
-  //   term: 'Fall',
-  //   year: 0,
-  //   grade: 'A',
-  //   designation: 'A1 - Oral Communication',
-  //   additionalReq: '',
-  // })
-
   const handleCourseTypeChange = (val) => {
-    const newCourseType = courseType.set(val)
-    // if (val === 'ge') {
-    //   courseData.set({
-    //     ...courseData.get(),
-    //     type: newCourseType,
-    //     designation: 'A1 - Oral Communication',
-    //     additionalReq: null,
-    //   })
-    // } else {
-    //   courseData.set({
-    //     ...courseData.get(),
-    //     type: newCourseType,
-    //     designation: 'Lower Div',
-    //     additionalReq: null,
-    //   })
-    // }
+    courseType.set(val)
   }
-
-  // const handleCourseNumberChange = (e) => {
-  //   const newCourseNumber = courseNumber.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), number: newCourseNumber })
-  // }
-
-  // const handleCourseDeptChange = (e) => {
-  //   const newCourseDept = courseDept.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), dept: newCourseDept })
-  // }
-
-  // const handleCourseTitleChange = (e) => {
-  //   const newCourseTitle = courseTitle.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), title: newCourseTitle })
-  // }
-
-  // const handleCourseUnitChange = (e) => {
-  //   const newCourseUnits = courseUnits.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), units: newCourseUnits })
-  // }
-
-  // const handleCourseTermChange = (e) => {
-  //   const newCourseTerm = courseTerm.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), term: newCourseTerm })
-  // }
-
-  // const handleCourseYearChange = (e) => {
-  //   const newCourseYear = courseYear.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), year: newCourseYear })
-  // }
-
-  // const handleCourseGradeChange = (e) => {
-  //   const newCourseGrade = courseGrade.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), grade: newCourseGrade })
-  // }
-
-  // const handleCourseDesignationChange = (e) => {
-  //   const newCourseDesignation = courseDesignation.set(e.target.value)
-  //   courseData.set({ ...courseData.get(), designation: newCourseDesignation })
-  // }
-
-  // const handleCourseAdditionalReqChange = (e) => {
-  //   let newCourseAdditionalReq
-
-  //   if (e.target.value === '-') {
-  //     newCourseAdditionalReq = courseAdditionalReq.set(null)
-  //   } else {
-  //     newCourseAdditionalReq = courseAdditionalReq.set(e.target.value)
-  //   }
-  //   courseData.set({
-  //     ...courseData.get(),
-  //     additionalReq: newCourseAdditionalReq,
-  //   })
-  // }
 
   const handleSubmit = async ({
     courseNumber,
@@ -189,6 +95,10 @@ export const CompletedCourseForm = (props) => {
       }
     }
 
+    if (courseAdditionalReq === '') {
+      courseAdditionalReq = 'N/A'
+    }
+
     const courseData = {
       userID: JSON.parse(user).googleId,
       type: courseType.get(),
@@ -199,7 +109,7 @@ export const CompletedCourseForm = (props) => {
       term: courseTerm,
       year: courseYear,
       grade: courseGrade,
-      designation: courseDesignation,
+      designation: courseDesignation.split(' -')[0],
       additionalReq: courseAdditionalReq,
     }
 

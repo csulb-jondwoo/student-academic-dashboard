@@ -79,10 +79,6 @@ const GeHistory = () => {
         E: 'E',
         F: 'F',
       },
-      // cellStyle: {
-      //   whiteSpace: 'nowrap',
-      // },
-      // width: 1000,
     },
     {
       title: 'Additional Req',
@@ -96,9 +92,6 @@ const GeHistory = () => {
     {
       title: 'Term',
       field: 'termYear',
-      // cellStyle: {
-      //   whiteSpace: 'nowrap', // history.push('dashboard');
-      // },
       width: 500,
     },
   ]

@@ -11,6 +11,7 @@ const addCompletedCourse = async (req, res) => {
   try {
     const { userID } = req.body // userID = googleId passed from completed course form
     const completed = req.body
+    console.log(completed)
 
     await userSchema.findOneAndUpdate(
       {
