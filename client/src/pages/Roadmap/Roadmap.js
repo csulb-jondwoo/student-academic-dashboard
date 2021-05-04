@@ -245,7 +245,6 @@ const Roadmap = () => {
                         );
                       }}
                     </Droppable>
-                    <Button size="small" color="primary"><DeleteIcon fontSize="small"/>Delete</Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -259,12 +258,9 @@ const Roadmap = () => {
         }
 
 
-        <Row className="mt-5 row-padding">
-          <Col className="d-flex justify-content-end">
-            <Button className="mb-4" onClick={handleClick}>Create PDF</Button>
-          </Col>
+        <Row className="d-flex mt-5 justify-content-center text-center padding">
           <Col>
-            <Button>Save Roadmap</Button>
+            <Button className="mb-4 " onClick={handleClick}>Create PDF Table</Button>
           </Col>
         </Row>
       </Container>
