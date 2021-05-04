@@ -131,15 +131,7 @@ const Roadmap = () => {
           </Col>
         </Row>
         {/* Catalog */}
-        <Row className="d-flex mt-5 justify-content-center row-padding">
-          <Col>
-            <Card className="text-center shadow-sm">
-              <Card.Body>
-                <Card.Title>CECS Required Courses</Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+
         <Row className="d-flex mt-5 justify-content-center row-padding">
 
               <Col>
@@ -195,7 +187,7 @@ const Roadmap = () => {
             return key !== "initialTable"
           }).map(([key, value], index) => {
             return (
-              <Col className="table-wrapper">
+              <Col xs={6} className="table-wrapper">
                 <Card>
                   <Card.Body>
                     <Card.Title>
@@ -212,7 +204,7 @@ const Roadmap = () => {
                             ? "lightblue"
                             : "white",
                             padding: 4,
-                            width: 280,
+                            width: 400,
                             minHeight: 280
                           }}
                           >
@@ -262,7 +254,7 @@ const Roadmap = () => {
         </Row>
 
         {show ?
-           <ExportPdf data={termList} /> :
+           <ExportPdf className="row-padding" data={termList} /> :
            null
         }
 

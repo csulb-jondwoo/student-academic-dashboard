@@ -3,12 +3,11 @@
   overflow: auto;
 }
 .row-padding {
-  padding: 10px;
+  padding: 20px;
   border-collapse: collapse;
 }
 
 .white {
   background-color: white;
 }
-
 

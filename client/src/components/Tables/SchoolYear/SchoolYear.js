@@ -22,9 +22,9 @@ const SchoolYear = ({
               required
             >
               <option value=""></option>
-              <option value="Fall">Fall</option>
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
+              <option value="Fall">Fall</option>
               <option value="Winter">Winter</option>
             </Form.Control>
             <Form.Control.Feedback type="invalid">
