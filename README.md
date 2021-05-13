@@ -5,3 +5,4 @@ An all-in-one degree dashboard for CSULB students to help plan out their degree
 Ryan Stehle  
 Zack Hunter  
 Jon Ham  
+

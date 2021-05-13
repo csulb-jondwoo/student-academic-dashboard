@@ -1,0 +1,8 @@
+**/node_modules/
+**/nodemon.json
+**/.env
+**/.vscode
+.vscode/
+**/TODO.txt
+**/.prettier*
+**/.eslint*

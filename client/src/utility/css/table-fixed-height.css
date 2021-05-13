@@ -1,0 +1,13 @@
+.table-wrapper {
+  max-height: 40vh;
+  overflow: auto;
+}
+.row-padding {
+  padding: 20px;
+  border-collapse: collapse;
+}
+
+.white {
+  background-color: white;
+}
+
