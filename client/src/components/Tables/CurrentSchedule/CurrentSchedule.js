@@ -9,7 +9,6 @@ import { Menu, MenuItem } from '@material-ui/core'
 import { myContext } from '../../../context/Context'
 import DialogSelect from '../../../utility/DialogSelect/DialogSelect'
 import formatTime from '../../../utility/formatTime/formatTime'
-import { addCompletedCourse } from '../../../api'
 
 const CurrentSchedule = () => {
   const {
@@ -22,8 +21,8 @@ const CurrentSchedule = () => {
 
   const [courseData, setCourseData] = useState({})
 
-  const [currentTerm, setCurrentTerm] = useState('Spring')
-  const [currentYear, setCurrentYear] = useState(2021)
+  const currentTerm = 'Spring'
+  const currentYear = 2021
   const [isLoading, setIsLoading] = useState(true)
   const [courseTitle, setCourseTitle] = useState(undefined)
   const [grade, setGrade] = useState('')
@@ -118,7 +117,7 @@ const CurrentSchedule = () => {
     async function markAsComplete() {
       try {
         // TODO: success alert
-        const res = await addCompletedCourse(courseData)
+        // const res = await addCompletedCourse(courseData)
         // why is res undefined
         // if (res.data.success === true) {
         //   setSuccess(true)

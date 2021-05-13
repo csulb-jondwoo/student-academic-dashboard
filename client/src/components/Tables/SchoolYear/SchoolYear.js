@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -51,8 +51,9 @@ const SchoolYear = ({
           </Form.Group>
           <Form.Group controlId="year">
             <Form.Label>
-              To add courses, select the Term and Year, then select Create New Term.
-              Next, drag a course from the table into the corresponding term below.
+              To add courses, select the Term and Year, then select Create New
+              Term. Next, drag a course from the table into the corresponding
+              term below.
             </Form.Label>
           </Form.Group>
           <Button className="mt-3" variant="primary" type="submit">

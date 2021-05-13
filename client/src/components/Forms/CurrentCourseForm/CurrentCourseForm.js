@@ -24,7 +24,7 @@ export const CurrentCourseForm = (props) => {
   // -------------------------------------------------------------------
   // TODO: possibly move to context or AddCourse component after refactoring
   const [open, setOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [error, setError] = useState(null)
@@ -193,7 +193,7 @@ export const CurrentCourseForm = (props) => {
         setSuccess(true)
         setSeverity('success')
         setOpen(true)
-        setIsLoading(false)
+        // setIsLoading(false)
       }
     } catch (error) {
       setSeverity('error')

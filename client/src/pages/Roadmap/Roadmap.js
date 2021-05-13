@@ -9,19 +9,18 @@ import SchoolYear from '../../components/Tables/SchoolYear/SchoolYear'
 import { majorReqData } from '../../assets/CecsReqs'
 import '../../utility/css/table-fixed-height.css'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import DeleteIcon from "@material-ui/icons/Delete"
+// import DeleteIcon from "@material-ui/icons/Delete"
 import { ExportPdf } from './ExportPdf'
-import axios from 'axios'
-import { saveAs } from 'file-saver'
-
+// import axios from 'axios'
+// import { saveAs } from 'file-saver'
 
 const Roadmap = () => {
   const [termList, setTermList] = useState({
     initialTable: {
-      term: "",
-      year: "",
-      items: majorReqData
-    }
+      term: '',
+      year: '',
+      items: majorReqData,
+    },
   })
   const [term, setTerm] = useState()
   const [year, setYear] = useState()
@@ -43,76 +42,78 @@ const Roadmap = () => {
       e.stopPropagation()
     }
     setValidated(true)
-    setTermList(prevState => {
+    setTermList((prevState) => {
       return {
         ...prevState,
         [`${term}${year}`]: {
           term: term,
           year: year,
-          items: []
-        }
+          items: [],
+        },
       }
     })
   }
-  
-  const createAndDownloadPdf = () => {
-    const API = axios.create({ baseURL: 'http://localhost:5000' })
-    API.post('/create-pdf', termList)
-      .then(() => API.get('fetch-pdf', { responseType: 'blob' }))
-      .then((res) => {
-        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
 
-        saveAs(pdfBlob, 'myRoadmap.pdf');
-      })
-  } 
+  // const createAndDownloadPdf = () => {
+  //   const API = axios.create({ baseURL: 'http://localhost:5000' })
+  //   API.post('/create-pdf', termList)
+  //     .then(() => API.get('fetch-pdf', { responseType: 'blob' }))
+  //     .then((res) => {
+  //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
+
+  //       saveAs(pdfBlob, 'myRoadmap.pdf')
+  //     })
+  // }
 
   const onDragEnd = (result, termList, setTermList) => {
-    const { source, destination } = result;
-    if (!destination) return;
+    const { source, destination } = result
+    if (!destination) return
 
-    if (source.droppableId === destination.droppableId === "initialTable") {
+    if ((source.droppableId === destination.droppableId) === 'initialTable') {
       return
     }
-  
+
     if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = termList[source.droppableId];
-      const destColumn = termList[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
+      const sourceColumn = termList[source.droppableId]
+      const destColumn = termList[destination.droppableId]
+      const sourceItems = [...sourceColumn.items]
+      const destItems = [...destColumn.items]
+      const [removed] = sourceItems.splice(source.index, 1)
+      destItems.splice(destination.index, 0, removed)
       setTermList({
         ...termList,
         [source.droppableId]: {
           ...sourceColumn,
-          items: sourceItems
+          items: sourceItems,
         },
         [destination.droppableId]: {
           ...destColumn,
-          items: destItems
-        }
-      });
+          items: destItems,
+        },
+      })
     } else {
-      const column = termList[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
+      const column = termList[source.droppableId]
+      const copiedItems = [...column.items]
+      const [removed] = copiedItems.splice(source.index, 1)
+      copiedItems.splice(destination.index, 0, removed)
       setTermList({
         ...termList,
         [source.droppableId]: {
           ...column,
-          items: copiedItems
-        }
-      });
+          items: copiedItems,
+        },
+      })
     }
-  };
+  }
 
   const handleClick = () => {
     setShow(true)
   }
 
   return (
-    <DragDropContext onDragEnd={result => onDragEnd(result, termList, setTermList)}>
+    <DragDropContext
+      onDragEnd={(result) => onDragEnd(result, termList, setTermList)}
+    >
       <Container>
         {/* Title */}
         <Row className="d-flex mt-5 justify-content-center padding">
@@ -133,134 +134,127 @@ const Roadmap = () => {
         {/* Catalog */}
 
         <Row className="d-flex mt-5 justify-content-center row-padding">
+          <Col>
+            <div className="table-wrapper row-padding">
+              {/* Table Wrapper */}
 
-              <Col>
-                <div className="table-wrapper row-padding">
-                  {/* Table Wrapper */}
-                  
-                    {/* Start of Draggable/Droppable Courses */}
-                    <Droppable droppableId={"initialTable"}>
-                      {(provided) => {
+              {/* Start of Draggable/Droppable Courses */}
+              <Droppable droppableId={'initialTable'}>
+                {(provided) => {
+                  return (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      {termList.initialTable.items.map((item, index) => {
                         return (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
+                          <Draggable
+                            key={item.course}
+                            index={index}
+                            draggableId={item.course}
                           >
-                            {termList.initialTable.items.map((item, index) => {
+                            {(provided) => {
                               return (
-                                <Draggable
-                                  key={item.course}
-                                  index={index}
-                                  draggableId={item.course}
+                                <ul
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  ref={provided.innerRef}
                                 >
-                                  {(provided) => {
-                                    return (
-                                    <ul
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      ref={provided.innerRef}
-                                    >
-                                      <li>
-                                        <Link
-                                          to={{ pathname: item.url }}
-                                          target="_blank"
-                                        >{`${item.course} - ${item.title} - ${item.units} Units - ${item.designation}`}</Link>
-                                      </li>
-                                    </ul>
-                                    )
-                                  }}
-                                </Draggable>
+                                  <li>
+                                    <Link
+                                      to={{ pathname: item.url }}
+                                      target="_blank"
+                                    >{`${item.course} - ${item.title} - ${item.units} Units - ${item.designation}`}</Link>
+                                  </li>
+                                </ul>
                               )
-                            })}
-                            {provided.placeholder}
-                          </div>
+                            }}
+                          </Draggable>
                         )
-                      }}
-                    </Droppable>
-                </div>
-              </Col>
-
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )
+                }}
+              </Droppable>
+            </div>
+          </Col>
         </Row>
 
         <Row className="d-flex mt-5 justify-content-center row-padding">
-          {Object.entries(termList).filter(([key, value]) => {
-            return key !== "initialTable"
-          }).map(([key, value], index) => {
-            return (
-              <Col xs={6} className="table-wrapper">
-                <Card>
-                  <Card.Body>
-                    <Card.Title>
-                      {`${value.term} ${value.year}`}
-                    </Card.Title>
-                    <Droppable droppableId={key} key={key}>
-                      {(provided, snapshot) => {
-                        return (
-                          <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          style={{
-                            background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "white",
-                            padding: 4,
-                            width: 400,
-                            minHeight: 280
-                          }}
-                          >
-                            {value.items.map((item, index) => {
-                              return (
-                                <Draggable
-                                key={item.course}
-                                draggableId={item.course}
-                                index={index}
-                                >
-                                  {(provided, snapshot) => {
-                                    return (
-                                      <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      style={{
-                                        userSelect: "none",
-                                        padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                        ? "#263B4A"
-                                        : "#456C86",
-                                        color: "white",
-                                        ...provided.draggableProps.style
-                                      }}
-                                      >
-                                        {`${item.course} ${item.title}`}
-                                      </div>
-                                    );
-                                  }}
-                                </Draggable>
-                              );
-                            })}
-                            {provided.placeholder}
-                          </div>
-                        );
-                      }}
-                    </Droppable>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          {Object.entries(termList)
+            .filter(([key, value]) => {
+              return key !== 'initialTable'
+            })
+            .map(([key, value], index) => {
+              return (
+                <Col xs={6} className="table-wrapper">
+                  <Card>
+                    <Card.Body>
+                      <Card.Title>{`${value.term} ${value.year}`}</Card.Title>
+                      <Droppable droppableId={key} key={key}>
+                        {(provided, snapshot) => {
+                          return (
+                            <div
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                              style={{
+                                background: snapshot.isDraggingOver
+                                  ? 'lightblue'
+                                  : 'white',
+                                padding: 4,
+                                width: 400,
+                                minHeight: 280,
+                              }}
+                            >
+                              {value.items.map((item, index) => {
+                                return (
+                                  <Draggable
+                                    key={item.course}
+                                    draggableId={item.course}
+                                    index={index}
+                                  >
+                                    {(provided, snapshot) => {
+                                      return (
+                                        <div
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          style={{
+                                            userSelect: 'none',
+                                            padding: 16,
+                                            margin: '0 0 8px 0',
+                                            minHeight: '50px',
+                                            backgroundColor: snapshot.isDragging
+                                              ? '#263B4A'
+                                              : '#456C86',
+                                            color: 'white',
+                                            ...provided.draggableProps.style,
+                                          }}
+                                        >
+                                          {`${item.course} ${item.title}`}
+                                        </div>
+                                      )
+                                    }}
+                                  </Draggable>
+                                )
+                              })}
+                              {provided.placeholder}
+                            </div>
+                          )
+                        }}
+                      </Droppable>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+            })}
         </Row>
 
-        {show ?
-           <ExportPdf className="row-padding" data={termList} /> :
-           null
-        }
-
+        {show ? <ExportPdf className="row-padding" data={termList} /> : null}
 
         <Row className="d-flex mt-5 justify-content-center text-center padding">
           <Col>
-            <Button className="mb-4 " onClick={handleClick}>Create PDF Table</Button>
+            <Button className="mb-4 " onClick={handleClick}>
+              Create PDF Table
+            </Button>
           </Col>
         </Row>
       </Container>
