@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// const { REACT_APP_API_BASE_URL } = process.env
+const { REACT_APP_API_BASE_URL, REACT_APP_API_BASE_URL_DEV } = process.env
 
 const API = axios.create({
-  baseURL: 'https://student-academic-dashboard.web.app',
+  baseURL: REACT_APP_API_BASE_URL,
 })
 
 // Login/Logout
