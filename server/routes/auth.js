@@ -11,12 +11,12 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: process.env.AUTH_FAILURE_REDIRECT,
+    failureRedirect: 'https://student-academic-dashboard.web.app/login',
   }),
   (req, res) => {
     // Successful authentication
 
-    res.redirect(process.env.AUTH_SUCCESS_REDIRECT)
+    res.redirect('https://student-academic-dashboard.web.app/dashboard')
   }
 )
 
