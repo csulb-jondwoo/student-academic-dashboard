@@ -42,13 +42,15 @@ export default function Context(props) {
   // actions
   // Auth
   const handleLogin = () => {
-    window.location.href = REACT_APP_LOGIN_CALLBACK_URL
+    window.location.href =
+      'https://academic-dashboard-server.herokuapp.com/auth/google'
   }
   const handleLogout = () => {
     api.googleLogout().then((res) => {
       if (res.data === 'done') {
         localStorage.clear()
-        window.location.href = REACT_APP_LOGOUT_CALLBACK_URL
+        window.location.href =
+          'https://student-academic-dashboard.web.app/login'
       }
     })
   }
