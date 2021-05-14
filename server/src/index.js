@@ -49,6 +49,9 @@ app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.get('/', (req, res) => {
+  res.send('Hello to Academic Dashboard API')
+})
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/course', courseRoutes)
