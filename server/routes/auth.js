@@ -11,12 +11,12 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/login',
+    failureRedirect: process.env.AUTH_FAILURE_REDIRECT,
   }),
   (req, res) => {
     // Successful authentication
 
-    res.redirect('http://localhost:3000/dashboard')
+    res.redirect(process.env.AUTH_SUCCESS_REDIRECT)
   }
 )
 
