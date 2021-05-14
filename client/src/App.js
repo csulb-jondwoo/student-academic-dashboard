@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import { HashRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ConfirmProvider } from 'material-ui-confirm'
 
 import Navigation from './components/Navigation/Navigation'
