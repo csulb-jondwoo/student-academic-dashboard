@@ -18,6 +18,10 @@ const initialState = {
   error: null,
   isLoading: true,
 }
+const {
+  REACT_APP_LOGIN_CALLBACK_URL,
+  REACT_APP_LOGOUT_CALLBACK_URL,
+} = process.env
 
 // Create Context
 export const myContext = createContext(initialState)
@@ -35,13 +39,13 @@ export default function Context(props) {
   // actions
   // Auth
   const handleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/google'
+    window.location.href = REACT_APP_LOGIN_CALLBACK_URL
   }
   const handleLogout = () => {
     api.googleLogout().then((res) => {
       if (res.data === 'done') {
         localStorage.clear()
-        window.location.href = 'http://localhost:3000/login'
+        window.location.href = REACT_APP_LOGOUT_CALLBACK_URL
       }
     })
   }
