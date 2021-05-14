@@ -55,7 +55,6 @@ export default function Context(props) {
 
   useEffect(() => {
     api.fetchUser().then((res) => {
-      console.log(res.data)
       if (res.data) {
         localStorage.setItem('user', JSON.stringify(res.data))
         setUser(localStorage.getItem('user'))
