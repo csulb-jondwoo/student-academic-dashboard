@@ -20,6 +20,7 @@ require('../config/passport')(passport)
 const app = express()
 app.use(express.json())
 
+// Database
 const CONNECTION_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bcfji.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 const PORT = process.env.PORT || 5000
 
