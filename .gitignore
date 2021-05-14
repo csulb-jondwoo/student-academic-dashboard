@@ -6,6 +6,3 @@
 **/TODO.txt
 **/.prettier*
 **/.eslint*
-
-# Local Netlify folder
-.netlify
