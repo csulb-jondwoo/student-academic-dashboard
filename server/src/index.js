@@ -21,7 +21,7 @@ const app = express()
 app.use(express.json())
 
 // Database
-const CONNECTION_URL = `mongodb+srv://jon:jon123@cluster0.bcfji.mongodb.net/student-academic-dash?retryWrites=true&w=majority`
+const CONNECTION_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bcfji.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 const PORT = process.env.PORT || 5000
 
 mongoose
@@ -39,7 +39,7 @@ mongoose
 app.use(express.json())
 app.use(
   cors({
-    origin: 'https://student-academic-dashboard.web.app',
+    origin: process.env.ORIGIN,
     credentials: true,
   })
 )
