@@ -11,8 +11,7 @@ module.exports = (passport) => {
         clientID:
           '274923431758-p0ojivpf6if4q9uvoi7ohqguevopkrus.apps.googleusercontent.com',
         clientSecret: '0VzoDBxyWwKPeupuTfHTuwZh',
-        callbackURL:
-          'https://student-academic-dashboard.web.app/auth/google/callback',
+        callbackURL: '/auth/google/callback',
       },
       (accessToken, refreshToken, profile, done) => {
         // Successful authentication

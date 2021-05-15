@@ -19,12 +19,12 @@ const initialState = {
   isLoading: true,
 }
 
-const {
-  REACT_APP_LOGIN_CALLBACK_URL,
-  REACT_APP_LOGIN_CALLBACK_URL_DEV,
-  REACT_APP_LOGOUT_CALLBACK_URL,
-  REACT_APP_LOGOUT_CALLBACK_URL_DEV,
-} = process.env
+// const {
+//   REACT_APP_LOGIN_CALLBACK_URL,
+//   REACT_APP_LOGIN_CALLBACK_URL_DEV,
+//   REACT_APP_LOGOUT_CALLBACK_URL,
+//   REACT_APP_LOGOUT_CALLBACK_URL_DEV,
+// } = process.env
 
 // Create Context
 export const myContext = createContext(initialState)
