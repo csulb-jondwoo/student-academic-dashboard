@@ -16,7 +16,7 @@ router.get(
   (req, res) => {
     // Successful authentication
 
-    res.redirect('/dashboard')
+    res.redirect('https://student-academic-dashboard.netlify.app/dashboard')
   }
 )
 

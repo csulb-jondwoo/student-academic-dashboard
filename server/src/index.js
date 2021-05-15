@@ -39,15 +39,23 @@ mongoose
 app.use(express.json())
 app.use(
   cors({
-    origin: process.env.ORIGIN,
+    origin: 'https://student-academic-dashboard.web.app',
     credentials: true,
   })
 )
+
+app.set('trust proxy', 1)
+
 app.use(
   session({
     secret: 'secretcode',
     resave: true,
     saveUninitialized: true,
+    cookie: {
+      sameSite: 'none',
+      secure: true,
+      maxAg: 1000 * 60 * 60 * 24 * 7, //one week
+    },
   })
 )
 app.use(bodyParser.urlencoded({ extended: true }))

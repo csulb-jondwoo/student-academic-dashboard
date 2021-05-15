@@ -50,7 +50,7 @@ export default function Context(props) {
       if (res.data === 'done') {
         localStorage.clear()
         window.location.href =
-          'https://student-academic-dashboard.web.app/login'
+          'https://student-academic-dashboard.netlify.app/login'
       }
     })
   }
