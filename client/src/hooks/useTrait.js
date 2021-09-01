@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+
 const useTrait = (initialValue) => {
   const [trait, updateTrait] = useState(initialValue)
 
