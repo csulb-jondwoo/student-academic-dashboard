@@ -8,6 +8,7 @@ const session = require('express-session')
 const passport = require('passport')
 const pdf = require('html-pdf')
 
+
 const pdfTemplate = require('../documents')
 
 const authRoutes = require('../routes/auth.js')
